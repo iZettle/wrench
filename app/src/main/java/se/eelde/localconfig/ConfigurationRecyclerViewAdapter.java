@@ -24,12 +24,14 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Confi
 
     private final ArrayList<Configuration> mValues = new ArrayList<>();
 
-    public ConfigurationRecyclerViewAdapter() {
+    public ConfigurationRecyclerViewAdapter(ArrayList<Configuration> newConfigurations) {
+        mValues.addAll(newConfigurations);
     }
 
     public void setItems(ArrayList<Configuration> items) {
         mValues.clear();
         mValues.addAll(items);
+        notifyDataSetChanged();
     }
 
     @Override

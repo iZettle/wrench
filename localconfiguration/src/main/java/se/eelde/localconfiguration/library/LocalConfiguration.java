@@ -2,14 +2,10 @@ package se.eelde.localconfiguration.library;
 
 
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LocalConfiguration {
     private LocalConfiguration() {
@@ -60,11 +56,6 @@ public class LocalConfiguration {
         contentResolver.insert(ConfigProviderHelper.configurationUri(), Configuration.toContentValues(configuration));
     }
 
-    private static void updateConfiguration(ContentResolver contentResolver, Configuration configuration) {
-        ContentValues contentValues = Configuration.toContentValues(configuration);
-        contentResolver.update(ConfigProviderHelper.configurationUri(configuration._id), contentValues, null, null);
-    }
-
     @Nullable
     private static Configuration getConfiguration(ContentResolver contentResolver, String key) {
         Cursor cursor = null;
@@ -82,21 +73,4 @@ public class LocalConfiguration {
         return null;
     }
 
-    private static List<Configuration> getConfigurations(ContentResolver contentResolver, long id) {
-        ArrayList<Configuration> configurations = new ArrayList<>();
-        Cursor cursor = null;
-        try {
-            cursor = contentResolver.query(ConfigProviderHelper.configurationUri(id), Configuration.PROJECTION, null, null, null);
-            if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    configurations.add(Configuration.configurationFromCursor(cursor));
-                }
-            }
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        return configurations;
-    }
 }

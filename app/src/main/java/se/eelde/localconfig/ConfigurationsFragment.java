@@ -20,7 +20,7 @@ import se.eelde.localconfiguration.library.Configuration;
 public class ConfigurationsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int CONFIGURATIONS_LOADER = 1;
-    private ConfigurationRecyclerViewAdapter configurationRecyclerViewAdapter;
+    FragmentConfigurationsBinding fragmentConfigurationsBinding;
 
     public ConfigurationsFragment() {
     }
@@ -34,12 +34,10 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentConfigurationsBinding fragmentConfigurationsBinding = FragmentConfigurationsBinding.inflate(inflater, container, false);
+        fragmentConfigurationsBinding = FragmentConfigurationsBinding.inflate(inflater, container, false);
 
         fragmentConfigurationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        configurationRecyclerViewAdapter = new ConfigurationRecyclerViewAdapter();
-        fragmentConfigurationsBinding.list.setAdapter(configurationRecyclerViewAdapter);
 
         fragmentConfigurationsBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,11 +72,19 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         switch (loader.getId()) {
             case CONFIGURATIONS_LOADER: {
 
+
                 ArrayList<se.eelde.localconfiguration.library.Configuration> newConfigurations = new ArrayList<>();
                 while (cursor.moveToNext()) {
                     newConfigurations.add(Configuration.configurationFromCursor(cursor));
                 }
-                configurationRecyclerViewAdapter.setItems(newConfigurations);
+
+                ConfigurationRecyclerViewAdapter adapter = (ConfigurationRecyclerViewAdapter) fragmentConfigurationsBinding.list.getAdapter();
+                if (adapter == null) {
+                    adapter = new ConfigurationRecyclerViewAdapter(newConfigurations);
+                    fragmentConfigurationsBinding.list.setAdapter(adapter);
+                } else {
+                    adapter.setItems(newConfigurations);
+                }
                 break;
             }
             default: {
