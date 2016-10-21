@@ -72,10 +72,13 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         switch (loader.getId()) {
             case CONFIGURATIONS_LOADER: {
 
-
                 ArrayList<se.eelde.localconfiguration.library.Configuration> newConfigurations = new ArrayList<>();
-                while (cursor.moveToNext()) {
-                    newConfigurations.add(Configuration.configurationFromCursor(cursor));
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    do {
+                        newConfigurations.add(Configuration.configurationFromCursor(cursor));
+                    }
+                    while (cursor.moveToNext());
                 }
 
                 ConfigurationRecyclerViewAdapter adapter = (ConfigurationRecyclerViewAdapter) fragmentConfigurationsBinding.list.getAdapter();
