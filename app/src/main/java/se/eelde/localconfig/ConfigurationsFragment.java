@@ -21,7 +21,6 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
 
     private static final int CONFIGURATIONS_LOADER = 1;
     private ConfigurationRecyclerViewAdapter configurationRecyclerViewAdapter;
-    private FragmentConfigurationsBinding fragmentConfigurationsBinding;
 
     public ConfigurationsFragment() {
     }
@@ -35,7 +34,7 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragmentConfigurationsBinding = FragmentConfigurationsBinding.inflate(inflater, container, false);
+        FragmentConfigurationsBinding fragmentConfigurationsBinding = FragmentConfigurationsBinding.inflate(inflater, container, false);
 
         fragmentConfigurationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
 

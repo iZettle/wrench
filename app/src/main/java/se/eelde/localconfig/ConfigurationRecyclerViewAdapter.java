@@ -25,10 +25,6 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Confi
         mValues.addAll(items);
     }
 
-    public void addItems(ArrayList<Configuration> items) {
-        mValues.addAll(items);
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ConfigurationListItemBinding fragmentConfigurationBinding = ConfigurationListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);

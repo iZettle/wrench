@@ -93,11 +93,10 @@ import java.util.Map;
  */
 public class SelectionBuilder {
     private static final String TAG = "basicsyncadapter";
-
+    private final Map<String, String> mProjectionMap = new HashMap<>();
+    private final StringBuilder mSelection = new StringBuilder();
+    private final ArrayList<String> mSelectionArgs = new ArrayList<>();
     private String mTable = null;
-    private Map<String, String> mProjectionMap = new HashMap<>();
-    private StringBuilder mSelection = new StringBuilder();
-    private ArrayList<String> mSelectionArgs = new ArrayList<>();
 
     /**
      * Reset any internal state, allowing this builder to be recycled.
@@ -234,6 +233,7 @@ public class SelectionBuilder {
      * @return Current selection as a SQL statement
      * @see #getSelectionArgs()
      */
+    @SuppressWarnings("WeakerAccess")
     public String getSelection() {
         return mSelection.toString();
 
@@ -320,6 +320,7 @@ public class SelectionBuilder {
      * @return A {@link Cursor} object, which is positioned before the first entry. Note that
      * {@link Cursor}s are not synchronized, see the documentation for more details.
      */
+    @SuppressWarnings("WeakerAccess")
     public Cursor query(SQLiteDatabase db, String[] columns, String groupBy,
                         String having, String orderBy, String limit) {
         assertTable();

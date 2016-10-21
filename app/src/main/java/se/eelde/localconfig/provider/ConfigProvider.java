@@ -3,13 +3,16 @@ package se.eelde.localconfig.provider;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Binder;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
+import se.eelde.localconfig.BuildConfig;
 import se.eelde.localconfig.database.ConfigDatabaseHelper;
 import se.eelde.localconfig.database.SelectionBuilder;
 import se.eelde.localconfig.database.tables.ApplicationTable;
@@ -24,7 +27,7 @@ public class ConfigProvider extends ContentProvider {
     private static final int APPLICATIONS = 2;
     private static final int CONFIGURATION = 3;
     private static final int CONFIGURATIONS = 4;
-    private static UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/application/#", APPLICATION);
@@ -38,60 +41,8 @@ public class ConfigProvider extends ContentProvider {
     public ConfigProvider() {
     }
 
-    @Override
-    public boolean onCreate() {
-        configDatabaseHelper = new ConfigDatabaseHelper(getContext());
-        return true;
-    }
-
-    @Override
-    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        SelectionBuilder selectionBuilder = new SelectionBuilder();
-        SQLiteDatabase readableDatabase = configDatabaseHelper.getReadableDatabase();
-
-        Cursor cursor;
-        switch (sUriMatcher.match(uri)) {
-            case APPLICATION: {
-                cursor = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(se.eelde.localconfiguration.library.Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
-                        .where(selection, selectionArgs)
-                        .query(readableDatabase, projection, sortOrder);
-                break;
-            }
-            case APPLICATIONS: {
-                cursor = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(selection, selectionArgs)
-                        .query(readableDatabase, projection, sortOrder);
-                break;
-            }
-            case CONFIGURATION: {
-                cursor = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(se.eelde.localconfiguration.library.Configuration.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
-                        .where(selection, selectionArgs)
-                        .query(readableDatabase, projection, sortOrder);
-                break;
-            }
-            case CONFIGURATIONS: {
-                cursor = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(selection, selectionArgs)
-                        .query(readableDatabase, projection, sortOrder);
-                break;
-            }
-            default: {
-                throw new UnsupportedOperationException("Not yet implemented");
-            }
-        }
-
-        if (cursor != null && getContext() != null) {
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
-        }
-
-        return cursor;
-    }
-
-    private Application getCallingApplication(SQLiteDatabase writableDatabase) {
-        //noinspection ConstantConditions
-        String packageName = getContext().getPackageManager().getNameForUid(Binder.getCallingUid());
+    private static Application getCallingApplication(Context context, SQLiteDatabase writableDatabase) {
+        String packageName = context.getPackageManager().getNameForUid(Binder.getCallingUid());
         Cursor cursor = null;
         try {
 
@@ -116,18 +67,77 @@ public class ConfigProvider extends ContentProvider {
     }
 
     @Override
+    public boolean onCreate() {
+        configDatabaseHelper = new ConfigDatabaseHelper(getContext());
+        return true;
+    }
+
+    @Override
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        SelectionBuilder selectionBuilder = new SelectionBuilder();
+        SQLiteDatabase writableDatabase = configDatabaseHelper.getWritableDatabase();
+
+        Cursor cursor;
+        switch (sUriMatcher.match(uri)) {
+            case APPLICATION: {
+                cursor = selectionBuilder.table(ApplicationTable.TABLE_NAME)
+                        .where(se.eelde.localconfiguration.library.Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(selection, selectionArgs)
+                        .query(writableDatabase, projection, sortOrder);
+                break;
+            }
+            case APPLICATIONS: {
+                cursor = selectionBuilder.table(ApplicationTable.TABLE_NAME)
+                        .where(selection, selectionArgs)
+                        .query(writableDatabase, projection, sortOrder);
+                break;
+            }
+            case CONFIGURATION: {
+                selectionBuilder.table(ConfigurationTable.TABLE_NAME)
+                        .where(Configuration.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment()))
+                        .where(selection, selectionArgs);
+
+                Application callingApplication = getCallingApplication(getContext(), writableDatabase);
+                if (!TextUtils.equals(callingApplication.applicationName, BuildConfig.APPLICATION_ID)) {
+                    selectionBuilder.where(Configuration.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
+                cursor = selectionBuilder.query(writableDatabase, projection, sortOrder);
+                break;
+            }
+            case CONFIGURATIONS: {
+                selectionBuilder.table(ConfigurationTable.TABLE_NAME)
+                        .where(selection, selectionArgs);
+
+                Application callingApplication = getCallingApplication(getContext(), writableDatabase);
+                if (!TextUtils.equals(callingApplication.applicationName, BuildConfig.APPLICATION_ID)) {
+                    selectionBuilder.where(Configuration.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
+                cursor = selectionBuilder.query(writableDatabase, projection, sortOrder);
+                break;
+            }
+            default: {
+                throw new UnsupportedOperationException("Not yet implemented");
+            }
+        }
+
+        if (cursor != null && getContext() != null) {
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        }
+
+        return cursor;
+    }
+
+    @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         SQLiteDatabase writableDatabase = configDatabaseHelper.getWritableDatabase();
 
         long insertId;
         switch (sUriMatcher.match(uri)) {
-            case APPLICATIONS: {
-                insertId = writableDatabase.insert(ApplicationTable.TABLE_NAME, null, values);
-                break;
-            }
             case CONFIGURATIONS: {
 
-                values.put(Configuration.Columns.APPLICATION_ID, getCallingApplication(writableDatabase)._id);
+                values.put(Configuration.Columns.APPLICATION_ID, getCallingApplication(getContext(), writableDatabase)._id);
 
                 insertId = writableDatabase.insert(ConfigurationTable.TABLE_NAME, null, values);
                 break;
@@ -152,7 +162,7 @@ public class ConfigProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {
                 updatedRows = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(se.eelde.localconfiguration.library.Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
                         .where(selection, selectionArgs)
                         .update(writableDatabase, values);
 
@@ -166,7 +176,7 @@ public class ConfigProvider extends ContentProvider {
             }
             case CONFIGURATION: {
                 updatedRows = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(se.eelde.localconfiguration.library.Configuration.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(Configuration.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
                         .where(selection, selectionArgs)
                         .update(writableDatabase, values);
                 break;
@@ -197,7 +207,7 @@ public class ConfigProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {
                 updatedRows = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(se.eelde.localconfiguration.library.Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
                         .where(selection, selectionArgs)
                         .delete(writableDatabase);
 
@@ -211,7 +221,7 @@ public class ConfigProvider extends ContentProvider {
             }
             case CONFIGURATION: {
                 updatedRows = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(se.eelde.localconfiguration.library.Configuration.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(Configuration.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
                         .where(selection, selectionArgs)
                         .delete(writableDatabase);
                 break;
@@ -237,4 +247,5 @@ public class ConfigProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
 }

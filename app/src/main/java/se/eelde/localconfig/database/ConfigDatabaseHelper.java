@@ -19,9 +19,7 @@ public class ConfigDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(ApplicationTable.CREATE);
-        sqLiteDatabase.execSQL(ApplicationTable.PREFILL);
         sqLiteDatabase.execSQL(ConfigurationTable.CREATE);
-        sqLiteDatabase.execSQL(ConfigurationTable.PREFILL);
     }
 
     @Override

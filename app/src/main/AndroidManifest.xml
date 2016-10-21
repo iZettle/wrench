@@ -9,6 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".ConfigurationsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,13 +18,14 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".AddConfigurationActivity" />
+
         <provider
             android:name=".provider.ConfigProvider"
             android:authorities="se.eelde.localconfig.configprovider"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".AddConfigurationActivity"></activity>
     </application>
 
 </manifest>

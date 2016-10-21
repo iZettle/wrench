@@ -15,14 +15,4 @@ public class ConfigurationTable {
             + Configuration.Columns.TYPE + " TEXT "
             + ")";
 
-    public static final String PREFILL = "INSERT INTO " + TABLE_NAME
-            + "("
-            + Configuration.Columns._ID + ", "
-            + Configuration.Columns.APPLICATION_ID + ", "
-            + Configuration.Columns.KEY + ", "
-            + Configuration.Columns.VALUE + ", "
-            + Configuration.Columns.TYPE + ") VALUES (0, 0, 'myKey', 'myValue', 'string') ";
-
-    public static final String DROP = "DROP TABLE IF EXISTS " + TABLE_NAME;
-
 }

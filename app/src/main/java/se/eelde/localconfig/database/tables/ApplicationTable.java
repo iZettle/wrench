@@ -12,11 +12,4 @@ public class ApplicationTable {
             + Application.Columns.APPLICATION_NAME + " TEXT "
             + ")";
 
-    public static final java.lang.String PREFILL = "INSERT INTO " + TABLE_NAME
-            + "("
-            + Application.Columns._ID + ", "
-            + Application.Columns.APPLICATION_NAME + ") VALUES (0, 'myApplication') ";
-
-    public static final String DROP = "DROP TABLE IF EXISTS " + TABLE_NAME;
-
 }
