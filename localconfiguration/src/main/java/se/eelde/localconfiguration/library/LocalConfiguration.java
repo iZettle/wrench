@@ -15,50 +15,37 @@ public class LocalConfiguration {
     private LocalConfiguration() {
     }
 
-    @SuppressWarnings("unused")
-    public static String getString(ContentResolver contentResolver, String key) {
+    public static String getString(ContentResolver contentResolver, String key, String defValue) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
             configuration = new Configuration();
             configuration.key = key;
-            configuration.value = "";
-            configuration.type = "string";
+            configuration.value = defValue;
+            configuration.type = String.class.getName();
             insertConfiguration(contentResolver, configuration);
         }
         return configuration.value;
     }
 
-    @SuppressWarnings("unused")
-    public static boolean getBoolean(ContentResolver contentResolver, String key) {
-        return getBoolean(contentResolver, key, true);
-    }
-
-    @SuppressWarnings("unused")
     public static boolean getBoolean(ContentResolver contentResolver, String key, boolean defValue) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
             configuration = new Configuration();
             configuration.key = key;
-            configuration.value = String.valueOf(false);
-            configuration.type = "boolean";
+            configuration.value = String.valueOf(defValue);
+            configuration.type = Boolean.class.getName();
             insertConfiguration(contentResolver, configuration);
         }
         return Boolean.valueOf(configuration.value);
     }
 
-    @SuppressWarnings("unused")
-    public static int getInt(ContentResolver contentResolver, String key) {
-        return getInt(contentResolver, key, 0);
-    }
-
-    @SuppressWarnings("unused")
     public static int getInt(ContentResolver contentResolver, String key, int defValue) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
             configuration = new Configuration();
             configuration.key = key;
-            configuration.value = String.valueOf(0);
-            configuration.type = "int";
+            configuration.value = String.valueOf(defValue);
+            configuration.type = Integer.class.getName();
             insertConfiguration(contentResolver, configuration);
         }
         return Integer.valueOf(configuration.value);
