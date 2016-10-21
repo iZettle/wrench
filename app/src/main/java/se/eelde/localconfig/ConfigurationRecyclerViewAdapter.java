@@ -110,7 +110,7 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Confi
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            conf.value = input.getText().toString();
+                            conf.value = String.valueOf(input.isChecked());
                             v.getContext().getContentResolver().update(ConfigProviderHelper.configurationUri().buildUpon().appendPath(String.valueOf(conf._id)).build(), Configuration.toContentValues(conf), null, null);
                         }
                     });
