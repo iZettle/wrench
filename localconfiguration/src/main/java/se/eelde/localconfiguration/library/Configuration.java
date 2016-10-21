@@ -3,13 +3,9 @@ package se.eelde.localconfiguration.library;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.provider.BaseColumns;
-import android.support.v4.os.ParcelableCompat;
-import android.support.v4.os.ParcelableCompatCreatorCallbacks;
 
-public class Configuration implements Parcelable {
+public class Configuration {
     public static final String[] PROJECTION = new String[]{
             Columns._ID,
             Columns.APPLICATION_ID,
@@ -17,17 +13,7 @@ public class Configuration implements Parcelable {
             Columns.VALUE,
             Columns.TYPE
     };
-    public static final Creator<Configuration> CREATOR = ParcelableCompat.newCreator(new ParcelableCompatCreatorCallbacks<Configuration>() {
-        @Override
-        public Configuration createFromParcel(Parcel in, ClassLoader loader) {
-            return new Configuration(in);
-        }
 
-        @Override
-        public Configuration[] newArray(int size) {
-            return new Configuration[size];
-        }
-    });
     public long _id;
     public long applicationId;
     public String type;
@@ -35,15 +21,6 @@ public class Configuration implements Parcelable {
     public String value;
 
     public Configuration() {
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public Configuration(Parcel parcel) {
-        _id = parcel.readLong();
-        applicationId = parcel.readLong();
-        type = parcel.readString();
-        key = parcel.readString();
-        value = parcel.readString();
     }
 
     public static Configuration configurationFromCursor(Cursor cursor) {
@@ -67,19 +44,6 @@ public class Configuration implements Parcelable {
         return contentValues;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(_id);
-        parcel.writeLong(applicationId);
-        parcel.writeString(type);
-        parcel.writeString(key);
-        parcel.writeString(value);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public interface Columns extends BaseColumns {
         String APPLICATION_ID = "applicationName";

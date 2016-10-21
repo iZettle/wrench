@@ -24,15 +24,6 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity
-            android:name=".EditConfigurationActivity"
-            android:label="@string/title_activity_edit_configuration"
-            android:parentActivityName=".ConfigurationsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="se.eelde.localconfig.ConfigurationsActivity" />
-        </activity>
     </application>
 
 </manifest>

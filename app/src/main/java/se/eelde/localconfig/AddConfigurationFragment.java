@@ -33,9 +33,9 @@ public class AddConfigurationFragment extends Fragment {
         fragmentAddConfigurationBinding = FragmentAddConfigurationBinding.inflate(inflater, container, false);
 
         typeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1);
-        typeAdapter.add("string");
-        typeAdapter.add("boolean");
-        typeAdapter.add("int");
+        typeAdapter.add(String.class.getName());
+        typeAdapter.add(Boolean.class.getName());
+        typeAdapter.add(Integer.class.getName());
 
         fragmentAddConfigurationBinding.typeSpinner.setAdapter(typeAdapter);
 
