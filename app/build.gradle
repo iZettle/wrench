@@ -29,12 +29,12 @@ dependencies {
     })
     //noinspection GradleCompatible
     compile project(':localconfiguration')
+
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:support-v4:25.0.0'
     compile 'com.android.support:recyclerview-v7:25.0.0'
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
     compile 'com.android.support:design:25.0.0'
-
     compile 'com.facebook.stetho:stetho:1.4.1'
+    testCompile 'junit:junit:4.12'
 }

@@ -9,7 +9,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".ConfigurationsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,7 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".AddConfigurationActivity" />
 
         <provider
@@ -26,6 +24,15 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity
+            android:name=".EditConfigurationActivity"
+            android:label="@string/title_activity_edit_configuration"
+            android:parentActivityName=".ConfigurationsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="se.eelde.localconfig.ConfigurationsActivity" />
+        </activity>
     </application>
 
 </manifest>

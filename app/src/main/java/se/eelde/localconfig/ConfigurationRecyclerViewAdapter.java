@@ -1,5 +1,6 @@
 package se.eelde.localconfig;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +42,11 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Confi
         holder.configurationListItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, mValues.get(holder.getAdapterPosition())._id + " was clicked");
+                Configuration conf = mValues.get(holder.getAdapterPosition());
+                Context context = v.getContext();
+                context.startActivity(EditConfigurationActivity.newIntent(context, conf));
+
+                Log.d(TAG, conf._id + " was clicked");
             }
         });
     }

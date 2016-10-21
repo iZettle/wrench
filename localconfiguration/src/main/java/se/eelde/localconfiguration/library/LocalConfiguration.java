@@ -15,6 +15,7 @@ public class LocalConfiguration {
     private LocalConfiguration() {
     }
 
+    @SuppressWarnings("unused")
     public static String getString(ContentResolver contentResolver, String key) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
@@ -27,7 +28,13 @@ public class LocalConfiguration {
         return configuration.value;
     }
 
+    @SuppressWarnings("unused")
     public static boolean getBoolean(ContentResolver contentResolver, String key) {
+        return getBoolean(contentResolver, key, true);
+    }
+
+    @SuppressWarnings("unused")
+    public static boolean getBoolean(ContentResolver contentResolver, String key, boolean defValue) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
             configuration = new Configuration();
@@ -39,7 +46,13 @@ public class LocalConfiguration {
         return Boolean.valueOf(configuration.value);
     }
 
+    @SuppressWarnings("unused")
     public static int getInt(ContentResolver contentResolver, String key) {
+        return getInt(contentResolver, key, 0);
+    }
+
+    @SuppressWarnings("unused")
+    public static int getInt(ContentResolver contentResolver, String key, int defValue) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
             configuration = new Configuration();
