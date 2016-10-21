@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">LocalConfig</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save">Save</string>
+    <string name="key">Key</string>
+    <string name="value">Value</string>
+</resources>
