@@ -15,7 +15,7 @@ public class ConfigurationFullCursorParser implements ICursorParser<Configuratio
             Columns.VALUE,
             Columns.TYPE
     };
-    ConfigurationCursorParser innerParser;
+    private ConfigurationCursorParser innerParser;
 
     public ConfigurationFullCursorParser() {
         innerParser = new ConfigurationCursorParser();

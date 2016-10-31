@@ -1,9 +1,7 @@
 package se.eelde.localconfig;
 
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import se.eelde.localconfig.databinding.ActivityConfigurationsBinding;
@@ -22,7 +20,6 @@ public class ConfigurationsActivity extends AppCompatActivity {
                     .commit();
         }
 
-        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
 
