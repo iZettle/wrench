@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import se.eelde.localconfig.databinding.FragmentAddConfigurationBinding;
 import se.eelde.localconfiguration.library.ConfigProviderHelper;
 import se.eelde.localconfiguration.library.Configuration;
+import se.eelde.localconfiguration.library.util.ConfigurationContentValueProducer;
 
 
 public class AddConfigurationFragment extends Fragment {
@@ -47,7 +48,7 @@ public class AddConfigurationFragment extends Fragment {
                 configuration.type = typeAdapter.getItem(fragmentAddConfigurationBinding.typeSpinner.getSelectedItemPosition());
                 configuration.value = fragmentAddConfigurationBinding.valueEditText.getText().toString();
 
-                getContext().getContentResolver().insert(ConfigProviderHelper.configurationUri(), Configuration.toContentValues(configuration));
+                getContext().getContentResolver().insert(ConfigProviderHelper.configurationUri(), new ConfigurationContentValueProducer().toContentValues(configuration));
 
                 getActivity().finish();
             }

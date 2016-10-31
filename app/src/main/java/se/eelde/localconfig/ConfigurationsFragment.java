@@ -14,8 +14,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import se.eelde.localconfig.databinding.FragmentConfigurationsBinding;
+import se.eelde.localconfig.library.ConfigurationFull;
+import se.eelde.localconfig.library.ConfigurationFullCursorParser;
 import se.eelde.localconfiguration.library.ConfigProviderHelper;
-import se.eelde.localconfiguration.library.Configuration;
 
 public class ConfigurationsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -59,7 +60,7 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case CONFIGURATIONS_LOADER: {
-                return new CursorLoader(getContext(), ConfigProviderHelper.configurationUri(), se.eelde.localconfiguration.library.Configuration.PROJECTION, null, null, null);
+                return new CursorLoader(getContext(), ConfigProviderHelper.configurationUri(), ConfigurationFullCursorParser.PROJECTION, null, null, null);
             }
             default: {
                 throw new UnsupportedOperationException("Invalid id: " + id);
@@ -72,11 +73,12 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         switch (loader.getId()) {
             case CONFIGURATIONS_LOADER: {
 
-                ArrayList<se.eelde.localconfiguration.library.Configuration> newConfigurations = new ArrayList<>();
+                ArrayList<ConfigurationFull> newConfigurations = new ArrayList<>();
 
                 if (cursor != null && cursor.moveToFirst()) {
+                    ConfigurationFullCursorParser configurationFullCursorParser = new ConfigurationFullCursorParser();
                     do {
-                        newConfigurations.add(Configuration.configurationFromCursor(cursor));
+                        newConfigurations.add(configurationFullCursorParser.populateFromCursor(new ConfigurationFull(), cursor));
                     }
                     while (cursor.moveToNext());
                 }

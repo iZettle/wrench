@@ -1,9 +1,11 @@
-package se.eelde.localconfiguration.library;
+package se.eelde.localconfig.library;
 
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
+
+import se.eelde.localconfiguration.library.util.ConfigurationCursorParser;
 
 public class Application {
     public static final String[] PROJECTION = new String[]{
@@ -16,8 +18,8 @@ public class Application {
     public static Application applicationFromCursor(Cursor cursor) {
         Application application = new Application();
 
-        application._id = cursor.getLong(cursor.getColumnIndex(Configuration.Columns._ID));
-        application.applicationName = cursor.getString(cursor.getColumnIndex(Configuration.Columns.APPLICATION_ID));
+        application._id = cursor.getLong(cursor.getColumnIndex(ConfigurationCursorParser.Columns._ID));
+        application.applicationName = cursor.getString(cursor.getColumnIndex(ConfigurationFullCursorParser.Columns.APPLICATION_ID));
 
         return application;
     }

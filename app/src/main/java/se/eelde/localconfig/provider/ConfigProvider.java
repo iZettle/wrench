@@ -17,9 +17,10 @@ import se.eelde.localconfig.database.ConfigDatabaseHelper;
 import se.eelde.localconfig.database.SelectionBuilder;
 import se.eelde.localconfig.database.tables.ApplicationTable;
 import se.eelde.localconfig.database.tables.ConfigurationTable;
-import se.eelde.localconfiguration.library.Application;
+import se.eelde.localconfig.library.Application;
+import se.eelde.localconfig.library.ConfigurationFullCursorParser;
 import se.eelde.localconfiguration.library.ConfigProviderHelper;
-import se.eelde.localconfiguration.library.Configuration;
+import se.eelde.localconfiguration.library.util.ConfigurationCursorParser;
 
 public class ConfigProvider extends ContentProvider {
 
@@ -81,7 +82,7 @@ public class ConfigProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {
                 cursor = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(se.eelde.localconfiguration.library.Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
                         .where(selection, selectionArgs)
                         .query(writableDatabase, projection, sortOrder);
                 break;
@@ -94,12 +95,12 @@ public class ConfigProvider extends ContentProvider {
             }
             case CONFIGURATION: {
                 selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(Configuration.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment()))
+                        .where(ConfigurationCursorParser.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment()))
                         .where(selection, selectionArgs);
 
                 Application callingApplication = getCallingApplication(getContext(), writableDatabase);
                 if (!TextUtils.equals(callingApplication.applicationName, BuildConfig.APPLICATION_ID)) {
-                    selectionBuilder.where(Configuration.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
+                    selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
                 }
 
                 cursor = selectionBuilder.query(writableDatabase, projection, sortOrder);
@@ -111,7 +112,7 @@ public class ConfigProvider extends ContentProvider {
 
                 Application callingApplication = getCallingApplication(getContext(), writableDatabase);
                 if (!TextUtils.equals(callingApplication.applicationName, BuildConfig.APPLICATION_ID)) {
-                    selectionBuilder.where(Configuration.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
+                    selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
                 }
 
                 cursor = selectionBuilder.query(writableDatabase, projection, sortOrder);
@@ -137,7 +138,7 @@ public class ConfigProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case CONFIGURATIONS: {
 
-                values.put(Configuration.Columns.APPLICATION_ID, getCallingApplication(getContext(), writableDatabase)._id);
+                values.put(ConfigurationFullCursorParser.Columns.APPLICATION_ID, getCallingApplication(getContext(), writableDatabase)._id);
 
                 insertId = writableDatabase.insert(ConfigurationTable.TABLE_NAME, null, values);
                 break;
@@ -176,7 +177,7 @@ public class ConfigProvider extends ContentProvider {
             }
             case CONFIGURATION: {
                 updatedRows = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(Configuration.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(ConfigurationCursorParser.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
                         .where(selection, selectionArgs)
                         .update(writableDatabase, values);
                 break;
@@ -221,7 +222,7 @@ public class ConfigProvider extends ContentProvider {
             }
             case CONFIGURATION: {
                 updatedRows = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(Configuration.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(ConfigurationCursorParser.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
                         .where(selection, selectionArgs)
                         .delete(writableDatabase);
                 break;

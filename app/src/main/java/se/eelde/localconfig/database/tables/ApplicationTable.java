@@ -1,7 +1,7 @@
 package se.eelde.localconfig.database.tables;
 
 
-import se.eelde.localconfiguration.library.Application;
+import se.eelde.localconfig.library.Application;
 
 public class ApplicationTable {
     public static final String TABLE_NAME = "application";
