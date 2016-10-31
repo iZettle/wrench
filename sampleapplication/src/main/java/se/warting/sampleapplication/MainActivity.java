@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         LocalConfiguration localConfiguration = new LocalConfiguration(this);
 
-        if (localConfiguration.exists()) {
+        if (!BuildConfig.DEBUG || localConfiguration.exists()) {
             // text that defaults to something
             log("WELCOME_TITLE:");
             log(localConfiguration.getString("WELCOME_TITLE", "welcome!"));
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             log("Local configuration application not installed");
-
         }
 
     }
