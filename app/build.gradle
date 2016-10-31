@@ -7,7 +7,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "24.0.3"
     defaultConfig {
-        applicationId "se.eelde.localconfig"
+        applicationId "com.izettle.localconfig.application"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -29,8 +29,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //noinspection GradleCompatible
-    compile project(':localconfiguration')
-
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:support-v4:25.0.0'
     compile 'com.android.support:recyclerview-v7:25.0.0'
@@ -39,4 +37,5 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta2'
+    compile project(':localconfiguration')
 }
