@@ -24,8 +24,7 @@
             android:name=".provider.ConfigProvider"
             android:authorities="se.eelde.localconfig.configprovider"
             android:enabled="true"
-            android:exported="true"
-            tools:ignore="ExportedContentProvider" />
+            android:exported="true" />
 
     </application>
 
