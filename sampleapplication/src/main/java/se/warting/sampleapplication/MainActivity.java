@@ -10,6 +10,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
 
+    private LocalConfiguration localConfiguration;
+
     private void log(String text) {
         textView.setText((textView.getText() + "\n" + text).trim());
     }
@@ -20,22 +22,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.log);
 
+        localConfiguration = new LocalConfiguration(this);
+
         // text that defaults to something
         log("WELCOME_TITLE:");
-        log(LocalConfiguration.getString(getContentResolver(), "WELCOME_TITLE", "welcome!"));
+        log(localConfiguration.getString("WELCOME_TITLE", "welcome!"));
 
         // welcome text that can be null
         log("WELCOME_TEXT:");
-        log(LocalConfiguration.getString(getContentResolver(), "WELCOME_TEXT", null));
+        log(localConfiguration.getString("WELCOME_TEXT", null));
 
         // check if strict mode is enabled, default to false/DISABLED
         log("STRICT_MODE:");
-        log(LocalConfiguration.getBoolean(getContentResolver(), "STRICT_MODE", false) ? "ENABLED" : "DISABLED");
+        log(localConfiguration.getBoolean("STRICT_MODE", false) ? "ENABLED" : "DISABLED");
 
         // get num columns to show, defaults to 2
         log("NUM_COLUMNS:");
-        log(String.valueOf(LocalConfiguration.getInt(getContentResolver(), "NUM_COLUMNS", 2)));
-
+        log(String.valueOf(localConfiguration.getInt("NUM_COLUMNS", 2)));
 
     }
 }
