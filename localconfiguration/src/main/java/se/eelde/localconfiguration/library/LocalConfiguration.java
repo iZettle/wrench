@@ -17,59 +17,11 @@ import se.eelde.localconfiguration.library.util.ConfigurationCursorParser;
 
 public class LocalConfiguration {
     private final ContentResolver contentResolver;
+    private final PackageManager packageManager;
 
     public LocalConfiguration(Context context) {
         this.contentResolver = context.getContentResolver();
-    }
-
-    public static String getString(ContentResolver contentResolver, String key, String defValue) {
-        Configuration configuration = getConfiguration(contentResolver, key);
-        if (configuration == null) {
-            configuration = new Configuration();
-            configuration.key = key;
-            configuration.value = defValue;
-            configuration.type = String.class.getName();
-            insertConfiguration(contentResolver, configuration);
-        }
-        return configuration.value;
-    }
-
-    public static boolean getBoolean(ContentResolver contentResolver, String key, boolean defValue) {
-        Configuration configuration = getConfiguration(contentResolver, key);
-        if (configuration == null) {
-            configuration = new Configuration();
-            configuration.key = key;
-            configuration.value = String.valueOf(defValue);
-            configuration.type = Boolean.class.getName();
-            insertConfiguration(contentResolver, configuration);
-        }
-        return Boolean.valueOf(configuration.value);
-    }
-
-    public static int getInt(ContentResolver contentResolver, String key, int defValue) {
-        Configuration configuration = getConfiguration(contentResolver, key);
-        if (configuration == null) {
-            configuration = new Configuration();
-            configuration.key = key;
-            configuration.value = String.valueOf(defValue);
-            configuration.type = Integer.class.getName();
-            insertConfiguration(contentResolver, configuration);
-        }
-        return Integer.valueOf(configuration.value);
-    }
-
-    public static Map<String, ?> getAll(ContentResolver contentResolver) {
-        Map<String, Object> values = new ArrayMap<>();
-        ArrayList<Configuration> configurations = getConfigurations(contentResolver);
-        for (Configuration configuration : configurations) {
-            values.put(configuration.key, configuration.value);
-        }
-        return values;
-    }
-
-    public static boolean exists(PackageManager packageManager) {
-        ProviderInfo providerInfo = packageManager.resolveContentProvider(ConfigProviderHelper.AUTHORITY, 0);
-        return providerInfo != null;
+        this.packageManager = context.getPackageManager();
     }
 
     private static void insertConfiguration(ContentResolver contentResolver, Configuration configuration) {
@@ -112,16 +64,61 @@ public class LocalConfiguration {
         return null;
     }
 
+    public Map<String, ?> getAll() {
+        Map<String, Object> values = new ArrayMap<>();
+        ArrayList<Configuration> configurations = getConfigurations(contentResolver);
+        for (Configuration configuration : configurations) {
+            if (Boolean.class.getName().equals(configuration.type)) {
+                values.put(configuration.key, Boolean.valueOf(configuration.value));
+            } else if (Integer.class.getName().equals(configuration.type)) {
+                values.put(configuration.key, Integer.valueOf(configuration.value));
+            } else {
+                values.put(configuration.key, configuration.value);
+            }
+
+        }
+        return values;
+    }
+
+    public boolean exists() {
+        ProviderInfo providerInfo = packageManager.resolveContentProvider(ConfigProviderHelper.AUTHORITY, 0);
+        return providerInfo != null;
+    }
+
     public String getString(String key, String defValue) {
-        return getString(contentResolver, key, defValue);
+        Configuration configuration = getConfiguration(contentResolver, key);
+        if (configuration == null) {
+            configuration = new Configuration();
+            configuration.key = key;
+            configuration.value = defValue;
+            configuration.type = String.class.getName();
+            insertConfiguration(contentResolver, configuration);
+        }
+        return configuration.value;
     }
 
     public boolean getBoolean(String key, boolean defValue) {
-        return getBoolean(contentResolver, key, defValue);
+        Configuration configuration = getConfiguration(contentResolver, key);
+        if (configuration == null) {
+            configuration = new Configuration();
+            configuration.key = key;
+            configuration.value = String.valueOf(defValue);
+            configuration.type = Boolean.class.getName();
+            insertConfiguration(contentResolver, configuration);
+        }
+        return Boolean.valueOf(configuration.value);
     }
 
     public int getInt(String key, int defValue) {
-        return getInt(contentResolver, key, defValue);
+        Configuration configuration = getConfiguration(contentResolver, key);
+        if (configuration == null) {
+            configuration = new Configuration();
+            configuration.key = key;
+            configuration.value = String.valueOf(defValue);
+            configuration.type = Integer.class.getName();
+            insertConfiguration(contentResolver, configuration);
+        }
+        return Integer.valueOf(configuration.value);
     }
 
 }

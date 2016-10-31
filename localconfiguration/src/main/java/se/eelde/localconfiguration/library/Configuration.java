@@ -8,6 +8,6 @@ public class Configuration {
     public String key;
     public String value;
 
-    public Configuration() {
+    Configuration() {
     }
 }
