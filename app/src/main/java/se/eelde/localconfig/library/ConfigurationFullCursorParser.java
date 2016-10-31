@@ -24,12 +24,12 @@ public class ConfigurationFullCursorParser implements ICursorParser<Configuratio
     public ConfigurationFull populateFromCursor(ConfigurationFull configuration, Cursor cursor) {
         innerParser.populateFromCursor(configuration, cursor);
 
-        configuration.type = cursor.getString(cursor.getColumnIndex(ConfigurationFullCursorParser.Columns.APPLICATION_ID));
+        configuration.applicationId = cursor.getLong(cursor.getColumnIndex(ConfigurationFullCursorParser.Columns.APPLICATION_ID));
 
         return configuration;
     }
 
     public interface Columns extends ConfigurationCursorParser.Columns {
-        String APPLICATION_ID = "applicationName";
+        String APPLICATION_ID = "applicationId";
     }
 }
