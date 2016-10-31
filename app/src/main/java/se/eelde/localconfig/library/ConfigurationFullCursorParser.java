@@ -9,11 +9,11 @@ import se.eelde.localconfiguration.library.util.ICursorParser;
 public class ConfigurationFullCursorParser implements ICursorParser<ConfigurationFull> {
 
     public static String[] PROJECTION = new String[]{
-            ConfigurationFullCursorParser.Columns._ID,
-            ConfigurationFullCursorParser.Columns.KEY,
-            ConfigurationFullCursorParser.Columns.KEY,
-            ConfigurationFullCursorParser.Columns.VALUE,
-            ConfigurationFullCursorParser.Columns.TYPE
+            Columns._ID,
+            Columns.APPLICATION_ID,
+            Columns.KEY,
+            Columns.VALUE,
+            Columns.TYPE
     };
     ConfigurationCursorParser innerParser;
 
