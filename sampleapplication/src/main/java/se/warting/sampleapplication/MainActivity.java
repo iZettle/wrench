@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.izettle.localconfiguration.LocalConfiguration;
+
 import java.util.Map;
 
-import se.eelde.localconfiguration.library.LocalConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,7 +45,11 @@ public class MainActivity extends AppCompatActivity {
 
             log("All keys and values:");
             for (Map.Entry<String, ?> entry : localConfiguration.getAll().entrySet()) {
-                log(entry.getKey() + ": (" + entry.getValue().getClass().getSimpleName() + ")" + entry.getValue().toString());
+                if (entry.getValue() != null) {
+                    log(entry.getKey() + ": (" + entry.getValue().getClass().getSimpleName() + ")" + entry.getValue());
+                } else {
+                    log(entry.getKey() + ": (?) NULL ");
+                }
             }
 
 

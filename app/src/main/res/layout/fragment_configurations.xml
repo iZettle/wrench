@@ -9,11 +9,10 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
-            android:name="se.eelde.localconfig.ConfigurationsFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
-            tools:context="se.eelde.localconfig.ConfigurationsFragment"
+            tools:context="com.izettle.localconfig.application.ConfigurationsFragment"
             tools:listitem="@layout/configuration_list_item" />
 
         <android.support.design.widget.FloatingActionButton
