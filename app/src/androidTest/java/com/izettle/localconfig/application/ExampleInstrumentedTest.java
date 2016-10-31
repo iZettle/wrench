@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("se.eelde.localconfig", appContext.getPackageName());
+        assertEquals("com.izettle.localconfig.application", appContext.getPackageName());
     }
 }
