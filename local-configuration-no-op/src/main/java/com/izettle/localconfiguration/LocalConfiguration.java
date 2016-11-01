@@ -10,22 +10,15 @@ import java.util.Map;
 public class LocalConfiguration {
 
     public LocalConfiguration(Context context) {
-
     }
 
     public Map<String, ?> getAll() {
         return Collections.emptyMap();
     }
 
-    public boolean exists() {
-        return false;
-    }
-
-
     public String getString(String key, String defValue) {
         return defValue;
     }
-
 
     public boolean getBoolean(String key, boolean defValue) {
         return defValue;

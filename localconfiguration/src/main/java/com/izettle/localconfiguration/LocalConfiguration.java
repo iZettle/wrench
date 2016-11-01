@@ -3,8 +3,6 @@ package com.izettle.localconfiguration;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
 
@@ -17,11 +15,9 @@ import java.util.Map;
 
 public class LocalConfiguration {
     private final ContentResolver contentResolver;
-    private final PackageManager packageManager;
 
     public LocalConfiguration(Context context) {
         this.contentResolver = context.getContentResolver();
-        this.packageManager = context.getPackageManager();
     }
 
     private static void insertConfiguration(ContentResolver contentResolver, Configuration configuration) {
@@ -78,11 +74,6 @@ public class LocalConfiguration {
 
         }
         return values;
-    }
-
-    public boolean exists() {
-        ProviderInfo providerInfo = packageManager.resolveContentProvider(ConfigProviderHelper.AUTHORITY, 0);
-        return providerInfo != null;
     }
 
     public String getString(String key, String defValue) {
