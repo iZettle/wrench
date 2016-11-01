@@ -1,4 +1,4 @@
-package se.warting.sampleapplication;
+package com.izettle.localconfig.sampleapplication;
 
 import org.junit.Test;
 

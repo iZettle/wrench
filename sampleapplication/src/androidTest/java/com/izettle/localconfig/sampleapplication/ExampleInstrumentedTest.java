@@ -1,4 +1,4 @@
-package se.warting.sampleapplication;
+package com.izettle.localconfig.sampleapplication;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("se.warting.sampleapplication", appContext.getPackageName());
+        assertEquals("com.izettle.localconfig.sampleapplication", appContext.getPackageName());
     }
 }

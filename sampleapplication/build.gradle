@@ -15,7 +15,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "se.warting.sampleapplication"
+        applicationId "com.izettle.localconfig.sampleapplication"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -45,4 +45,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     releaseCompile project(':local-configuration-no-op')
     debugCompile project(':localconfiguration')
+    compile 'com.android.support:multidex:1.0.1'
 }

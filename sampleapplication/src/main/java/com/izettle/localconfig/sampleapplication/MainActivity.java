@@ -1,4 +1,4 @@
-package se.warting.sampleapplication;
+package com.izettle.localconfig.sampleapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
