@@ -18,6 +18,7 @@ import com.izettle.localconfig.application.database.SelectionBuilder;
 import com.izettle.localconfig.application.database.tables.ApplicationTable;
 import com.izettle.localconfig.application.database.tables.ConfigurationTable;
 import com.izettle.localconfig.application.library.Application;
+import com.izettle.localconfig.application.library.ApplicationCursorParser;
 import com.izettle.localconfig.application.library.ConfigurationFullCursorParser;
 import com.izettle.localconfiguration.ConfigProviderHelper;
 import com.izettle.localconfiguration.util.ConfigurationCursorParser;
@@ -50,11 +51,11 @@ public class ConfigProvider extends ContentProvider {
 
             cursor = new SelectionBuilder()
                     .table(ApplicationTable.TABLE_NAME)
-                    .where(Application.Columns.APPLICATION_NAME + " = ?", packageName)
-                    .query(writableDatabase, Application.PROJECTION, null);
+                    .where(ApplicationCursorParser.Columns.APPLICATION_NAME + " = ?", packageName)
+                    .query(writableDatabase, ApplicationCursorParser.PROJECTION, null);
 
             if (cursor.moveToFirst()) {
-                return Application.applicationFromCursor(cursor);
+                return new ApplicationCursorParser().populateFromCursor(new Application(), cursor);
             } else {
                 Application application = new Application();
                 application.applicationName = packageName;
@@ -83,7 +84,7 @@ public class ConfigProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {
                 cursor = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(ApplicationCursorParser.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
                         .where(selection, selectionArgs)
                         .query(writableDatabase, projection, sortOrder);
                 break;
@@ -164,7 +165,7 @@ public class ConfigProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {
                 updatedRows = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(ApplicationCursorParser.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
                         .where(selection, selectionArgs)
                         .update(writableDatabase, values);
 
@@ -209,7 +210,7 @@ public class ConfigProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {
                 updatedRows = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(Application.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
+                        .where(ApplicationCursorParser.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
                         .where(selection, selectionArgs)
                         .delete(writableDatabase);
 

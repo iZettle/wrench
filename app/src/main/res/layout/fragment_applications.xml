@@ -17,11 +17,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="LinearLayoutManager"
-                tools:context="com.izettle.localconfig.application.ConfigurationsFragment"
+                tools:context="com.izettle.localconfig.application.ApplicationsFragment"
                 tools:listitem="@layout/configuration_list_item" />
 
             <LinearLayout
-                android:id="@+id/no_configurations_empty_view"
+                android:id="@+id/no_applications_empty_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="@string/no_configurations_found" />
+                    android:text="@string/no_applications_found" />
 
 
             </LinearLayout>

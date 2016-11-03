@@ -2,34 +2,49 @@ package com.izettle.localconfig.application.library;
 
 
 import android.content.ContentValues;
-import android.database.Cursor;
-import android.provider.BaseColumns;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.v4.os.ParcelableCompat;
+import android.support.v4.os.ParcelableCompatCreatorCallbacks;
 
 
-public class Application {
-    public static final String[] PROJECTION = new String[]{
-            Columns._ID,
-            Columns.APPLICATION_NAME
-    };
+public class Application implements Parcelable {
+    public static Parcelable.Creator CREATOR = ParcelableCompat.newCreator(new ParcelableCompatCreatorCallbacks<Application>() {
+        @Override
+        public Application createFromParcel(Parcel in, ClassLoader loader) {
+            return new Application(in);
+        }
+
+        @Override
+        public Application[] newArray(int size) {
+            return new Application[size];
+        }
+    });
     public long _id;
     public String applicationName;
 
-    public static Application applicationFromCursor(Cursor cursor) {
-        Application application = new Application();
+    public Application() {
+    }
 
-        application._id = cursor.getLong(cursor.getColumnIndex(Columns._ID));
-        application.applicationName = cursor.getString(cursor.getColumnIndex(Columns.APPLICATION_NAME));
-
-        return application;
+    public Application(Parcel in) {
+        _id = in.readLong();
+        applicationName = in.readString();
     }
 
     public static ContentValues toContentValues(Application application) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Columns.APPLICATION_NAME, application.applicationName);
+        contentValues.put(ApplicationCursorParser.Columns.APPLICATION_NAME, application.applicationName);
         return contentValues;
     }
 
-    public interface Columns extends BaseColumns {
-        String APPLICATION_NAME = "applicationName";
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(_id);
+        parcel.writeString(applicationName);
     }
 }

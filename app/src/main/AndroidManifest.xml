@@ -11,14 +11,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ConfigurationsActivity">
+        <activity android:name=".ApplicationsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddConfigurationActivity" />
+
+        <activity
+            android:name=".ConfigurationsActivity"
+            android:parentActivityName=".ApplicationsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ApplicationsActivity" />
+        </activity>
 
         <provider
             android:name=".provider.ConfigProvider"

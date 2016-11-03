@@ -10,8 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ViewAnimator;
 
 import com.izettle.localconfig.application.databinding.FragmentConfigurationsBinding;
+import com.izettle.localconfig.application.library.Application;
 import com.izettle.localconfig.application.library.ConfigurationFull;
 import com.izettle.localconfig.application.library.ConfigurationFullCursorParser;
 import com.izettle.localconfiguration.ConfigProviderHelper;
@@ -22,14 +24,16 @@ import java.util.ArrayList;
 public class ConfigurationsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int CONFIGURATIONS_LOADER = 1;
+    private static final String ARG_APPLICATION = "ARG_APPLICATION";
     FragmentConfigurationsBinding fragmentConfigurationsBinding;
 
     public ConfigurationsFragment() {
     }
 
-    public static ConfigurationsFragment newInstance() {
+    public static ConfigurationsFragment newInstance(Application application) {
         ConfigurationsFragment fragment = new ConfigurationsFragment();
         Bundle args = new Bundle();
+        args.putParcelable(ARG_APPLICATION, application);
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,14 +43,6 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         fragmentConfigurationsBinding = FragmentConfigurationsBinding.inflate(inflater, container, false);
 
         fragmentConfigurationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-        fragmentConfigurationsBinding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(AddConfigurationActivity.newIntent(getContext()));
-            }
-        });
 
         return fragmentConfigurationsBinding.getRoot();
     }
@@ -61,7 +57,9 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case CONFIGURATIONS_LOADER: {
-                return new CursorLoader(getContext(), ConfigProviderHelper.configurationUri(), ConfigurationFullCursorParser.PROJECTION, null, null, null);
+                Application application = getArguments().getParcelable(ARG_APPLICATION);
+                return new CursorLoader(getContext(), ConfigProviderHelper.configurationUri(), ConfigurationFullCursorParser.PROJECTION,
+                        ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", new String[]{String.valueOf(application._id)}, null);
             }
             default: {
                 throw new UnsupportedOperationException("Invalid id: " + id);
@@ -74,9 +72,17 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         switch (loader.getId()) {
             case CONFIGURATIONS_LOADER: {
 
+                if (cursor.getCount() == 0) {
+                    ViewAnimator animator = fragmentConfigurationsBinding.animator;
+                    animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.noConfigurationsEmptyView));
+                } else {
+                    ViewAnimator animator = fragmentConfigurationsBinding.animator;
+                    animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.list));
+                }
+
                 ArrayList<ConfigurationFull> newConfigurations = new ArrayList<>();
 
-                if (cursor != null && cursor.moveToFirst()) {
+                if (cursor.moveToFirst()) {
                     ConfigurationFullCursorParser configurationFullCursorParser = new ConfigurationFullCursorParser();
                     do {
                         newConfigurations.add(configurationFullCursorParser.populateFromCursor(new ConfigurationFull(), cursor));

@@ -4,5 +4,7 @@
     <string name="save">Save</string>
     <string name="key">Key</string>
     <string name="value">Value</string>
+    <string name="no_configurations_found">No configurations found.</string>
+    <string name="no_applications_found">No applications found</string>
 
 </resources>
