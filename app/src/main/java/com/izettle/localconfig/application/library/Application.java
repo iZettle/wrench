@@ -22,6 +22,7 @@ public class Application implements Parcelable {
     });
     public long _id;
     public String applicationName;
+    public String label;
 
     public Application() {
     }
@@ -29,11 +30,13 @@ public class Application implements Parcelable {
     public Application(Parcel in) {
         _id = in.readLong();
         applicationName = in.readString();
+        label = in.readString();
     }
 
     public static ContentValues toContentValues(Application application) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ApplicationCursorParser.Columns.APPLICATION_NAME, application.applicationName);
+        contentValues.put(ApplicationCursorParser.Columns.LABEL, application.label);
         return contentValues;
     }
 
@@ -46,5 +49,6 @@ public class Application implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(_id);
         parcel.writeString(applicationName);
+        parcel.writeString(label);
     }
 }

@@ -50,7 +50,7 @@ public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<Applica
             e.printStackTrace();
         }
         holder.applicationListItemBinding.id.setText(String.valueOf(application._id));
-        holder.applicationListItemBinding.content.setText(application.applicationName);
+        holder.applicationListItemBinding.content.setText(application.label);
 
         holder.applicationListItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

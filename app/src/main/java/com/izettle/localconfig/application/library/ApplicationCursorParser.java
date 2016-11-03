@@ -10,7 +10,8 @@ public class ApplicationCursorParser implements ICursorParser<Application> {
 
     public static String[] PROJECTION = new String[]{
             Columns._ID,
-            Columns.APPLICATION_NAME
+            Columns.APPLICATION_NAME,
+            Columns.LABEL
     };
 
     public ApplicationCursorParser() {
@@ -20,11 +21,13 @@ public class ApplicationCursorParser implements ICursorParser<Application> {
 
         application._id = cursor.getLong(cursor.getColumnIndex(Columns._ID));
         application.applicationName = cursor.getString(cursor.getColumnIndex(Columns.APPLICATION_NAME));
+        application.label = cursor.getString(cursor.getColumnIndex(Columns.LABEL));
 
         return application;
     }
 
     public interface Columns extends BaseColumns {
         String APPLICATION_NAME = "applicationName";
+        String LABEL = "label";
     }
 }

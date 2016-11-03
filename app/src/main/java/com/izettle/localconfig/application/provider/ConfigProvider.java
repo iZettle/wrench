@@ -4,6 +4,8 @@ import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -43,7 +45,8 @@ public class ConfigProvider extends ContentProvider {
     public ConfigProvider() {
     }
 
-    private static Application getCallingApplication(String packageName, SQLiteDatabase writableDatabase) {
+    private static Application getCallingApplication(PackageManager packageManager, String packageName, SQLiteDatabase writableDatabase) {
+
         Cursor cursor = null;
         try {
 
@@ -56,6 +59,13 @@ public class ConfigProvider extends ContentProvider {
                 return new ApplicationCursorParser().populateFromCursor(new Application(), cursor);
             } else {
                 Application application = new Application();
+                try {
+                    ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+                    application.label = String.valueOf(applicationInfo.loadLabel(packageManager));
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+
                 application.applicationName = packageName;
                 application._id = writableDatabase.insert(ApplicationTable.TABLE_NAME, null, Application.toContentValues(application));
                 return application;
@@ -79,6 +89,7 @@ public class ConfigProvider extends ContentProvider {
         SQLiteDatabase writableDatabase = configDatabaseHelper.getWritableDatabase();
 
         Cursor cursor;
+
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {
                 cursor = selectionBuilder.table(ApplicationTable.TABLE_NAME)
@@ -98,9 +109,10 @@ public class ConfigProvider extends ContentProvider {
                         .where(ConfigurationCursorParser.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment()))
                         .where(selection, selectionArgs);
 
-                String packageName = getContext().getPackageManager().getNameForUid(Binder.getCallingUid());
+                PackageManager packageManager = getContext().getPackageManager();
+                String packageName = packageManager.getNameForUid(Binder.getCallingUid());
                 if (!TextUtils.equals(packageName, BuildConfig.APPLICATION_ID)) {
-                    Application callingApplication = getCallingApplication(packageName, writableDatabase);
+                    Application callingApplication = getCallingApplication(packageManager, packageName, writableDatabase);
                     selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
                 }
 
@@ -111,9 +123,10 @@ public class ConfigProvider extends ContentProvider {
                 selectionBuilder.table(ConfigurationTable.TABLE_NAME)
                         .where(selection, selectionArgs);
 
-                String packageName = getContext().getPackageManager().getNameForUid(Binder.getCallingUid());
+                PackageManager packageManager = getContext().getPackageManager();
+                String packageName = packageManager.getNameForUid(Binder.getCallingUid());
                 if (!TextUtils.equals(packageName, BuildConfig.APPLICATION_ID)) {
-                    Application callingApplication = getCallingApplication(packageName, writableDatabase);
+                    Application callingApplication = getCallingApplication(packageManager, packageName, writableDatabase);
                     selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
                 }
 
@@ -140,8 +153,9 @@ public class ConfigProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case CONFIGURATIONS: {
 
-                String packageName = getContext().getPackageManager().getNameForUid(Binder.getCallingUid());
-                values.put(ConfigurationFullCursorParser.Columns.APPLICATION_ID, getCallingApplication(packageName, writableDatabase)._id);
+                PackageManager packageManager = getContext().getPackageManager();
+                String packageName = packageManager.getNameForUid(Binder.getCallingUid());
+                values.put(ConfigurationFullCursorParser.Columns.APPLICATION_ID, getCallingApplication(packageManager, packageName, writableDatabase)._id);
 
                 insertId = writableDatabase.insert(ConfigurationTable.TABLE_NAME, null, values);
                 break;
