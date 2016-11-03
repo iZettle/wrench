@@ -3,7 +3,6 @@ package com.izettle.localconfig.application.provider;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -44,8 +43,7 @@ public class ConfigProvider extends ContentProvider {
     public ConfigProvider() {
     }
 
-    private static Application getCallingApplication(Context context, SQLiteDatabase writableDatabase) {
-        String packageName = context.getPackageManager().getNameForUid(Binder.getCallingUid());
+    private static Application getCallingApplication(String packageName, SQLiteDatabase writableDatabase) {
         Cursor cursor = null;
         try {
 
@@ -100,8 +98,9 @@ public class ConfigProvider extends ContentProvider {
                         .where(ConfigurationCursorParser.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment()))
                         .where(selection, selectionArgs);
 
-                Application callingApplication = getCallingApplication(getContext(), writableDatabase);
-                if (!TextUtils.equals(callingApplication.applicationName, BuildConfig.APPLICATION_ID)) {
+                String packageName = getContext().getPackageManager().getNameForUid(Binder.getCallingUid());
+                if (!TextUtils.equals(packageName, BuildConfig.APPLICATION_ID)) {
+                    Application callingApplication = getCallingApplication(packageName, writableDatabase);
                     selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
                 }
 
@@ -112,8 +111,9 @@ public class ConfigProvider extends ContentProvider {
                 selectionBuilder.table(ConfigurationTable.TABLE_NAME)
                         .where(selection, selectionArgs);
 
-                Application callingApplication = getCallingApplication(getContext(), writableDatabase);
-                if (!TextUtils.equals(callingApplication.applicationName, BuildConfig.APPLICATION_ID)) {
+                String packageName = getContext().getPackageManager().getNameForUid(Binder.getCallingUid());
+                if (!TextUtils.equals(packageName, BuildConfig.APPLICATION_ID)) {
+                    Application callingApplication = getCallingApplication(packageName, writableDatabase);
                     selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
                 }
 
@@ -140,7 +140,8 @@ public class ConfigProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case CONFIGURATIONS: {
 
-                values.put(ConfigurationFullCursorParser.Columns.APPLICATION_ID, getCallingApplication(getContext(), writableDatabase)._id);
+                String packageName = getContext().getPackageManager().getNameForUid(Binder.getCallingUid());
+                values.put(ConfigurationFullCursorParser.Columns.APPLICATION_ID, getCallingApplication(packageName, writableDatabase)._id);
 
                 insertId = writableDatabase.insert(ConfigurationTable.TABLE_NAME, null, values);
                 break;

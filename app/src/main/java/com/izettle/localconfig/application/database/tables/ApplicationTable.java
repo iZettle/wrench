@@ -1,7 +1,6 @@
 package com.izettle.localconfig.application.database.tables;
 
-
-§import com.izettle.localconfig.application.library.ApplicationCursorParser;
+import com.izettle.localconfig.application.library.ApplicationCursorParser;
 
 public class ApplicationTable {
     public static final String TABLE_NAME = "application";
