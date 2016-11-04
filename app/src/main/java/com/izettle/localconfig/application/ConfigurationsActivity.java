@@ -27,6 +27,8 @@ public class ConfigurationsActivity extends AppCompatActivity {
 
         Application application = getIntent().getExtras().getParcelable(EXTRA_APPLICATION);
 
+        setSupportActionBar(activityConfigurationsBinding.toolbar);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()

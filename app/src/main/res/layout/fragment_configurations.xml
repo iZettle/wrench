@@ -3,27 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
+    <ViewAnimator
+        android:id="@+id/animator"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ViewAnimator
-            android:id="@+id/animator"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/configuration_list_item" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="LinearLayoutManager"
-                tools:context="com.izettle.localconfig.application.ConfigurationsFragment"
-                tools:listitem="@layout/configuration_list_item" />
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/no_configurations_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
-                android:id="@+id/no_configurations_empty_view"
+                android:id="@+id/no_applications_empty_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -38,9 +42,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="@string/no_configurations_found" />
-
-
             </LinearLayout>
-        </ViewAnimator>
-    </android.support.design.widget.CoordinatorLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </ViewAnimator>
 </layout>

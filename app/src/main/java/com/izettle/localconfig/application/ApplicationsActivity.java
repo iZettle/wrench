@@ -14,6 +14,8 @@ public class ApplicationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityApplicationsBinding activityApplicationsBinding = DataBindingUtil.setContentView(this, R.layout.activity_applications);
 
+        setSupportActionBar(activityApplicationsBinding.toolbar);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()

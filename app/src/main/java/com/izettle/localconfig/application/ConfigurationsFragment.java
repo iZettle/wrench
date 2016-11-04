@@ -2,6 +2,7 @@ package com.izettle.localconfig.application;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -25,6 +26,7 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
 
     private static final int CONFIGURATIONS_LOADER = 1;
     private static final String ARG_APPLICATION = "ARG_APPLICATION";
+    private static final String LOADER_EXTRA_APPLICATION = "LOADER_EXTRA_APPLICATION";
     FragmentConfigurationsBinding fragmentConfigurationsBinding;
 
     public ConfigurationsFragment() {
@@ -48,16 +50,34 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Application application = getArguments().getParcelable(ARG_APPLICATION);
+        if (application == null) {
+            throw new NullPointerException();
+        }
+        getActivity().setTitle(application.label);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        getLoaderManager().initLoader(CONFIGURATIONS_LOADER, null, this);
+
+        Application application = getArguments().getParcelable(ARG_APPLICATION);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(LOADER_EXTRA_APPLICATION, application);
+        getLoaderManager().initLoader(CONFIGURATIONS_LOADER, bundle, this);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case CONFIGURATIONS_LOADER: {
-                Application application = getArguments().getParcelable(ARG_APPLICATION);
+                Application application = args.getParcelable(LOADER_EXTRA_APPLICATION);
+                if (application == null) {
+                    throw new NullPointerException();
+                }
                 return new CursorLoader(getContext(), ConfigProviderHelper.configurationUri(), ConfigurationFullCursorParser.PROJECTION,
                         ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", new String[]{String.valueOf(application._id)}, null);
             }

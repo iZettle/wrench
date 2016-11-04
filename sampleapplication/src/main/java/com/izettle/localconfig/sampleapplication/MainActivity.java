@@ -3,6 +3,7 @@ package com.izettle.localconfig.sampleapplication;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 
 import com.izettle.localconfig.sampleapplication.databinding.ActivityMainBinding;
 import com.izettle.localconfiguration.LocalConfiguration;
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        setSupportActionBar(activityMainBinding.toolbar);
 
         LocalConfiguration localConfiguration = new LocalConfiguration(this);
 
@@ -45,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         activityMainBinding.all.setText(all.toString());
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        return true;
     }
 }

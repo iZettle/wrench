@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LocalConfiguration</string>
+    <string name="menu1">Menu 1</string>
+    <string name="menu2">Menu 2</string>
 </resources>

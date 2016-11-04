@@ -1,87 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="?attr/actionBarPopupTheme"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1" />
 
         <TextView
             android:id="@+id/log1key"
             style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:padding="8dp"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
             tools:text="log1key" />
 
         <TextView
             android:id="@+id/log1value"
             style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/log1key"
+            app:layout_constraintRight_toRightOf="@+id/log1key"
+            app:layout_constraintTop_toBottomOf="@+id/log1key"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
             tools:text="log1value" />
 
         <TextView
             android:id="@+id/log2key"
             style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/log1value"
+            app:layout_constraintRight_toRightOf="@+id/log1value"
+            app:layout_constraintTop_toBottomOf="@+id/log1value"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
             tools:text="log2key" />
 
         <TextView
             android:id="@+id/log2value"
             style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/log2key"
+            app:layout_constraintRight_toRightOf="@+id/log2key"
+            app:layout_constraintTop_toBottomOf="@+id/log2key"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
             tools:text="log2value" />
 
         <TextView
             android:id="@+id/log3key"
             style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/log2value"
+            app:layout_constraintRight_toRightOf="@+id/log2value"
+            app:layout_constraintTop_toBottomOf="@+id/log2value"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
             tools:text="log3key" />
 
         <TextView
             android:id="@+id/log3value"
             style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/log3key"
+            app:layout_constraintRight_toRightOf="@+id/log3key"
+            app:layout_constraintTop_toBottomOf="@+id/log3key"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
             tools:text="log3value" />
 
         <TextView
             android:id="@+id/log4key"
             style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/log3value"
+            app:layout_constraintRight_toRightOf="@+id/log3value"
+            app:layout_constraintTop_toBottomOf="@+id/log3value"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
             tools:text="log4key" />
 
         <TextView
             android:id="@+id/log4value"
             style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/log4key"
+            app:layout_constraintRight_toRightOf="@+id/log4key"
+            app:layout_constraintTop_toBottomOf="@+id/log4key"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
             tools:text="log4value" />
 
         <TextView
             android:id="@+id/all"
             style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/log4value"
+            app:layout_constraintRight_toRightOf="@+id/log4value"
+            app:layout_constraintTop_toBottomOf="@+id/log4value"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
             tools:text="all" />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>
