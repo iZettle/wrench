@@ -18,5 +18,8 @@ public class ApplicationConfigProviderHelper extends ConfigProviderHelper {
         return ContentUris.withAppendedId(applicationUri, id);
     }
 
+    public static Uri configurationUri(long id) {
+        return ContentUris.withAppendedId(configurationUri, id);
+    }
 
 }

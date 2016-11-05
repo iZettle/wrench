@@ -13,12 +13,19 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityMainBinding activityMainBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         setSupportActionBar(activityMainBinding.toolbar);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         LocalConfiguration localConfiguration = new LocalConfiguration(this);
 

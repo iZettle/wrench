@@ -2,8 +2,11 @@ package com.izettle.localconfig.application;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,33 +21,35 @@ import com.izettle.localconfig.application.library.ConfigurationFullContentValue
 import com.izettle.localconfiguration.ConfigProviderHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<ConfigurationRecyclerViewAdapter.ViewHolder> {
+public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<ConfigurationRecyclerViewAdapter.ConfigurationViewHolder> {
 
     private static final String TAG = "localconfig";
 
-    private final ArrayList<ConfigurationFull> mValues = new ArrayList<>();
+    private final ArrayList<ConfigurationFull> items = new ArrayList<>();
 
     public ConfigurationRecyclerViewAdapter(ArrayList<ConfigurationFull> newConfigurations) {
-        mValues.addAll(newConfigurations);
+        items.addAll(newConfigurations);
     }
 
     public void setItems(ArrayList<ConfigurationFull> items) {
-        mValues.clear();
-        mValues.addAll(items);
-        notifyDataSetChanged();
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ConfigurationListDiffCallbacks(this.items, items));
+        diffResult.dispatchUpdatesTo(this);
+        this.items.clear();
+        this.items.addAll(items);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ConfigurationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ConfigurationListItemBinding fragmentConfigurationBinding = ConfigurationListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ViewHolder(fragmentConfigurationBinding);
+        return new ConfigurationViewHolder(fragmentConfigurationBinding);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        ConfigurationFull configuration = mValues.get(position);
+    public void onBindViewHolder(final ConfigurationViewHolder holder, int position) {
+        ConfigurationFull configuration = items.get(position);
 
         holder.configurationListItemBinding.id.setText(String.valueOf(configuration._id));
         holder.configurationListItemBinding.content.setText(configuration.key + " = " + configuration.value + " :: " + configuration.applicationId);
@@ -52,7 +57,7 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Confi
         holder.configurationListItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                final ConfigurationFull conf = mValues.get(holder.getAdapterPosition());
+                final ConfigurationFull conf = items.get(holder.getAdapterPosition());
                 final ConfigurationFullContentValueProducer configurationFullContentValueProducer = new ConfigurationFullContentValueProducer();
 
                 if (conf.type.equals(String.class.getName())) {
@@ -135,15 +140,72 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Confi
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return items.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public ItemTouchHelper getItemTouchHelper(final SwipeDelete swipeDelete) {
+        return new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                ConfigurationFull item = items.get(viewHolder.getAdapterPosition());
+                swipeDelete.swiped(item);
+            }
+        });
+    }
+
+    public interface SwipeDelete {
+        void swiped(ConfigurationFull configuration);
+    }
+
+    class ConfigurationViewHolder extends RecyclerView.ViewHolder {
         private final ConfigurationListItemBinding configurationListItemBinding;
 
-        private ViewHolder(ConfigurationListItemBinding configurationListItemBinding) {
+        private ConfigurationViewHolder(ConfigurationListItemBinding configurationListItemBinding) {
             super(configurationListItemBinding.getRoot());
             this.configurationListItemBinding = configurationListItemBinding;
+        }
+    }
+
+    private class ConfigurationListDiffCallbacks extends DiffUtil.Callback {
+        private final List<ConfigurationFull> mOldItems;
+        private final List<ConfigurationFull> mNewItems;
+
+        public ConfigurationListDiffCallbacks(List<ConfigurationFull> oldItems, List<ConfigurationFull> newItems) {
+            mOldItems = oldItems;
+            mNewItems = newItems;
+        }
+
+        @Override
+        public int getOldListSize() {
+            return mOldItems.size();
+        }
+
+        @Override
+        public int getNewListSize() {
+            return mNewItems.size();
+        }
+
+        @Override
+        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            ConfigurationFull oldItem = mOldItems.get(oldItemPosition);
+            ConfigurationFull newItem = mNewItems.get(newItemPosition);
+
+            return oldItem._id == newItem._id;
+        }
+
+        @Override
+        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+            ConfigurationFull oldItem = mOldItems.get(oldItemPosition);
+            ConfigurationFull newItem = mNewItems.get(newItemPosition);
+
+            return TextUtils.equals(oldItem.key, newItem.key) &&
+                    TextUtils.equals(oldItem.value, newItem.value) &&
+                    TextUtils.equals(oldItem.type, newItem.type);
         }
     }
 }

@@ -42,22 +42,30 @@ public class LocalConfiguration {
         return configurations;
     }
 
+    /**
+     * @return The configuration. Or null if provider doesn't exist. Empty Configuration if key did not exist in the provider.
+     */
     @Nullable
     private static Configuration getConfiguration(ContentResolver contentResolver, String key) {
         ConfigurationCursorParser configurationCursorParser = new ConfigurationCursorParser();
         Cursor cursor = null;
         try {
             cursor = contentResolver.query(ConfigProviderHelper.configurationUri(), configurationCursorParser.PROJECTION, ConfigurationCursorParser.Columns.KEY + " = ?", new String[]{key}, null);
-            if (cursor != null && cursor.moveToFirst()) {
+            if (cursor == null) {
+                return null;
+            }
+
+            if (cursor.moveToFirst()) {
                 return configurationCursorParser.populateFromCursor(new Configuration(), cursor);
             }
+
 
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
         }
-        return null;
+        return new Configuration();
     }
 
     public Map<String, ?> getAll() {
@@ -79,7 +87,10 @@ public class LocalConfiguration {
     public String getString(String key, String defValue) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
-            configuration = new Configuration();
+            return defValue;
+        }
+
+        if (configuration._id == 0) {
             configuration.key = key;
             configuration.value = defValue;
             configuration.type = String.class.getName();
@@ -91,7 +102,10 @@ public class LocalConfiguration {
     public boolean getBoolean(String key, boolean defValue) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
-            configuration = new Configuration();
+            return defValue;
+        }
+
+        if (configuration._id == 0) {
             configuration.key = key;
             configuration.value = String.valueOf(defValue);
             configuration.type = Boolean.class.getName();
@@ -103,7 +117,10 @@ public class LocalConfiguration {
     public int getInt(String key, int defValue) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
-            configuration = new Configuration();
+            return defValue;
+        }
+
+        if (configuration._id == 0) {
             configuration.key = key;
             configuration.value = String.valueOf(defValue);
             configuration.type = Integer.class.getName();

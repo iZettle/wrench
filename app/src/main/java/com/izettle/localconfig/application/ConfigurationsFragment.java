@@ -8,6 +8,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.ViewAnimator;
 
 import com.izettle.localconfig.application.databinding.FragmentConfigurationsBinding;
 import com.izettle.localconfig.application.library.Application;
+import com.izettle.localconfig.application.library.ApplicationConfigProviderHelper;
 import com.izettle.localconfig.application.library.ConfigurationFull;
 import com.izettle.localconfig.application.library.ConfigurationFullCursorParser;
 import com.izettle.localconfiguration.ConfigProviderHelper;
@@ -41,15 +43,6 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragmentConfigurationsBinding = FragmentConfigurationsBinding.inflate(inflater, container, false);
-
-        fragmentConfigurationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        return fragmentConfigurationsBinding.getRoot();
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -58,6 +51,15 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
             throw new NullPointerException();
         }
         getActivity().setTitle(application.label);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        fragmentConfigurationsBinding = FragmentConfigurationsBinding.inflate(inflater, container, false);
+
+        fragmentConfigurationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        return fragmentConfigurationsBinding.getRoot();
     }
 
     @Override
@@ -113,7 +115,18 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
                 ConfigurationRecyclerViewAdapter adapter = (ConfigurationRecyclerViewAdapter) fragmentConfigurationsBinding.list.getAdapter();
                 if (adapter == null) {
                     adapter = new ConfigurationRecyclerViewAdapter(newConfigurations);
+
                     fragmentConfigurationsBinding.list.setAdapter(adapter);
+
+                    ItemTouchHelper itemTouchHelper = adapter.getItemTouchHelper(new ConfigurationRecyclerViewAdapter.SwipeDelete() {
+                        @Override
+                        public void swiped(ConfigurationFull configuration) {
+                            getContext().getContentResolver().delete(ApplicationConfigProviderHelper.configurationUri(configuration._id), null, null);
+                        }
+                    });
+
+                    itemTouchHelper.attachToRecyclerView(fragmentConfigurationsBinding.list);
+
                 } else {
                     adapter.setItems(newConfigurations);
                 }
