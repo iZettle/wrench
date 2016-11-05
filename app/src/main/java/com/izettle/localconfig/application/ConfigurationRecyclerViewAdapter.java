@@ -1,32 +1,33 @@
 package com.izettle.localconfig.application;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.CompoundButton;
 
-import com.izettle.localconfig.application.databinding.ConfigurationListItemBinding;
+import com.izettle.localconfig.application.databinding.ConfigurationBooleanListItemBinding;
+import com.izettle.localconfig.application.databinding.ConfigurationIntegerListItemBinding;
+import com.izettle.localconfig.application.databinding.ConfigurationStringListItemBinding;
+import com.izettle.localconfig.application.library.ApplicationConfigProviderHelper;
 import com.izettle.localconfig.application.library.ConfigurationFull;
 import com.izettle.localconfig.application.library.ConfigurationFullContentValueProducer;
-import com.izettle.localconfiguration.ConfigProviderHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<ConfigurationRecyclerViewAdapter.ConfigurationViewHolder> {
+public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String TAG = "localconfig";
+    private static final int VIEW_TYPE_STRING = 1;
+    private static final int VIEW_TYPE_INTEGER = 2;
+    private static final int VIEW_TYPE_BOOLEAN = 3;
 
     private final ArrayList<ConfigurationFull> items = new ArrayList<>();
 
@@ -42,100 +43,104 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Confi
     }
 
     @Override
-    public ConfigurationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ConfigurationListItemBinding fragmentConfigurationBinding = ConfigurationListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ConfigurationViewHolder(fragmentConfigurationBinding);
+    public int getItemViewType(int position) {
+        ConfigurationFull configurationFull = items.get(position);
+        if (TextUtils.equals(configurationFull.type, String.class.getName())) {
+            return VIEW_TYPE_STRING;
+
+        } else if (TextUtils.equals(configurationFull.type, Integer.class.getName())) {
+            return VIEW_TYPE_INTEGER;
+
+        } else if (TextUtils.equals(configurationFull.type, Boolean.class.getName())) {
+            return VIEW_TYPE_BOOLEAN;
+
+        } else {
+            throw new IllegalStateException("Unknown configuration type");
+        }
     }
 
     @Override
-    public void onBindViewHolder(final ConfigurationViewHolder holder, int position) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case VIEW_TYPE_STRING: {
+                ConfigurationStringListItemBinding configurationStringListItemBinding = ConfigurationStringListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+                return new ConfigurationStringViewHolder(configurationStringListItemBinding);
+            }
+            case VIEW_TYPE_INTEGER: {
+                ConfigurationIntegerListItemBinding configurationIntegerListItemBinding = ConfigurationIntegerListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+                return new ConfigurationIntegerViewHolder(configurationIntegerListItemBinding);
+            }
+            case VIEW_TYPE_BOOLEAN: {
+                ConfigurationBooleanListItemBinding configurationBooleanListItemBinding = ConfigurationBooleanListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+                return new ConfigurationBooleanViewHolder(configurationBooleanListItemBinding);
+            }
+            default: {
+                throw new IllegalStateException("Unknown view type");
+            }
+        }
+
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        onBindViewHolder(holder, position, new ArrayList<>());
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
         ConfigurationFull configuration = items.get(position);
 
-        holder.configurationListItemBinding.id.setText(String.valueOf(configuration._id));
-        holder.configurationListItemBinding.content.setText(configuration.key + " = " + configuration.value + " :: " + configuration.applicationId);
+        final ConfigurationFullContentValueProducer configurationFullContentValueProducer = new ConfigurationFullContentValueProducer();
 
-        holder.configurationListItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                final ConfigurationFull conf = items.get(holder.getAdapterPosition());
-                final ConfigurationFullContentValueProducer configurationFullContentValueProducer = new ConfigurationFullContentValueProducer();
-
-                if (conf.type.equals(String.class.getName())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    builder.setTitle(conf.key);
-                    final EditText input = new EditText(v.getContext());
-                    input.setInputType(InputType.TYPE_CLASS_TEXT);
-                    input.setText(conf.value);
-                    input.selectAll();
-                    builder.setView(input);
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            conf.value = input.getText().toString();
-                            v.getContext().getContentResolver().update(ConfigProviderHelper.configurationUri().buildUpon().appendPath(String.valueOf(conf._id)).build(), configurationFullContentValueProducer.toContentValues(conf), null, null);
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                    dialog.show();
-
-                } else if (conf.type.equals(Integer.class.getName())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    builder.setTitle(conf.key);
-                    final EditText input = new EditText(v.getContext());
-                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    input.setText(conf.value);
-                    input.selectAll();
-                    builder.setView(input);
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            conf.value = input.getText().toString();
-                            v.getContext().getContentResolver().update(ConfigProviderHelper.configurationUri().buildUpon().appendPath(String.valueOf(conf._id)).build(), configurationFullContentValueProducer.toContentValues(conf), null, null);
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                    dialog.show();
-                } else if (conf.type.equals(Boolean.class.getName())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    builder.setTitle(conf.key);
-                    final CheckBox input = new CheckBox(v.getContext());
-                    input.setChecked(Boolean.valueOf(conf.value));
-                    builder.setView(input);
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            conf.value = String.valueOf(input.isChecked());
-                            v.getContext().getContentResolver().update(ConfigProviderHelper.configurationUri().buildUpon().appendPath(String.valueOf(conf._id)).build(), configurationFullContentValueProducer.toContentValues(conf), null, null);
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    builder.show();
-                }
-                Log.d(TAG, conf._id + " was clicked");
+        if (holder instanceof ConfigurationStringViewHolder) {
+            ConfigurationStringViewHolder viewHolder = (ConfigurationStringViewHolder) holder;
+            viewHolder.binding.layout.setHint(configuration.key);
+            if (!TextUtils.equals(viewHolder.binding.value.getText(), configuration.value)) {
+                viewHolder.binding.value.setText(configuration.value);
             }
-        });
+            viewHolder.binding.value.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (!b) {
+                        ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
+                        configurationFull.value = String.valueOf(((TextInputEditText) view).getText());
+
+                        view.getContext().getContentResolver().update(ApplicationConfigProviderHelper.configurationUri(configurationFull._id), configurationFullContentValueProducer.toContentValues(configurationFull), null, null);
+                    }
+                }
+            });
+
+        } else if (holder instanceof ConfigurationIntegerViewHolder) {
+            ConfigurationIntegerViewHolder viewHolder = (ConfigurationIntegerViewHolder) holder;
+            viewHolder.binding.layout.setHint(configuration.key);
+            if (!TextUtils.equals(viewHolder.binding.value.getText(), configuration.value)) {
+                viewHolder.binding.value.setText(configuration.value);
+            }
+            viewHolder.binding.value.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (!b) {
+                        ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
+                        configurationFull.value = String.valueOf(((TextInputEditText) view).getText());
+                        view.getContext().getContentResolver().update(ApplicationConfigProviderHelper.configurationUri(configurationFull._id), configurationFullContentValueProducer.toContentValues(configurationFull), null, null);
+                    }
+                }
+            });
+
+        } else if (holder instanceof ConfigurationBooleanViewHolder) {
+            ConfigurationBooleanViewHolder viewHolder = (ConfigurationBooleanViewHolder) holder;
+            viewHolder.binding.layout.setText(configuration.key);
+            viewHolder.binding.layout.setChecked(Boolean.valueOf(configuration.value));
+
+            viewHolder.binding.layout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
+                    configurationFull.value = String.valueOf(compoundButton.isChecked());
+                    compoundButton.getContext().getContentResolver().update(ApplicationConfigProviderHelper.configurationUri(configurationFull._id), configurationFullContentValueProducer.toContentValues(configurationFull), null, null);
+                }
+            });
+        }
     }
 
     @Override
@@ -162,12 +167,30 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Confi
         void swiped(ConfigurationFull configuration);
     }
 
-    class ConfigurationViewHolder extends RecyclerView.ViewHolder {
-        private final ConfigurationListItemBinding configurationListItemBinding;
+    class ConfigurationBooleanViewHolder extends RecyclerView.ViewHolder {
+        private final ConfigurationBooleanListItemBinding binding;
 
-        private ConfigurationViewHolder(ConfigurationListItemBinding configurationListItemBinding) {
-            super(configurationListItemBinding.getRoot());
-            this.configurationListItemBinding = configurationListItemBinding;
+        private ConfigurationBooleanViewHolder(ConfigurationBooleanListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+    }
+
+    class ConfigurationStringViewHolder extends RecyclerView.ViewHolder {
+        private final ConfigurationStringListItemBinding binding;
+
+        private ConfigurationStringViewHolder(ConfigurationStringListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+    }
+
+    class ConfigurationIntegerViewHolder extends RecyclerView.ViewHolder {
+        private final ConfigurationIntegerListItemBinding binding;
+
+        private ConfigurationIntegerViewHolder(ConfigurationIntegerListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
@@ -206,6 +229,21 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Confi
             return TextUtils.equals(oldItem.key, newItem.key) &&
                     TextUtils.equals(oldItem.value, newItem.value) &&
                     TextUtils.equals(oldItem.type, newItem.type);
+        }
+
+        @Nullable
+        @Override
+        public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+            ConfigurationFull oldItem = mOldItems.get(oldItemPosition);
+            ConfigurationFull newItem = mNewItems.get(newItemPosition);
+
+            Bundle bundle = new Bundle();
+
+            if (!TextUtils.equals(oldItem.value, newItem.value)) {
+                bundle.putString("string", newItem.value);
+            }
+
+            return bundle;
         }
     }
 }

@@ -94,11 +94,10 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         switch (loader.getId()) {
             case CONFIGURATIONS_LOADER: {
 
-                if (cursor.getCount() == 0) {
-                    ViewAnimator animator = fragmentConfigurationsBinding.animator;
+                ViewAnimator animator = fragmentConfigurationsBinding.animator;
+                if (cursor.getCount() == 0 && animator.getDisplayedChild() != animator.indexOfChild(fragmentConfigurationsBinding.noConfigurationsEmptyView)) {
                     animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.noConfigurationsEmptyView));
-                } else {
-                    ViewAnimator animator = fragmentConfigurationsBinding.animator;
+                } else if (animator.getDisplayedChild() != animator.indexOfChild(fragmentConfigurationsBinding.list)) {
                     animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.list));
                 }
 
@@ -130,6 +129,7 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
                 } else {
                     adapter.setItems(newConfigurations);
                 }
+
                 break;
             }
             default: {
