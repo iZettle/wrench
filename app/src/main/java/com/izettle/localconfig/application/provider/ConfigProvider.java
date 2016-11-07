@@ -3,6 +3,7 @@ package com.izettle.localconfig.application.provider;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -11,14 +12,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Binder;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
+import android.support.annotation.Nullable;
 
-import com.izettle.localconfig.application.BuildConfig;
 import com.izettle.localconfig.application.database.ConfigDatabaseHelper;
 import com.izettle.localconfig.application.database.SelectionBuilder;
 import com.izettle.localconfig.application.database.tables.ApplicationTable;
 import com.izettle.localconfig.application.database.tables.ConfigurationTable;
 import com.izettle.localconfig.application.library.Application;
+import com.izettle.localconfig.application.library.ApplicationConfigProviderHelper;
 import com.izettle.localconfig.application.library.ApplicationCursorParser;
 import com.izettle.localconfig.application.library.ConfigurationFullCursorParser;
 import com.izettle.localconfiguration.ConfigProviderHelper;
@@ -45,7 +46,12 @@ public class ConfigProvider extends ContentProvider {
     public ConfigProvider() {
     }
 
-    private static Application getCallingApplication(PackageManager packageManager, String packageName, SQLiteDatabase writableDatabase) {
+    private static Application getCallingApplication(@Nullable Context context, SQLiteDatabase writableDatabase) {
+        if (context == null) {
+            return null;
+        }
+        PackageManager packageManager = context.getPackageManager();
+        String packageName = packageManager.getNameForUid(Binder.getCallingUid());
 
         Cursor cursor = null;
         try {
@@ -67,7 +73,11 @@ public class ConfigProvider extends ContentProvider {
                 }
 
                 application.applicationName = packageName;
-                application._id = writableDatabase.insert(ApplicationTable.TABLE_NAME, null, Application.toContentValues(application));
+                if (!application.isConfigApplication()) {
+                    application._id = writableDatabase.insert(ApplicationTable.TABLE_NAME, null, Application.toContentValues(application));
+                    context.getContentResolver().notifyChange(ApplicationConfigProviderHelper.applicationUri(application._id), null, false);
+                }
+
                 return application;
             }
         } finally {
@@ -85,52 +95,60 @@ public class ConfigProvider extends ContentProvider {
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        SelectionBuilder selectionBuilder = new SelectionBuilder();
         SQLiteDatabase writableDatabase = configDatabaseHelper.getWritableDatabase();
+
+        Application callingApplication = getCallingApplication(getContext(), writableDatabase);
+        if (callingApplication == null) {
+            return null; // for security reason we need to know the callingApplication
+        }
+
+        SelectionBuilder selectionBuilder = new SelectionBuilder().where(selection, selectionArgs);
 
         Cursor cursor;
 
+
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {
+
+
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ApplicationCursorParser.Columns._ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
                 cursor = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(ApplicationCursorParser.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
-                        .where(selection, selectionArgs)
+                        .where(ApplicationCursorParser.Columns._ID + " = ?", uri.getLastPathSegment())
                         .query(writableDatabase, projection, sortOrder);
+
                 break;
             }
             case APPLICATIONS: {
+
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ApplicationCursorParser.Columns._ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
                 cursor = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(selection, selectionArgs)
                         .query(writableDatabase, projection, sortOrder);
                 break;
             }
             case CONFIGURATION: {
-                selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(ConfigurationCursorParser.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment()))
-                        .where(selection, selectionArgs);
 
-                PackageManager packageManager = getContext().getPackageManager();
-                String packageName = packageManager.getNameForUid(Binder.getCallingUid());
-                if (!TextUtils.equals(packageName, BuildConfig.APPLICATION_ID)) {
-                    Application callingApplication = getCallingApplication(packageManager, packageName, writableDatabase);
+                if (!callingApplication.isConfigApplication()) {
                     selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
                 }
 
-                cursor = selectionBuilder.query(writableDatabase, projection, sortOrder);
+                cursor = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
+                        .where(ConfigurationCursorParser.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment()))
+                        .query(writableDatabase, projection, sortOrder);
                 break;
             }
             case CONFIGURATIONS: {
-                selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(selection, selectionArgs);
 
-                PackageManager packageManager = getContext().getPackageManager();
-                String packageName = packageManager.getNameForUid(Binder.getCallingUid());
-                if (!TextUtils.equals(packageName, BuildConfig.APPLICATION_ID)) {
-                    Application callingApplication = getCallingApplication(packageManager, packageName, writableDatabase);
+                if (!callingApplication.isConfigApplication()) {
                     selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
                 }
 
-                cursor = selectionBuilder.query(writableDatabase, projection, sortOrder);
+                cursor = selectionBuilder.table(ConfigurationTable.TABLE_NAME).query(writableDatabase, projection, sortOrder);
                 break;
             }
             default: {
@@ -149,14 +167,16 @@ public class ConfigProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         SQLiteDatabase writableDatabase = configDatabaseHelper.getWritableDatabase();
 
+        Application callingApplication = getCallingApplication(getContext(), writableDatabase);
+        if (callingApplication == null) {
+            return null; // for security reason we need to know the callingApplication
+        }
+
+
         long insertId;
         switch (sUriMatcher.match(uri)) {
             case CONFIGURATIONS: {
-
-                PackageManager packageManager = getContext().getPackageManager();
-                String packageName = packageManager.getNameForUid(Binder.getCallingUid());
-                values.put(ConfigurationFullCursorParser.Columns.APPLICATION_ID, getCallingApplication(packageManager, packageName, writableDatabase)._id);
-
+                values.put(ConfigurationFullCursorParser.Columns.APPLICATION_ID, callingApplication._id);
                 insertId = writableDatabase.insert(ConfigurationTable.TABLE_NAME, null, values);
                 break;
             }
@@ -165,44 +185,59 @@ public class ConfigProvider extends ContentProvider {
             }
         }
 
-        //noinspection ConstantConditions
-        getContext().getContentResolver().notifyChange(uri, null, false);
+        getContext().getContentResolver().notifyChange(Uri.withAppendedPath(uri, String.valueOf(insertId)), null, false);
 
         return ContentUris.withAppendedId(uri, insertId);
     }
 
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        SelectionBuilder selectionBuilder = new SelectionBuilder();
         SQLiteDatabase writableDatabase = configDatabaseHelper.getWritableDatabase();
+
+        Application callingApplication = getCallingApplication(getContext(), writableDatabase);
+        if (callingApplication == null) {
+            return 0; // for security reason we need to know the callingApplication
+        }
+
+        SelectionBuilder selectionBuilder = new SelectionBuilder().where(selection, selectionArgs);
 
         int updatedRows;
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {
+
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ApplicationCursorParser.Columns._ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
                 updatedRows = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(ApplicationCursorParser.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
-                        .where(selection, selectionArgs)
-                        .update(writableDatabase, values);
+                        .where(ApplicationCursorParser.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment())).update(writableDatabase, values);
 
                 break;
             }
             case APPLICATIONS: {
-                updatedRows = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(selection, selectionArgs)
-                        .update(writableDatabase, values);
+
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ApplicationCursorParser.Columns._ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
+                updatedRows = selectionBuilder.table(ApplicationTable.TABLE_NAME).update(writableDatabase, values);
                 break;
             }
             case CONFIGURATION: {
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
                 updatedRows = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(ConfigurationCursorParser.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
-                        .where(selection, selectionArgs)
-                        .update(writableDatabase, values);
+                        .where(ConfigurationCursorParser.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment())).update(writableDatabase, values);
                 break;
             }
             case CONFIGURATIONS: {
-                updatedRows = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(selection, selectionArgs)
-                        .update(writableDatabase, values);
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
+                updatedRows = selectionBuilder.table(ConfigurationTable.TABLE_NAME).update(writableDatabase, values);
                 break;
             }
             default: {
@@ -210,41 +245,63 @@ public class ConfigProvider extends ContentProvider {
             }
         }
 
-        //noinspection ConstantConditions
-        getContext().getContentResolver().notifyChange(uri, null, false);
+        if (updatedRows > 0) {
+            getContext().getContentResolver().notifyChange(uri, null, false);
+        }
 
         return updatedRows;
     }
 
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
-        SelectionBuilder selectionBuilder = new SelectionBuilder();
         SQLiteDatabase writableDatabase = configDatabaseHelper.getWritableDatabase();
+
+        Application callingApplication = getCallingApplication(getContext(), writableDatabase);
+        if (callingApplication == null) {
+            return 0; // for security reason we need to know the callingApplication
+        }
+
+        SelectionBuilder selectionBuilder = new SelectionBuilder().where(selection, selectionArgs);
 
         int updatedRows;
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {
+
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ApplicationCursorParser.Columns._ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
                 updatedRows = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(ApplicationCursorParser.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
-                        .where(selection, selectionArgs)
-                        .delete(writableDatabase);
+                        .where(ApplicationCursorParser.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment())).delete(writableDatabase);
 
                 break;
             }
             case APPLICATIONS: {
-                updatedRows = selectionBuilder.table(ApplicationTable.TABLE_NAME)
-                        .where(selection, selectionArgs)
-                        .delete(writableDatabase);
+
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ApplicationCursorParser.Columns._ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
+                updatedRows = selectionBuilder.table(ApplicationTable.TABLE_NAME).delete(writableDatabase);
                 break;
             }
             case CONFIGURATION: {
+
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
                 updatedRows = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
-                        .where(ConfigurationCursorParser.Columns._ID + " = ?", new String[]{String.valueOf(uri.getLastPathSegment())})
-                        .where(selection, selectionArgs)
+                        .where(ConfigurationCursorParser.Columns._ID + " = ?", String.valueOf(uri.getLastPathSegment()))
                         .delete(writableDatabase);
                 break;
             }
             case CONFIGURATIONS: {
+
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
                 updatedRows = selectionBuilder.table(ConfigurationTable.TABLE_NAME)
                         .where(selection, selectionArgs)
                         .delete(writableDatabase);

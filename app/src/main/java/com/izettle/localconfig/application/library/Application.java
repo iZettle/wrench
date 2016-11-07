@@ -6,6 +6,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
+import android.text.TextUtils;
+
+import com.izettle.localconfig.application.BuildConfig;
 
 
 public class Application implements Parcelable {
@@ -50,5 +53,9 @@ public class Application implements Parcelable {
         parcel.writeLong(_id);
         parcel.writeString(applicationName);
         parcel.writeString(label);
+    }
+
+    public boolean isConfigApplication() {
+        return TextUtils.equals(applicationName, BuildConfig.APPLICATION_ID);
     }
 }
