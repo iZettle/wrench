@@ -20,6 +20,7 @@ import com.izettle.localconfig.application.library.ApplicationConfigProviderHelp
 import com.izettle.localconfig.application.library.ConfigurationFull;
 import com.izettle.localconfig.application.library.ConfigurationFullCursorParser;
 import com.izettle.localconfiguration.ConfigProviderHelper;
+import com.izettle.localconfiguration.util.ConfigurationValueCursorParser;
 
 import java.util.ArrayList;
 
@@ -121,6 +122,7 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
                         @Override
                         public void swiped(ConfigurationFull configuration) {
                             getContext().getContentResolver().delete(ApplicationConfigProviderHelper.configurationUri(configuration._id), null, null);
+                            getContext().getContentResolver().delete(ApplicationConfigProviderHelper.configurationValueUri(), ConfigurationValueCursorParser.Columns.CONFIGURATION_ID + " = ?", new String[]{String.valueOf(configuration._id)});
                         }
                     });
 

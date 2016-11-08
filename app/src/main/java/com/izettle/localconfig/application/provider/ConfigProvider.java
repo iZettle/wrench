@@ -324,6 +324,18 @@ public class ConfigProvider extends ContentProvider {
                         .delete(writableDatabase);
                 break;
             }
+            case CONFIGURATION_VALUES: {
+
+                if (!callingApplication.isConfigApplication()) {
+                    //TODO: figure something out
+                    // selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id)); // (inner?) join
+                }
+
+                updatedRows = selectionBuilder.table(ConfigurationValueTable.TABLE_NAME)
+                        .where(selection, selectionArgs)
+                        .delete(writableDatabase);
+                break;
+            }
             default: {
                 throw new UnsupportedOperationException("Not yet implemented");
             }

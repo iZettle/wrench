@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.log4value.setText(String.valueOf(localConfiguration.getInt("NUM_COLUMNS", 2)));
 
         // get num columns to show, defaults to 2
-        activityMainBinding.log4key.setText("ENVIRONMENT:");
+        activityMainBinding.log5key.setText("ENVIRONMENT:");
 
         Environment environment = localConfiguration.getEnum("ENVIRONMENT", Environment.class, Environment.PROD);
-        activityMainBinding.log4value.setText(String.valueOf(environment));
+        activityMainBinding.log5value.setText(String.valueOf(environment));
 
         StringBuilder all = new StringBuilder("All keys and values\n");
         for (Map.Entry<String, ?> entry : localConfiguration.getAll().entrySet()) {
