@@ -4,10 +4,12 @@ package com.izettle.localconfiguration;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 
 import com.izettle.localconfiguration.util.ConfigurationContentValueProducer;
 import com.izettle.localconfiguration.util.ConfigurationCursorParser;
+import com.izettle.localconfiguration.util.ConfigurationValueContentValueProducer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,8 +22,12 @@ public class LocalConfiguration {
         this.contentResolver = context.getContentResolver();
     }
 
-    private static void insertConfiguration(ContentResolver contentResolver, Configuration configuration) {
-        contentResolver.insert(ConfigProviderHelper.configurationUri(), new ConfigurationContentValueProducer().toContentValues(configuration));
+    private static Uri insertConfigurationValue(ContentResolver contentResolver, ConfigurationValue configurationValue) {
+        return contentResolver.insert(ConfigProviderHelper.configurationValueUri(), new ConfigurationValueContentValueProducer().toContentValues(configurationValue));
+    }
+
+    private static Uri insertConfiguration(ContentResolver contentResolver, Configuration configuration) {
+        return contentResolver.insert(ConfigProviderHelper.configurationUri(), new ConfigurationContentValueProducer().toContentValues(configuration));
     }
 
     private static ArrayList<Configuration> getConfigurations(ContentResolver contentResolver) {
@@ -82,6 +88,33 @@ public class LocalConfiguration {
 
         }
         return values;
+    }
+
+    public <T extends Enum<T>> T getEnum(String key, Class<T> type, T defValue) {
+        Configuration configuration = getConfiguration(contentResolver, key);
+        if (configuration == null) {
+            return defValue;
+        }
+
+        T[] enumConstants = type.getEnumConstants();
+
+        if (configuration._id == 0) {
+            configuration.key = key;
+            configuration.value = defValue.toString();
+            configuration.type = Enum.class.getName();
+
+            Uri uri = insertConfiguration(contentResolver, configuration);
+            configuration._id = Long.parseLong(uri.getLastPathSegment());
+
+            for (T enumConstant : enumConstants) {
+                ConfigurationValue configurationValue = new ConfigurationValue();
+                configurationValue.configurationId = configuration._id;
+                configurationValue.value = enumConstant.toString();
+                insertConfigurationValue(contentResolver, configurationValue);
+            }
+        }
+
+        return Enum.valueOf(type, configuration.value);
     }
 
     public String getString(String key, String defValue) {

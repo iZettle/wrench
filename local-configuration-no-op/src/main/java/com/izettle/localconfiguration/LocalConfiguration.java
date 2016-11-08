@@ -16,6 +16,10 @@ public class LocalConfiguration {
         return Collections.emptyMap();
     }
 
+    public <T extends Enum<T>> T getEnum(String key, Class<T> type, T defValue) {
+        return defValue;
+    }
+
     public String getString(String key, String defValue) {
         return defValue;
     }

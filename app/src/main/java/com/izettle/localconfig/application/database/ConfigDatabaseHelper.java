@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.izettle.localconfig.application.database.tables.ApplicationTable;
 import com.izettle.localconfig.application.database.tables.ConfigurationTable;
+import com.izettle.localconfig.application.database.tables.ConfigurationValueTable;
 
 public class ConfigDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "localConfig.db";
@@ -20,6 +21,7 @@ public class ConfigDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(ApplicationTable.CREATE);
         sqLiteDatabase.execSQL(ConfigurationTable.CREATE);
+        sqLiteDatabase.execSQL(ConfigurationValueTable.CREATE);
     }
 
     @Override

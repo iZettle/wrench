@@ -20,7 +20,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:inputType="text"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLines="5"
                 android:textAppearance="?attr/textAppearanceListItem" />
         </android.support.design.widget.TextInputLayout>
     </android.support.v7.widget.CardView>

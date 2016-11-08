@@ -18,6 +18,7 @@ import com.izettle.localconfig.application.database.ConfigDatabaseHelper;
 import com.izettle.localconfig.application.database.SelectionBuilder;
 import com.izettle.localconfig.application.database.tables.ApplicationTable;
 import com.izettle.localconfig.application.database.tables.ConfigurationTable;
+import com.izettle.localconfig.application.database.tables.ConfigurationValueTable;
 import com.izettle.localconfig.application.library.Application;
 import com.izettle.localconfig.application.library.ApplicationConfigProviderHelper;
 import com.izettle.localconfig.application.library.ApplicationCursorParser;
@@ -32,6 +33,8 @@ public class ConfigProvider extends ContentProvider {
     private static final int APPLICATIONS = 2;
     private static final int CONFIGURATION = 3;
     private static final int CONFIGURATIONS = 4;
+    private static final int CONFIGURATION_VALUE = 5;
+    private static final int CONFIGURATION_VALUES = 6;
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
@@ -39,6 +42,8 @@ public class ConfigProvider extends ContentProvider {
         sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/application", APPLICATIONS);
         sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configuration/#", CONFIGURATION);
         sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configuration", CONFIGURATIONS);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configurationValue/#", CONFIGURATION_VALUE);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configurationValue", CONFIGURATION_VALUES);
     }
 
     private ConfigDatabaseHelper configDatabaseHelper;
@@ -151,6 +156,15 @@ public class ConfigProvider extends ContentProvider {
                 cursor = selectionBuilder.table(ConfigurationTable.TABLE_NAME).query(writableDatabase, projection, sortOrder);
                 break;
             }
+            case CONFIGURATION_VALUES: {
+
+                if (!callingApplication.isConfigApplication()) {
+                    selectionBuilder.where(ConfigurationFullCursorParser.Columns.APPLICATION_ID + " = ?", String.valueOf(callingApplication._id));
+                }
+
+                cursor = selectionBuilder.table(ConfigurationValueTable.TABLE_NAME).query(writableDatabase, projection, sortOrder);
+                break;
+            }
             default: {
                 throw new UnsupportedOperationException("Not yet implemented " + uri.toString());
             }
@@ -172,12 +186,15 @@ public class ConfigProvider extends ContentProvider {
             return null; // for security reason we need to know the callingApplication
         }
 
-
         long insertId;
         switch (sUriMatcher.match(uri)) {
             case CONFIGURATIONS: {
                 values.put(ConfigurationFullCursorParser.Columns.APPLICATION_ID, callingApplication._id);
                 insertId = writableDatabase.insert(ConfigurationTable.TABLE_NAME, null, values);
+                break;
+            }
+            case CONFIGURATION_VALUES: {
+                insertId = writableDatabase.insert(ConfigurationValueTable.TABLE_NAME, null, values);
                 break;
             }
             default: {

@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        new Bundle().getParcelable("");
+
         LocalConfiguration localConfiguration = new LocalConfiguration(this);
 
         // text that defaults to something
@@ -45,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.log4key.setText("NUM_COLUMNS:");
         activityMainBinding.log4value.setText(String.valueOf(localConfiguration.getInt("NUM_COLUMNS", 2)));
 
+        // get num columns to show, defaults to 2
+        activityMainBinding.log4key.setText("ENVIRONMENT:");
+
+        Environment environment = localConfiguration.getEnum("ENVIRONMENT", Environment.class, Environment.PROD);
+        activityMainBinding.log4value.setText(String.valueOf(environment));
 
         StringBuilder all = new StringBuilder("All keys and values\n");
         for (Map.Entry<String, ?> entry : localConfiguration.getAll().entrySet()) {
@@ -61,5 +68,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return true;
+    }
+
+    enum Environment {
+        PROD, TEST, DEV
     }
 }

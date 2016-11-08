@@ -142,6 +142,34 @@
             tools:text="log4value" />
 
         <TextView
+            android:id="@+id/log5key"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/log3value"
+            app:layout_constraintRight_toRightOf="@+id/log3value"
+            app:layout_constraintTop_toBottomOf="@+id/log4value"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
+            tools:text="log4key" />
+
+        <TextView
+            android:id="@+id/log5value"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/log4key"
+            app:layout_constraintRight_toRightOf="@+id/log4key"
+            app:layout_constraintTop_toBottomOf="@+id/log5key"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
+            tools:text="log4value" />
+
+        <TextView
             android:id="@+id/all"
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="0dp"
@@ -149,7 +177,7 @@
             android:padding="8dp"
             app:layout_constraintLeft_toLeftOf="@+id/log4value"
             app:layout_constraintRight_toRightOf="@+id/log4value"
-            app:layout_constraintTop_toBottomOf="@+id/log4value"
+            app:layout_constraintTop_toBottomOf="@+id/log5value"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1"
             tools:layout_constraintTop_creator="1"
