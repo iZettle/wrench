@@ -189,7 +189,7 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 }
             }
 
-            final ArrayAdapter<ConfigurationValue> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, configurationValues);
+            final ArrayAdapter<ConfigurationValue> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, configurationValues);
             viewHolder.binding.layout.setAdapter(adapter);
             viewHolder.binding.layout.setSelection(selectedPosition);
             viewHolder.binding.layout.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
