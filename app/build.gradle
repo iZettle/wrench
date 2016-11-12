@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
+
     dataBinding {
         enabled = true
     }
     compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.izettle.localconfig.application"
         minSdkVersion 15
@@ -15,6 +16,14 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary true
+
+        jackOptions {
+            enabled true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
