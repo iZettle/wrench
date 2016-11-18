@@ -118,12 +118,9 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
 
                     fragmentConfigurationsBinding.list.setAdapter(adapter);
 
-                    ItemTouchHelper itemTouchHelper = adapter.getItemTouchHelper(new ConfigurationRecyclerViewAdapter.SwipeDelete() {
-                        @Override
-                        public void swiped(ConfigurationFull configuration) {
-                            getContext().getContentResolver().delete(ApplicationConfigProviderHelper.configurationUri(configuration._id), null, null);
-                            getContext().getContentResolver().delete(ApplicationConfigProviderHelper.configurationValueUri(), ConfigurationValueCursorParser.Columns.CONFIGURATION_ID + " = ?", new String[]{String.valueOf(configuration._id)});
-                        }
+                    ItemTouchHelper itemTouchHelper = adapter.getItemTouchHelper(configuration -> {
+                        getContext().getContentResolver().delete(ApplicationConfigProviderHelper.configurationUri(configuration._id), null, null);
+                        getContext().getContentResolver().delete(ApplicationConfigProviderHelper.configurationValueUri(), ConfigurationValueCursorParser.Columns.CONFIGURATION_ID + " = ?", new String[]{String.valueOf(configuration._id)});
                     });
 
                     itemTouchHelper.attachToRecyclerView(fragmentConfigurationsBinding.list);

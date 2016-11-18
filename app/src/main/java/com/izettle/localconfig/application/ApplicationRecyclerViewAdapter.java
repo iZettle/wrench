@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.izettle.localconfig.application.databinding.ApplicationListItemBinding;
@@ -52,15 +51,12 @@ public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<Applica
         holder.applicationListItemBinding.id.setText(String.valueOf(application._id));
         holder.applicationListItemBinding.content.setText(application.label);
 
-        holder.applicationListItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                final Application application = mValues.get(holder.getAdapterPosition());
+        holder.applicationListItemBinding.getRoot().setOnClickListener(v -> {
+            final Application application1 = mValues.get(holder.getAdapterPosition());
 
-                Context context = v.getContext();
-                context.startActivity(ConfigurationsActivity.newIntent(context, application));
-                Log.d(TAG, application._id + " was clicked");
-            }
+            Context context = v.getContext();
+            context.startActivity(ConfigurationsActivity.newIntent(context, application1));
+            Log.d(TAG, application1._id + " was clicked");
         });
     }
 
