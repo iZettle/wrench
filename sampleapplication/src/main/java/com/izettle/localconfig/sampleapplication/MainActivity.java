@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        new Bundle().getParcelable("");
-
         LocalConfiguration localConfiguration = new LocalConfiguration(this);
 
         // text that defaults to something

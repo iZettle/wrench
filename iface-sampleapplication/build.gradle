@@ -7,7 +7,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "com.izettle.localconfig.sampleapplication"
+        applicationId "com.izettle.localconfiguration.iface.sampleapplication"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -41,8 +41,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.0'
     testCompile 'junit:junit:4.12'
-    releaseCompile project(':local-configuration-no-op')
-    debugCompile project(':localconfiguration')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
+    compile project(':iface-localconfiguration')
 }
