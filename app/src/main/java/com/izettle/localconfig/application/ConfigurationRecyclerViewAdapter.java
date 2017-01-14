@@ -115,7 +115,7 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 viewHolder.binding.value.setText(configuration.value);
             }
             viewHolder.binding.value.setOnFocusChangeListener((view, focus) -> {
-                if (!focus) {
+                if (!focus && holder.getAdapterPosition() != -1) {
                     ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
                     configurationFull.value = String.valueOf(((TextInputEditText) view).getText());
 
@@ -130,7 +130,7 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 viewHolder.binding.value.setText(configuration.value);
             }
             viewHolder.binding.value.setOnFocusChangeListener((view, focus) -> {
-                if (!focus) {
+                if (!focus && holder.getAdapterPosition() != -1) {
                     ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
                     configurationFull.value = String.valueOf(((TextInputEditText) view).getText());
                     view.getContext().getContentResolver().update(ApplicationConfigProviderHelper.configurationUri(configurationFull._id), configurationFullContentValueProducer.toContentValues(configurationFull), null, null);
