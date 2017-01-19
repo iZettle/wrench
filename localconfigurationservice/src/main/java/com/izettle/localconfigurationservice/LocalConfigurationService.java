@@ -76,25 +76,7 @@ public abstract class LocalConfigurationService extends IntentService {
                 ConfigurationCursorParser.Columns.KEY + " = ? AND " + ConfigurationCursorParser.Columns.TYPE + " = ?", new String[]{configuration.key, configuration.type});
     }
 
-    @Override
-    protected final void onHandleIntent(Intent intent) {
-        if (intent != null) {
-            Bundle extras = intent.getExtras();
-            for (String key : extras.keySet()) {
-                Object value = extras.get(key);
-                if (value instanceof Integer) {
-                    updateInteger(getContentResolver(), key, (int) value);
-                } else if (value instanceof String) {
-                    updateString(getContentResolver(), key, (String) value);
-                } else if (value instanceof Boolean) {
-                    updateBoolean(getContentResolver(), key, (boolean) value);
-                }
-
-            }
-        }
-    }
-
-    private void updateBoolean(ContentResolver contentResolver, String key, boolean value) {
+    private static void updateBoolean(ContentResolver contentResolver, String key, boolean value) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
             Log.w("LocalConfigurationServi", "provider not found");
@@ -112,7 +94,7 @@ public abstract class LocalConfigurationService extends IntentService {
         }
     }
 
-    private void updateString(ContentResolver contentResolver, String key, String value) {
+    private static void updateString(ContentResolver contentResolver, String key, String value) {
         Configuration configuration = getConfiguration(contentResolver, key);
         if (configuration == null) {
             Log.w("LocalConfigurationServi", "provider not found");
@@ -127,6 +109,24 @@ public abstract class LocalConfigurationService extends IntentService {
         } else {
             configuration.value = value;
             updateConfiguration(contentResolver, configuration);
+        }
+    }
+
+    @Override
+    protected final void onHandleIntent(Intent intent) {
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            for (String key : extras.keySet()) {
+                Object value = extras.get(key);
+                if (value instanceof Integer) {
+                    updateInteger(getContentResolver(), key, (int) value);
+                } else if (value instanceof String) {
+                    updateString(getContentResolver(), key, (String) value);
+                } else if (value instanceof Boolean) {
+                    updateBoolean(getContentResolver(), key, (boolean) value);
+                }
+
+            }
         }
     }
 }
