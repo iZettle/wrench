@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 
 import com.izettle.localconfig.application.databinding.ConfigurationBooleanListItemBinding;
 import com.izettle.localconfig.application.databinding.ConfigurationEnumListItemBinding;
@@ -114,12 +115,15 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             if (!TextUtils.equals(viewHolder.binding.value.getText(), configuration.value)) {
                 viewHolder.binding.value.setText(configuration.value);
             }
-            viewHolder.binding.value.setOnFocusChangeListener((view, focus) -> {
-                if (!focus && holder.getAdapterPosition() != -1) {
-                    ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
-                    configurationFull.value = String.valueOf(((TextInputEditText) view).getText());
+            viewHolder.binding.value.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean focus) {
+                    if (!focus && holder.getAdapterPosition() != -1) {
+                        ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
+                        configurationFull.value = String.valueOf(((TextInputEditText) view).getText());
 
-                    view.getContext().getContentResolver().update(ApplicationConfigProviderHelper.configurationUri(configurationFull._id), configurationFullContentValueProducer.toContentValues(configurationFull), null, null);
+                        view.getContext().getContentResolver().update(ApplicationConfigProviderHelper.configurationUri(configurationFull._id), configurationFullContentValueProducer.toContentValues(configurationFull), null, null);
+                    }
                 }
             });
 
@@ -129,11 +133,14 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             if (!TextUtils.equals(viewHolder.binding.value.getText(), configuration.value)) {
                 viewHolder.binding.value.setText(configuration.value);
             }
-            viewHolder.binding.value.setOnFocusChangeListener((view, focus) -> {
-                if (!focus && holder.getAdapterPosition() != -1) {
-                    ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
-                    configurationFull.value = String.valueOf(((TextInputEditText) view).getText());
-                    view.getContext().getContentResolver().update(ApplicationConfigProviderHelper.configurationUri(configurationFull._id), configurationFullContentValueProducer.toContentValues(configurationFull), null, null);
+            viewHolder.binding.value.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean focus) {
+                    if (!focus && holder.getAdapterPosition() != -1) {
+                        ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
+                        configurationFull.value = String.valueOf(((TextInputEditText) view).getText());
+                        view.getContext().getContentResolver().update(ApplicationConfigProviderHelper.configurationUri(configurationFull._id), configurationFullContentValueProducer.toContentValues(configurationFull), null, null);
+                    }
                 }
             });
 
@@ -142,10 +149,13 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             viewHolder.binding.layout.setText(configuration.key);
             viewHolder.binding.layout.setChecked(Boolean.valueOf(configuration.value));
 
-            viewHolder.binding.layout.setOnCheckedChangeListener((compoundButton, checked) -> {
-                ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
-                configurationFull.value = String.valueOf(compoundButton.isChecked());
-                compoundButton.getContext().getContentResolver().update(ApplicationConfigProviderHelper.configurationUri(configurationFull._id), configurationFullContentValueProducer.toContentValues(configurationFull), null, null);
+            viewHolder.binding.layout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                    ConfigurationFull configurationFull = items.get(holder.getAdapterPosition());
+                    configurationFull.value = String.valueOf(compoundButton.isChecked());
+                    compoundButton.getContext().getContentResolver().update(ApplicationConfigProviderHelper.configurationUri(configurationFull._id), configurationFullContentValueProducer.toContentValues(configurationFull), null, null);
+                }
             });
         } else if (holder instanceof ConfigurationEnumViewHolder) {
             ConfigurationEnumViewHolder viewHolder = (ConfigurationEnumViewHolder) holder;
