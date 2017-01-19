@@ -198,7 +198,7 @@ public class ConfigProvider extends ContentProvider {
                 break;
             }
             default: {
-                throw new UnsupportedOperationException("Not yet implemented");
+                throw new UnsupportedOperationException("Not yet implemented " + uri);
             }
         }
 
@@ -258,7 +258,7 @@ public class ConfigProvider extends ContentProvider {
                 break;
             }
             default: {
-                throw new UnsupportedOperationException("Not yet implemented");
+                throw new UnsupportedOperationException("Not yet implemented " + uri);
             }
         }
 

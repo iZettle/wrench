@@ -45,4 +45,5 @@ dependencies {
     debugCompile project(':localconfiguration')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
+    compile project(':localconfigurationservice')
 }
