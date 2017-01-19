@@ -21,7 +21,7 @@
 
         <service
             android:name=".ConfigurationService"
-            android:exported="true"></service>
+            android:exported="true" />
     </application>
 
 </manifest>
