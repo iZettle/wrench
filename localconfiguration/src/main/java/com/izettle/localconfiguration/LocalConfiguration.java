@@ -161,5 +161,4 @@ public class LocalConfiguration {
         }
         return Integer.valueOf(configuration.value);
     }
-
 }

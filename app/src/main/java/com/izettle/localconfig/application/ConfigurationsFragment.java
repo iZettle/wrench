@@ -1,15 +1,28 @@
 package com.izettle.localconfig.application;
 
+import android.Manifest;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
+import android.support.v4.content.IntentCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewAnimator;
@@ -30,7 +43,9 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
     private static final int CONFIGURATIONS_LOADER = 1;
     private static final String ARG_APPLICATION = "ARG_APPLICATION";
     private static final String LOADER_EXTRA_APPLICATION = "LOADER_EXTRA_APPLICATION";
+    private static final int PERMISSION_KILL_BACKGROUND_PROCESS = 132;
     FragmentConfigurationsBinding fragmentConfigurationsBinding;
+    private Application application;
 
     public ConfigurationsFragment() {
     }
@@ -43,15 +58,25 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         return fragment;
     }
 
+    private static void restartApplication(Context context, Application application) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        activityManager.killBackgroundProcesses(application.applicationName);
+
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(application.applicationName);
+        context.startActivity(IntentCompat.makeRestartActivityTask(intent.getComponent()));
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Application application = getArguments().getParcelable(ARG_APPLICATION);
+        application = getArguments().getParcelable(ARG_APPLICATION);
         if (application == null) {
             throw new NullPointerException();
         }
         getActivity().setTitle(application.label);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -71,6 +96,59 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         Bundle bundle = new Bundle();
         bundle.putParcelable(LOADER_EXTRA_APPLICATION, application);
         getLoaderManager().initLoader(CONFIGURATIONS_LOADER, bundle, this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_configurations_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_restart_application: {
+
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.KILL_BACKGROUND_PROCESSES) == PackageManager.PERMISSION_GRANTED) {
+
+                    restartApplication(getContext(), application);
+                } else {
+
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.KILL_BACKGROUND_PROCESSES)) {
+                        Snackbar.make(getView(), "My text", BaseTransientBottomBar.LENGTH_LONG)
+                                .setAction("", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        requestPermissions(new String[]{Manifest.permission.KILL_BACKGROUND_PROCESSES}, PERMISSION_KILL_BACKGROUND_PROCESS);
+                                    }
+                                }).show();
+
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.KILL_BACKGROUND_PROCESSES}, PERMISSION_KILL_BACKGROUND_PROCESS);
+                    }
+                }
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_KILL_BACKGROUND_PROCESS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    restartApplication(getContext(), application);
+
+                } else {
+
+
+                }
+                return;
+            }
+        }
     }
 
     @Override

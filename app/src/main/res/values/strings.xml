@@ -6,5 +6,6 @@
     <string name="value">Value</string>
     <string name="no_configurations_found">No configurations found.</string>
     <string name="no_applications_found">No applications found</string>
+    <string name="restart_application">Restart application</string>
 
 </resources>
