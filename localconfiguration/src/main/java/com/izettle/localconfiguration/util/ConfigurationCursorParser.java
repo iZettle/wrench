@@ -17,7 +17,8 @@ public class ConfigurationCursorParser implements ICursorParser<Configuration> {
     public Configuration populateFromCursor(Configuration configuration, Cursor cursor) {
         configuration._id = cursor.getLong(cursor.getColumnIndex(Columns._ID));
         configuration.key = cursor.getString(cursor.getColumnIndex(Columns.KEY));
-        configuration.value = cursor.getString(cursor.getColumnIndex(Columns.VALUE));
+        int columnIndex = cursor.getColumnIndex(Columns.VALUE);
+        configuration.value = cursor.isNull(columnIndex) ? null : cursor.getString(columnIndex);
         configuration.type = cursor.getString(cursor.getColumnIndex(Columns.TYPE));
 
         return configuration;
