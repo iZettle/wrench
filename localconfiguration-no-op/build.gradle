@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.izettle.localconfiguration-no-op'
+group = 'com.izettle.localconfiguration'
 version = '1.0'
 
 android {

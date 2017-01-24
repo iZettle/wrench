@@ -1,1 +1,1 @@
-include ':app', ':localconfiguration', ':sampleapplication', ':local-configuration-no-op', ':localconfigurationservice'
+include ':app', ':localconfiguration', ':sampleapplication', ':localconfiguration-no-op', ':localconfigurationservice'

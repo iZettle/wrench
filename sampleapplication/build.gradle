@@ -45,9 +45,9 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
-    releaseCompile project(':local-configuration-no-op')
 
     debugCompile 'com.izettle.localconfiguration:localconfiguration:1.0'
+    releaseCompile 'com.izettle.localconfiguration:localconfiguration-no-op:1.0'
 
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
