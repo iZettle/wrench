@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -92,6 +95,7 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_configurations_list, menu);
+
     }
 
     @Override
@@ -103,7 +107,11 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
                 activityManager.killBackgroundProcesses(application.applicationName);
 
                 Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(application.applicationName);
-                getContext().startActivity(IntentCompat.makeRestartActivityTask(intent.getComponent()));
+                if (intent != null) {
+                    getContext().startActivity(IntentCompat.makeRestartActivityTask(intent.getComponent()));
+                } else {
+                    Snackbar.make(getView(), R.string.application_not_installed, Snackbar.LENGTH_LONG).show();
+                }
 
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "restart_application");

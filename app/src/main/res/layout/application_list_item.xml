@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,21 +11,29 @@
 
         <ImageView
             android:id="@+id/application_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:scaleType="centerInside"
+            tools:src="@drawable/ic_report_black_24dp"
+            />
 
         <TextView
-            android:id="@+id/id"
+            android:id="@+id/application_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:textAppearance="?attr/textAppearanceListItem"
+            tools:text="MyApplication" />
 
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:textColor="@color/gray"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            tools:text="Not installed"
+            />
+
     </LinearLayout>
 </layout>

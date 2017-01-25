@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,12 +44,14 @@ public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<Applica
             PackageManager packageManager = holder.applicationListItemBinding.getRoot().getContext().getPackageManager();
             Drawable icon = packageManager.getApplicationIcon(application.applicationName);
             holder.applicationListItemBinding.applicationIcon.setImageDrawable(icon);
+            holder.applicationListItemBinding.status.setText("");
+
         } catch (PackageManager.NameNotFoundException e) {
             holder.applicationListItemBinding.applicationIcon.setImageResource(R.drawable.ic_report_black_24dp);
+            holder.applicationListItemBinding.status.setText(R.string.not_installed);
             e.printStackTrace();
         }
-        holder.applicationListItemBinding.id.setText(String.valueOf(application._id));
-        holder.applicationListItemBinding.content.setText(application.label);
+        holder.applicationListItemBinding.applicationName.setText(application.label);
 
         holder.applicationListItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +60,6 @@ public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<Applica
 
                 Context context = v.getContext();
                 context.startActivity(ConfigurationsActivity.newIntent(context, application1));
-                Log.d(TAG, application1._id + " was clicked");
             }
         });
     }
