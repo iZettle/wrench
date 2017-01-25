@@ -1,19 +1,13 @@
 package com.izettle.localconfig.application;
 
-import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BaseTransientBottomBar;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.IntentCompat;
 import android.support.v4.content.Loader;
@@ -27,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewAnimator;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.izettle.localconfig.application.databinding.FragmentConfigurationsBinding;
 import com.izettle.localconfig.application.library.Application;
 import com.izettle.localconfig.application.library.ApplicationConfigProviderHelper;
@@ -46,6 +41,7 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
     private static final int PERMISSION_KILL_BACKGROUND_PROCESS = 132;
     FragmentConfigurationsBinding fragmentConfigurationsBinding;
     private Application application;
+    private FirebaseAnalytics firebaseAnalytics;
 
     public ConfigurationsFragment() {
     }
@@ -56,14 +52,6 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         args.putParcelable(ARG_APPLICATION, application);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private static void restartApplication(Context context, Application application) {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        activityManager.killBackgroundProcesses(application.applicationName);
-
-        Intent intent = context.getPackageManager().getLaunchIntentForPackage(application.applicationName);
-        context.startActivity(IntentCompat.makeRestartActivityTask(intent.getComponent()));
     }
 
     @Override
@@ -77,6 +65,8 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         getActivity().setTitle(application.label);
 
         setHasOptionsMenu(true);
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Override
@@ -109,44 +99,22 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         switch (item.getItemId()) {
             case R.id.action_restart_application: {
 
-                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.KILL_BACKGROUND_PROCESSES) == PackageManager.PERMISSION_GRANTED) {
+                ActivityManager activityManager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
+                activityManager.killBackgroundProcesses(application.applicationName);
 
-                    restartApplication(getContext(), application);
-                } else {
+                Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(application.applicationName);
+                getContext().startActivity(IntentCompat.makeRestartActivityTask(intent.getComponent()));
 
-                    if (shouldShowRequestPermissionRationale(Manifest.permission.KILL_BACKGROUND_PROCESSES)) {
-                        Snackbar.make(getView(), "My text", BaseTransientBottomBar.LENGTH_LONG)
-                                .setAction("", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        requestPermissions(new String[]{Manifest.permission.KILL_BACKGROUND_PROCESSES}, PERMISSION_KILL_BACKGROUND_PROCESS);
-                                    }
-                                }).show();
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "restart_application");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Restart Application");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Button");
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
-                    } else {
-                        requestPermissions(new String[]{Manifest.permission.KILL_BACKGROUND_PROCESSES}, PERMISSION_KILL_BACKGROUND_PROCESS);
-                    }
-                }
                 return true;
             }
             default: {
                 return super.onOptionsItemSelected(item);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_KILL_BACKGROUND_PROCESS: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    restartApplication(getContext(), application);
-
-                } else {
-
-
-                }
-                return;
             }
         }
     }
