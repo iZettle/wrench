@@ -5,7 +5,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.Nullable;
 
 import com.izettle.localconfiguration.util.ConfigurationContentValueProducer;
 import com.izettle.localconfiguration.util.ConfigurationCursorParser;
@@ -51,7 +50,6 @@ public class LocalConfiguration {
     /**
      * @return The configuration. Or null if provider doesn't exist. Empty Configuration if key did not exist in the provider.
      */
-    @Nullable
     private static Configuration getConfiguration(ContentResolver contentResolver, String key) {
         ConfigurationCursorParser configurationCursorParser = new ConfigurationCursorParser();
         Cursor cursor = null;
