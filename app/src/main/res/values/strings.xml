@@ -4,8 +4,10 @@
     <string name="save">Save</string>
     <string name="key">Key</string>
     <string name="value">Value</string>
-    <string name="title_activity_edit_configuration">EditConfigurationActivity</string>
+    <string name="no_configurations_found">No configurations found.</string>
+    <string name="no_applications_found">No applications found</string>
+    <string name="restart_application">Restart application</string>
+    <string name="not_installed">Not installed</string>
+    <string name="application_not_installed">Application not installed</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

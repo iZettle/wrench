@@ -3,28 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
+    <ViewAnimator
+        android:id="@+id/animator"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
-            android:name="se.eelde.localconfig.ConfigurationsFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
-            tools:context="se.eelde.localconfig.ConfigurationsFragment"
-            tools:listitem="@layout/configuration_list_item" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/configuration_boolean_list_item" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:clickable="true"
-            android:src="@drawable/ic_add_black_24dp"
-            app:fabSize="normal"
-            app:layout_anchor="@id/list"
-            app:layout_anchorGravity="bottom|right|end" />
-    </android.support.design.widget.CoordinatorLayout>
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/no_configurations_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:id="@+id/no_applications_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    app:srcCompat="@drawable/ic_report_black_24dp" />
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/no_configurations_found" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </ViewAnimator>
 </layout>
