@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -41,7 +39,6 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
     private static final int CONFIGURATIONS_LOADER = 1;
     private static final String ARG_APPLICATION = "ARG_APPLICATION";
     private static final String LOADER_EXTRA_APPLICATION = "LOADER_EXTRA_APPLICATION";
-    private static final int PERMISSION_KILL_BACKGROUND_PROCESS = 132;
     FragmentConfigurationsBinding fragmentConfigurationsBinding;
     private Application application;
     private FirebaseAnalytics firebaseAnalytics;
@@ -65,7 +62,7 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
         if (application == null) {
             throw new NullPointerException();
         }
-        getActivity().setTitle(application.label);
+        getActivity().setTitle(application.applicationLabel);
 
         setHasOptionsMenu(true);
 
@@ -104,9 +101,9 @@ public class ConfigurationsFragment extends Fragment implements LoaderManager.Lo
             case R.id.action_restart_application: {
 
                 ActivityManager activityManager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
-                activityManager.killBackgroundProcesses(application.applicationName);
+                activityManager.killBackgroundProcesses(application.applicationId);
 
-                Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(application.applicationName);
+                Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(application.applicationId);
                 if (intent != null) {
                     getContext().startActivity(IntentCompat.makeRestartActivityTask(intent.getComponent()));
                 } else {

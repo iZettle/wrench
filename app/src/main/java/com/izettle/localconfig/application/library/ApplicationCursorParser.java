@@ -10,8 +10,8 @@ public class ApplicationCursorParser implements ICursorParser<Application> {
 
     public static String[] PROJECTION = new String[]{
             Columns._ID,
-            Columns.APPLICATION_NAME,
-            Columns.LABEL
+            Columns.APPLICATION_ID,
+            Columns.APPLICATION_LABEL
     };
 
     public ApplicationCursorParser() {
@@ -20,14 +20,14 @@ public class ApplicationCursorParser implements ICursorParser<Application> {
     public Application populateFromCursor(Application application, Cursor cursor) {
 
         application._id = cursor.getLong(cursor.getColumnIndex(Columns._ID));
-        application.applicationName = cursor.getString(cursor.getColumnIndex(Columns.APPLICATION_NAME));
-        application.label = cursor.getString(cursor.getColumnIndex(Columns.LABEL));
+        application.applicationId = cursor.getString(cursor.getColumnIndex(Columns.APPLICATION_ID));
+        application.applicationLabel = cursor.getString(cursor.getColumnIndex(Columns.APPLICATION_LABEL));
 
         return application;
     }
 
     public interface Columns extends BaseColumns {
-        String APPLICATION_NAME = "applicationName";
-        String LABEL = "label";
+        String APPLICATION_ID = "applicationId";
+        String APPLICATION_LABEL = "applicationLabel";
     }
 }

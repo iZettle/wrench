@@ -63,7 +63,7 @@ public class ConfigProvider extends ContentProvider {
 
             cursor = new SelectionBuilder()
                     .table(ApplicationTable.TABLE_NAME)
-                    .where(ApplicationCursorParser.Columns.APPLICATION_NAME + " = ?", packageName)
+                    .where(ApplicationCursorParser.Columns.APPLICATION_ID + " = ?", packageName)
                     .query(writableDatabase, ApplicationCursorParser.PROJECTION, null);
 
             if (cursor.moveToFirst()) {
@@ -72,12 +72,12 @@ public class ConfigProvider extends ContentProvider {
                 Application application = new Application();
                 try {
                     ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-                    application.label = String.valueOf(applicationInfo.loadLabel(packageManager));
+                    application.applicationLabel = String.valueOf(applicationInfo.loadLabel(packageManager));
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
 
-                application.applicationName = packageName;
+                application.applicationId = packageName;
                 if (!application.isConfigApplication()) {
                     application._id = writableDatabase.insert(ApplicationTable.TABLE_NAME, null, Application.toContentValues(application));
                     context.getContentResolver().notifyChange(ApplicationConfigProviderHelper.applicationUri(application._id), null, false);
@@ -110,7 +110,6 @@ public class ConfigProvider extends ContentProvider {
         SelectionBuilder selectionBuilder = new SelectionBuilder().where(selection, selectionArgs);
 
         Cursor cursor;
-
 
         switch (sUriMatcher.match(uri)) {
             case APPLICATION: {

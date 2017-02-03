@@ -4,6 +4,7 @@ package com.izettle.localconfig.application.library;
 import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Keep;
 import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import com.izettle.localconfig.application.BuildConfig;
 
 
 public class Application implements Parcelable {
+    @Keep
     public static Parcelable.Creator CREATOR = ParcelableCompat.newCreator(new ParcelableCompatCreatorCallbacks<Application>() {
         @Override
         public Application createFromParcel(Parcel in, ClassLoader loader) {
@@ -24,22 +26,22 @@ public class Application implements Parcelable {
         }
     });
     public long _id;
-    public String applicationName;
-    public String label;
+    public String applicationId;
+    public String applicationLabel;
 
     public Application() {
     }
 
     public Application(Parcel in) {
         _id = in.readLong();
-        applicationName = in.readString();
-        label = in.readString();
+        applicationId = in.readString();
+        applicationLabel = in.readString();
     }
 
     public static ContentValues toContentValues(Application application) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ApplicationCursorParser.Columns.APPLICATION_NAME, application.applicationName);
-        contentValues.put(ApplicationCursorParser.Columns.LABEL, application.label);
+        contentValues.put(ApplicationCursorParser.Columns.APPLICATION_ID, application.applicationId);
+        contentValues.put(ApplicationCursorParser.Columns.APPLICATION_LABEL, application.applicationLabel);
         return contentValues;
     }
 
@@ -51,11 +53,11 @@ public class Application implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(_id);
-        parcel.writeString(applicationName);
-        parcel.writeString(label);
+        parcel.writeString(applicationId);
+        parcel.writeString(applicationLabel);
     }
 
     public boolean isConfigApplication() {
-        return TextUtils.equals(applicationName, BuildConfig.APPLICATION_ID);
+        return TextUtils.equals(applicationId, BuildConfig.APPLICATION_ID);
     }
 }

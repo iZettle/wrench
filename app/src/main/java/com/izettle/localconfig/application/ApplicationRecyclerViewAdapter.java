@@ -42,7 +42,7 @@ public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<Applica
 
         try {
             PackageManager packageManager = holder.applicationListItemBinding.getRoot().getContext().getPackageManager();
-            Drawable icon = packageManager.getApplicationIcon(application.applicationName);
+            Drawable icon = packageManager.getApplicationIcon(application.applicationId);
             holder.applicationListItemBinding.applicationIcon.setImageDrawable(icon);
             holder.applicationListItemBinding.status.setText("");
 
@@ -51,7 +51,7 @@ public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<Applica
             holder.applicationListItemBinding.status.setText(R.string.not_installed);
             e.printStackTrace();
         }
-        holder.applicationListItemBinding.applicationName.setText(application.label);
+        holder.applicationListItemBinding.applicationName.setText(application.applicationLabel);
 
         holder.applicationListItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
