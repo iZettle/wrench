@@ -22,8 +22,11 @@ android {
             enabled false
         }
 
-        resValue "string", "appid", "${applicationId}"
-        resValue "string", "configprovider", "a"
+        def configurationAuthorityValue = applicationId + ".configprovider"
+
+        manifestPlaceholders = [configurationAuthority: configurationAuthorityValue]
+
+        buildConfigField "String", "CONFIG_AUTHORITY", "\"${configurationAuthorityValue}\""
 
     }
     compileOptions {
@@ -36,6 +39,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+//            applicationIdSuffix ".debug"
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
