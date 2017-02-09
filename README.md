@@ -82,6 +82,9 @@ intent.putExtra("FeatureUnderDevelopment", true);
 startService(intent);
 ```
 
+## SAMPLE APPLICATION
+Simple showcase of how to use the LocalConfiguration application
+
 ## VISION
 The vision is to make a public release of the application to the play store to benefit other developers. To facilitate less friction for usage we want to open source the libraries so we can provide them using jcenter. Along with the open sourcing of the libraries we want to open source the code to the application.
 
