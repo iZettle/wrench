@@ -88,4 +88,4 @@ Simple showcase of how to use the LocalConfiguration application
 ## VISION
 The vision is to make a public release of the application to the play store to benefit other developers. To facilitate less friction for usage we want to open source the libraries so we can provide them using jcenter. Along with the open sourcing of the libraries we want to open source the code to the application.
 
-
+The idea is to write small libraries around LocalConfig to facilitate our usecases. The two that are written to date are just a start. If you have a usecase that is not covered by those libraries file it as an issue and we'll look over how we can support your usecase.
