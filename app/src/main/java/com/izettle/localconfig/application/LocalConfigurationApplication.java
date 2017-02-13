@@ -1,10 +1,10 @@
 package com.izettle.localconfig.application;
 
-import android.support.multidex.MultiDexApplication;
+import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 
-public class LocalConfigurationApplication extends MultiDexApplication {
+public class LocalConfigurationApplication extends Application {
 
     @Override
     public void onCreate() {

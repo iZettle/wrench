@@ -160,6 +160,8 @@ public class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         } else if (holder instanceof ConfigurationEnumViewHolder) {
             ConfigurationEnumViewHolder viewHolder = (ConfigurationEnumViewHolder) holder;
 
+            viewHolder.binding.title.setText(configuration.key);
+
             Context context = viewHolder.binding.getRoot().getContext();
             ContentResolver contentResolver = context.getContentResolver();
             Cursor cursor = null;
