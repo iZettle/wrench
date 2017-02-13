@@ -32,7 +32,7 @@
 
         <provider
             android:name=".provider.ConfigProvider"
-            android:authorities="com.izettle.localconfig.application.configprovider"
+            android:authorities="${configurationAuthority}"
             android:enabled="true"
             android:exported="true" />
 

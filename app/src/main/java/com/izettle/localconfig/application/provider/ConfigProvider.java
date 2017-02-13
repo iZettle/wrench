@@ -14,6 +14,7 @@ import android.os.Binder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.izettle.localconfig.application.BuildConfig;
 import com.izettle.localconfig.application.database.ConfigDatabaseHelper;
 import com.izettle.localconfig.application.database.SelectionBuilder;
 import com.izettle.localconfig.application.database.tables.ApplicationTable;
@@ -38,12 +39,12 @@ public class ConfigProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/application/#", APPLICATION);
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/application", APPLICATIONS);
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configuration/#", CONFIGURATION);
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configuration", CONFIGURATIONS);
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configurationValue/#", CONFIGURATION_VALUE);
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configurationValue", CONFIGURATION_VALUES);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "application/#", APPLICATION);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "application", APPLICATIONS);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "configuration/#", CONFIGURATION);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "configuration", CONFIGURATIONS);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "configurationValue/#", CONFIGURATION_VALUE);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "configurationValue", CONFIGURATION_VALUES);
     }
 
     private ConfigDatabaseHelper configDatabaseHelper;
@@ -348,7 +349,29 @@ public class ConfigProvider extends ContentProvider {
 
     @Override
     public String getType(@NonNull Uri uri) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        switch (sUriMatcher.match(uri)) {
+            case APPLICATION: {
+                return "vnd.android.cursor.item/vnd." + BuildConfig.APPLICATION_ID + ".application";
+            }
+            case APPLICATIONS: {
+                return "vnd.android.cursor.dir/vnd." + BuildConfig.APPLICATION_ID + ".application";
+            }
+            case CONFIGURATION: {
+                return "vnd.android.cursor.item/vnd." + BuildConfig.APPLICATION_ID + ".configuration";
+            }
+            case CONFIGURATIONS: {
+                return "vnd.android.cursor.dir/vnd." + BuildConfig.APPLICATION_ID + ".configuration";
+            }
+            case CONFIGURATION_VALUE: {
+                return "vnd.android.cursor.item/vnd." + BuildConfig.APPLICATION_ID + ".configurationValue";
+            }
+            case CONFIGURATION_VALUES: {
+                return "vnd.android.cursor.dir/vnd." + BuildConfig.APPLICATION_ID + ".configurationValue";
+            }
+            default: {
+                throw new UnsupportedOperationException("Not yet implemented");
+            }
+        }
     }
 
 }

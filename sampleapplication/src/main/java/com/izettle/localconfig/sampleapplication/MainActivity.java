@@ -1,13 +1,16 @@
 package com.izettle.localconfig.sampleapplication;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.View;
 
 import com.izettle.localconfig.sampleapplication.databinding.ActivityMainBinding;
 import com.izettle.localconfiguration.LocalConfiguration;
 
+import java.util.Date;
 import java.util.Map;
 
 
@@ -29,27 +32,19 @@ public class MainActivity extends AppCompatActivity {
 
         LocalConfiguration localConfiguration = new LocalConfiguration(this);
 
-        // text that defaults to something
-        activityMainBinding.log1key.setText("WELCOME_TITLE:");
-        activityMainBinding.log1value.setText(localConfiguration.getString("WELCOME_TITLE", "welcome!"));
+        activityMainBinding.stringConfigurationTitle.setText(R.string.string_configuration);
+        activityMainBinding.stringConfiguration.setText(localConfiguration.getString("String configuration", "welcome!"));
 
-        // welcome text that can be null
-        activityMainBinding.log2key.setText("WELCOME_TEXT:");
-        activityMainBinding.log2value.setText(localConfiguration.getString("WELCOME_TEXT", null));
+        activityMainBinding.booleanConfigurationTitle.setText(R.string.boolean_configuration);
+        activityMainBinding.booleanConfiguration.setText(String.valueOf(localConfiguration.getBoolean("boolean configuration", false)));
 
-        // check if strict mode is enabled, default to false/DISABLED
-        activityMainBinding.log3key.setText("STRICT_MODE:");
-        activityMainBinding.log3value.setText(localConfiguration.getBoolean("STRICT_MODE", false) ? "ENABLED" : "DISABLED");
+        activityMainBinding.intConfigurationTitle.setText(R.string.int_configuration);
+        activityMainBinding.intConfiguration.setText(String.valueOf(localConfiguration.getInt("int configuration", 2)));
 
-        // get num columns to show, defaults to 2
-        activityMainBinding.log4key.setText("NUM_COLUMNS:");
-        activityMainBinding.log4value.setText(String.valueOf(localConfiguration.getInt("NUM_COLUMNS", 2)));
+        activityMainBinding.enumConfigurationTitle.setText(R.string.enum_configuration);
 
-        // get num columns to show, defaults to 2
-        activityMainBinding.log5key.setText("ENVIRONMENT:");
-
-        Environment environment = localConfiguration.getEnum("ENVIRONMENT", Environment.class, Environment.PROD);
-        activityMainBinding.log5value.setText(String.valueOf(environment));
+        MyEnum myEnum = localConfiguration.getEnum("enum configuration", MyEnum.class, MyEnum.FIRST);
+        activityMainBinding.enumConfiguration.setText(String.valueOf(myEnum));
 
         StringBuilder all = new StringBuilder("All keys and values\n");
         for (Map.Entry<String, ?> entry : localConfiguration.getAll().entrySet()) {
@@ -60,6 +55,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         activityMainBinding.all.setText(all.toString());
+
+        activityMainBinding.serviceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ConfigurationService.class);
+                intent.putExtra("service configuration", new Date().toString());
+                startService(intent);
+            }
+        });
+
+        activityMainBinding.serviceConfiguration.setText(localConfiguration.getString("service configuration", null));
+
     }
 
     @Override
@@ -68,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    enum Environment {
-        PROD, TEST, DEV
+    enum MyEnum {
+        FIRST, SECOND, THIRD
     }
 }
