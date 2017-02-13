@@ -39,12 +39,12 @@ public class ConfigProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/application/#", APPLICATION);
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/application", APPLICATIONS);
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configuration/#", CONFIGURATION);
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configuration", CONFIGURATIONS);
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configurationValue/#", CONFIGURATION_VALUE);
-        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "/configurationValue", CONFIGURATION_VALUES);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "application/#", APPLICATION);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "application", APPLICATIONS);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "configuration/#", CONFIGURATION);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "configuration", CONFIGURATIONS);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "configurationValue/#", CONFIGURATION_VALUE);
+        sUriMatcher.addURI(ConfigProviderHelper.AUTHORITY, "configurationValue", CONFIGURATION_VALUES);
     }
 
     private ConfigDatabaseHelper configDatabaseHelper;
