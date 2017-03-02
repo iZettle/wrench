@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.izettle.localconfig.application"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 5
         versionName "1.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
