@@ -4,9 +4,6 @@
     package="com.izettle.localconfig.application">
 
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="22" />
 
     <application
         android:name=".LocalConfigurationApplication"
