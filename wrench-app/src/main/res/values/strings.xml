@@ -9,7 +9,6 @@
     <string name="delete_application">Delete application</string>
     <string name="go_to_application_settings">Go to application settings</string>
     <string name="filter_configurations">Filter configurations</string>
-    <string name="ok">OK</string>
     <string name="revert">revert</string>
     <string name="select_scope">Select scope</string>
     <string name="application_icon">Application icon</string>

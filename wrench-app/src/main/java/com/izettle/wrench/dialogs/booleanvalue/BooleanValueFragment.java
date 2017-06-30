@@ -60,7 +60,7 @@ public class BooleanValueFragment extends LifecycleDialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.select_scope)
                 .setView(binding.getRoot())
-                .setPositiveButton(R.string.ok,
+                .setPositiveButton(android.R.string.ok,
                         (dialog, whichButton) -> {
                             AsyncTask.execute(() -> viewModel.updateConfigurationValue(String.valueOf(binding.value.isChecked())));
                             dismiss();

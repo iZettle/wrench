@@ -1,43 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <issues by="lint 3.0.0-alpha4" format="4">
-
-    <issue
-        errorLine1="            android:parentActivityName=&quot;com.izettle.wrench.ApplicationsActivity&quot;>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        id="UnusedAttribute"
-        message="Attribute `parentActivityName` is only used in API level 16 and higher (current min is 15)">
-        <location column="13" file="src/main/AndroidManifest.xml" line="30" />
-    </issue>
-
-    <issue
-        errorLine1="                    app:srcCompat=&quot;@drawable/ic_report_black_24dp&quot; />"
-        errorLine2="                    ~~~~~~~~~~~~~" id="VectorDrawableCompat"
-        message="To use VectorDrawableCompat, you need to set `android.defaultConfig.vectorDrawables.useSupportLibrary = true`.">
-        <location column="21" file="src/main/res/layout/fragment_applications.xml" line="34" />
-    </issue>
-
-    <issue
-        errorLine1="                    app:srcCompat=&quot;@drawable/ic_report_black_24dp&quot; />"
-        errorLine2="                    ~~~~~~~~~~~~~" id="VectorDrawableCompat"
-        message="To use VectorDrawableCompat, you need to set `android.defaultConfig.vectorDrawables.useSupportLibrary = true`.">
-        <location column="21" file="src/main/res/layout/fragment_configurations.xml" line="37" />
-    </issue>
-
-    <issue errorLine1="    &lt;string name=&quot;ok&quot;>ok&lt;/string>"
-        errorLine2="                      ^" id="Typos"
-        message="&quot;ok&quot; is usually capitalized as &quot;OK&quot;">
-        <location column="23" file="src/main/res/values/strings.xml" line="15" />
-    </issue>
-
     <issue errorLine1="        &lt;provider" errorLine2="        ^" id="ExportedContentProvider"
         message="Exported content providers can provide access to potentially sensitive data">
         <location column="9" file="src/main/AndroidManifest.xml" line="36" />
     </issue>
-
-    <issue errorLine1="    &lt;string name=&quot;ok&quot;>ok&lt;/string>"
-        errorLine2="                      ^" id="ButtonCase"
-        message="The standard Android way to capitalize ok is &quot;OK&quot; (tip: use `@android:string/ok` instead)">
-        <location column="23" file="src/main/res/values/strings.xml" line="15" />
-    </issue>
-
 </issues>
