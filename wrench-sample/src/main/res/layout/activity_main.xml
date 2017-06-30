@@ -197,7 +197,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Click to upate value using service"
+                android:text="@string/click_to_update_value_using_service"
                 app:layout_constraintBottom_toTopOf="@+id/service_configuration"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintLeft_toLeftOf="parent"

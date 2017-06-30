@@ -2,6 +2,7 @@ package com.izettle.wrench.core;
 
 import android.content.ContentValues;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class Nut {
 
     public long id;
