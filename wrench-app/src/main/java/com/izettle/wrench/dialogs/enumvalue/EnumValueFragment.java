@@ -1,0 +1,86 @@
+package com.izettle.wrench.dialogs.enumvalue;
+
+import android.app.Dialog;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
+
+import com.izettle.wrench.R;
+import com.izettle.wrench.database.WrenchPredefinedConfigurationValue;
+import com.izettle.wrench.databinding.FragmentEnumValueBinding;
+import com.izettle.wrench.lifecycle.LifecycleDialogFragment;
+
+public class EnumValueFragment extends LifecycleDialogFragment implements PredefinedValueRecyclerViewAdapter.Listener {
+
+    private static final String ARGUMENT_CONFIGURATION_ID = "ARGUMENT_CONFIGURATION_ID";
+    private static final String ARGUMENT_SCOPE_ID = "ARGUMENT_SCOPE_ID";
+    private FragmentEnumValueBinding binding;
+    private FragmentEnumValueViewModel viewModel;
+    private PredefinedValueRecyclerViewAdapter adapter;
+
+    public static EnumValueFragment newInstance(long configurationId, long scopeId) {
+        EnumValueFragment fragment = new EnumValueFragment();
+        Bundle args = new Bundle();
+        args.putLong(ARGUMENT_CONFIGURATION_ID, configurationId);
+        args.putLong(ARGUMENT_SCOPE_ID, scopeId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        binding = FragmentEnumValueBinding.inflate(LayoutInflater.from(getContext()), null);
+
+        viewModel = new FragmentEnumValueViewModel(getActivity().getApplication());
+        viewModel.init(getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID));
+
+        viewModel.getConfiguration().observe(this, wrenchConfiguration -> {
+            if (wrenchConfiguration != null) {
+                getDialog().setTitle(wrenchConfiguration.key());
+            }
+        });
+
+        viewModel.getScope().observe(this, wrenchScope -> {
+            if (wrenchScope != null) {
+            }
+        });
+
+        viewModel.getSelectedConfigurationValueLiveData().observe(this, wrenchConfigurationValue -> {
+            if (wrenchConfigurationValue != null) {
+                viewModel.setSelectedConfigurationValue(wrenchConfigurationValue);
+            }
+        });
+
+        adapter = new PredefinedValueRecyclerViewAdapter(this);
+        binding.list.setAdapter(adapter);
+        binding.list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        viewModel.getPredefinedValues().observe(this, adapter::setItems);
+
+        return new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.select_scope)
+                .setView(binding.getRoot())
+                .setNegativeButton(R.string.revert,
+                        (dialog, whichButton) -> {
+                            if (viewModel.getSelectedConfigurationValue() != null) {
+                                AsyncTask.execute(() -> viewModel.deleteConfigurationValue());
+                            }
+                            dismiss();
+                        }
+                )
+                .create();
+    }
+
+    @Override
+    public void onClick(View view) {
+        WrenchPredefinedConfigurationValue predefinedConfigurationValue = adapter.getItem(binding.list.getChildAdapterPosition(view));
+        AsyncTask.execute(() -> viewModel.updateConfigurationValue(predefinedConfigurationValue.getValue()));
+        dismiss();
+    }
+}

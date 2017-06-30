@@ -1,0 +1,270 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "e46802aeaee1cd44e5cf199e09086315",
+    "entities": [
+      {
+        "tableName": "application",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `packageName` TEXT, `applicationLabel` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "packageName",
+            "columnName": "packageName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "applicationLabel",
+            "columnName": "applicationLabel",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_application_packageName",
+            "unique": true,
+            "columnNames": [
+              "packageName"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_application_packageName` ON `${TABLE_NAME}` (`packageName`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "configuration",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `applicationId` INTEGER, `configurationKey` TEXT, `configurationType` TEXT, FOREIGN KEY(`applicationId`) REFERENCES `application`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "applicationId",
+            "columnName": "applicationId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "key",
+            "columnName": "configurationKey",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "configurationType",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_configuration_applicationId_configurationKey",
+            "unique": true,
+            "columnNames": [
+              "applicationId",
+              "configurationKey"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_configuration_applicationId_configurationKey` ON `${TABLE_NAME}` (`applicationId`, `configurationKey`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "application",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "applicationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "configurationValue",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `configurationId` INTEGER, `value` TEXT, `scope` INTEGER, FOREIGN KEY(`configurationId`) REFERENCES `configuration`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "configurationId",
+            "columnName": "configurationId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "scope",
+            "columnName": "scope",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_configurationValue_configurationId_value_scope",
+            "unique": true,
+            "columnNames": [
+              "configurationId",
+              "value",
+              "scope"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_configurationValue_configurationId_value_scope` ON `${TABLE_NAME}` (`configurationId`, `value`, `scope`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "configuration",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "configurationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "predefinedConfigurationValue",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `configurationId` INTEGER, `value` TEXT, FOREIGN KEY(`configurationId`) REFERENCES `configuration`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "configurationId",
+            "columnName": "configurationId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_predefinedConfigurationValue_configurationId",
+            "unique": false,
+            "columnNames": [
+              "configurationId"
+            ],
+            "createSql": "CREATE  INDEX `index_predefinedConfigurationValue_configurationId` ON `${TABLE_NAME}` (`configurationId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "configuration",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "configurationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "scope",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `applicationId` INTEGER, `name` TEXT, `selectedTimestamp` INTEGER, FOREIGN KEY(`applicationId`) REFERENCES `application`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "applicationId",
+            "columnName": "applicationId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "timeStamp",
+            "columnName": "selectedTimestamp",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_scope_applicationId_name",
+            "unique": true,
+            "columnNames": [
+              "applicationId",
+              "name"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_scope_applicationId_name` ON `${TABLE_NAME}` (`applicationId`, `name`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "application",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "applicationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e46802aeaee1cd44e5cf199e09086315\")"
+    ]
+  }
+}
