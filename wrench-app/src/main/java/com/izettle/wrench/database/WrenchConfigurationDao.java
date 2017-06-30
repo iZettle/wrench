@@ -2,10 +2,8 @@ package com.izettle.wrench.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
 import android.database.Cursor;
 
 import com.izettle.wrench.database.tables.ConfigurationTable;
@@ -15,9 +13,6 @@ import java.util.List;
 
 @Dao
 public interface WrenchConfigurationDao {
-
-    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE id = (:id)")
-    Cursor get(Long id);
 
     @Query("SELECT configuration.id, " +
             " configuration.configurationKey, " +
@@ -53,15 +48,5 @@ public interface WrenchConfigurationDao {
 
     @Insert
     long insert(WrenchConfiguration wrenchConfiguration);
-
-    @Insert
-    long[] insertAll(WrenchConfiguration... configurations);
-
-    @Delete
-    void delete(WrenchConfiguration configuration);
-
-    @Update
-    void update(WrenchConfiguration wrenchConfiguration);
-
 
 }

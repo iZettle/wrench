@@ -5,7 +5,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.content.ContentValues;
 
 import com.izettle.wrench.database.tables.ApplicationTable;
 import com.izettle.wrench.database.tables.ConfigurationTable;
@@ -32,18 +31,6 @@ public class WrenchConfiguration {
 
     @ColumnInfo(name = ConfigurationTable.COL_TYPE)
     private String type;
-
-    public static WrenchConfiguration fromContentValues(ContentValues values) {
-        WrenchConfiguration wrenchConfiguration = new WrenchConfiguration();
-
-        if (values.containsKey(ConfigurationTable.COL_ID)) {
-            wrenchConfiguration.id = values.getAsLong(ConfigurationTable.COL_ID);
-        }
-        wrenchConfiguration.applicationId = values.getAsLong(ConfigurationTable.COL_APP_ID);
-        wrenchConfiguration.key = values.getAsString(ConfigurationTable.COL_KEY);
-        wrenchConfiguration.type = values.getAsString(ConfigurationTable.COL_TYPE);
-        return wrenchConfiguration;
-    }
 
     public long id() {
         return id;

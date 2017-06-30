@@ -18,7 +18,7 @@ import com.izettle.wrench.lifecycle.AppCompatLifecycleActivity;
 public class ConfigurationsActivity extends AppCompatLifecycleActivity {
 
     private static final String EXTRA_APPLICATION_ID = "EXTRA_APPLICATION_ID";
-    ActivityConfigurationsBinding binding;
+    private ActivityConfigurationsBinding binding;
 
     public static Intent newIntent(Context context, long applicationId) {
         Intent intent = new Intent(context, ConfigurationsActivity.class);
@@ -49,9 +49,7 @@ public class ConfigurationsActivity extends AppCompatLifecycleActivity {
             }
         });
 
-        binding.addScope.setOnClickListener(view -> {
-            ScopeFragment.newInstance(applicationId).show(getSupportFragmentManager(), null);
-        });
+        binding.addScope.setOnClickListener(view -> ScopeFragment.newInstance(applicationId).show(getSupportFragmentManager(), null));
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()

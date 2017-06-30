@@ -4,7 +4,6 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.izettle.wrench.database.WrenchApplication;
@@ -51,12 +50,7 @@ public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<Applica
         }
         holder.binding.applicationName.setText(application.applicationLabel());
 
-        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.getContext().startActivity(ConfigurationsActivity.newIntent(v.getContext(), items.get(holder.getAdapterPosition()).id()));
-            }
-        });
+        holder.binding.getRoot().setOnClickListener(v -> v.getContext().startActivity(ConfigurationsActivity.newIntent(v.getContext(), items.get(holder.getAdapterPosition()).id())));
     }
 
     @Override

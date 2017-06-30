@@ -36,13 +36,6 @@ public class BooleanValueFragment extends LifecycleDialogFragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-    }
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -54,11 +47,6 @@ public class BooleanValueFragment extends LifecycleDialogFragment {
         viewModel.getConfiguration().observe(this, wrenchConfiguration -> {
             if (wrenchConfiguration != null) {
                 getDialog().setTitle(wrenchConfiguration.key());
-            }
-        });
-
-        viewModel.getScope().observe(this, wrenchScope -> {
-            if (wrenchScope != null) {
             }
         });
 

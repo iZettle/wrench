@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ApplicationsFragment extends AppCompatLifecycleFragment {
 
-    FragmentApplicationsBinding fragmentApplicationsBinding;
+    private FragmentApplicationsBinding fragmentApplicationsBinding;
     private ApplicationViewModel model;
 
     public ApplicationsFragment() {

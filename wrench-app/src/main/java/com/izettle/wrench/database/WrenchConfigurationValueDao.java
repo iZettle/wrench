@@ -33,11 +33,6 @@ public interface WrenchConfigurationValueDao {
     @Update
     int update(WrenchConfigurationValue wrenchConfigurationValue);
 
-    @Query("UPDATE " + ConfigurationValueTable.TABLE_NAME +
-            " SET " + ConfigurationValueTable.COL_VALUE + " = (:value)" +
-            " WHERE " + ConfigurationValueTable.COL_ID + " = (:id)")
-    void setConfigurationValue(long id, String value);
-
     @Delete
     void delete(WrenchConfigurationValue selectedConfigurationValue);
 }

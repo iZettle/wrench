@@ -9,7 +9,7 @@ import com.izettle.wrench.database.WrenchConfigurationValue;
 import com.izettle.wrench.database.WrenchDatabase;
 import com.izettle.wrench.database.WrenchScope;
 
-public class FragmentStringValueViewModel extends AndroidViewModel {
+class FragmentStringValueViewModel extends AndroidViewModel {
 
     private final WrenchDatabase wrenchDatabase;
     private LiveData<WrenchConfiguration> configuration;
@@ -35,13 +35,6 @@ public class FragmentStringValueViewModel extends AndroidViewModel {
             configuration = wrenchDatabase.configurationDao().getConfiguration(configurationId);
         }
         return configuration;
-    }
-
-    LiveData<WrenchScope> getScope() {
-        if (scope == null) {
-            scope = wrenchDatabase.scopeDao().getScope(scopeId);
-        }
-        return scope;
     }
 
     public void updateConfigurationValue(String value) {

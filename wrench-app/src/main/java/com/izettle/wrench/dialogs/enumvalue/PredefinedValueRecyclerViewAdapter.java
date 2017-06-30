@@ -14,9 +14,9 @@ import java.util.List;
 public class PredefinedValueRecyclerViewAdapter extends RecyclerView.Adapter<PredefinedValueRecyclerViewAdapter.ViewHolder> {
 
     private final ArrayList<WrenchPredefinedConfigurationValue> items = new ArrayList<>();
-    private Listener listener;
+    private final Listener listener;
 
-    public PredefinedValueRecyclerViewAdapter(Listener listener) {
+    PredefinedValueRecyclerViewAdapter(Listener listener) {
         this.listener = listener;
     }
 
@@ -31,9 +31,7 @@ public class PredefinedValueRecyclerViewAdapter extends RecyclerView.Adapter<Pre
         WrenchPredefinedConfigurationValue predefinedConfigurationValue = items.get(position);
 
         holder.binding.value.setText(predefinedConfigurationValue.getValue());
-        holder.binding.getRoot().setOnClickListener(view -> {
-            listener.onClick(view);
-        });
+        holder.binding.getRoot().setOnClickListener(listener::onClick);
     }
 
     @Override
@@ -41,12 +39,13 @@ public class PredefinedValueRecyclerViewAdapter extends RecyclerView.Adapter<Pre
         return items.size();
     }
 
-    public void setItems(List<WrenchPredefinedConfigurationValue> items) {
+    void setItems(List<WrenchPredefinedConfigurationValue> items) {
         this.items.clear();
         this.items.addAll(items);
+        notifyDataSetChanged();
     }
 
-    public WrenchPredefinedConfigurationValue getItem(int position) {
+    WrenchPredefinedConfigurationValue getItem(int position) {
         return items.get(position);
     }
 
@@ -54,10 +53,10 @@ public class PredefinedValueRecyclerViewAdapter extends RecyclerView.Adapter<Pre
         void onClick(View view);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private final SimpleListItemBinding binding;
 
-        public ViewHolder(SimpleListItemBinding binding) {
+        ViewHolder(SimpleListItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

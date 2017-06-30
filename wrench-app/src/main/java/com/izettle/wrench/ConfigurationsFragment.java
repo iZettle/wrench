@@ -33,7 +33,7 @@ import java.util.List;
 
 public class ConfigurationsFragment extends AppCompatLifecycleFragment implements SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener {
     private static final String STATE_FILTER = "STATE_FILTER";
-    FragmentConfigurationsBinding fragmentConfigurationsBinding;
+    private FragmentConfigurationsBinding fragmentConfigurationsBinding;
     private CharSequence currentFilter;
     private SearchView searchView;
     private ConfigurationViewModel model;

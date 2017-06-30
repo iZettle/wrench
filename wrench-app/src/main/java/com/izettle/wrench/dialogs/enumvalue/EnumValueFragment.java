@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -40,14 +41,10 @@ public class EnumValueFragment extends LifecycleDialogFragment implements Predef
         viewModel = new FragmentEnumValueViewModel(getActivity().getApplication());
         viewModel.init(getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID));
 
+        Log.d("TAG", String.format("configId: %d, scopeId: %d", getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID)));
         viewModel.getConfiguration().observe(this, wrenchConfiguration -> {
             if (wrenchConfiguration != null) {
                 getDialog().setTitle(wrenchConfiguration.key());
-            }
-        });
-
-        viewModel.getScope().observe(this, wrenchScope -> {
-            if (wrenchScope != null) {
             }
         });
 
@@ -61,7 +58,13 @@ public class EnumValueFragment extends LifecycleDialogFragment implements Predef
         binding.list.setAdapter(adapter);
         binding.list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        viewModel.getPredefinedValues().observe(this, adapter::setItems);
+
+        viewModel.getPredefinedValues().observe(this, items -> {
+            if (items != null) {
+                Log.d("TAG", String.format("items: %d", items.size()));
+                adapter.setItems(items);
+            }
+        });
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.select_scope)

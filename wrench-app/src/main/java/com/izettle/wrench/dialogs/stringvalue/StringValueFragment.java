@@ -43,11 +43,6 @@ public class StringValueFragment extends LifecycleDialogFragment {
             }
         });
 
-        viewModel.getScope().observe(this, wrenchScope -> {
-            if (wrenchScope != null) {
-            }
-        });
-
         viewModel.getSelectedConfigurationValueLiveData().observe(this, wrenchConfigurationValue -> {
             viewModel.setSelectedConfigurationValue(wrenchConfigurationValue);
             if (wrenchConfigurationValue != null) {
