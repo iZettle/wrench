@@ -43,11 +43,6 @@ public class StringValueFragment extends LifecycleDialogFragment {
             }
         });
 
-        viewModel.getScope().observe(this, wrenchScope -> {
-            if (wrenchScope != null) {
-            }
-        });
-
         viewModel.getSelectedConfigurationValueLiveData().observe(this, wrenchConfigurationValue -> {
             viewModel.setSelectedConfigurationValue(wrenchConfigurationValue);
             if (wrenchConfigurationValue != null) {
@@ -66,7 +61,7 @@ public class StringValueFragment extends LifecycleDialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.select_scope)
                 .setView(binding.getRoot())
-                .setPositiveButton(R.string.ok,
+                .setPositiveButton(android.R.string.ok,
                         (dialog, whichButton) -> {
                             AsyncTask.execute(() -> viewModel.updateConfigurationValue(binding.value.getText().toString()));
                             dismiss();

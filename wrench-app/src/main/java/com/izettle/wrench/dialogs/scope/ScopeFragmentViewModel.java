@@ -13,7 +13,7 @@ import com.izettle.wrench.database.WrenchScope;
 import java.util.Date;
 import java.util.List;
 
-public class ScopeFragmentViewModel extends AndroidViewModel {
+class ScopeFragmentViewModel extends AndroidViewModel {
     private final WrenchDatabase wrenchDatabase;
     private long applicationId;
     private LiveData<WrenchScope> selectedScopeLiveData;

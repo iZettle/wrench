@@ -14,7 +14,7 @@ import java.util.List;
 public class ScopeRecyclerViewAdapter extends RecyclerView.Adapter<ScopeRecyclerViewAdapter.ViewHolder> {
 
     private final ArrayList<WrenchScope> items = new ArrayList<>();
-    private Listener listener;
+    private final Listener listener;
 
     public ScopeRecyclerViewAdapter(Listener listener) {
         this.listener = listener;
@@ -31,9 +31,7 @@ public class ScopeRecyclerViewAdapter extends RecyclerView.Adapter<ScopeRecycler
         WrenchScope wrenchScope = items.get(position);
 
         holder.binding.value.setText(wrenchScope.getName());
-        holder.binding.getRoot().setOnClickListener(view -> {
-            listener.onClick(view);
-        });
+        holder.binding.getRoot().setOnClickListener(listener::onClick);
     }
 
     @Override

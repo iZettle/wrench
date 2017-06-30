@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ConfigurationViewModel extends AndroidViewModel {
+class ConfigurationViewModel extends AndroidViewModel {
     private final WrenchDatabase wrenchDatabase;
     final private Map<Long, LiveData<List<WrenchConfigurationValue>>> configurationValues = new HashMap<>();
     WrenchApplication wrenchApplication;
@@ -68,10 +68,6 @@ public class ConfigurationViewModel extends AndroidViewModel {
         wrenchDatabase.applicationDao().delete(wrenchApplication);
     }
 
-    public void updateConfigurationValue(WrenchConfigurationValue wrenchConfigurationValue) {
-        wrenchDatabase.configurationValueDao().update(wrenchConfigurationValue);
-    }
-
     LiveData<List<WrenchScope>> getScopes() {
         return wrenchDatabase.scopeDao().getScopes(applicationId);
     }
@@ -93,7 +89,7 @@ public class ConfigurationViewModel extends AndroidViewModel {
         return selectedScopeLiveData;
     }
 
-    public LiveData<WrenchScope> getDefaultScopeLiveData() {
+    LiveData<WrenchScope> getDefaultScopeLiveData() {
         if (defaultScopeLiveData == null) {
             defaultScopeLiveData = wrenchDatabase.scopeDao().getDefaultScopeLiveData(applicationId);
         }

@@ -5,7 +5,6 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
 
 import com.izettle.wrench.database.tables.ApplicationTable;
 
@@ -28,7 +27,4 @@ public interface WrenchApplicationDao {
 
     @Delete
     void delete(WrenchApplication application);
-
-    @Update
-    void update(WrenchApplication wrenchApplication);
 }

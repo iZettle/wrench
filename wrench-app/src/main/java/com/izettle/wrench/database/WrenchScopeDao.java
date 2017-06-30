@@ -14,9 +14,6 @@ import java.util.List;
 @Dao
 public interface WrenchScopeDao {
 
-    @Query("SELECT * FROM " + ScopeTable.TABLE_NAME + " WHERE id = (:id)")
-    LiveData<WrenchScope> get(long id);
-
     @Query("SELECT * FROM " + ScopeTable.TABLE_NAME + " WHERE " + ScopeTable.COL_APP_ID + " = (:applicationId) AND " + ScopeTable.COL_NAME + " != '" + WrenchScope.SCOPE_DEFAULT + "'")
     LiveData<List<WrenchScope>> getScopes(long applicationId);
 

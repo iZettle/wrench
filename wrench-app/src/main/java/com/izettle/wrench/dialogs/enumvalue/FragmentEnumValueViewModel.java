@@ -12,7 +12,7 @@ import com.izettle.wrench.database.WrenchScope;
 
 import java.util.List;
 
-public class FragmentEnumValueViewModel extends AndroidViewModel {
+class FragmentEnumValueViewModel extends AndroidViewModel {
 
     private final WrenchDatabase wrenchDatabase;
     private LiveData<WrenchConfiguration> configuration;
@@ -21,7 +21,6 @@ public class FragmentEnumValueViewModel extends AndroidViewModel {
     private long scopeId;
     private LiveData<WrenchConfigurationValue> selectedConfigurationValueLiveData;
     private WrenchConfigurationValue selectedConfigurationValue;
-    private Object predefinedValues;
     private LiveData<List<WrenchPredefinedConfigurationValue>> predefinedValuesLiveData;
 
     FragmentEnumValueViewModel(Application application) {
@@ -40,13 +39,6 @@ public class FragmentEnumValueViewModel extends AndroidViewModel {
             configuration = wrenchDatabase.configurationDao().getConfiguration(configurationId);
         }
         return configuration;
-    }
-
-    LiveData<WrenchScope> getScope() {
-        if (scope == null) {
-            scope = wrenchDatabase.scopeDao().getScope(scopeId);
-        }
-        return scope;
     }
 
     public void updateConfigurationValue(String value) {
@@ -72,14 +64,14 @@ public class FragmentEnumValueViewModel extends AndroidViewModel {
         return selectedConfigurationValueLiveData;
     }
 
-    public LiveData<List<WrenchPredefinedConfigurationValue>> getPredefinedValues() {
+    LiveData<List<WrenchPredefinedConfigurationValue>> getPredefinedValues() {
         if (predefinedValuesLiveData == null) {
             predefinedValuesLiveData = wrenchDatabase.predefinedConfigurationValueDao().getByConfigurationId(configurationId);
         }
         return predefinedValuesLiveData;
     }
 
-    public WrenchConfigurationValue getSelectedConfigurationValue() {
+    WrenchConfigurationValue getSelectedConfigurationValue() {
         return selectedConfigurationValue;
     }
 

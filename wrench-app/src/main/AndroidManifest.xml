@@ -27,7 +27,8 @@
 
         <activity
             android:name="com.izettle.wrench.ConfigurationsActivity"
-            android:parentActivityName="com.izettle.wrench.ApplicationsActivity">
+            android:parentActivityName="com.izettle.wrench.ApplicationsActivity"
+            tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.izettle.wrench.ApplicationsActivity" />

@@ -36,13 +36,6 @@ public class BooleanValueFragment extends LifecycleDialogFragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-    }
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -57,11 +50,6 @@ public class BooleanValueFragment extends LifecycleDialogFragment {
             }
         });
 
-        viewModel.getScope().observe(this, wrenchScope -> {
-            if (wrenchScope != null) {
-            }
-        });
-
         viewModel.getSelectedConfigurationValueLiveData().observe(this, wrenchConfigurationValue -> {
             viewModel.setSelectedConfigurationValue(wrenchConfigurationValue);
             if (wrenchConfigurationValue != null) {
@@ -72,7 +60,7 @@ public class BooleanValueFragment extends LifecycleDialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.select_scope)
                 .setView(binding.getRoot())
-                .setPositiveButton(R.string.ok,
+                .setPositiveButton(android.R.string.ok,
                         (dialog, whichButton) -> {
                             AsyncTask.execute(() -> viewModel.updateConfigurationValue(String.valueOf(binding.value.isChecked())));
                             dismiss();

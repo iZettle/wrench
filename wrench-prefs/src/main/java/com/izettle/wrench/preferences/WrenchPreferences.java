@@ -1,6 +1,5 @@
 package com.izettle.wrench.preferences;
 
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,8 +17,8 @@ public final class WrenchPreferences {
         this.contentResolver = context.getContentResolver();
     }
 
-    private static Uri insertNut(ContentResolver contentResolver, Nut nut) {
-        return contentResolver.insert(ConfigProviderContract.nutUri(), nut.toContentValues());
+    private static void insertNut(ContentResolver contentResolver, Nut nut) {
+        contentResolver.insert(ConfigProviderContract.nutUri(), nut.toContentValues());
     }
 
     @Nullable

@@ -1,11 +1,9 @@
 package com.izettle.wrench.dialogs.scope;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -32,11 +30,6 @@ public class ScopeFragment extends LifecycleDialogFragment implements ScopeRecyc
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -58,33 +51,29 @@ public class ScopeFragment extends LifecycleDialogFragment implements ScopeRecyc
                 .setTitle(R.string.select_scope)
                 .setView(binding.getRoot())
                 .setPositiveButton("Add",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                EditText input = new EditText(getContext());
-                                input.setSingleLine();
+                        (dialog, whichButton) -> {
+                            EditText input = new EditText(getContext());
+                            input.setSingleLine();
 
-                                new AlertDialog.Builder(getContext())
-                                        .setTitle("Create new scope")
-                                        .setView(input)
-                                        .setPositiveButton("OK", (dialog2, which) -> {
-                                            String scopeName = input.getText().toString();
-                                            AsyncTask.execute(() -> viewModel.createScope(scopeName));
-                                        })
-                                        .setNegativeButton("Cancel", null)
-                                        .show();
-                            }
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle("Create new scope")
+                                    .setView(input)
+                                    .setPositiveButton("OK", (dialog2, which) -> {
+                                        String scopeName = input.getText().toString();
+                                        AsyncTask.execute(() -> viewModel.createScope(scopeName));
+                                    })
+                                    .setNegativeButton("Cancel", null)
+                                    .show();
                         }
                 )
                 .setNegativeButton("Delete",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                WrenchScope selectedScope = viewModel.getSelectedScope();
-                                if (selectedScope == null) {
-                                    return;
-                                }
-                                if (!WrenchScope.isDefaultScope(selectedScope)) {
-                                    AsyncTask.execute(() -> viewModel.removeScope(selectedScope));
-                                }
+                        (dialog, whichButton) -> {
+                            WrenchScope selectedScope = viewModel.getSelectedScope();
+                            if (selectedScope == null) {
+                                return;
+                            }
+                            if (!WrenchScope.isDefaultScope(selectedScope)) {
+                                AsyncTask.execute(() -> viewModel.removeScope(selectedScope));
                             }
                         }
                 )
