@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="InvalidPackage" severity="ignore" />
+    <issue id="GradleDependency" severity="ignore" />
+    <issue id="ContentDescription" severity="ignore" />
+    <issue id="UnusedResources" severity="ignore">
+        <ignore path="build/generated/res/google-services/debug/values/values.xml" />
+    </issue>
+    <issue id="MissingTranslation" severity="ignore">
+        <ignore path="build/generated/res/resValues/debug/values/generated.xml" />
+    </issue>
+    <issue id="all">
+        <ignore path="build" />
+    </issue>
+</lint>
