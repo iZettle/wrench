@@ -33,6 +33,13 @@ android {
             applicationIdSuffix '.debug'
         }
     }
+    lintOptions {
+        baseline file("lint-baseline.xml")
+        checkReleaseBuilds true
+        abortOnError true
+        warningsAsErrors true
+        lintConfig file("../lint.xml")
+    }
 }
 
 dependencies {
