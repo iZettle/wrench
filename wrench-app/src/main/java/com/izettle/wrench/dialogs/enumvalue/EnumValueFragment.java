@@ -41,7 +41,6 @@ public class EnumValueFragment extends LifecycleDialogFragment implements Predef
         viewModel = new FragmentEnumValueViewModel(getActivity().getApplication());
         viewModel.init(getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID));
 
-        Log.d("TAG", String.format("configId: %d, scopeId: %d", getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID)));
         viewModel.getConfiguration().observe(this, wrenchConfiguration -> {
             if (wrenchConfiguration != null) {
                 getDialog().setTitle(wrenchConfiguration.key());
