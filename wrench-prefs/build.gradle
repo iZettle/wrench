@@ -1,26 +1,4 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-    }
-}
-
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-
-group = 'com.izettle.wrench'
-version = '1.0'
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "file://localhost/tmp/repository")
-        }
-    }
-}
 
 android {
     compileSdkVersion 26
@@ -63,6 +41,4 @@ dependencies {
     implementation 'com.android.support:support-annotations:26.0.0-beta2'
 }
 
-repositories {
-    mavenCentral()
-}
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
