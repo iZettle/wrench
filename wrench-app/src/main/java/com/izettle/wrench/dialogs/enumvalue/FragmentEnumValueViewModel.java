@@ -8,22 +8,21 @@ import com.izettle.wrench.database.WrenchConfiguration;
 import com.izettle.wrench.database.WrenchConfigurationValue;
 import com.izettle.wrench.database.WrenchDatabase;
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValue;
-import com.izettle.wrench.database.WrenchScope;
 
 import java.util.List;
 
-class FragmentEnumValueViewModel extends AndroidViewModel {
+public class FragmentEnumValueViewModel extends AndroidViewModel {
 
     private final WrenchDatabase wrenchDatabase;
     private LiveData<WrenchConfiguration> configuration;
-    private LiveData<WrenchScope> scope;
     private long configurationId;
     private long scopeId;
     private LiveData<WrenchConfigurationValue> selectedConfigurationValueLiveData;
     private WrenchConfigurationValue selectedConfigurationValue;
     private LiveData<List<WrenchPredefinedConfigurationValue>> predefinedValuesLiveData;
 
-    FragmentEnumValueViewModel(Application application) {
+    @SuppressWarnings("WeakerAccess")
+    public FragmentEnumValueViewModel(Application application) {
         super(application);
 
         wrenchDatabase = WrenchDatabase.getDatabase(application);

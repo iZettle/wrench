@@ -13,12 +13,13 @@ import com.izettle.wrench.database.WrenchScope;
 import java.util.Date;
 import java.util.List;
 
-class ScopeFragmentViewModel extends AndroidViewModel {
+public class ScopeFragmentViewModel extends AndroidViewModel {
     private final WrenchDatabase wrenchDatabase;
     private long applicationId;
     private LiveData<WrenchScope> selectedScopeLiveData;
     private WrenchScope selectedScope;
 
+    @SuppressWarnings("WeakerAccess")
     public ScopeFragmentViewModel(Application application) {
         super(application);
         wrenchDatabase = WrenchDatabase.getDatabase(application);
@@ -28,17 +29,17 @@ class ScopeFragmentViewModel extends AndroidViewModel {
         this.applicationId = applicationId;
     }
 
-    public LiveData<List<WrenchScope>> getScopes() {
+    LiveData<List<WrenchScope>> getScopes() {
         return wrenchDatabase.scopeDao().getScopes(applicationId);
     }
 
-    public void selectScope(WrenchScope wrenchScope) {
+    void selectScope(WrenchScope wrenchScope) {
         wrenchScope.setTimeStamp(new Date());
         wrenchDatabase.scopeDao().update(wrenchScope);
     }
 
     @WorkerThread
-    public WrenchScope createScope(String scopeName) throws SQLiteException {
+    WrenchScope createScope(String scopeName) throws SQLiteException {
         WrenchScope wrenchScope = new WrenchScope();
         wrenchScope.setName(scopeName);
         wrenchScope.setApplicationId(applicationId);
@@ -48,11 +49,11 @@ class ScopeFragmentViewModel extends AndroidViewModel {
     }
 
     @WorkerThread
-    public void removeScope(WrenchScope scope) {
+    void removeScope(WrenchScope scope) {
         wrenchDatabase.scopeDao().delete(scope);
     }
 
-    public LiveData<WrenchScope> getSelectedScopeLiveData() {
+    LiveData<WrenchScope> getSelectedScopeLiveData() {
         if (selectedScopeLiveData == null) {
             selectedScopeLiveData = wrenchDatabase.scopeDao().getSelectedScopeLiveData(applicationId);
         }
@@ -60,11 +61,11 @@ class ScopeFragmentViewModel extends AndroidViewModel {
     }
 
     @Nullable
-    public WrenchScope getSelectedScope() {
+    WrenchScope getSelectedScope() {
         return selectedScope;
     }
 
-    public void setSelectedScope(WrenchScope scope) {
+    void setSelectedScope(WrenchScope scope) {
         this.selectedScope = scope;
     }
 

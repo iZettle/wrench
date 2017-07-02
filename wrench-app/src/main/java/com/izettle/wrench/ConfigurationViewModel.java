@@ -16,12 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class ConfigurationViewModel extends AndroidViewModel {
+public class ConfigurationViewModel extends AndroidViewModel {
     private final WrenchDatabase wrenchDatabase;
     final private Map<Long, LiveData<List<WrenchConfigurationValue>>> configurationValues = new HashMap<>();
     WrenchApplication wrenchApplication;
     private LiveData<WrenchApplication> wrenchApplicationLiveData;
-    private LiveData<List<WrenchConfiguration>> configurations;
     private long applicationId;
     private String query;
     private LiveData<WrenchScope> selectedScopeLiveData;
@@ -52,6 +51,7 @@ class ConfigurationViewModel extends AndroidViewModel {
     }
 
     LiveData<List<WrenchConfiguration>> getConfigurations() {
+        LiveData<List<WrenchConfiguration>> configurations;
         if (TextUtils.isEmpty(query)) {
             configurations = wrenchDatabase.configurationDao().getApplicationConfigurations(applicationId);
         } else {

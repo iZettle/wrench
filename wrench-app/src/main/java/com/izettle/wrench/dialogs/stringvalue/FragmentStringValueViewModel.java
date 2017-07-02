@@ -7,19 +7,18 @@ import android.arch.lifecycle.LiveData;
 import com.izettle.wrench.database.WrenchConfiguration;
 import com.izettle.wrench.database.WrenchConfigurationValue;
 import com.izettle.wrench.database.WrenchDatabase;
-import com.izettle.wrench.database.WrenchScope;
 
-class FragmentStringValueViewModel extends AndroidViewModel {
+public class FragmentStringValueViewModel extends AndroidViewModel {
 
     private final WrenchDatabase wrenchDatabase;
     private LiveData<WrenchConfiguration> configuration;
-    private LiveData<WrenchScope> scope;
     private long configurationId;
     private long scopeId;
     private LiveData<WrenchConfigurationValue> selectedConfigurationValueLiveData;
     private WrenchConfigurationValue selectedConfigurationValue;
 
-    FragmentStringValueViewModel(Application application) {
+    @SuppressWarnings("WeakerAccess")
+    public FragmentStringValueViewModel(Application application) {
         super(application);
 
         wrenchDatabase = WrenchDatabase.getDatabase(application);

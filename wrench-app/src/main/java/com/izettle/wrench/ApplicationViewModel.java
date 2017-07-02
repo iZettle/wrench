@@ -9,15 +9,14 @@ import com.izettle.wrench.database.WrenchDatabase;
 
 import java.util.List;
 
-class ApplicationViewModel extends AndroidViewModel {
+public class ApplicationViewModel extends AndroidViewModel {
 
-    private final WrenchDatabase wrenchDatabase;
-    private final LiveData<List<com.izettle.wrench.database.WrenchApplication>> applications;
+    private final LiveData<List<WrenchApplication>> applications;
 
     public ApplicationViewModel(Application application) {
         super(application);
 
-        wrenchDatabase = WrenchDatabase.getDatabase(application);
+        WrenchDatabase wrenchDatabase = WrenchDatabase.getDatabase(application);
 
         applications = wrenchDatabase.applicationDao().getApplications();
     }
