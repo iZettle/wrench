@@ -51,7 +51,7 @@ public final class WrenchPreferences {
         return contentResolver.insert(ConfigProviderContract.boltUri(), bolt.toContentValues());
     }
 
-    public final <T extends Enum<T>> T getEnum(String key, Class<T> type, T defValue) {
+    public <T extends Enum<T>> T getEnum(String key, Class<T> type, T defValue) {
         Bolt bolt = getBolt(contentResolver, key);
         if (bolt == null) {
             return defValue;
@@ -75,7 +75,7 @@ public final class WrenchPreferences {
         return Enum.valueOf(type, bolt.value);
     }
 
-    public final String getString(String key, String defValue) {
+    public String getString(String key, String defValue) {
 
         Bolt bolt = getBolt(contentResolver, key);
         if (bolt == null) {
@@ -93,7 +93,7 @@ public final class WrenchPreferences {
         return bolt.value;
     }
 
-    public final boolean getBoolean(String key, boolean defValue) {
+    public boolean getBoolean(String key, boolean defValue) {
         Bolt bolt = getBolt(contentResolver, key);
         if (bolt == null) {
             return defValue;
@@ -110,7 +110,7 @@ public final class WrenchPreferences {
         return Boolean.valueOf(bolt.value);
     }
 
-    public final int getInt(String key, int defValue) {
+    public int getInt(String key, int defValue) {
         Bolt bolt = getBolt(contentResolver, key);
         if (bolt == null) {
             return defValue;
