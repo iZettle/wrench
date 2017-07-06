@@ -10,7 +10,7 @@ import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.ConfigProviderContract;
 import com.izettle.wrench.core.Nut;
 
-public final class WrenchPreferences {
+public class WrenchPreferences {
     private final ContentResolver contentResolver;
 
     public WrenchPreferences(Context context) {

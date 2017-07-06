@@ -4,7 +4,7 @@ package com.izettle.wrench.preferences;
 import android.content.Context;
 
 @SuppressWarnings("unused")
-public final class WrenchPreferences {
+public class WrenchPreferences {
 
     public WrenchPreferences(Context context) {
     }
