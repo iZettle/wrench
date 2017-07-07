@@ -2,7 +2,7 @@ package com.izettle.wrench.core;
 
 import android.net.Uri;
 
-public class ConfigProviderContract {
+public class WrenchProviderContract {
     public static final String WRENCH_AUTHORITY = BuildConfig.WRENCH_AUTHORITY;
 
     private static final Uri boltUri = Uri.parse("content://" + WRENCH_AUTHORITY + "/currentConfiguration");
