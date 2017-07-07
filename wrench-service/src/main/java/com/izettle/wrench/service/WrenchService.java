@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.izettle.wrench.core.Bolt;
-import com.izettle.wrench.core.ConfigProviderContract;
+import com.izettle.wrench.core.WrenchProviderContract;
 
 public final class WrenchService extends IntentService {
 
@@ -78,11 +78,11 @@ public final class WrenchService extends IntentService {
     }
 
     private static Uri insertBolt(ContentResolver contentResolver, Bolt bolt) {
-        return contentResolver.insert(ConfigProviderContract.boltUri(), bolt.toContentValues());
+        return contentResolver.insert(WrenchProviderContract.boltUri(), bolt.toContentValues());
     }
 
     private static void updateBolt(ContentResolver contentResolver, Bolt bolt) {
-        contentResolver.update(ConfigProviderContract.boltUri(bolt.id),
+        contentResolver.update(WrenchProviderContract.boltUri(bolt.id),
                 bolt.toContentValues(),
                 null,
                 null);
@@ -92,7 +92,7 @@ public final class WrenchService extends IntentService {
     private static Bolt getBolt(ContentResolver contentResolver, String key) {
         Cursor cursor = null;
         try {
-            cursor = contentResolver.query(ConfigProviderContract.boltUri(key),
+            cursor = contentResolver.query(WrenchProviderContract.boltUri(key),
                     null,
                     null,
                     null,

@@ -7,8 +7,8 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 
 import com.izettle.wrench.core.Bolt;
-import com.izettle.wrench.core.ConfigProviderContract;
 import com.izettle.wrench.core.Nut;
+import com.izettle.wrench.core.WrenchProviderContract;
 
 public class WrenchPreferences {
     private final ContentResolver contentResolver;
@@ -18,14 +18,14 @@ public class WrenchPreferences {
     }
 
     private static void insertNut(ContentResolver contentResolver, Nut nut) {
-        contentResolver.insert(ConfigProviderContract.nutUri(), nut.toContentValues());
+        contentResolver.insert(WrenchProviderContract.nutUri(), nut.toContentValues());
     }
 
     @Nullable
     private static Bolt getBolt(ContentResolver contentResolver, String key) {
         Cursor cursor = null;
         try {
-            cursor = contentResolver.query(ConfigProviderContract.boltUri(key),
+            cursor = contentResolver.query(WrenchProviderContract.boltUri(key),
                     null,
                     null,
                     null,
@@ -48,7 +48,7 @@ public class WrenchPreferences {
     }
 
     private static Uri insertBolt(ContentResolver contentResolver, Bolt bolt) {
-        return contentResolver.insert(ConfigProviderContract.boltUri(), bolt.toContentValues());
+        return contentResolver.insert(WrenchProviderContract.boltUri(), bolt.toContentValues());
     }
 
     public <T extends Enum<T>> T getEnum(String key, Class<T> type, T defValue) {
