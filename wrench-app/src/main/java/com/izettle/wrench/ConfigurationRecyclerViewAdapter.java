@@ -65,9 +65,10 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
 
     @Override
     public void onBindViewHolder(final ConfigurationViewHolder viewHolder, int position, List<Object> payloads) {
-        final WrenchConfiguration configuration = items.get(position);
+        final WrenchConfiguration configuration = items.get(viewHolder.getAdapterPosition());
 
         viewHolder.binding.title.setText(configuration.key());
+        model.getConfigurationValues(configuration.id()).removeObservers(lifecycleOwner);
         model.getConfigurationValues(configuration.id()).observe(lifecycleOwner, wrenchConfigurationValues -> {
             if (wrenchConfigurationValues == null) {
                 return;
@@ -95,7 +96,7 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
                 viewHolder.binding.customValue.setVisibility(View.GONE);
             }
 
-            viewHolder.binding.getRoot().setOnClickListener(view -> listener.configurationClicked(configuration));
+            viewHolder.binding.getRoot().setOnClickListener(view -> listener.configurationClicked(items.get(viewHolder.getAdapterPosition())));
         });
     }
 
