@@ -15,7 +15,7 @@ import android.support.annotation.Nullable;
 
 import com.izettle.wrench.BuildConfig;
 import com.izettle.wrench.core.Bolt;
-import com.izettle.wrench.core.ConfigProviderContract;
+import com.izettle.wrench.core.WrenchProviderContract;
 import com.izettle.wrench.database.WrenchApplication;
 import com.izettle.wrench.database.WrenchConfiguration;
 import com.izettle.wrench.database.WrenchConfigurationValue;
@@ -31,17 +31,14 @@ public class WrenchProvider extends ContentProvider {
     private static final int CURRENT_CONFIGURATION_ID = 1;
     private static final int CURRENT_CONFIGURATION_KEY = 2;
     private static final int CURRENT_CONFIGURATIONS = 3;
-    private static final int PREDEFINED_CONFIGURATION_VALUE = 4;
     private static final int PREDEFINED_CONFIGURATION_VALUES = 5;
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-
     static {
-        sUriMatcher.addURI(ConfigProviderContract.WRENCH_AUTHORITY, "currentConfiguration/#", CURRENT_CONFIGURATION_ID);
-        sUriMatcher.addURI(ConfigProviderContract.WRENCH_AUTHORITY, "currentConfiguration/*", CURRENT_CONFIGURATION_KEY);
-        sUriMatcher.addURI(ConfigProviderContract.WRENCH_AUTHORITY, "currentConfiguration", CURRENT_CONFIGURATIONS);
-        sUriMatcher.addURI(ConfigProviderContract.WRENCH_AUTHORITY, "predefinedConfigurationValue/*", PREDEFINED_CONFIGURATION_VALUE);
-        sUriMatcher.addURI(ConfigProviderContract.WRENCH_AUTHORITY, "predefinedConfigurationValue", PREDEFINED_CONFIGURATION_VALUES);
+        sUriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration/#", CURRENT_CONFIGURATION_ID);
+        sUriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration/*", CURRENT_CONFIGURATION_KEY);
+        sUriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration", CURRENT_CONFIGURATIONS);
+        sUriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "predefinedConfigurationValue", PREDEFINED_CONFIGURATION_VALUES);
     }
 
     private WrenchDatabase wrenchDatabase;
@@ -272,9 +269,6 @@ public class WrenchProvider extends ContentProvider {
             }
             case CURRENT_CONFIGURATION_KEY: {
                 return "vnd.android.cursor.dir/vnd." + BuildConfig.APPLICATION_ID + ".currentConfiguration";
-            }
-            case PREDEFINED_CONFIGURATION_VALUE: {
-                return "vnd.android.cursor.item/vnd." + BuildConfig.APPLICATION_ID + ".predefinedConfigurationValue";
             }
             case PREDEFINED_CONFIGURATION_VALUES: {
                 return "vnd.android.cursor.dir/vnd." + BuildConfig.APPLICATION_ID + ".predefinedConfigurationValue";
