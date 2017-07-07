@@ -150,7 +150,7 @@ public class WrenchProvider extends ContentProvider {
                     cursor.close();
 
                     WrenchScope defaultScope = getDefaultScope(getContext(), wrenchDatabase, callingApplication.id());
-                    cursor = wrenchDatabase.configurationDao().getBolt(Uri.decode(uri.getLastPathSegment()), defaultScope.id());
+                    cursor = wrenchDatabase.configurationDao().getBolt(uri.getLastPathSegment(), defaultScope.id());
                 }
 
                 break;
