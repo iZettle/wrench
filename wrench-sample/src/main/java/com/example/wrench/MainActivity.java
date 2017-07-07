@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.stringConfigurationTitle.setText(R.string.string_configuration);
         activityMainBinding.stringConfiguration.setText(wrenchPreferences.getString("String configuration", "welcome!"));
 
+        activityMainBinding.urlConfigurationTitle.setText(R.string.url_configuration);
+        activityMainBinding.urlConfiguration.setText(wrenchPreferences.getString("Url configuration (http://www.example.com/path?param=value)", "http://www.example.com/path?param=value"));
+
         activityMainBinding.booleanConfigurationTitle.setText(R.string.boolean_configuration);
         activityMainBinding.booleanConfiguration.setText(String.valueOf(wrenchPreferences.getBoolean("boolean configuration", false)));
 

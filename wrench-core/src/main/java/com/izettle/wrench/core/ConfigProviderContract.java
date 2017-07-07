@@ -13,7 +13,7 @@ public class ConfigProviderContract {
     }
 
     public static Uri boltUri(String key) {
-        return Uri.withAppendedPath(boltUri, key);
+        return Uri.withAppendedPath(boltUri, Uri.encode(key));
     }
 
     public static Uri boltUri() {
