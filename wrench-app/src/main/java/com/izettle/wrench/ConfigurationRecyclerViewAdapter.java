@@ -96,8 +96,9 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
                 viewHolder.binding.customValue.setVisibility(View.GONE);
             }
 
-            viewHolder.binding.getRoot().setOnClickListener(view -> listener.configurationClicked(items.get(viewHolder.getAdapterPosition())));
         });
+        viewHolder.binding.getRoot().setOnClickListener(view -> listener.configurationClicked(items.get(viewHolder.getAdapterPosition())));
+
     }
 
     @Nullable
