@@ -50,7 +50,7 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
         switch (viewType) {
             case VIEW_TYPE_GENERAL: {
                 ConfigurationListItemBinding binding = ConfigurationListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-                return new ConfigurationViewHolder(binding);
+                return new ConfigurationViewHolder(binding, null);
             }
             default: {
                 throw new IllegalStateException("Unknown view type");
@@ -65,10 +65,14 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
 
     @Override
     public void onBindViewHolder(final ConfigurationViewHolder viewHolder, int position, List<Object> payloads) {
-        final WrenchConfiguration configuration = items.get(position);
+        if (viewHolder.configuration != null) {
+            model.getConfigurationValues(viewHolder.configuration.id()).removeObservers(lifecycleOwner);
+        }
 
-        viewHolder.binding.title.setText(configuration.key());
-        model.getConfigurationValues(configuration.id()).observe(lifecycleOwner, wrenchConfigurationValues -> {
+        viewHolder.configuration = items.get(viewHolder.getAdapterPosition());
+
+        viewHolder.binding.title.setText(viewHolder.configuration.key());
+        model.getConfigurationValues(viewHolder.configuration.id()).observe(lifecycleOwner, wrenchConfigurationValues -> {
             if (wrenchConfigurationValues == null) {
                 return;
             }
@@ -79,7 +83,6 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
             WrenchConfigurationValue defaultScopedItem = getItemForScope(defaultScope, wrenchConfigurationValues);
             if (defaultScopedItem == null) {
                 return;
-                // throw new RuntimeException("Could not find a default value for configuration " + configuration.key());
             }
 
             viewHolder.binding.defaultValue.setText(defaultScopedItem.getValue());
@@ -94,9 +97,8 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
                 viewHolder.binding.defaultValue.setPaintFlags(viewHolder.binding.defaultValue.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 viewHolder.binding.customValue.setVisibility(View.GONE);
             }
-
-            viewHolder.binding.getRoot().setOnClickListener(view -> listener.configurationClicked(configuration));
         });
+        viewHolder.binding.getRoot().setOnClickListener(view -> listener.configurationClicked(items.get(viewHolder.getAdapterPosition())));
     }
 
     @Nullable

@@ -35,9 +35,6 @@ public interface WrenchScopeDao {
     @Query("SELECT * FROM " + ScopeTable.TABLE_NAME + " WHERE " + ScopeTable.COL_APP_ID + " = (:applicationId) AND " + ScopeTable.COL_NAME + " = '" + WrenchScope.SCOPE_DEFAULT + "'")
     WrenchScope getDefaultScope(long applicationId);
 
-    @Query("SELECT * FROM " + ScopeTable.TABLE_NAME + " WHERE " + ScopeTable.COL_ID + " = (:scopeId)")
-    LiveData<WrenchScope> getScope(long scopeId);
-
     @Update
     void update(WrenchScope scope);
 }

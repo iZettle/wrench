@@ -117,13 +117,13 @@ public class ConfigurationsFragment extends AppCompatLifecycleFragment implement
         });
 
         model.getDefaultScopeLiveData().observe(this, scope -> {
-            if (scope != null) {
+            if (scope != null && fragmentConfigurationsBinding.list.getAdapter() != null) {
                 fragmentConfigurationsBinding.list.getAdapter().notifyDataSetChanged();
             }
         });
 
         model.getSelectedScopeLiveData().observe(this, scope -> {
-            if (scope != null) {
+            if (scope != null && fragmentConfigurationsBinding.list.getAdapter() != null) {
                 fragmentConfigurationsBinding.list.getAdapter().notifyDataSetChanged();
             }
         });
