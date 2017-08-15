@@ -42,6 +42,7 @@ public class WrenchProvider extends ContentProvider {
     }
 
     private WrenchDatabase wrenchDatabase;
+    private IPackageManagerWrapper packageManagerWrapper;
 
     public WrenchProvider() {
     }
@@ -87,21 +88,18 @@ public class WrenchProvider extends ContentProvider {
 
 
     @Nullable
-    private static synchronized WrenchApplication getCallingApplication(@Nullable Context context, WrenchDatabase wrenchDatabase) {
+    private synchronized WrenchApplication getCallingApplication(@Nullable Context context, WrenchDatabase wrenchDatabase) {
         if (context == null) {
             return null;
         }
-        PackageManager packageManager = context.getPackageManager();
-        String packageName = packageManager.getNameForUid(Binder.getCallingUid());
 
-        WrenchApplication wrenchApplication = wrenchDatabase.applicationDao().loadByPackageName(packageName);
+        WrenchApplication wrenchApplication = wrenchDatabase.applicationDao().loadByPackageName(packageManagerWrapper.getCallingApplicationPackageName());
 
         if (wrenchApplication == null) {
             wrenchApplication = new WrenchApplication();
-            wrenchApplication.setPackageName(packageName);
+            wrenchApplication.setPackageName(packageManagerWrapper.getCallingApplicationPackageName());
             try {
-                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-                wrenchApplication.setApplicationLabel(String.valueOf(applicationInfo.loadLabel(packageManager)));
+                wrenchApplication.setApplicationLabel(packageManagerWrapper.getApplicationLabel());
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
@@ -115,6 +113,10 @@ public class WrenchProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         wrenchDatabase = WrenchDatabase.getDatabase(getContext());
+
+        packageManagerWrapper = new PackageManagerWrapper(getContext().getPackageManager());
+        // packageManagerWrapper = new TestPackageManagerWrapper("TestApplication", "com.test.application");
+
         return true;
     }
 
