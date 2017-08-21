@@ -1,8 +1,7 @@
 package com.izettle.wrench.dialogs.scope;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 import android.database.sqlite.SQLiteException;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
@@ -13,16 +12,18 @@ import com.izettle.wrench.database.WrenchScope;
 import java.util.Date;
 import java.util.List;
 
-public class ScopeFragmentViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+public class ScopeFragmentViewModel extends ViewModel {
     private final WrenchDatabase wrenchDatabase;
     private long applicationId;
     private LiveData<WrenchScope> selectedScopeLiveData;
     private WrenchScope selectedScope;
 
     @SuppressWarnings("WeakerAccess")
-    public ScopeFragmentViewModel(Application application) {
-        super(application);
-        wrenchDatabase = WrenchDatabase.getDatabase(application);
+    @Inject
+    public ScopeFragmentViewModel(WrenchDatabase wrenchDatabase) {
+        this.wrenchDatabase = wrenchDatabase;
     }
 
     public void init(long applicationId) {

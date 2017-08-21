@@ -1,6 +1,8 @@
 package com.izettle.wrench.dialogs.stringvalue;
 
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,12 +12,17 @@ import android.view.inputmethod.EditorInfo;
 
 import com.izettle.wrench.R;
 import com.izettle.wrench.databinding.FragmentStringValueBinding;
+import com.izettle.wrench.di.Injectable;
 import com.izettle.wrench.lifecycle.LifecycleDialogFragment;
 
-public class StringValueFragment extends LifecycleDialogFragment {
+import javax.inject.Inject;
+
+public class StringValueFragment extends LifecycleDialogFragment implements Injectable {
 
     private static final String ARGUMENT_CONFIGURATION_ID = "ARGUMENT_CONFIGURATION_ID";
     private static final String ARGUMENT_SCOPE_ID = "ARGUMENT_SCOPE_ID";
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
     private FragmentStringValueBinding binding;
     private FragmentStringValueViewModel viewModel;
 
@@ -34,7 +41,8 @@ public class StringValueFragment extends LifecycleDialogFragment {
 
         binding = FragmentStringValueBinding.inflate(LayoutInflater.from(getContext()), null);
 
-        viewModel = new FragmentStringValueViewModel(getActivity().getApplication());
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentStringValueViewModel.class);
+
         viewModel.init(getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID));
 
         viewModel.getConfiguration().observe(this, wrenchConfiguration -> {

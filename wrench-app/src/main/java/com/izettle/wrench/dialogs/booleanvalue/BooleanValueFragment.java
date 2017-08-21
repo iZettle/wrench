@@ -1,6 +1,8 @@
 package com.izettle.wrench.dialogs.booleanvalue;
 
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,12 +14,17 @@ import android.view.ViewGroup;
 
 import com.izettle.wrench.R;
 import com.izettle.wrench.databinding.FragmentBooleanValueBinding;
+import com.izettle.wrench.di.Injectable;
 import com.izettle.wrench.lifecycle.LifecycleDialogFragment;
 
-public class BooleanValueFragment extends LifecycleDialogFragment {
+import javax.inject.Inject;
+
+public class BooleanValueFragment extends LifecycleDialogFragment implements Injectable {
 
     private static final String ARGUMENT_CONFIGURATION_ID = "ARGUMENT_CONFIGURATION_ID";
     private static final String ARGUMENT_SCOPE_ID = "ARGUMENT_SCOPE_ID";
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
     private FragmentBooleanValueBinding binding;
     private FragmentBooleanValueViewModel viewModel;
 
@@ -41,7 +48,8 @@ public class BooleanValueFragment extends LifecycleDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         binding = FragmentBooleanValueBinding.inflate(LayoutInflater.from(getContext()), null);
 
-        viewModel = new FragmentBooleanValueViewModel(getActivity().getApplication());
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentBooleanValueViewModel.class);
+
         viewModel.init(getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID));
 
         viewModel.getConfiguration().observe(this, wrenchConfiguration -> {

@@ -1,15 +1,12 @@
 package com.izettle.wrench.provider;
 
-import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Binder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -25,8 +22,12 @@ import com.izettle.wrench.database.WrenchScope;
 
 import java.util.Date;
 
+import javax.inject.Inject;
 
-public class WrenchProvider extends ContentProvider {
+import dagger.android.DaggerContentProvider;
+
+
+public class WrenchProvider extends DaggerContentProvider {
 
     private static final int CURRENT_CONFIGURATION_ID = 1;
     private static final int CURRENT_CONFIGURATION_KEY = 2;
@@ -41,7 +42,8 @@ public class WrenchProvider extends ContentProvider {
         sUriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "predefinedConfigurationValue", PREDEFINED_CONFIGURATION_VALUES);
     }
 
-    private WrenchDatabase wrenchDatabase;
+    @Inject
+    public WrenchDatabase wrenchDatabase;
     private IPackageManagerWrapper packageManagerWrapper;
 
     public WrenchProvider() {
@@ -112,7 +114,7 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        wrenchDatabase = WrenchDatabase.getDatabase(getContext());
+        super.onCreate();
 
         packageManagerWrapper = new PackageManagerWrapper(getContext().getPackageManager());
         // packageManagerWrapper = new TestPackageManagerWrapper("TestApplication", "com.test.application");

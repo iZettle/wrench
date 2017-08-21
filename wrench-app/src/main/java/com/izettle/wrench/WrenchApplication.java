@@ -1,10 +1,13 @@
 package com.izettle.wrench;
 
-import android.app.Application;
-
 import com.facebook.stetho.Stetho;
+import com.izettle.wrench.di.AppInjector;
+import com.izettle.wrench.di.DaggerAppComponent;
 
-public class WrenchApplication extends Application {
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
+
+public class WrenchApplication extends DaggerApplication {
 
     @Override
     public void onCreate() {
@@ -13,5 +16,12 @@ public class WrenchApplication extends Application {
         if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this);
         }
+
+        AppInjector.init(this);
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().application(this).build();
     }
 }
