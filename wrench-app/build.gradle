@@ -14,7 +14,7 @@ android {
         targetSdkVersion 26
         versionCode 5
         versionName "1.0.4"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.izettle.wrench.WrenchTestRunner"
         vectorDrawables.useSupportLibrary = true
 
         javaCompileOptions {

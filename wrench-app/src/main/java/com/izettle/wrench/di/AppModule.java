@@ -25,6 +25,8 @@ import com.izettle.wrench.database.WrenchConfigurationValueDao;
 import com.izettle.wrench.database.WrenchDatabase;
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValueDao;
 import com.izettle.wrench.database.WrenchScopeDao;
+import com.izettle.wrench.provider.IPackageManagerWrapper;
+import com.izettle.wrench.provider.PackageManagerWrapper;
 
 import javax.inject.Singleton;
 
@@ -33,6 +35,11 @@ import dagger.Provides;
 
 @Module(includes = ViewModelModule.class)
 class AppModule {
+
+    @Provides
+    IPackageManagerWrapper providePackageManagerWrapper(Application app) {
+        return new PackageManagerWrapper(app.getPackageManager());
+    }
 
     @Singleton
     @Provides

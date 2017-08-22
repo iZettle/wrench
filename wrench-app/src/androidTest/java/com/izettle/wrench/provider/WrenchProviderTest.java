@@ -1,5 +1,6 @@
 package com.izettle.wrench.provider;
 
+import android.arch.persistence.room.Room;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
@@ -10,6 +11,7 @@ import com.izettle.wrench.BuildConfig;
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.Nut;
 import com.izettle.wrench.core.WrenchProviderContract;
+import com.izettle.wrench.database.WrenchDatabase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +30,16 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
     public void setUp() throws Exception {
         super.setUp();
         contentResolver = getMockContentResolver();
+
+        WrenchDatabase wrenchDatabase = Room.inMemoryDatabaseBuilder(getMockContext(), WrenchDatabase.class).build();
+
+        getProvider().applicationDao = wrenchDatabase.applicationDao();
+        getProvider().configurationDao = wrenchDatabase.configurationDao();
+        getProvider().configurationValueDao = wrenchDatabase.configurationValueDao();
+        getProvider().scopeDao = wrenchDatabase.scopeDao();
+        getProvider().predefinedConfigurationDao = wrenchDatabase.predefinedConfigurationValueDao();
+
+        getProvider().packageManagerWrapper = new TestPackageManagerWrapper("TestApplication", "com.test.application");
     }
 
     @Test
