@@ -1,5 +1,6 @@
 package com.izettle.wrench.provider;
 
+import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,20 +15,25 @@ import com.izettle.wrench.BuildConfig;
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.WrenchProviderContract;
 import com.izettle.wrench.database.WrenchApplication;
+import com.izettle.wrench.database.WrenchApplicationDao;
 import com.izettle.wrench.database.WrenchConfiguration;
+import com.izettle.wrench.database.WrenchConfigurationDao;
 import com.izettle.wrench.database.WrenchConfigurationValue;
-import com.izettle.wrench.database.WrenchDatabase;
+import com.izettle.wrench.database.WrenchConfigurationValueDao;
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValue;
+import com.izettle.wrench.database.WrenchPredefinedConfigurationValueDao;
 import com.izettle.wrench.database.WrenchScope;
+import com.izettle.wrench.database.WrenchScopeDao;
 
 import java.util.Date;
 
 import javax.inject.Inject;
 
-import dagger.android.DaggerContentProvider;
+import dagger.android.AndroidInjection;
+import dagger.android.HasContentProviderInjector;
 
 
-public class WrenchProvider extends DaggerContentProvider {
+public class WrenchProvider extends ContentProvider {
 
     private static final int CURRENT_CONFIGURATION_ID = 1;
     private static final int CURRENT_CONFIGURATION_KEY = 2;
@@ -43,45 +49,59 @@ public class WrenchProvider extends DaggerContentProvider {
     }
 
     @Inject
-    public WrenchDatabase wrenchDatabase;
-    private IPackageManagerWrapper packageManagerWrapper;
+    WrenchApplicationDao applicationDao;
+
+    @Inject
+    WrenchScopeDao scopeDao;
+
+    @Inject
+    WrenchConfigurationDao configurationDao;
+
+    @Inject
+    WrenchConfigurationValueDao configurationValueDao;
+
+    @Inject
+    WrenchPredefinedConfigurationValueDao predefinedConfigurationDao;
+
+    @Inject
+    IPackageManagerWrapper packageManagerWrapper;
 
     public WrenchProvider() {
     }
 
-    private static synchronized WrenchScope getDefaultScope(@Nullable Context context, WrenchDatabase wrenchDatabase, long applicationId) {
+    private static synchronized WrenchScope getDefaultScope(@Nullable Context context, WrenchScopeDao scopeDao, long applicationId) {
         if (context == null) {
             return null;
         }
 
-        WrenchScope scope = wrenchDatabase.scopeDao().getDefaultScope(applicationId);
+        WrenchScope scope = scopeDao.getDefaultScope(applicationId);
 
         if (scope == null) {
             scope = new WrenchScope();
             scope.setApplicationId(applicationId);
-            long id = wrenchDatabase.scopeDao().insert(scope);
+            long id = scopeDao.insert(scope);
             scope.setId(id);
         }
         return scope;
     }
 
-    private static synchronized WrenchScope getSelectedScope(@Nullable Context context, WrenchDatabase wrenchDatabase, long applicationId) {
+    private static synchronized WrenchScope getSelectedScope(@Nullable Context context, WrenchScopeDao scopeDao, long applicationId) {
         if (context == null) {
             return null;
         }
 
-        WrenchScope scope = wrenchDatabase.scopeDao().getSelectedScope(applicationId);
+        WrenchScope scope = scopeDao.getSelectedScope(applicationId);
 
         if (scope == null) {
             WrenchScope defaultScope = new WrenchScope();
             defaultScope.setApplicationId(applicationId);
-            defaultScope.setId(wrenchDatabase.scopeDao().insert(defaultScope));
+            defaultScope.setId(scopeDao.insert(defaultScope));
 
             WrenchScope customScope = new WrenchScope();
             customScope.setApplicationId(applicationId);
             customScope.setTimeStamp(new Date(defaultScope.getTimeStamp().getTime() + 1000));
             customScope.setName(WrenchScope.SCOPE_USER);
-            customScope.setId(wrenchDatabase.scopeDao().insert(customScope));
+            customScope.setId(scopeDao.insert(customScope));
 
             scope = customScope;
         }
@@ -90,12 +110,12 @@ public class WrenchProvider extends DaggerContentProvider {
 
 
     @Nullable
-    private synchronized WrenchApplication getCallingApplication(@Nullable Context context, WrenchDatabase wrenchDatabase) {
+    private synchronized WrenchApplication getCallingApplication(@Nullable Context context, WrenchApplicationDao applicationDao) {
         if (context == null) {
             return null;
         }
 
-        WrenchApplication wrenchApplication = wrenchDatabase.applicationDao().loadByPackageName(packageManagerWrapper.getCallingApplicationPackageName());
+        WrenchApplication wrenchApplication = applicationDao.loadByPackageName(packageManagerWrapper.getCallingApplicationPackageName());
 
         if (wrenchApplication == null) {
             wrenchApplication = new WrenchApplication();
@@ -106,7 +126,7 @@ public class WrenchProvider extends DaggerContentProvider {
                 e.printStackTrace();
             }
 
-            wrenchApplication.setId(wrenchDatabase.applicationDao().insert(wrenchApplication));
+            wrenchApplication.setId(applicationDao.insert(wrenchApplication));
         }
 
         return wrenchApplication;
@@ -114,10 +134,10 @@ public class WrenchProvider extends DaggerContentProvider {
 
     @Override
     public boolean onCreate() {
-        super.onCreate();
 
-        packageManagerWrapper = new PackageManagerWrapper(getContext().getPackageManager());
-        // packageManagerWrapper = new TestPackageManagerWrapper("TestApplication", "com.test.application");
+        if (getContext().getApplicationContext() instanceof HasContentProviderInjector) {
+            AndroidInjection.inject(this);
+        }
 
         return true;
     }
@@ -125,7 +145,7 @@ public class WrenchProvider extends DaggerContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
-        WrenchApplication callingApplication = getCallingApplication(getContext(), wrenchDatabase);
+        WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
             return null; // for security reason we need to know the callingApplication
         }
@@ -134,27 +154,27 @@ public class WrenchProvider extends DaggerContentProvider {
 
         switch (sUriMatcher.match(uri)) {
             case CURRENT_CONFIGURATION_ID: {
-                WrenchScope scope = getSelectedScope(getContext(), wrenchDatabase, callingApplication.id());
-                cursor = wrenchDatabase.configurationDao().getBolt(Long.valueOf(uri.getLastPathSegment()), scope.id());
+                WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.id());
+                cursor = configurationDao.getBolt(Long.valueOf(uri.getLastPathSegment()), scope.id());
 
                 if (cursor.getCount() == 0) {
                     cursor.close();
 
-                    WrenchScope defaultScope = getDefaultScope(getContext(), wrenchDatabase, callingApplication.id());
-                    cursor = wrenchDatabase.configurationDao().getBolt(Long.valueOf(uri.getLastPathSegment()), defaultScope.id());
+                    WrenchScope defaultScope = getDefaultScope(getContext(), scopeDao, callingApplication.id());
+                    cursor = configurationDao.getBolt(Long.valueOf(uri.getLastPathSegment()), defaultScope.id());
                 }
 
                 break;
             }
             case CURRENT_CONFIGURATION_KEY: {
-                WrenchScope scope = getSelectedScope(getContext(), wrenchDatabase, callingApplication.id());
-                cursor = wrenchDatabase.configurationDao().getBolt(uri.getLastPathSegment(), scope.id());
+                WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.id());
+                cursor = configurationDao.getBolt(uri.getLastPathSegment(), scope.id());
 
                 if (cursor.getCount() == 0) {
                     cursor.close();
 
-                    WrenchScope defaultScope = getDefaultScope(getContext(), wrenchDatabase, callingApplication.id());
-                    cursor = wrenchDatabase.configurationDao().getBolt(uri.getLastPathSegment(), defaultScope.id());
+                    WrenchScope defaultScope = getDefaultScope(getContext(), scopeDao, callingApplication.id());
+                    cursor = configurationDao.getBolt(uri.getLastPathSegment(), defaultScope.id());
                 }
 
                 break;
@@ -173,7 +193,7 @@ public class WrenchProvider extends DaggerContentProvider {
 
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
-        WrenchApplication callingApplication = getCallingApplication(getContext(), wrenchDatabase);
+        WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
             return null; // for security reason we need to know the callingApplication
         }
@@ -183,7 +203,7 @@ public class WrenchProvider extends DaggerContentProvider {
             case CURRENT_CONFIGURATIONS: {
                 Bolt bolt = Bolt.fromContentValues(values);
 
-                WrenchConfiguration wrenchConfiguration = wrenchDatabase.configurationDao().getWrenchConfiguration(callingApplication.id(), bolt.key);
+                WrenchConfiguration wrenchConfiguration = configurationDao.getWrenchConfiguration(callingApplication.id(), bolt.key);
 
                 if (wrenchConfiguration == null) {
                     wrenchConfiguration = new WrenchConfiguration();
@@ -191,24 +211,24 @@ public class WrenchProvider extends DaggerContentProvider {
                     wrenchConfiguration.setKey(bolt.key);
                     wrenchConfiguration.setType(bolt.type);
 
-                    wrenchConfiguration.setId(wrenchDatabase.configurationDao().insert(wrenchConfiguration));
+                    wrenchConfiguration.setId(configurationDao.insert(wrenchConfiguration));
                 }
 
-                WrenchScope defaultScope = getDefaultScope(getContext(), wrenchDatabase, callingApplication.id());
+                WrenchScope defaultScope = getDefaultScope(getContext(), scopeDao, callingApplication.id());
 
                 WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue();
                 wrenchConfigurationValue.setConfigurationId(wrenchConfiguration.id());
                 wrenchConfigurationValue.setValue(bolt.value);
                 wrenchConfigurationValue.setScope(defaultScope.id());
 
-                wrenchConfigurationValue.setId(wrenchDatabase.configurationValueDao().insert(wrenchConfigurationValue));
+                wrenchConfigurationValue.setId(configurationValueDao.insert(wrenchConfigurationValue));
 
                 insertId = wrenchConfiguration.id();
                 break;
             }
             case PREDEFINED_CONFIGURATION_VALUES: {
                 WrenchPredefinedConfigurationValue fullConfig = WrenchPredefinedConfigurationValue.fromContentValues(values);
-                insertId = wrenchDatabase.predefinedConfigurationValueDao().insert(fullConfig);
+                insertId = predefinedConfigurationDao.insert(fullConfig);
                 break;
             }
             default: {
@@ -224,7 +244,7 @@ public class WrenchProvider extends DaggerContentProvider {
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 
-        WrenchApplication callingApplication = getCallingApplication(getContext(), wrenchDatabase);
+        WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
             return 0; // for security reason we need to know the callingApplication
         }
@@ -233,14 +253,14 @@ public class WrenchProvider extends DaggerContentProvider {
         switch (sUriMatcher.match(uri)) {
             case CURRENT_CONFIGURATION_ID: {
                 Bolt bolt = Bolt.fromContentValues(values);
-                WrenchScope scope = getSelectedScope(getContext(), wrenchDatabase, callingApplication.id());
-                updatedRows = wrenchDatabase.configurationValueDao().updateConfigurationValue(Long.parseLong(uri.getLastPathSegment()), scope.id(), bolt.value);
+                WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.id());
+                updatedRows = configurationValueDao.updateConfigurationValue(Long.parseLong(uri.getLastPathSegment()), scope.id(), bolt.value);
                 if (updatedRows == 0) {
                     WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue();
                     wrenchConfigurationValue.setConfigurationId(Long.parseLong(uri.getLastPathSegment()));
                     wrenchConfigurationValue.setScope(scope.id());
                     wrenchConfigurationValue.setValue(bolt.value);
-                    wrenchDatabase.configurationValueDao().insert(wrenchConfigurationValue);
+                    configurationValueDao.insert(wrenchConfigurationValue);
                 }
 
                 break;

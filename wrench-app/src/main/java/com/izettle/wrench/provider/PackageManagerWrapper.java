@@ -7,7 +7,7 @@ import android.os.Binder;
 public class PackageManagerWrapper implements IPackageManagerWrapper {
     private final PackageManager packageManager;
 
-    PackageManagerWrapper(PackageManager packageManager) {
+    public PackageManagerWrapper(PackageManager packageManager) {
         this.packageManager = packageManager;
     }
 

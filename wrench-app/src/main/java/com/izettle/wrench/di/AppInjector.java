@@ -37,8 +37,11 @@ public class AppInjector {
     }
 
     public static void init(WrenchApplication wrenchApplication) {
-        DaggerAppComponent.builder().application(wrenchApplication)
-                .build().inject(wrenchApplication);
+        DaggerAppComponent.builder()
+                .application(wrenchApplication)
+                .build()
+                .inject(wrenchApplication);
+
         wrenchApplication
                 .registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
                     @Override
