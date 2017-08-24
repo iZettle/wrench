@@ -53,5 +53,5 @@ abstract class ViewModelModule {
     abstract ViewModel bindFragmentBooleanValueViewModel(FragmentBooleanValueViewModel fragmentBooleanValueViewModel);
 
     @Binds
-    abstract ViewModelProvider.Factory bindViewModelFactory(GithubViewModelFactory factory);
+    abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
 }
