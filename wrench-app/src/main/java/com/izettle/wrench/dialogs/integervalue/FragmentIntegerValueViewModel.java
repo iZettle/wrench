@@ -1,14 +1,15 @@
 package com.izettle.wrench.dialogs.integervalue;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 
 import com.izettle.wrench.database.WrenchConfiguration;
 import com.izettle.wrench.database.WrenchConfigurationValue;
 import com.izettle.wrench.database.WrenchDatabase;
 
-public class FragmentIntegerValueViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+public class FragmentIntegerValueViewModel extends ViewModel {
 
     private final WrenchDatabase wrenchDatabase;
     private LiveData<WrenchConfiguration> configuration;
@@ -18,10 +19,9 @@ public class FragmentIntegerValueViewModel extends AndroidViewModel {
     private WrenchConfigurationValue selectedConfigurationValue;
 
     @SuppressWarnings("WeakerAccess")
-    public FragmentIntegerValueViewModel(Application application) {
-        super(application);
-
-        wrenchDatabase = WrenchDatabase.getDatabase(application);
+    @Inject
+    public FragmentIntegerValueViewModel(WrenchDatabase wrenchDatabase) {
+        this.wrenchDatabase = wrenchDatabase;
     }
 
     void init(long configurationId, long scopeId) {

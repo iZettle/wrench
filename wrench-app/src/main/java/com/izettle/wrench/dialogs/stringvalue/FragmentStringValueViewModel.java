@@ -1,14 +1,15 @@
 package com.izettle.wrench.dialogs.stringvalue;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 
 import com.izettle.wrench.database.WrenchConfiguration;
 import com.izettle.wrench.database.WrenchConfigurationValue;
 import com.izettle.wrench.database.WrenchDatabase;
 
-public class FragmentStringValueViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+public class FragmentStringValueViewModel extends ViewModel {
 
     private final WrenchDatabase wrenchDatabase;
     private LiveData<WrenchConfiguration> configuration;
@@ -18,10 +19,9 @@ public class FragmentStringValueViewModel extends AndroidViewModel {
     private WrenchConfigurationValue selectedConfigurationValue;
 
     @SuppressWarnings("WeakerAccess")
-    public FragmentStringValueViewModel(Application application) {
-        super(application);
-
-        wrenchDatabase = WrenchDatabase.getDatabase(application);
+    @Inject
+    public FragmentStringValueViewModel(WrenchDatabase wrenchDatabase) {
+        this.wrenchDatabase = wrenchDatabase;
     }
 
     void init(long configurationId, long scopeId) {

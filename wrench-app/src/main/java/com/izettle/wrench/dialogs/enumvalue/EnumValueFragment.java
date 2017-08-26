@@ -1,6 +1,8 @@
 package com.izettle.wrench.dialogs.enumvalue;
 
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,12 +15,17 @@ import android.view.View;
 import com.izettle.wrench.R;
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValue;
 import com.izettle.wrench.databinding.FragmentEnumValueBinding;
+import com.izettle.wrench.di.Injectable;
 import com.izettle.wrench.lifecycle.LifecycleDialogFragment;
 
-public class EnumValueFragment extends LifecycleDialogFragment implements PredefinedValueRecyclerViewAdapter.Listener {
+import javax.inject.Inject;
+
+public class EnumValueFragment extends LifecycleDialogFragment implements PredefinedValueRecyclerViewAdapter.Listener, Injectable {
 
     private static final String ARGUMENT_CONFIGURATION_ID = "ARGUMENT_CONFIGURATION_ID";
     private static final String ARGUMENT_SCOPE_ID = "ARGUMENT_SCOPE_ID";
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
     private FragmentEnumValueBinding binding;
     private FragmentEnumValueViewModel viewModel;
     private PredefinedValueRecyclerViewAdapter adapter;
@@ -38,7 +45,8 @@ public class EnumValueFragment extends LifecycleDialogFragment implements Predef
 
         binding = FragmentEnumValueBinding.inflate(LayoutInflater.from(getContext()), null);
 
-        viewModel = new FragmentEnumValueViewModel(getActivity().getApplication());
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentEnumValueViewModel.class);
+
         viewModel.init(getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID));
 
         viewModel.getConfiguration().observe(this, wrenchConfiguration -> {

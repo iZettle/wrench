@@ -1,22 +1,21 @@
 package com.izettle.wrench;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 
 import com.izettle.wrench.database.WrenchApplication;
 import com.izettle.wrench.database.WrenchDatabase;
 
 import java.util.List;
 
-public class ApplicationViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+public class ApplicationViewModel extends ViewModel {
 
     private final LiveData<List<WrenchApplication>> applications;
 
-    public ApplicationViewModel(Application application) {
-        super(application);
-
-        WrenchDatabase wrenchDatabase = WrenchDatabase.getDatabase(application);
+    @Inject
+    public ApplicationViewModel(WrenchDatabase wrenchDatabase) {
 
         applications = wrenchDatabase.applicationDao().getApplications();
     }

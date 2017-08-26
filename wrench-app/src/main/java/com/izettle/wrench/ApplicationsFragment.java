@@ -1,5 +1,6 @@
 package com.izettle.wrench;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,13 +11,18 @@ import android.view.ViewGroup;
 import android.widget.ViewAnimator;
 
 import com.izettle.wrench.databinding.FragmentApplicationsBinding;
+import com.izettle.wrench.di.Injectable;
 import com.izettle.wrench.lifecycle.AppCompatLifecycleFragment;
 
 import java.util.List;
 
+import javax.inject.Inject;
 
-public class ApplicationsFragment extends AppCompatLifecycleFragment {
 
+public class ApplicationsFragment extends AppCompatLifecycleFragment implements Injectable {
+
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
     private FragmentApplicationsBinding fragmentApplicationsBinding;
     private ApplicationViewModel model;
 
@@ -33,7 +39,9 @@ public class ApplicationsFragment extends AppCompatLifecycleFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        model = ViewModelProviders.of(getActivity()).get(ApplicationViewModel.class);
+
+        model = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel.class);
+
         model.getApplications().observe(this, this::applicationsUpdated);
     }
 

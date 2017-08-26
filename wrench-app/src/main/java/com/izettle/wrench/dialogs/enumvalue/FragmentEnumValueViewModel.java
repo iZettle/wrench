@@ -1,8 +1,7 @@
 package com.izettle.wrench.dialogs.enumvalue;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 
 import com.izettle.wrench.database.WrenchConfiguration;
 import com.izettle.wrench.database.WrenchConfigurationValue;
@@ -11,7 +10,9 @@ import com.izettle.wrench.database.WrenchPredefinedConfigurationValue;
 
 import java.util.List;
 
-public class FragmentEnumValueViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+public class FragmentEnumValueViewModel extends ViewModel {
 
     private final WrenchDatabase wrenchDatabase;
     private LiveData<WrenchConfiguration> configuration;
@@ -22,10 +23,9 @@ public class FragmentEnumValueViewModel extends AndroidViewModel {
     private LiveData<List<WrenchPredefinedConfigurationValue>> predefinedValuesLiveData;
 
     @SuppressWarnings("WeakerAccess")
-    public FragmentEnumValueViewModel(Application application) {
-        super(application);
-
-        wrenchDatabase = WrenchDatabase.getDatabase(application);
+    @Inject
+    public FragmentEnumValueViewModel(WrenchDatabase wrenchDatabase) {
+        this.wrenchDatabase = wrenchDatabase;
     }
 
     void init(long configurationId, long scopeId) {

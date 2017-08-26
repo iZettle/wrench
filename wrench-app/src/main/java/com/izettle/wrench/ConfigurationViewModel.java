@@ -1,8 +1,7 @@
 package com.izettle.wrench;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
@@ -16,7 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ConfigurationViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+public class ConfigurationViewModel extends ViewModel {
     private final WrenchDatabase wrenchDatabase;
     final private Map<Long, LiveData<List<WrenchConfigurationValue>>> configurationValues = new HashMap<>();
     WrenchApplication wrenchApplication;
@@ -26,10 +27,9 @@ public class ConfigurationViewModel extends AndroidViewModel {
     private LiveData<WrenchScope> selectedScopeLiveData;
     private LiveData<WrenchScope> defaultScopeLiveData;
 
-    public ConfigurationViewModel(Application application) {
-        super(application);
-
-        wrenchDatabase = WrenchDatabase.getDatabase(application);
+    @Inject
+    public ConfigurationViewModel(WrenchDatabase wrenchDatabase) {
+        this.wrenchDatabase = wrenchDatabase;
     }
 
     public void setApplicationId(long applicationId) {

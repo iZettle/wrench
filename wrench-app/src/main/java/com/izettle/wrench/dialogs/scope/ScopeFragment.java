@@ -1,6 +1,8 @@
 package com.izettle.wrench.dialogs.scope;
 
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,11 +15,16 @@ import android.widget.EditText;
 import com.izettle.wrench.R;
 import com.izettle.wrench.database.WrenchScope;
 import com.izettle.wrench.databinding.FragmentScopeBinding;
+import com.izettle.wrench.di.Injectable;
 import com.izettle.wrench.lifecycle.LifecycleDialogFragment;
 
-public class ScopeFragment extends LifecycleDialogFragment implements ScopeRecyclerViewAdapter.Listener {
+import javax.inject.Inject;
+
+public class ScopeFragment extends LifecycleDialogFragment implements ScopeRecyclerViewAdapter.Listener, Injectable {
 
     private static final String ARGUMENT_APPLICATION_ID = "ARGUMENT_APPLICATION_ID";
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
     private FragmentScopeBinding binding;
     private ScopeFragmentViewModel viewModel;
     private ScopeRecyclerViewAdapter adapter;
@@ -36,7 +43,8 @@ public class ScopeFragment extends LifecycleDialogFragment implements ScopeRecyc
 
         binding = FragmentScopeBinding.inflate(LayoutInflater.from(getContext()), null);
 
-        viewModel = new ScopeFragmentViewModel(getActivity().getApplication());
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ScopeFragmentViewModel.class);
+
         viewModel.init(getArguments().getLong(ARGUMENT_APPLICATION_ID));
 
         viewModel.getScopes().observe(this, scopes -> adapter.setItems(scopes));

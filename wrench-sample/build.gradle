@@ -1,13 +1,15 @@
 apply plugin: 'com.android.application'
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
 }
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.0'
+    buildToolsVersion '26.0.1'
     dataBinding {
         enabled = true
     }
@@ -46,11 +48,14 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:26.0.0'
+    implementation 'com.android.support:appcompat-v7:26.0.1'
     testImplementation 'junit:junit:4.12'
 
-    debugImplementation project(':wrench-prefs')
-    releaseImplementation project(':wrench-prefs-no-op')
+    debugImplementation 'com.izettle.wrench:wrench-prefs:0.1-SNAPSHOT'
+    releaseImplementation 'com.izettle.wrench:wrench-prefs-no-op:0.1-SNAPSHOT'
+
+    // debugImplementation project(':wrench-prefs')
+    // releaseImplementation project(':wrench-prefs-no-op')
 
     implementation project(':wrench-service')
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
