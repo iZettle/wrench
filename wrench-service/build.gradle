@@ -33,7 +33,7 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
     implementation project(':wrench-core')
-    implementation 'com.android.support:support-annotations:26.0.1'
+    implementation 'com.android.support:support-annotations:26.0.2'
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

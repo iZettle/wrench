@@ -48,7 +48,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:26.0.1'
+    implementation 'com.android.support:appcompat-v7:26.0.2'
     testImplementation 'junit:junit:4.12'
 
     debugImplementation 'com.izettle.wrench:wrench-prefs:0.1-SNAPSHOT'
