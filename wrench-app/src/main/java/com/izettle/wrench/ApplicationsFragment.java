@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +13,13 @@ import android.widget.ViewAnimator;
 
 import com.izettle.wrench.databinding.FragmentApplicationsBinding;
 import com.izettle.wrench.di.Injectable;
-import com.izettle.wrench.lifecycle.AppCompatLifecycleFragment;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 
-public class ApplicationsFragment extends AppCompatLifecycleFragment implements Injectable {
+public class ApplicationsFragment extends Fragment implements Injectable {
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;

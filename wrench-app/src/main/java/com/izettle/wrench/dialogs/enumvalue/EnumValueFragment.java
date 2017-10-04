@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -16,11 +17,10 @@ import com.izettle.wrench.R;
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValue;
 import com.izettle.wrench.databinding.FragmentEnumValueBinding;
 import com.izettle.wrench.di.Injectable;
-import com.izettle.wrench.lifecycle.LifecycleDialogFragment;
 
 import javax.inject.Inject;
 
-public class EnumValueFragment extends LifecycleDialogFragment implements PredefinedValueRecyclerViewAdapter.Listener, Injectable {
+public class EnumValueFragment extends DialogFragment implements PredefinedValueRecyclerViewAdapter.Listener, Injectable {
 
     private static final String ARGUMENT_CONFIGURATION_ID = "ARGUMENT_CONFIGURATION_ID";
     private static final String ARGUMENT_SCOPE_ID = "ARGUMENT_SCOPE_ID";

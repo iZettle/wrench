@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -16,11 +17,10 @@ import com.izettle.wrench.R;
 import com.izettle.wrench.database.WrenchScope;
 import com.izettle.wrench.databinding.FragmentScopeBinding;
 import com.izettle.wrench.di.Injectable;
-import com.izettle.wrench.lifecycle.LifecycleDialogFragment;
 
 import javax.inject.Inject;
 
-public class ScopeFragment extends LifecycleDialogFragment implements ScopeRecyclerViewAdapter.Listener, Injectable {
+public class ScopeFragment extends DialogFragment implements ScopeRecyclerViewAdapter.Listener, Injectable {
 
     private static final String ARGUMENT_APPLICATION_ID = "ARGUMENT_APPLICATION_ID";
     @Inject

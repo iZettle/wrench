@@ -10,11 +10,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 
 import com.izettle.wrench.database.WrenchScope;
 import com.izettle.wrench.databinding.ActivityConfigurationsBinding;
 import com.izettle.wrench.dialogs.scope.ScopeFragment;
-import com.izettle.wrench.lifecycle.AppCompatLifecycleActivity;
 
 import javax.inject.Inject;
 
@@ -22,7 +22,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
 
-public class ConfigurationsActivity extends AppCompatLifecycleActivity implements HasSupportFragmentInjector {
+public class ConfigurationsActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
     private static final String EXTRA_APPLICATION_ID = "EXTRA_APPLICATION_ID";
     @Inject
