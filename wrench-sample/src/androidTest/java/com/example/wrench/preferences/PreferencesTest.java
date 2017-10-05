@@ -1,8 +1,11 @@
 package com.example.wrench.preferences;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
@@ -10,6 +13,8 @@ import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 import android.test.mock.MockContext;
 
+import com.izettle.wrench.core.Bolt;
+import com.izettle.wrench.core.ColumnNames;
 import com.izettle.wrench.core.WrenchProviderContract;
 import com.izettle.wrench.preferences.WrenchPreferences;
 
@@ -71,7 +76,7 @@ public class PreferencesTest {
         private MockContentProvider mockProvider;
 
         public ResolverMockContext(Context context) {
-            mockProvider = new MockWrenchProvider(context);
+            mockProvider = new BoltProvider(context);
             contentResolver = new MockContentResolver();
             contentResolver.addProvider(WrenchProviderContract.WRENCH_AUTHORITY, mockProvider);
         }
@@ -82,14 +87,31 @@ public class PreferencesTest {
         }
     }
 
-    private class MockWrenchProvider extends MockContentProvider {
-        public MockWrenchProvider(Context context) {
+    private class BoltProvider extends MockContentProvider {
+        private final MatrixCursor cursor;
+
+        public BoltProvider(Context context) {
             super(context);
+            String[] columnNames = new String[]{ColumnNames.Bolt.COL_ID, ColumnNames.Bolt.COL_KEY, ColumnNames.Bolt.COL_TYPE, ColumnNames.Bolt.COL_VALUE};
+            cursor = new MatrixCursor(columnNames);
         }
 
         @Override
         public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-            return null;
+            return cursor;
+        }
+
+        @Override
+        public Uri insert(Uri uri, ContentValues values) {
+            Bolt bolt = Bolt.fromContentValues(values);
+            bolt.id = cursor.getCount() + 1;
+            cursor.newRow()
+                    .add(ColumnNames.Bolt.COL_ID, bolt.id)
+                    .add(ColumnNames.Bolt.COL_KEY, bolt.key)
+                    .add(ColumnNames.Bolt.COL_TYPE, bolt.type)
+                    .add(ColumnNames.Bolt.COL_VALUE, bolt.value);
+
+            return ContentUris.withAppendedId(uri, bolt.id);
         }
     }
 }
