@@ -30,6 +30,9 @@ android {
         buildConfigField "String", "CONFIG_AUTHORITY", "\"${configurationAuthorityValue}\""
 
     }
+    testOptions {
+        execution 'ANDROID_TEST_ORCHESTRATOR'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -40,7 +43,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-stetho.pro'
         }
         debug {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-stetho.pro'
 
             versionNameSuffix " debug"
@@ -58,9 +60,11 @@ android {
 }
 
 dependencies {
+    testImplementation 'junit:junit:4.12'
+
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation project(':wrench-core')
-    implementation project(':wrench-prefs')
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestUtil 'com.android.support.test:orchestrator:1.0.1'
 
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha9-1"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha9-1"
@@ -82,5 +86,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android:2.11"
     implementation "com.google.dagger:dagger-android-support:2.11"
 
-    testImplementation 'junit:junit:4.12'
+    implementation project(':wrench-core')
+    implementation project(':wrench-prefs')
+
 }
