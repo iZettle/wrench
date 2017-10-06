@@ -3,9 +3,9 @@ package com.izettle.wrench;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 
 import com.izettle.wrench.databinding.ActivityApplicationsBinding;
-import com.izettle.wrench.lifecycle.AppCompatLifecycleActivity;
 
 import javax.inject.Inject;
 
@@ -13,7 +13,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
 
-public class ApplicationsActivity extends AppCompatLifecycleActivity implements HasSupportFragmentInjector {
+public class ApplicationsActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;

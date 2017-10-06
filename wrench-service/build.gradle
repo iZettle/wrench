@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 15
@@ -28,12 +28,10 @@ android {
 }
 
 dependencies {
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.12'
     implementation project(':wrench-core')
-    implementation 'com.android.support:support-annotations:26.0.1'
+    implementation 'com.android.support:support-annotations:26.1.0'
+
+    testImplementation 'junit:junit:4.12'
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

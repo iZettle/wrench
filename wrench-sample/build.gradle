@@ -9,7 +9,7 @@ repositories {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '26.0.2'
     dataBinding {
         enabled = true
     }
@@ -22,16 +22,20 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    testOptions {
+        execution 'ANDROID_TEST_ORCHESTRATOR'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            versionNameSuffix " debug"
             applicationIdSuffix '.debug'
         }
     }
@@ -45,18 +49,21 @@ android {
 }
 
 dependencies {
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation 'com.android.support:appcompat-v7:26.0.1'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.10.0'
 
-    debugImplementation 'com.izettle.wrench:wrench-prefs:0.1-SNAPSHOT'
-    releaseImplementation 'com.izettle.wrench:wrench-prefs-no-op:0.1-SNAPSHOT'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation project(':wrench-core')
+    androidTestImplementation project(':wrench-prefs')
+    androidTestUtil 'com.android.support.test:orchestrator:1.0.1'
 
-    // debugImplementation project(':wrench-prefs')
-    // releaseImplementation project(':wrench-prefs-no-op')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    debugImplementation project(':wrench-prefs')
+    releaseImplementation project(':wrench-prefs-no-op')
 
     implementation project(':wrench-service')
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
 }

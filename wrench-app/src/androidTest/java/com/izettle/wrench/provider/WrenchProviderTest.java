@@ -33,6 +33,10 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
 
         WrenchDatabase wrenchDatabase = Room.inMemoryDatabaseBuilder(getMockContext(), WrenchDatabase.class).build();
 
+        if (getProvider().applicationDao != null) {
+            throw new IllegalStateException("applicationDao should be null here");
+        }
+
         getProvider().applicationDao = wrenchDatabase.applicationDao();
         getProvider().configurationDao = wrenchDatabase.configurationDao();
         getProvider().configurationValueDao = wrenchDatabase.configurationValueDao();

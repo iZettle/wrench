@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
@@ -27,11 +28,10 @@ import com.izettle.wrench.dialogs.booleanvalue.BooleanValueFragment;
 import com.izettle.wrench.dialogs.enumvalue.EnumValueFragment;
 import com.izettle.wrench.dialogs.integervalue.IntegerValueFragment;
 import com.izettle.wrench.dialogs.stringvalue.StringValueFragment;
-import com.izettle.wrench.lifecycle.AppCompatLifecycleFragment;
 
 import java.util.List;
 
-public class ConfigurationsFragment extends AppCompatLifecycleFragment implements SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener {
+public class ConfigurationsFragment extends Fragment implements SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener {
     private static final String STATE_FILTER = "STATE_FILTER";
     private FragmentConfigurationsBinding fragmentConfigurationsBinding;
     private CharSequence currentFilter;
