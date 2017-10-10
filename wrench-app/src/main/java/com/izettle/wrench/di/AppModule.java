@@ -25,6 +25,7 @@ import com.izettle.wrench.database.WrenchConfigurationValueDao;
 import com.izettle.wrench.database.WrenchDatabase;
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValueDao;
 import com.izettle.wrench.database.WrenchScopeDao;
+import com.izettle.wrench.database.migrations.Migrations;
 import com.izettle.wrench.provider.IPackageManagerWrapper;
 import com.izettle.wrench.provider.PackageManagerWrapper;
 
@@ -44,7 +45,9 @@ class AppModule {
     @Singleton
     @Provides
     WrenchDatabase provideDb(Application app) {
-        return Room.databaseBuilder(app, WrenchDatabase.class, "wrench_database.db").build();
+        return Room.databaseBuilder(app, WrenchDatabase.class, "wrench_database.db")
+                .addMigrations(Migrations.MIGRATION_1_2)
+                .build();
     }
 
     @Singleton
