@@ -12,8 +12,8 @@ android {
         applicationId "com.izettle.wrench"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 6
-        versionName "1.0.5"
+        versionCode 7
+        versionName "1.0.6"
         testInstrumentationRunner "com.izettle.wrench.WrenchTestRunner"
         vectorDrawables.useSupportLibrary = true
 
