@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
 android {
 
     dataBinding {
@@ -86,7 +93,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android:2.11"
     implementation "com.google.dagger:dagger-android-support:2.11"
 
-    implementation project(':wrench-core')
+    implementation 'com.izettle.wrench:wrench-core:0.1-SNAPSHOT'
     implementation project(':wrench-prefs')
 
 }
