@@ -1,12 +1,5 @@
 apply plugin: 'com.android.application'
 
-repositories {
-    mavenCentral()
-    maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots'
-    }
-}
-
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -54,16 +47,15 @@ dependencies {
 
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation project(':wrench-core')
-    androidTestImplementation project(':wrench-prefs')
+    androidTestImplementation 'com.izettle.wrench:wrench-core:0.2-RC2'
+    androidTestImplementation 'com.izettle.wrench:wrench-prefs:0.2-RC2'
     androidTestUtil 'com.android.support.test:orchestrator:1.0.1'
 
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    debugImplementation project(':wrench-prefs')
-    releaseImplementation project(':wrench-prefs-no-op')
+    debugImplementation 'com.izettle.wrench:wrench-prefs:0.2-RC2'
+    releaseImplementation 'com.izettle.wrench:wrench-prefs-no-op:0.2-RC2'
 
-    implementation project(':wrench-service')
-
+    implementation 'com.izettle.wrench:wrench-service:0.2-RC2'
 }

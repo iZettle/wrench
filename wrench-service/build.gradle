@@ -28,7 +28,7 @@ android {
 }
 
 dependencies {
-    implementation project(':wrench-core')
+    implementation 'com.izettle.wrench:wrench-core:0.2-RC2'
     implementation 'com.android.support:support-annotations:26.1.0'
 
     testImplementation 'junit:junit:4.12'
