@@ -1,5 +1,6 @@
 package com.example.wrench;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -17,44 +18,63 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding activityMainBinding;
 
+    private WrenchSampleViewModel wrenchSampleViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         setSupportActionBar(activityMainBinding.toolbar);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+        wrenchSampleViewModel = ViewModelProviders.of(this).get(WrenchSampleViewModel.class);
 
         WrenchPreferences wrenchPreferences = new WrenchPreferences(this);
 
-        activityMainBinding.stringConfigurationTitle.setText(R.string.string_configuration);
-        activityMainBinding.stringConfiguration.setText(wrenchPreferences.getString("String configuration", "welcome!"));
+        wrenchSampleViewModel.getStringBolt().observe(this, bolt -> {
+            if (bolt != null) {
+                activityMainBinding.stringConfiguration.setText(bolt.value);
+            }
+        });
 
-        activityMainBinding.urlConfigurationTitle.setText(R.string.url_configuration);
-        activityMainBinding.urlConfiguration.setText(wrenchPreferences.getString("Url configuration (http://www.example.com/path?param=value)", "http://www.example.com/path?param=value"));
+        wrenchSampleViewModel.getUrlBolt().observe(this, bolt -> {
+            if (bolt != null) {
+                activityMainBinding.urlConfiguration.setText(bolt.value);
+            }
+        });
 
-        activityMainBinding.booleanConfigurationTitle.setText(R.string.boolean_configuration);
-        activityMainBinding.booleanConfiguration.setText(String.valueOf(wrenchPreferences.getBoolean("boolean configuration", false)));
+        wrenchSampleViewModel.getBooleanBolt().observe(this, bolt -> {
+            if (bolt != null) {
+                activityMainBinding.booleanConfiguration.setText(bolt.value);
 
-        activityMainBinding.intConfigurationTitle.setText(R.string.int_configuration);
-        activityMainBinding.intConfiguration.setText(String.valueOf(wrenchPreferences.getInt("int configuration", 2)));
+            }
+        });
 
-        activityMainBinding.enumConfigurationTitle.setText(R.string.enum_configuration);
+        wrenchSampleViewModel.getIntBolt().observe(this, bolt -> {
+            if (bolt != null) {
+                activityMainBinding.intConfiguration.setText(bolt.value);
+            }
+        });
 
-        MyEnum myEnum = wrenchPreferences.getEnum("enum configuration", MyEnum.class, MyEnum.FIRST);
-        activityMainBinding.enumConfiguration.setText(String.valueOf(myEnum));
+        wrenchPreferences.getEnum(getString(R.string.enum_configuration), MyEnum.class, MyEnum.FIRST);
+        wrenchSampleViewModel.getBolt(getString(R.string.enum_configuration)).observe(this, bolt -> {
+            if (bolt != null) {
+                activityMainBinding.enumConfiguration.setText(bolt.value);
+            }
+        });
+
+        wrenchPreferences.getString(getString(R.string.service_configuration), null);
+        wrenchSampleViewModel.getBolt(getString(R.string.service_configuration)).observe(this, bolt -> {
+            if (bolt != null) {
+                activityMainBinding.serviceConfiguration.setText(bolt.value);
+            }
+        });
 
         activityMainBinding.serviceButton.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), WrenchService.class);
-            intent.putExtra("service configuration", new Date().toString());
+            intent.putExtra(getString(R.string.service_configuration), new Date().toString());
             startService(intent);
         });
-
-        activityMainBinding.serviceConfiguration.setText(wrenchPreferences.getString("service configuration", null));
     }
 
     @Override

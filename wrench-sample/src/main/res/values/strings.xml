@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Sample Application</string>
     <string name="string_configuration">String configuration:</string>
+    <string name="url_configuration">Url configuration (http://www.example.com/path?param=value):</string>
     <string name="boolean_configuration">boolean configuration:</string>
     <string name="int_configuration">int configuration:</string>
     <string name="enum_configuration">enum configuration:</string>
+    <string name="service_configuration">service_configuration</string>
     <string name="click_to_update_value_using_service">Click to update value using service</string>
-    <string name="url_configuration">Url configuration</string>
 </resources>
