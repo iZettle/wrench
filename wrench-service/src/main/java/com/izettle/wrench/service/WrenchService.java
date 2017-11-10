@@ -27,14 +27,14 @@ public final class WrenchService extends IntentService {
             return;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = Integer.class.getName();
-            bolt.value = String.valueOf(value);
+        if (bolt.getId() == 0) {
+            bolt.setKey(key);
+            bolt.setType(Integer.class.getName());
+            bolt.setValue(String.valueOf(value));
             Uri uri = insertBolt(contentResolver, bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
-            bolt.value = String.valueOf(value);
+            bolt.setValue(String.valueOf(value));
             updateBolt(contentResolver, bolt);
         }
     }
@@ -46,14 +46,14 @@ public final class WrenchService extends IntentService {
             return;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = Boolean.class.getName();
-            bolt.value = String.valueOf(value);
+        if (bolt.getId() == 0) {
+            bolt.setKey(key);
+            bolt.setType(Boolean.class.getName());
+            bolt.setValue(String.valueOf(value));
             Uri uri = insertBolt(contentResolver, bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
-            bolt.value = String.valueOf(value);
+            bolt.setValue(String.valueOf(value));
             updateBolt(contentResolver, bolt);
         }
     }
@@ -65,14 +65,14 @@ public final class WrenchService extends IntentService {
             return;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = String.class.getName();
-            bolt.value = value;
+        if (bolt.getId() == 0) {
+            bolt.setKey(key);
+            bolt.setType(String.class.getName());
+            bolt.setValue(value);
             Uri uri = insertBolt(contentResolver, bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
-            bolt.value = value;
+            bolt.setValue(value);
             updateBolt(contentResolver, bolt);
         }
     }
@@ -82,7 +82,7 @@ public final class WrenchService extends IntentService {
     }
 
     private static void updateBolt(ContentResolver contentResolver, Bolt bolt) {
-        contentResolver.update(WrenchProviderContract.boltUri(bolt.id),
+        contentResolver.update(WrenchProviderContract.boltUri(bolt.getId()),
                 bolt.toContentValues(),
                 null,
                 null);

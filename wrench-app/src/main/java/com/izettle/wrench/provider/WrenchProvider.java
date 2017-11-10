@@ -203,13 +203,13 @@ public class WrenchProvider extends ContentProvider {
             case CURRENT_CONFIGURATIONS: {
                 Bolt bolt = Bolt.fromContentValues(values);
 
-                WrenchConfiguration wrenchConfiguration = configurationDao.getWrenchConfiguration(callingApplication.id(), bolt.key);
+                WrenchConfiguration wrenchConfiguration = configurationDao.getWrenchConfiguration(callingApplication.id(), bolt.getKey());
 
                 if (wrenchConfiguration == null) {
                     wrenchConfiguration = new WrenchConfiguration();
                     wrenchConfiguration.setApplicationId(callingApplication.id());
-                    wrenchConfiguration.setKey(bolt.key);
-                    wrenchConfiguration.setType(bolt.type);
+                    wrenchConfiguration.setKey(bolt.getKey());
+                    wrenchConfiguration.setType(bolt.getType());
 
                     wrenchConfiguration.setId(configurationDao.insert(wrenchConfiguration));
                 }
@@ -218,7 +218,7 @@ public class WrenchProvider extends ContentProvider {
 
                 WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue();
                 wrenchConfigurationValue.setConfigurationId(wrenchConfiguration.id());
-                wrenchConfigurationValue.setValue(bolt.value);
+                wrenchConfigurationValue.setValue(bolt.getValue());
                 wrenchConfigurationValue.setScope(defaultScope.id());
 
                 wrenchConfigurationValue.setId(configurationValueDao.insert(wrenchConfigurationValue));
@@ -254,12 +254,12 @@ public class WrenchProvider extends ContentProvider {
             case CURRENT_CONFIGURATION_ID: {
                 Bolt bolt = Bolt.fromContentValues(values);
                 WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.id());
-                updatedRows = configurationValueDao.updateConfigurationValue(Long.parseLong(uri.getLastPathSegment()), scope.id(), bolt.value);
+                updatedRows = configurationValueDao.updateConfigurationValue(Long.parseLong(uri.getLastPathSegment()), scope.id(), bolt.getValue());
                 if (updatedRows == 0) {
                     WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue();
                     wrenchConfigurationValue.setConfigurationId(Long.parseLong(uri.getLastPathSegment()));
                     wrenchConfigurationValue.setScope(scope.id());
-                    wrenchConfigurationValue.setValue(bolt.value);
+                    wrenchConfigurationValue.setValue(bolt.getValue());
                     configurationValueDao.insert(wrenchConfigurationValue);
                 }
 

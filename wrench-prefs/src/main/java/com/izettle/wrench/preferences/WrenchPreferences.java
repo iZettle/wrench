@@ -57,22 +57,19 @@ public class WrenchPreferences {
             return defValue;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = Enum.class.getName();
-            bolt.value = defValue.toString();
+        if (bolt.getId() == 0) {
+            bolt.setKey(key);
+            bolt.setType(Enum.class.getName());
+            bolt.setValue(defValue.toString());
             Uri uri = insertBolt(contentResolver, bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
 
             for (T enumConstant : type.getEnumConstants()) {
-                Nut nut = new Nut();
-                nut.configurationId = bolt.id;
-                nut.value = enumConstant.toString();
-                insertNut(contentResolver, nut);
+                insertNut(contentResolver, new Nut(bolt.getId(), enumConstant.toString()));
             }
         }
 
-        return Enum.valueOf(type, bolt.value);
+        return Enum.valueOf(type, bolt.getValue());
     }
 
     public String getString(String key, String defValue) {
@@ -82,15 +79,15 @@ public class WrenchPreferences {
             return defValue;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = String.class.getName();
-            bolt.value = defValue;
+        if (bolt.getId() == 0) {
+            bolt.setKey(key);
+            bolt.setType(String.class.getName());
+            bolt.setValue(defValue);
             Uri uri = insertBolt(contentResolver, bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         }
 
-        return bolt.value;
+        return bolt.getValue();
     }
 
     public boolean getBoolean(String key, boolean defValue) {
@@ -99,15 +96,15 @@ public class WrenchPreferences {
             return defValue;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = Boolean.class.getName();
-            bolt.value = String.valueOf(defValue);
+        if (bolt.getId() == 0) {
+            bolt.setKey(key);
+            bolt.setType(Boolean.class.getName());
+            bolt.setValue(String.valueOf(defValue));
             Uri uri = insertBolt(contentResolver, bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         }
 
-        return Boolean.valueOf(bolt.value);
+        return Boolean.valueOf(bolt.getValue());
     }
 
     public int getInt(String key, int defValue) {
@@ -116,14 +113,14 @@ public class WrenchPreferences {
             return defValue;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = Integer.class.getName();
-            bolt.value = String.valueOf(defValue);
+        if (bolt.getId() == 0) {
+            bolt.setKey(key);
+            bolt.setType(Integer.class.getName());
+            bolt.setValue(String.valueOf(defValue));
             Uri uri = insertBolt(contentResolver, bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         }
 
-        return Integer.valueOf(bolt.value);
+        return Integer.valueOf(bolt.getValue());
     }
 }

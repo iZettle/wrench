@@ -81,7 +81,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android:2.13"
     implementation "com.google.dagger:dagger-android-support:2.13"
 
-    implementation 'com.izettle.wrench:wrench-core:0.2-RC2'
-    implementation 'com.izettle.wrench:wrench-prefs:0.2-RC2'
+    implementation project(":wrench-core")
+    implementation project(":wrench-prefs")
 
 }

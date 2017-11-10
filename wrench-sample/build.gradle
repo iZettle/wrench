@@ -51,8 +51,8 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
     implementation 'android.arch.lifecycle:extensions:1.0.0'
 
-    debugImplementation 'com.izettle.wrench:wrench-prefs:0.2-RC2'
-    releaseImplementation 'com.izettle.wrench:wrench-prefs-no-op:0.2-RC2'
+    debugImplementation project(":wrench-prefs")
+    releaseImplementation project(":wrench-prefs-no-op")
 
-    implementation 'com.izettle.wrench:wrench-service:0.2-RC2'
+    implementation project(":wrench-service")
 }
