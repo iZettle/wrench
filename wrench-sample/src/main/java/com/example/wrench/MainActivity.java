@@ -18,8 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding activityMainBinding;
 
-    private WrenchSampleViewModel wrenchSampleViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(activityMainBinding.toolbar);
 
-        wrenchSampleViewModel = ViewModelProviders.of(this).get(WrenchSampleViewModel.class);
+        WrenchSampleViewModel wrenchSampleViewModel = ViewModelProviders.of(this).get(WrenchSampleViewModel.class);
 
         WrenchPreferences wrenchPreferences = new WrenchPreferences(this);
 
