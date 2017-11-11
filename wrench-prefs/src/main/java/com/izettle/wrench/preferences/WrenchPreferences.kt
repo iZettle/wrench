@@ -36,10 +36,10 @@ class WrenchPreferences(context: Context) {
     }
 
     fun <T : Enum<T>> getEnum(key: String, type: Class<T>, defValue: T): T {
-        val bolt = getBolt(contentResolver, key) ?: return defValue
+        var bolt = getBolt(contentResolver, key) ?: return defValue
 
         if (bolt.id == 0L) {
-            bolt.copy(key = key, type = Enum::class.java.name, value = defValue.toString())
+            bolt = bolt.copy(key = key, type = Enum::class.java.name, value = defValue.toString())
             val uri = insertBolt(contentResolver, bolt)
             bolt.id = java.lang.Long.parseLong(uri!!.lastPathSegment)
 
@@ -53,10 +53,10 @@ class WrenchPreferences(context: Context) {
 
     fun getString(key: String, defValue: String?): String? {
 
-        val bolt = getBolt(contentResolver, key) ?: return defValue
+        var bolt = getBolt(contentResolver, key) ?: return defValue
 
         if (bolt.id == 0L) {
-            bolt.copy(key = key, type = String::class.java.name, value = defValue)
+            bolt = bolt.copy(key = key, type = String::class.java.name, value = defValue)
             insertBolt(contentResolver, bolt)
         }
 
@@ -64,10 +64,10 @@ class WrenchPreferences(context: Context) {
     }
 
     fun getBoolean(key: String, defValue: Boolean): Boolean {
-        val bolt = getBolt(contentResolver, key) ?: return defValue
+        var bolt = getBolt(contentResolver, key) ?: return defValue
 
         if (bolt.id == 0L) {
-            bolt.copy(key = key, type = Boolean::class.java.name, value = defValue.toString())
+            bolt = bolt.copy(key = key, type = Boolean::class.java.name, value = defValue.toString())
             insertBolt(contentResolver, bolt)
         }
 
@@ -75,10 +75,10 @@ class WrenchPreferences(context: Context) {
     }
 
     fun getInt(key: String, defValue: Int): Int {
-        val bolt = getBolt(contentResolver, key) ?: return defValue
+        var bolt = getBolt(contentResolver, key) ?: return defValue
 
         if (bolt.id == 0L) {
-            bolt.copy(key = key, type = Int::class.java.name, value = defValue.toString())
+            bolt = bolt.copy(key = key, type = Int::class.java.name, value = defValue.toString())
             insertBolt(contentResolver, bolt)
         }
 

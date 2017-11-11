@@ -4,9 +4,9 @@ import android.content.ContentValues
 import android.database.Cursor
 
 data class Bolt(var id: Long = 0,
-                var type: String,
-                var key: String,
-                var value: String?) {
+                val type: String,
+                val key: String,
+                val value: String?) {
 
     constructor() : this(0, "", "", "")
 
@@ -25,15 +25,12 @@ data class Bolt(var id: Long = 0,
 
         @JvmStatic
         fun fromContentValues(values: ContentValues): Bolt {
-            val boltValue = Bolt()
-            if (values.containsKey(ColumnNames.Bolt.COL_ID)) {
-                boltValue.id = values.getAsLong(ColumnNames.Bolt.COL_ID)!!
-            }
-            boltValue.key = values.getAsString(ColumnNames.Bolt.COL_KEY)
-            boltValue.value = values.getAsString(ColumnNames.Bolt.COL_VALUE)
-            boltValue.type = values.getAsString(ColumnNames.Bolt.COL_TYPE)
+            val boltId = values.getAsLong(ColumnNames.Bolt.COL_ID) ?: 0
 
-            return boltValue
+            return Bolt(id = boltId,
+                    type = values.getAsString(ColumnNames.Bolt.COL_TYPE),
+                    key = values.getAsString(ColumnNames.Bolt.COL_KEY),
+                    value = values.getAsString(ColumnNames.Bolt.COL_VALUE))
         }
 
         @JvmStatic
@@ -41,7 +38,7 @@ data class Bolt(var id: Long = 0,
             return Bolt(cursor.getLong(ColumnNames.Bolt.COL_ID),
                     cursor.getString(ColumnNames.Bolt.COL_TYPE),
                     cursor.getString(ColumnNames.Bolt.COL_KEY),
-                    cursor.getString(ColumnNames.Bolt.COL_VALUE)
+                    cursor.getStringOrNull(ColumnNames.Bolt.COL_VALUE)
             )
         }
     }

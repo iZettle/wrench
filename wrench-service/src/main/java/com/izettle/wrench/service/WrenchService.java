@@ -28,13 +28,11 @@ public final class WrenchService extends IntentService {
         }
 
         if (bolt.getId() == 0) {
-            bolt.setKey(key);
-            bolt.setType(Integer.class.getName());
-            bolt.setValue(String.valueOf(value));
+            bolt = bolt.copy(bolt.getId(), Integer.class.getName(), key, String.valueOf(value));
             Uri uri = insertBolt(contentResolver, bolt);
             bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
-            bolt.setValue(String.valueOf(value));
+            bolt = bolt.copy(bolt.getId(), bolt.getType(), bolt.getKey(), String.valueOf(value));
             updateBolt(contentResolver, bolt);
         }
     }
@@ -47,13 +45,12 @@ public final class WrenchService extends IntentService {
         }
 
         if (bolt.getId() == 0) {
-            bolt.setKey(key);
-            bolt.setType(Boolean.class.getName());
-            bolt.setValue(String.valueOf(value));
+            bolt = bolt.copy(bolt.getId(), Boolean.class.getName(), key, String.valueOf(value));
+
             Uri uri = insertBolt(contentResolver, bolt);
             bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
-            bolt.setValue(String.valueOf(value));
+            bolt = bolt.copy(bolt.getId(), bolt.getType(), bolt.getKey(), String.valueOf(value));
             updateBolt(contentResolver, bolt);
         }
     }
@@ -66,13 +63,11 @@ public final class WrenchService extends IntentService {
         }
 
         if (bolt.getId() == 0) {
-            bolt.setKey(key);
-            bolt.setType(String.class.getName());
-            bolt.setValue(value);
+            bolt = bolt.copy(bolt.getId(), String.class.getName(), key, value);
             Uri uri = insertBolt(contentResolver, bolt);
             bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
-            bolt.setValue(value);
+            bolt = bolt.copy(bolt.getId(), bolt.getType(), bolt.getKey(), value);
             updateBolt(contentResolver, bolt);
         }
     }
