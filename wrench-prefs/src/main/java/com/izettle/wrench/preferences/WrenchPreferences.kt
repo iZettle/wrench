@@ -2,9 +2,7 @@ package com.izettle.wrench.preferences
 
 import android.content.ContentResolver
 import android.content.Context
-import android.database.Cursor
 import android.net.Uri
-
 import com.izettle.wrench.core.Bolt
 import com.izettle.wrench.core.Nut
 import com.izettle.wrench.core.WrenchProviderContract
@@ -17,7 +15,7 @@ class WrenchPreferences(context: Context) {
     }
 
     private fun getBolt(contentResolver: ContentResolver, key: String): Bolt? {
-        val cursor: Cursor? = contentResolver.query(WrenchProviderContract.boltUri(key), null, null, null, null)
+        val cursor = contentResolver.query(WrenchProviderContract.boltUri(key), null, null, null, null)
         cursor.use {
             if (cursor == null) {
                 return null
