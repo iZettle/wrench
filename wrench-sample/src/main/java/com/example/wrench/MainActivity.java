@@ -13,7 +13,6 @@ import com.izettle.wrench.service.WrenchService;
 
 import java.util.Date;
 
-
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding activityMainBinding;
