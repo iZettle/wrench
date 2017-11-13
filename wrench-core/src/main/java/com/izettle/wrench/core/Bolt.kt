@@ -25,9 +25,8 @@ data class Bolt(var id: Long = 0,
 
         @JvmStatic
         fun fromContentValues(values: ContentValues): Bolt {
-            val boltId = values.getAsLong(ColumnNames.Bolt.COL_ID) ?: 0
 
-            return Bolt(id = boltId,
+            return Bolt(id = values.getAsLong(ColumnNames.Bolt.COL_ID) ?: 0,
                     type = values.getAsString(ColumnNames.Bolt.COL_TYPE),
                     key = values.getAsString(ColumnNames.Bolt.COL_KEY),
                     value = values.getAsString(ColumnNames.Bolt.COL_VALUE))

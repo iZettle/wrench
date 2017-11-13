@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -88,30 +89,48 @@ public class PreferencesTest {
     }
 
     private class BoltProvider extends MockContentProvider {
-        private final MatrixCursor cursor;
+        private static final int CURRENT_CONFIGURATION_ID = 1;
+        private static final int CURRENT_CONFIGURATION_KEY = 2;
+        private static final int CURRENT_CONFIGURATIONS = 3;
+        private static final int PREDEFINED_CONFIGURATION_VALUES = 5;
+        private final MatrixCursor boltCursor;
+        UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         public BoltProvider(Context context) {
             super(context);
             String[] columnNames = new String[]{ColumnNames.Bolt.COL_ID, ColumnNames.Bolt.COL_KEY, ColumnNames.Bolt.COL_TYPE, ColumnNames.Bolt.COL_VALUE};
-            cursor = new MatrixCursor(columnNames);
+            boltCursor = new MatrixCursor(columnNames);
+
+            uriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration/#", CURRENT_CONFIGURATION_ID);
+            uriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration/*", CURRENT_CONFIGURATION_KEY);
+            uriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration", CURRENT_CONFIGURATIONS);
+            uriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "predefinedConfigurationValue", PREDEFINED_CONFIGURATION_VALUES);
+
         }
 
         @Override
         public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-            return cursor;
+            return boltCursor;
         }
 
         @Override
         public Uri insert(Uri uri, ContentValues values) {
-            Bolt bolt = Bolt.fromContentValues(values);
-            bolt.id = cursor.getCount() + 1;
-            cursor.newRow()
-                    .add(ColumnNames.Bolt.COL_ID, bolt.id)
-                    .add(ColumnNames.Bolt.COL_KEY, bolt.key)
-                    .add(ColumnNames.Bolt.COL_TYPE, bolt.type)
-                    .add(ColumnNames.Bolt.COL_VALUE, bolt.value);
-
-            return ContentUris.withAppendedId(uri, bolt.id);
+            switch (uriMatcher.match(uri)) {
+                case CURRENT_CONFIGURATIONS: {
+                    Bolt bolt = Bolt.fromContentValues(values);
+                    bolt.setId(boltCursor.getCount() + 1);
+                    boltCursor.newRow()
+                            .add(ColumnNames.Bolt.COL_ID, bolt.getId())
+                            .add(ColumnNames.Bolt.COL_KEY, bolt.getKey())
+                            .add(ColumnNames.Bolt.COL_TYPE, bolt.getType())
+                            .add(ColumnNames.Bolt.COL_VALUE, bolt.getValue());
+                    return ContentUris.withAppendedId(uri, bolt.getId());
+                }
+                case PREDEFINED_CONFIGURATION_VALUES: {
+                    return uri;
+                }
+            }
+            throw new IllegalArgumentException("Unknown uri");
         }
     }
 }
