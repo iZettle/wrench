@@ -32,6 +32,9 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import dagger.android.HasContentProviderInjector;
 
+import static com.izettle.wrench.provider.WrenchApiVersion.API_1;
+import static com.izettle.wrench.provider.WrenchApiVersion.API_INVALID;
+
 
 public class WrenchProvider extends ContentProvider {
 
@@ -108,6 +111,27 @@ public class WrenchProvider extends ContentProvider {
         return scope;
     }
 
+    private static void assertValidApiVersion(Uri uri) {
+        switch (getApiVersion(uri)) {
+            case API_1: {
+                return;
+            }
+            case WrenchApiVersion.API_INVALID:
+            default: {
+                throw new IllegalArgumentException("This content provider requires you to provide a valid api-version in a queryParameter");
+            }
+        }
+    }
+
+    @WrenchApiVersion
+    private static int getApiVersion(Uri uri) {
+        String queryParameter = uri.getQueryParameter(WrenchProviderContract.WRENCH_API_VERSION);
+        if (queryParameter != null) {
+            return Integer.valueOf(queryParameter);
+        } else {
+            return API_INVALID;
+        }
+    }
 
     @Nullable
     private synchronized WrenchApplication getCallingApplication(@Nullable Context context, WrenchApplicationDao applicationDao) {
@@ -144,6 +168,7 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        assertValidApiVersion(uri);
 
         WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
@@ -193,6 +218,8 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
+        assertValidApiVersion(uri);
+
         WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
             return null; // for security reason we need to know the callingApplication
@@ -242,7 +269,15 @@ public class WrenchProvider extends ContentProvider {
     }
 
     @Override
+    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
+        assertValidApiVersion(uri);
+
+        return super.bulkInsert(uri, values);
+    }
+
+    @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        assertValidApiVersion(uri);
 
         WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
@@ -279,11 +314,15 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
+        assertValidApiVersion(uri);
+
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public String getType(@NonNull Uri uri) {
+        assertValidApiVersion(uri);
+
         switch (sUriMatcher.match(uri)) {
             case CURRENT_CONFIGURATIONS: {
                 return "vnd.android.cursor.dir/vnd." + BuildConfig.APPLICATION_ID + ".currentConfiguration";

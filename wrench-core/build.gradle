@@ -15,6 +15,8 @@ android {
         def wrenchProviderAuthority = "com.izettle.wrench.configprovider"
         manifestPlaceholders = [wrenchProviderAuthority: wrenchProviderAuthority]
         buildConfigField("String", "WRENCH_AUTHORITY", "\"${wrenchProviderAuthority}\"")
+
+        buildConfigField("int", "WRENCH_API_VERSION", "1")
     }
 
     buildTypes {
