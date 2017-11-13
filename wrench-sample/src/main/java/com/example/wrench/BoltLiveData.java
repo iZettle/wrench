@@ -1,6 +1,5 @@
 package com.example.wrench;
 
-import android.arch.lifecycle.LiveData;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
@@ -8,9 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-
-import com.izettle.wrench.core.Bolt;
-import com.izettle.wrench.core.WrenchProviderContract;
 
 public class BoltLiveData extends LiveData<Bolt> {
     private final String key;
