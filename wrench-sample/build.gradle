@@ -55,5 +55,5 @@ dependencies {
     releaseImplementation project(":wrench-prefs-no-op")
 
     implementation project(":wrench-service")
-    compile project(path: ':wrench-core')
+    implementation project(":wrench-core")
 }
