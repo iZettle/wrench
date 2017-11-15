@@ -32,10 +32,16 @@ object WrenchProviderContract {
     @JvmStatic
     fun boltUri(): Uri {
         return boltUri
+                .buildUpon()
+                .appendQueryParameter(WRENCH_API_VERSION, BuildConfig.WRENCH_API_VERSION.toString())
+                .build()
     }
 
     @JvmStatic
     fun nutUri(): Uri {
         return nutUri
+                .buildUpon()
+                .appendQueryParameter(WRENCH_API_VERSION, BuildConfig.WRENCH_API_VERSION.toString())
+                .build()
     }
 }
