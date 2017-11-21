@@ -4,11 +4,9 @@ import android.content.ContentValues
 import android.database.Cursor
 
 data class Bolt(var id: Long = 0,
-                val type: String,
-                val key: String,
-                val value: String?) {
-
-    constructor() : this(0, "", "", "")
+                val type: String = "",
+                val key: String = "",
+                val value: String? = null) {
 
     fun toContentValues(): ContentValues {
         val contentValues = ContentValues()
@@ -34,24 +32,24 @@ data class Bolt(var id: Long = 0,
 
         @JvmStatic
         fun fromCursor(cursor: Cursor): Bolt {
-            return Bolt(cursor.getLong(ColumnNames.Bolt.COL_ID),
-                    cursor.getString(ColumnNames.Bolt.COL_TYPE),
-                    cursor.getString(ColumnNames.Bolt.COL_KEY),
-                    cursor.getStringOrNull(ColumnNames.Bolt.COL_VALUE)
+            return Bolt(id = cursor.getLongOrThrow(ColumnNames.Bolt.COL_ID),
+                    type = cursor.getStringOrThrow(ColumnNames.Bolt.COL_TYPE),
+                    key = cursor.getStringOrThrow(ColumnNames.Bolt.COL_KEY),
+                    value = cursor.getStringOrNull(ColumnNames.Bolt.COL_VALUE)
             )
         }
     }
 }
 
 
-private fun Cursor.getString(columnName: String): String = getStringOrNull(columnName)!!
+private fun Cursor.getStringOrThrow(columnName: String): String = getStringOrNull(columnName)!!
 
 private fun Cursor.getStringOrNull(columnName: String): String? {
     val index = getColumnIndexOrThrow(columnName)
     return if (isNull(index)) null else getString(index)
 }
 
-private fun Cursor.getLong(columnName: String): Long = getLongOrNull(columnName)!!
+private fun Cursor.getLongOrThrow(columnName: String): Long = getLongOrNull(columnName)!!
 
 private fun Cursor.getLongOrNull(columnName: String): Long? {
     val index = getColumnIndexOrThrow(columnName)
