@@ -10,16 +10,14 @@ import com.izettle.wrench.core.WrenchProviderContract
 class WrenchService : IntentService("WrenchService") {
 
     override fun onHandleIntent(intent: Intent?) {
-        if (intent != null) {
-            val extras = intent.extras
-            for (key in extras!!.keySet()) {
+        intent?.let {
+            val extras = it.extras
+            for (key in extras.keySet()) {
                 val value = extras.get(key)
-                if (value is Int) {
-                    updateInteger(contentResolver, key, value)
-                } else if (value is String) {
-                    updateString(contentResolver, key, value)
-                } else if (value is Boolean) {
-                    updateBoolean(contentResolver, key, value)
+                when (value) {
+                    is Int -> updateInteger(contentResolver, key, value)
+                    is String -> updateString(contentResolver, key, value)
+                    is Boolean -> updateBoolean(contentResolver, key, value)
                 }
             }
         }
@@ -31,7 +29,7 @@ class WrenchService : IntentService("WrenchService") {
         if (bolt.id == 0L) {
             bolt = bolt.copy(bolt.id, Int::class.java.name, key, value.toString())
             val uri = insertBolt(contentResolver, bolt)
-            bolt.id = java.lang.Long.parseLong(uri!!.lastPathSegment)
+            bolt.id = uri!!.lastPathSegment.toLong()
         } else {
             bolt = bolt.copy(bolt.id, bolt.type, bolt.key, value.toString())
             updateBolt(contentResolver, bolt)
@@ -43,9 +41,8 @@ class WrenchService : IntentService("WrenchService") {
 
         if (bolt.id == 0L) {
             bolt = bolt.copy(bolt.id, Boolean::class.java.name, key, value.toString())
-
             val uri = insertBolt(contentResolver, bolt)
-            bolt.id = java.lang.Long.parseLong(uri!!.lastPathSegment)
+            bolt.id = uri!!.lastPathSegment.toLong()
         } else {
             bolt = bolt.copy(bolt.id, bolt.type, bolt.key, value.toString())
             updateBolt(contentResolver, bolt)
@@ -58,7 +55,7 @@ class WrenchService : IntentService("WrenchService") {
         if (bolt.id == 0L) {
             bolt = bolt.copy(bolt.id, String::class.java.name, key, value)
             val uri = insertBolt(contentResolver, bolt)
-            bolt.id = java.lang.Long.parseLong(uri!!.lastPathSegment)
+            bolt.id = uri!!.lastPathSegment.toLong()
         } else {
             bolt = bolt.copy(bolt.id, bolt.type, bolt.key, value)
             updateBolt(contentResolver, bolt)

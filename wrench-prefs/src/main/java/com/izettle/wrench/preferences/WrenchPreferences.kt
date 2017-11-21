@@ -39,7 +39,7 @@ class WrenchPreferences(context: Context) {
         if (bolt.id == 0L) {
             bolt = bolt.copy(key = key, type = Enum::class.java.name, value = defValue.toString())
             val uri = insertBolt(contentResolver, bolt)
-            bolt.id = java.lang.Long.parseLong(uri!!.lastPathSegment)
+            bolt.id = uri!!.lastPathSegment.toLong()
 
             for (enumConstant in type.enumConstants) {
                 insertNut(contentResolver, Nut(bolt.id, enumConstant.toString()))
