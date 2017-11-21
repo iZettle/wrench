@@ -24,6 +24,7 @@ import com.izettle.wrench.database.WrenchPredefinedConfigurationValue;
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValueDao;
 import com.izettle.wrench.database.WrenchScope;
 import com.izettle.wrench.database.WrenchScopeDao;
+import com.izettle.wrench.preferences.WrenchPreferences;
 
 import java.util.Date;
 
@@ -69,6 +70,9 @@ public class WrenchProvider extends ContentProvider {
     @Inject
     IPackageManagerWrapper packageManagerWrapper;
 
+    @Inject
+    WrenchPreferences wrenchPreferences;
+
     public WrenchProvider() {
     }
 
@@ -111,14 +115,14 @@ public class WrenchProvider extends ContentProvider {
         return scope;
     }
 
-    private static void assertValidApiVersion(Uri uri) {
+    private static void assertValidApiVersion(WrenchPreferences wrenchPreferences, Uri uri) {
         switch (getApiVersion(uri)) {
             case API_1: {
                 return;
             }
             case WrenchApiVersion.API_INVALID:
             default: {
-                throw new IllegalArgumentException("This content provider requires you to provide a valid api-version in a queryParameter");
+                // throw new IllegalArgumentException("This content provider requires you to provide a valid api-version in a queryParameter");
             }
         }
     }
@@ -168,7 +172,7 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        assertValidApiVersion(uri);
+        assertValidApiVersion(wrenchPreferences, uri);
 
         WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
@@ -218,7 +222,7 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
-        assertValidApiVersion(uri);
+        assertValidApiVersion(wrenchPreferences, uri);
 
         WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
@@ -270,14 +274,14 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-        assertValidApiVersion(uri);
+        assertValidApiVersion(wrenchPreferences, uri);
 
         return super.bulkInsert(uri, values);
     }
 
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        assertValidApiVersion(uri);
+        assertValidApiVersion(wrenchPreferences, uri);
 
         WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
@@ -314,14 +318,14 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
-        assertValidApiVersion(uri);
+        assertValidApiVersion(wrenchPreferences, uri);
 
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public String getType(@NonNull Uri uri) {
-        assertValidApiVersion(uri);
+        assertValidApiVersion(wrenchPreferences, uri);
 
         switch (sUriMatcher.match(uri)) {
             case CURRENT_CONFIGURATIONS: {
