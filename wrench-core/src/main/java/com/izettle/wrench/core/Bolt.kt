@@ -2,9 +2,10 @@ package com.izettle.wrench.core
 
 import android.content.ContentValues
 import android.database.Cursor
+import android.support.annotation.StringDef
 
 data class Bolt(var id: Long = 0,
-                val type: String = "",
+                @BoltType val type: String = "",
                 val key: String = "",
                 val value: String? = null) {
 
@@ -18,6 +19,10 @@ data class Bolt(var id: Long = 0,
 
         return contentValues
     }
+
+    @StringDef(TYPE.BOOLEAN, TYPE.STRING, TYPE.INTEGER, TYPE.ENUM)
+    @Retention(AnnotationRetention.SOURCE)
+    annotation class BoltType
 
     object TYPE {
         const val BOOLEAN = "boolean"
