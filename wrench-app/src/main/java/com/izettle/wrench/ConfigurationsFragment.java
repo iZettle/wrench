@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewAnimator;
 
+import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.database.WrenchConfiguration;
 import com.izettle.wrench.databinding.FragmentConfigurationsBinding;
 import com.izettle.wrench.dialogs.booleanvalue.BooleanValueFragment;
@@ -206,16 +207,20 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
 
         long selectedScopeId = model.getSelectedScopeLiveData().getValue().id();
 
-        if (TextUtils.equals(String.class.getName(), configuration.type())) {
+        if (TextUtils.equals(String.class.getName(), configuration.type()) ||
+                TextUtils.equals(Bolt.TYPE.STRING, configuration.type())) {
             StringValueFragment.newInstance(configuration.id(), selectedScopeId).show(getChildFragmentManager(), null);
 
-        } else if (TextUtils.equals(Integer.class.getName(), configuration.type())) {
+        } else if (TextUtils.equals(Integer.class.getName(), configuration.type()) ||
+                TextUtils.equals(Bolt.TYPE.INTEGER, configuration.type())) {
             IntegerValueFragment.newInstance(configuration.id(), selectedScopeId).show(getChildFragmentManager(), null);
 
-        } else if (TextUtils.equals(Boolean.class.getName(), configuration.type())) {
+        } else if (TextUtils.equals(Boolean.class.getName(), configuration.type()) ||
+                TextUtils.equals(Bolt.TYPE.BOOLEAN, configuration.type())) {
             BooleanValueFragment.newInstance(configuration.id(), selectedScopeId).show(getChildFragmentManager(), null);
 
-        } else if (TextUtils.equals(Enum.class.getName(), configuration.type())) {
+        } else if (TextUtils.equals(Enum.class.getName(), configuration.type()) ||
+                TextUtils.equals(Bolt.TYPE.ENUM, configuration.type())) {
             EnumValueFragment.newInstance(configuration.id(), selectedScopeId).show(getChildFragmentManager(), null);
 
         } else {

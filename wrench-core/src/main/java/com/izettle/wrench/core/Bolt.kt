@@ -19,6 +19,13 @@ data class Bolt(var id: Long = 0,
         return contentValues
     }
 
+    object TYPE {
+        const val BOOLEAN = "boolean"
+        const val STRING = "string"
+        const val INTEGER = "integer"
+        const val ENUM = "enum"
+    }
+
     companion object {
 
         @JvmStatic
