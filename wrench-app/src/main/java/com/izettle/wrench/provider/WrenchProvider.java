@@ -8,6 +8,7 @@ import android.content.UriMatcher;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Binder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -122,7 +123,15 @@ public class WrenchProvider extends ContentProvider {
             }
             case WrenchApiVersion.API_INVALID:
             default: {
-                // throw new IllegalArgumentException("This content provider requires you to provide a valid api-version in a queryParameter");
+                long l = 0;
+                try {
+                    l = Binder.clearCallingIdentity();
+                    if (wrenchPreferences.getBoolean("Require valid wrench api version", false)) {
+                        throw new IllegalArgumentException("This content provider requires you to provide a valid api-version in a queryParameter");
+                    }
+                } finally {
+                    Binder.restoreCallingIdentity(l);
+                }
             }
         }
     }
@@ -172,11 +181,15 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        assertValidApiVersion(wrenchPreferences, uri);
 
         WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
+
         if (callingApplication == null) {
-            return null; // for security reason we need to know the callingApplication
+            return null;
+        }
+
+        if (!isWrenchApplication(callingApplication)) {
+            assertValidApiVersion(wrenchPreferences, uri);
         }
 
         Cursor cursor;
@@ -220,13 +233,20 @@ public class WrenchProvider extends ContentProvider {
         return cursor;
     }
 
+    private boolean isWrenchApplication(WrenchApplication callingApplication) {
+        return callingApplication.packageName().equals(BuildConfig.APPLICATION_ID);
+    }
+
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
-        assertValidApiVersion(wrenchPreferences, uri);
 
         WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
-            return null; // for security reason we need to know the callingApplication
+            return null;
+        }
+
+        if (!isWrenchApplication(callingApplication)) {
+            assertValidApiVersion(wrenchPreferences, uri);
         }
 
         long insertId;
@@ -274,18 +294,28 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-        assertValidApiVersion(wrenchPreferences, uri);
+        WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
+        if (callingApplication == null) {
+            return 0;
+        }
+
+        if (!isWrenchApplication(callingApplication)) {
+            assertValidApiVersion(wrenchPreferences, uri);
+        }
 
         return super.bulkInsert(uri, values);
     }
 
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        assertValidApiVersion(wrenchPreferences, uri);
 
         WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
         if (callingApplication == null) {
-            return 0; // for security reason we need to know the callingApplication
+            return 0;
+        }
+
+        if (!isWrenchApplication(callingApplication)) {
+            assertValidApiVersion(wrenchPreferences, uri);
         }
 
         int updatedRows;
@@ -318,14 +348,28 @@ public class WrenchProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
-        assertValidApiVersion(wrenchPreferences, uri);
+        WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
+        if (callingApplication == null) {
+            return 0;
+        }
+
+        if (!isWrenchApplication(callingApplication)) {
+            assertValidApiVersion(wrenchPreferences, uri);
+        }
 
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public String getType(@NonNull Uri uri) {
-        assertValidApiVersion(wrenchPreferences, uri);
+        WrenchApplication callingApplication = getCallingApplication(getContext(), applicationDao);
+        if (callingApplication == null) {
+            return null;
+        }
+
+        if (!isWrenchApplication(callingApplication)) {
+            assertValidApiVersion(wrenchPreferences, uri);
+        }
 
         switch (sUriMatcher.match(uri)) {
             case CURRENT_CONFIGURATIONS: {
