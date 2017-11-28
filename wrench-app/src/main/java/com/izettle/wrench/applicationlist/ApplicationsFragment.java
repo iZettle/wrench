@@ -15,8 +15,6 @@ import android.widget.ViewAnimator;
 import com.izettle.wrench.databinding.FragmentApplicationsBinding;
 import com.izettle.wrench.di.Injectable;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 
@@ -42,7 +40,19 @@ public class ApplicationsFragment extends Fragment implements Injectable {
 
         ApplicationViewModel model = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel.class);
 
-        model.getApplications().observe(this, this::applicationsUpdated);
+        ApplicationAdapter adapter = new ApplicationAdapter();
+        model.getApplications().observe(this, adapter::setList);
+        fragmentApplicationsBinding.list.setAdapter(adapter);
+
+        model.isListEmpty().observe(this, isEmpty -> {
+            ViewAnimator animator = fragmentApplicationsBinding.animator;
+            if (isEmpty == null || isEmpty) {
+                animator.setDisplayedChild(animator.indexOfChild(fragmentApplicationsBinding.noApplicationsEmptyView));
+            } else {
+                animator.setDisplayedChild(animator.indexOfChild(fragmentApplicationsBinding.list));
+            }
+        });
+
     }
 
     @Override
@@ -51,24 +61,4 @@ public class ApplicationsFragment extends Fragment implements Injectable {
         fragmentApplicationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
         return fragmentApplicationsBinding.getRoot();
     }
-
-    private void applicationsUpdated(List<com.izettle.wrench.database.WrenchApplication> applications) {
-        if (applications.size() == 0) {
-            ViewAnimator animator = fragmentApplicationsBinding.animator;
-            animator.setDisplayedChild(animator.indexOfChild(fragmentApplicationsBinding.noApplicationsEmptyView));
-        } else {
-            ViewAnimator animator = fragmentApplicationsBinding.animator;
-            animator.setDisplayedChild(animator.indexOfChild(fragmentApplicationsBinding.list));
-        }
-
-        ApplicationRecyclerViewAdapter adapter = (ApplicationRecyclerViewAdapter) fragmentApplicationsBinding.list.getAdapter();
-        if (adapter == null) {
-            adapter = new ApplicationRecyclerViewAdapter(applications);
-            fragmentApplicationsBinding.list.setAdapter(adapter);
-
-        } else {
-            adapter.setItems(applications);
-        }
-    }
-
 }
