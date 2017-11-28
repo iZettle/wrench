@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<ApplicationRecyclerViewAdapter.ViewHolder> {
+public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<ApplicationRecyclerViewAdapter.ApplicationViewHolder> {
 
     private final ArrayList<WrenchApplication> items = new ArrayList<>();
 
@@ -30,13 +30,13 @@ public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<Applica
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ApplicationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ApplicationListItemBinding applicationListItemBinding = ApplicationListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ViewHolder(applicationListItemBinding);
+        return new ApplicationViewHolder(applicationListItemBinding);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ApplicationViewHolder holder, int position) {
         WrenchApplication application = items.get(position);
 
         try {
@@ -61,13 +61,12 @@ public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<Applica
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ApplicationViewHolder extends RecyclerView.ViewHolder {
         private final ApplicationListItemBinding binding;
 
-        private ViewHolder(ApplicationListItemBinding binding) {
+        private ApplicationViewHolder(ApplicationListItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
     }
-
 }
