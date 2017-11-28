@@ -1,8 +1,9 @@
-package com.izettle.wrench;
+package com.izettle.wrench.applicationlist;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +25,6 @@ public class ApplicationsFragment extends Fragment implements Injectable {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
     private FragmentApplicationsBinding fragmentApplicationsBinding;
-    private ApplicationViewModel model;
 
     public ApplicationsFragment() {
     }
@@ -40,13 +40,13 @@ public class ApplicationsFragment extends Fragment implements Injectable {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        model = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel.class);
+        ApplicationViewModel model = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel.class);
 
         model.getApplications().observe(this, this::applicationsUpdated);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentApplicationsBinding = FragmentApplicationsBinding.inflate(inflater, container, false);
         fragmentApplicationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
         return fragmentApplicationsBinding.getRoot();

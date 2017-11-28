@@ -1,4 +1,4 @@
-package com.izettle.wrench;
+package com.izettle.wrench.applicationlist;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
@@ -15,7 +15,7 @@ public class ApplicationViewModel extends ViewModel {
     private final LiveData<List<WrenchApplication>> applications;
 
     @Inject
-    public ApplicationViewModel(WrenchDatabase wrenchDatabase) {
+    ApplicationViewModel(WrenchDatabase wrenchDatabase) {
 
         applications = wrenchDatabase.applicationDao().getApplications();
     }

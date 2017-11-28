@@ -1,4 +1,4 @@
-package com.izettle.wrench;
+package com.izettle.wrench.applicationlist;
 
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.izettle.wrench.ConfigurationsActivity;
+import com.izettle.wrench.R;
 import com.izettle.wrench.database.WrenchApplication;
 import com.izettle.wrench.databinding.ApplicationListItemBinding;
 
@@ -17,11 +19,11 @@ public class ApplicationRecyclerViewAdapter extends RecyclerView.Adapter<Applica
 
     private final ArrayList<WrenchApplication> items = new ArrayList<>();
 
-    public ApplicationRecyclerViewAdapter(List<WrenchApplication> newApplications) {
+    ApplicationRecyclerViewAdapter(List<WrenchApplication> newApplications) {
         items.addAll(newApplications);
     }
 
-    public void setItems(List<WrenchApplication> items) {
+    void setItems(List<WrenchApplication> items) {
         this.items.clear();
         this.items.addAll(items);
         notifyDataSetChanged();

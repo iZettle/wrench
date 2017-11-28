@@ -16,8 +16,8 @@
 
 package com.izettle.wrench.di;
 
-import com.izettle.wrench.ApplicationsActivity;
 import com.izettle.wrench.ConfigurationsActivity;
+import com.izettle.wrench.applicationlist.ApplicationsActivity;
 import com.izettle.wrench.provider.WrenchProvider;
 
 import dagger.Module;
