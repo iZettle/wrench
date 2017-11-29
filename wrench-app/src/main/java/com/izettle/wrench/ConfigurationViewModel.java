@@ -1,6 +1,9 @@
 package com.izettle.wrench;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
@@ -19,17 +22,22 @@ import javax.inject.Inject;
 
 public class ConfigurationViewModel extends ViewModel {
     private final WrenchDatabase wrenchDatabase;
+    @SuppressLint("UseSparseArrays")
     final private Map<Long, LiveData<List<WrenchConfigurationValue>>> configurationValues = new HashMap<>();
+    private final MutableLiveData<String> queryLiveData;
     WrenchApplication wrenchApplication;
     private LiveData<WrenchApplication> wrenchApplicationLiveData;
     private long applicationId;
-    private String query;
     private LiveData<WrenchScope> selectedScopeLiveData;
     private LiveData<WrenchScope> defaultScopeLiveData;
 
     @Inject
-    public ConfigurationViewModel(WrenchDatabase wrenchDatabase) {
+    ConfigurationViewModel(WrenchDatabase wrenchDatabase) {
         this.wrenchDatabase = wrenchDatabase;
+
+        queryLiveData = new MutableLiveData<>();
+
+        setQuery("");
     }
 
     public void setApplicationId(long applicationId) {
@@ -51,17 +59,17 @@ public class ConfigurationViewModel extends ViewModel {
     }
 
     LiveData<List<WrenchConfiguration>> getConfigurations() {
-        LiveData<List<WrenchConfiguration>> configurations;
-        if (TextUtils.isEmpty(query)) {
-            configurations = wrenchDatabase.configurationDao().getApplicationConfigurations(applicationId);
-        } else {
-            configurations = wrenchDatabase.configurationDao().getApplicationConfigurations(applicationId, "%" + query + "%");
-        }
-        return configurations;
+        return Transformations.switchMap(queryLiveData, query -> {
+            if (TextUtils.isEmpty(query)) {
+                return wrenchDatabase.configurationDao().getApplicationConfigurations(applicationId);
+            } else {
+                return wrenchDatabase.configurationDao().getApplicationConfigurations(applicationId, "%" + query + "%");
+            }
+        });
     }
 
     public void setQuery(String query) {
-        this.query = query;
+        queryLiveData.setValue(query);
     }
 
     void deleteApplication(WrenchApplication wrenchApplication) {

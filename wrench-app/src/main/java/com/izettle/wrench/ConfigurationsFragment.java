@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -48,14 +49,6 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
         return fragment;
     }
 
-    private void updateQuery() {
-        model.getConfigurations().observe(ConfigurationsFragment.this, wrenchConfigurations -> {
-            if (wrenchConfigurations != null) {
-                updateConfigurations(wrenchConfigurations);
-            }
-        });
-    }
-
     private void updateConfigurations(List<WrenchConfiguration> wrenchConfigurations) {
         ViewAnimator animator = fragmentConfigurationsBinding.animator;
         if (wrenchConfigurations.size() == 0 && animator.getDisplayedChild() != animator.indexOfChild(fragmentConfigurationsBinding.noConfigurationsEmptyView)) {
@@ -75,7 +68,7 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putCharSequence(STATE_FILTER, searchView.getQuery());
@@ -93,21 +86,25 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentConfigurationsBinding = FragmentConfigurationsBinding.inflate(inflater, container, false);
 
         return fragmentConfigurationsBinding.getRoot();
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         model = ViewModelProviders.of(getActivity()).get(ConfigurationViewModel.class);
 
         fragmentConfigurationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        updateQuery();
+        model.getConfigurations().observe(ConfigurationsFragment.this, wrenchConfigurations -> {
+            if (wrenchConfigurations != null) {
+                updateConfigurations(wrenchConfigurations);
+            }
+        });
 
         model.getWrenchApplication().observe(this, wrenchApplication -> {
             if (wrenchApplication != null) {
@@ -160,7 +157,6 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
     @Override
     public boolean onQueryTextChange(String newText) {
         model.setQuery(newText);
-        updateQuery();
         return true;
     }
 
