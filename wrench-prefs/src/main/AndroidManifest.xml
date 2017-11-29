@@ -1,1 +1,5 @@
-<manifest package="com.izettle.wrench.preferences" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.izettle.wrench.preferences">
+
+    <uses-permission android:name="com.izettle.wrench.permission" />
+</manifest>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues by="lint 3.1.0-alpha03" format="4">
+<issues by="lint 3.1.0-alpha04" format="4">
 
     <issue errorLine1="            AndroidInjection.inject(activity);"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" id="CheckResult"
@@ -27,10 +27,4 @@
         <location column="13" file="src/main/java/com/izettle/wrench/provider/WrenchProvider.java"
             line="139" />
     </issue>
-
-    <issue errorLine1="        &lt;provider" errorLine2="        ^" id="ExportedContentProvider"
-        message="Exported content providers can provide access to potentially sensitive data">
-        <location column="9" file="src/main/AndroidManifest.xml" line="37" />
-    </issue>
-
 </issues>

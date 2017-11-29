@@ -45,15 +45,17 @@ dependencies {
 
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation project(':wrench-core')
+    androidTestImplementation project(':wrench-prefs')
 
     implementation 'com.android.support:appcompat-v7:27.0.1'
     implementation 'com.android.support:support-v4:27.0.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
     implementation 'android.arch.lifecycle:extensions:1.0.0'
 
-    debugImplementation project(":wrench-prefs")
-    releaseImplementation project(":wrench-prefs-no-op")
+    implementation project(':wrench-core')
+    debugImplementation project(':wrench-prefs')
+    releaseImplementation project(':wrench-prefs-no-op')
 
-    implementation project(":wrench-service")
-    implementation project(":wrench-core")
+    implementation project(':wrench-service')
 }

@@ -12,5 +12,7 @@
     <string name="revert">revert</string>
     <string name="select_scope">Select scope</string>
     <string name="application_icon">Application icon</string>
+    <string name="wrench_permission_label">Access Wrench</string>
+    <string name="wrench_permission_description">Access to request configuration from Wrench</string>
 
 </resources>
