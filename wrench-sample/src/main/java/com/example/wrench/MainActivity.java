@@ -13,7 +13,6 @@ import com.izettle.wrench.service.WrenchService;
 
 import java.util.Date;
 
-
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding activityMainBinding;
@@ -31,40 +30,39 @@ public class MainActivity extends AppCompatActivity {
 
         wrenchSampleViewModel.getStringBolt().observe(this, bolt -> {
             if (bolt != null) {
-                activityMainBinding.stringConfiguration.setText(bolt.value);
+                activityMainBinding.stringConfiguration.setText(bolt.getValue());
             }
         });
 
         wrenchSampleViewModel.getUrlBolt().observe(this, bolt -> {
             if (bolt != null) {
-                activityMainBinding.urlConfiguration.setText(bolt.value);
+                activityMainBinding.urlConfiguration.setText(bolt.getValue());
             }
         });
 
         wrenchSampleViewModel.getBooleanBolt().observe(this, bolt -> {
             if (bolt != null) {
-                activityMainBinding.booleanConfiguration.setText(bolt.value);
-
+                activityMainBinding.booleanConfiguration.setText(bolt.getValue());
             }
         });
 
         wrenchSampleViewModel.getIntBolt().observe(this, bolt -> {
             if (bolt != null) {
-                activityMainBinding.intConfiguration.setText(bolt.value);
+                activityMainBinding.intConfiguration.setText(bolt.getValue());
             }
         });
 
         wrenchPreferences.getEnum(getString(R.string.enum_configuration), MyEnum.class, MyEnum.FIRST);
         wrenchSampleViewModel.getBolt(getString(R.string.enum_configuration)).observe(this, bolt -> {
             if (bolt != null) {
-                activityMainBinding.enumConfiguration.setText(bolt.value);
+                activityMainBinding.enumConfiguration.setText(bolt.getValue());
             }
         });
 
         wrenchPreferences.getString(getString(R.string.service_configuration), null);
         wrenchSampleViewModel.getBolt(getString(R.string.service_configuration)).observe(this, bolt -> {
             if (bolt != null) {
-                activityMainBinding.serviceConfiguration.setText(bolt.value);
+                activityMainBinding.serviceConfiguration.setText(bolt.getValue());
             }
         });
 

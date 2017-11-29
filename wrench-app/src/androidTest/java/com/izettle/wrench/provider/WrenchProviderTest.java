@@ -62,9 +62,9 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
         cursor.moveToFirst();
         Bolt queryBolt = Bolt.fromCursor(cursor);
 
-        assertEquals(insertBolt.key, queryBolt.key);
-        assertEquals(insertBolt.value, queryBolt.value);
-        assertEquals(insertBolt.type, queryBolt.type);
+        assertEquals(insertBolt.getKey(), queryBolt.getKey());
+        assertEquals(insertBolt.getValue(), queryBolt.getValue());
+        assertEquals(insertBolt.getType(), queryBolt.getType());
 
         cursor = contentResolver.query(WrenchProviderContract.boltUri(Integer.parseInt(insertBoltUri.getLastPathSegment())), null, null, null, null);
         assertNotNull(cursor);
@@ -73,9 +73,9 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
         cursor.moveToFirst();
         queryBolt = Bolt.fromCursor(cursor);
 
-        assertEquals(insertBolt.key, queryBolt.key);
-        assertEquals(insertBolt.value, queryBolt.value);
-        assertEquals(insertBolt.type, queryBolt.type);
+        assertEquals(insertBolt.getKey(), queryBolt.getKey());
+        assertEquals(insertBolt.getValue(), queryBolt.getValue());
+        assertEquals(insertBolt.getType(), queryBolt.getType());
     }
 
     @Test
@@ -91,14 +91,14 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
         assertNotNull(cursor);
         assertTrue(cursor.moveToFirst());
 
-        Bolt queryBolt = Bolt.fromCursor(cursor);
-        assertEquals(insertBolt.key, queryBolt.key);
-        assertEquals(insertBolt.value, queryBolt.value);
-        assertEquals(insertBolt.type, queryBolt.type);
+        Bolt providerBolt = Bolt.fromCursor(cursor);
+        assertEquals(insertBolt.getKey(), providerBolt.getKey());
+        assertEquals(insertBolt.getValue(), providerBolt.getValue());
+        assertEquals(insertBolt.getType(), providerBolt.getType());
 
-        queryBolt.value += queryBolt.value;
+        Bolt updateBolt = new Bolt(providerBolt.getId(), providerBolt.getType(), providerBolt.getKey(), providerBolt.getValue() + providerBolt.getValue());
 
-        int update = contentResolver.update(WrenchProviderContract.boltUri(queryBolt.id), queryBolt.toContentValues(), null, null);
+        int update = contentResolver.update(WrenchProviderContract.boltUri(updateBolt.getId()), updateBolt.toContentValues(), null, null);
         assertEquals(1, update);
 
         cursor = contentResolver.query(WrenchProviderContract.boltUri(updateBoltKey), null, null, null, null);
@@ -107,7 +107,7 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
         assertTrue(cursor.moveToFirst());
         Bolt updatedBolt = Bolt.fromCursor(cursor);
 
-        assertEquals(insertBolt.value + insertBolt.value, updatedBolt.value);
+        assertEquals(insertBolt.getValue() + insertBolt.getValue(), updatedBolt.getValue());
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -147,7 +147,7 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testMissingDeleteForBoltWithId() throws Exception {
-        contentResolver.delete(WrenchProviderContract.boltUri(0), null,null);
+        contentResolver.delete(WrenchProviderContract.boltUri(0), null, null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -166,19 +166,10 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
     }
 
     private Nut getNut(String value) {
-        Nut nut = new Nut();
-
-        nut.configurationId = 0;
-        nut.value = value;
-        return nut;
+        return new Nut(0, value);
     }
 
     private Bolt getBolt(String key) {
-        Bolt bolt = new Bolt();
-
-        bolt.key = key;
-        bolt.value = "boltvalue";
-        bolt.type = "bolttype";
-        return bolt;
+        return new Bolt(0, "bolttype", key, "boltvalue");
     }
 }

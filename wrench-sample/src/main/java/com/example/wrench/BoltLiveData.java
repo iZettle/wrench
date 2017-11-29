@@ -90,12 +90,10 @@ public class BoltLiveData extends LiveData<Bolt> {
             return;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = type;
-            bolt.value = defValue;
+        if (bolt.getId() == 0) {
+            bolt = bolt.copy(bolt.getId(), type, key, defValue);
             Uri uri = insertBolt(context.getContentResolver(), bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         }
         setValue(bolt);
     }

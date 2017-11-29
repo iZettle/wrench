@@ -1,7 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues by="lint 3.0.0-alpha4" format="4">
+<issues by="lint 3.1.0-alpha03" format="4">
+
+    <issue errorLine1="            AndroidInjection.inject(activity);"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" id="CheckResult"
+        message="The result of `inject` is not used">
+        <location column="13" file="src/main/java/com/izettle/wrench/di/AppInjector.java"
+            line="86" />
+    </issue>
+
+    <issue errorLine1="                                        AndroidSupportInjection.inject(f);"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        id="CheckResult" message="The result of `inject` is not used">
+        <location column="41" file="src/main/java/com/izettle/wrench/di/AppInjector.java"
+            line="96" />
+    </issue>
+
+    <issue errorLine1="        super.onCreate();" errorLine2="        ~~~~~~~~~~~~~~~~"
+        id="CheckResult" message="The result of `onCreate` is not used">
+        <location column="9" file="src/main/java/com/izettle/wrench/WrenchApplication.java"
+            line="14" />
+    </issue>
+
+    <issue errorLine1="            AndroidInjection.inject(this);"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" id="CheckResult"
+        message="The result of `inject` is not used">
+        <location column="13" file="src/main/java/com/izettle/wrench/provider/WrenchProvider.java"
+            line="139" />
+    </issue>
+
     <issue errorLine1="        &lt;provider" errorLine2="        ^" id="ExportedContentProvider"
         message="Exported content providers can provide access to potentially sensitive data">
-        <location column="9" file="src/main/AndroidManifest.xml" line="36" />
+        <location column="9" file="src/main/AndroidManifest.xml" line="37" />
     </issue>
+
 </issues>

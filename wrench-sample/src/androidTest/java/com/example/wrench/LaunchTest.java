@@ -41,14 +41,12 @@ public class LaunchTest {
             return;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = Integer.class.getName();
-            bolt.value = String.valueOf(value);
+        if (bolt.getId() == 0) {
+            bolt = bolt.copy(bolt.getId(), Integer.class.getName(), key, String.valueOf(value));
             Uri uri = insertBolt(contentResolver, bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
-            bolt.value = String.valueOf(value);
+            bolt = bolt.copy(bolt.getId(), bolt.getType(), bolt.getKey(), String.valueOf(value));
             updateBolt(contentResolver, bolt);
         }
     }
@@ -60,14 +58,12 @@ public class LaunchTest {
             return;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = Boolean.class.getName();
-            bolt.value = String.valueOf(value);
+        if (bolt.getId() == 0) {
+            bolt = bolt.copy(bolt.getId(), Boolean.class.getName(), key, String.valueOf(value));
             Uri uri = insertBolt(contentResolver, bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
-            bolt.value = String.valueOf(value);
+            bolt = bolt.copy(bolt.getId(), bolt.getType(), bolt.getKey(), String.valueOf(value));
             updateBolt(contentResolver, bolt);
         }
     }
@@ -79,14 +75,12 @@ public class LaunchTest {
             return;
         }
 
-        if (bolt.id == 0) {
-            bolt.key = key;
-            bolt.type = String.class.getName();
-            bolt.value = value;
+        if (bolt.getId() == 0) {
+            bolt = bolt.copy(bolt.getId(), String.class.getName(), key, value);
             Uri uri = insertBolt(contentResolver, bolt);
-            bolt.id = Long.parseLong(uri.getLastPathSegment());
+            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
-            bolt.value = value;
+            bolt = bolt.copy(bolt.getId(), bolt.getType(), bolt.getKey(), String.valueOf(value));
             updateBolt(contentResolver, bolt);
         }
     }
@@ -122,7 +116,7 @@ public class LaunchTest {
     }
 
     private static void updateBolt(ContentResolver contentResolver, Bolt bolt) {
-        contentResolver.update(WrenchProviderContract.boltUri(bolt.id),
+        contentResolver.update(WrenchProviderContract.boltUri(bolt.getId()),
                 bolt.toContentValues(),
                 null,
                 null);

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 27
@@ -27,8 +28,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.izettle.wrench:wrench-core:0.2-RC2'
-    implementation 'com.android.support:support-annotations:27.0.0'
+    implementation project(":wrench-core")
+    implementation 'com.android.support:support-annotations:27.0.1'
 
     testImplementation 'junit:junit:4.12'
 }
