@@ -27,7 +27,7 @@ class WrenchService : IntentService("WrenchService") {
         var bolt = getBolt(contentResolver, key) ?: return
 
         if (bolt.id == 0L) {
-            bolt = bolt.copy(bolt.id, Int::class.java.name, key, value.toString())
+            bolt = bolt.copy(bolt.id, Bolt.TYPE.INTEGER, key, value.toString())
             val uri = insertBolt(contentResolver, bolt)
             bolt.id = uri!!.lastPathSegment.toLong()
         } else {
@@ -40,7 +40,7 @@ class WrenchService : IntentService("WrenchService") {
         var bolt = getBolt(contentResolver, key) ?: return
 
         if (bolt.id == 0L) {
-            bolt = bolt.copy(bolt.id, Boolean::class.java.name, key, value.toString())
+            bolt = bolt.copy(bolt.id, Bolt.TYPE.BOOLEAN, key, value.toString())
             val uri = insertBolt(contentResolver, bolt)
             bolt.id = uri!!.lastPathSegment.toLong()
         } else {
@@ -53,7 +53,7 @@ class WrenchService : IntentService("WrenchService") {
         var bolt = getBolt(contentResolver, key) ?: return
 
         if (bolt.id == 0L) {
-            bolt = bolt.copy(bolt.id, String::class.java.name, key, value)
+            bolt = bolt.copy(bolt.id, Bolt.TYPE.STRING, key, value)
             val uri = insertBolt(contentResolver, bolt)
             bolt.id = uri!!.lastPathSegment.toLong()
         } else {

@@ -26,6 +26,7 @@ import com.izettle.wrench.database.WrenchDatabase;
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValueDao;
 import com.izettle.wrench.database.WrenchScopeDao;
 import com.izettle.wrench.database.migrations.Migrations;
+import com.izettle.wrench.preferences.WrenchPreferences;
 import com.izettle.wrench.provider.IPackageManagerWrapper;
 import com.izettle.wrench.provider.PackageManagerWrapper;
 
@@ -40,6 +41,12 @@ class AppModule {
     @Provides
     IPackageManagerWrapper providePackageManagerWrapper(Application app) {
         return new PackageManagerWrapper(app.getPackageManager());
+    }
+
+    @Provides
+    @Singleton
+    WrenchPreferences provideWrenchPreferences(Application app) {
+        return new WrenchPreferences(app);
     }
 
     @Singleton

@@ -19,7 +19,7 @@ public class BoltLiveData extends LiveData<Bolt> {
     private final Context context;
     private BoltContentObserver boltContentObserver;
 
-    BoltLiveData(Context context, String key, String defValue, String type) {
+    BoltLiveData(Context context, String key, String defValue, @Bolt.BoltType String type) {
         this.context = context;
         this.key = key;
         this.type = type;
@@ -28,15 +28,15 @@ public class BoltLiveData extends LiveData<Bolt> {
     }
 
     public static BoltLiveData string(Context context, String key, String def) {
-        return new BoltLiveData(context, key, def, String.class.getName());
+        return new BoltLiveData(context, key, def, Bolt.TYPE.STRING);
     }
 
     public static BoltLiveData bool(Context context, String key, boolean def) {
-        return new BoltLiveData(context, key, String.valueOf(def), Boolean.class.getName());
+        return new BoltLiveData(context, key, String.valueOf(def), Bolt.TYPE.BOOLEAN);
     }
 
     public static BoltLiveData integer(Context context, String key, int def) {
-        return new BoltLiveData(context, key, String.valueOf(def), Integer.class.getName());
+        return new BoltLiveData(context, key, String.valueOf(def), Bolt.TYPE.INTEGER);
     }
 
     @Nullable

@@ -42,7 +42,7 @@ public class LaunchTest {
         }
 
         if (bolt.getId() == 0) {
-            bolt = bolt.copy(bolt.getId(), Integer.class.getName(), key, String.valueOf(value));
+            bolt = bolt.copy(bolt.getId(), Bolt.TYPE.INTEGER, key, String.valueOf(value));
             Uri uri = insertBolt(contentResolver, bolt);
             bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
@@ -59,7 +59,7 @@ public class LaunchTest {
         }
 
         if (bolt.getId() == 0) {
-            bolt = bolt.copy(bolt.getId(), Boolean.class.getName(), key, String.valueOf(value));
+            bolt = bolt.copy(bolt.getId(), Bolt.TYPE.BOOLEAN, key, String.valueOf(value));
             Uri uri = insertBolt(contentResolver, bolt);
             bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
@@ -76,7 +76,7 @@ public class LaunchTest {
         }
 
         if (bolt.getId() == 0) {
-            bolt = bolt.copy(bolt.getId(), String.class.getName(), key, value);
+            bolt = bolt.copy(bolt.getId(), Bolt.TYPE.STRING, key, value);
             Uri uri = insertBolt(contentResolver, bolt);
             bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         } else {
