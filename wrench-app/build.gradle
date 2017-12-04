@@ -24,8 +24,9 @@ android {
         }
 
         def configurationAuthorityValue = applicationId + ".configprovider"
+        def wrenchPermission = applicationId + ".permission"
 
-        manifestPlaceholders = [configurationAuthority: configurationAuthorityValue]
+        manifestPlaceholders = [configurationAuthority: configurationAuthorityValue, wrenchPermission: wrenchPermission]
 
         buildConfigField "String", "CONFIG_AUTHORITY", "\"${configurationAuthorityValue}\""
 

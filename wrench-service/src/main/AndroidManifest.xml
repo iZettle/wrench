@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.izettle.wrench.service">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.izettle.wrench.service">
 
-    <application />
+    <uses-permission android:name="com.izettle.wrench.permission" />
 </manifest>
