@@ -16,8 +16,8 @@
 
 package com.izettle.wrench.di;
 
-import com.izettle.wrench.ApplicationsFragment;
 import com.izettle.wrench.ConfigurationsFragment;
+import com.izettle.wrench.applicationlist.ApplicationsFragment;
 import com.izettle.wrench.dialogs.booleanvalue.BooleanValueFragment;
 import com.izettle.wrench.dialogs.enumvalue.EnumValueFragment;
 import com.izettle.wrench.dialogs.integervalue.IntegerValueFragment;

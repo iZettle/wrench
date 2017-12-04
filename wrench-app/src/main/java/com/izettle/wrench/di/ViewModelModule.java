@@ -3,8 +3,8 @@ package com.izettle.wrench.di;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.izettle.wrench.ApplicationViewModel;
 import com.izettle.wrench.ConfigurationViewModel;
+import com.izettle.wrench.applicationlist.ApplicationViewModel;
 import com.izettle.wrench.dialogs.booleanvalue.FragmentBooleanValueViewModel;
 import com.izettle.wrench.dialogs.enumvalue.FragmentEnumValueViewModel;
 import com.izettle.wrench.dialogs.integervalue.FragmentIntegerValueViewModel;

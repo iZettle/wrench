@@ -1,14 +1,13 @@
 package com.izettle.wrench.database;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.LivePagedListProvider;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import com.izettle.wrench.database.tables.ApplicationTable;
-
-import java.util.List;
 
 @Dao
 public interface WrenchApplicationDao {
@@ -17,7 +16,8 @@ public interface WrenchApplicationDao {
     LiveData<WrenchApplication> get(long id);
 
     @Query("SELECT * FROM " + ApplicationTable.TABLE_NAME)
-    LiveData<List<WrenchApplication>> getApplications();
+    LivePagedListProvider<Integer, WrenchApplication> getApplications();
+
 
     @Query("SELECT * FROM " + ApplicationTable.TABLE_NAME + " WHERE packageName IN (:packageName)")
     WrenchApplication loadByPackageName(String packageName);

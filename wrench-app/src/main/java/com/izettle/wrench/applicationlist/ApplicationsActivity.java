@@ -1,10 +1,11 @@
-package com.izettle.wrench;
+package com.izettle.wrench.applicationlist;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
+import com.izettle.wrench.R;
 import com.izettle.wrench.databinding.ActivityApplicationsBinding;
 
 import javax.inject.Inject;
