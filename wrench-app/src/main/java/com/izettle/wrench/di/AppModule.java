@@ -57,31 +57,26 @@ class AppModule {
                 .build();
     }
 
-    @Singleton
     @Provides
     WrenchApplicationDao provideWrenchApplicationDao(WrenchDatabase db) {
         return db.applicationDao();
     }
 
-    @Singleton
     @Provides
     WrenchConfigurationDao provideWrenchConfigurationDao(WrenchDatabase db) {
         return db.configurationDao();
     }
 
-    @Singleton
     @Provides
     WrenchConfigurationValueDao provideWrenchConfigurationValueDao(WrenchDatabase db) {
         return db.configurationValueDao();
     }
 
-    @Singleton
     @Provides
     WrenchPredefinedConfigurationValueDao provideWrenchPredefinedConfigurationValueDao(WrenchDatabase db) {
         return db.predefinedConfigurationValueDao();
     }
 
-    @Singleton
     @Provides
     WrenchScopeDao provideWrenchScopeDao(WrenchDatabase db) {
         return db.scopeDao();
