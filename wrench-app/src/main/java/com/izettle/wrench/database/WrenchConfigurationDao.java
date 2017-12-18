@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 import android.database.Cursor;
 
 import com.izettle.wrench.database.tables.ConfigurationTable;
@@ -40,9 +41,11 @@ public interface WrenchConfigurationDao {
     @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_ID + " = :configurationId")
     LiveData<WrenchConfiguration> getConfiguration(long configurationId);
 
+    @Transaction
     @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId")
     LiveData<List<WrenchConfigurationWithValues>> getApplicationConfigurations(long applicationId);
 
+    @Transaction
     @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId AND " + ConfigurationTable.COL_KEY + " LIKE :query")
     LiveData<List<WrenchConfigurationWithValues>> getApplicationConfigurations(long applicationId, String query);
 

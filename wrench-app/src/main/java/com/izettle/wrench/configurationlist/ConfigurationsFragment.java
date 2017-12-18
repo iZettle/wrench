@@ -106,7 +106,6 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
         model.getWrenchApplication().observe(this, wrenchApplication -> {
             if (wrenchApplication != null) {
                 getActivity().setTitle(wrenchApplication.applicationLabel());
-                model.wrenchApplication = wrenchApplication;
             }
         });
 
@@ -176,10 +175,14 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
                     public void onChanged(@Nullable WrenchApplication wrenchApplication) {
                         model.getWrenchApplication().removeObserver(this);
 
-                        ActivityManager activityManager = (ActivityManager) ConfigurationsFragment.this.getContext().getSystemService(Context.ACTIVITY_SERVICE);
-                        activityManager.killBackgroundProcesses(model.wrenchApplication.packageName());
+                        if (wrenchApplication == null) {
+                            return;
+                        }
 
-                        Intent intent = ConfigurationsFragment.this.getContext().getPackageManager().getLaunchIntentForPackage(model.wrenchApplication.packageName());
+                        ActivityManager activityManager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
+                        activityManager.killBackgroundProcesses(wrenchApplication.packageName());
+
+                        Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(wrenchApplication.packageName());
                         if (intent != null) {
                             ConfigurationsFragment.this.getContext().startActivity(Intent.makeRestartActivityTask(intent.getComponent()));
                         } else if (ConfigurationsFragment.this.getView() != null) {
@@ -191,11 +194,21 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
                 return true;
             }
             case R.id.action_application_settings: {
-                startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", model.wrenchApplication.packageName(), null)));
+                model.getWrenchApplication().observe(this, new Observer<WrenchApplication>() {
+                    @Override
+                    public void onChanged(@Nullable WrenchApplication wrenchApplication) {
+                        model.getWrenchApplication().removeObserver(this);
+                        if (wrenchApplication == null) {
+                            return;
+                        }
+
+                        startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", wrenchApplication.packageName(), null)));
+                    }
+                });
                 return true;
             }
             case R.id.action_delete_application: {
-                AsyncTask.execute(() -> model.deleteApplication(model.wrenchApplication));
+                AsyncTask.execute(() -> model.deleteApplication(model.getWrenchApplication().getValue()));
                 getActivity().finish();
                 return true;
             }
