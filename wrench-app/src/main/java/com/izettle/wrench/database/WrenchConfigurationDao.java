@@ -37,14 +37,14 @@ public interface WrenchConfigurationDao {
             " WHERE configuration.applicationId = (:applicationId) AND configuration.configurationKey = (:configurationKey)")
     WrenchConfiguration getWrenchConfiguration(long applicationId, String configurationKey);
 
-    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId")
-    LiveData<List<WrenchConfiguration>> getApplicationConfigurations(long applicationId);
-
     @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_ID + " = :configurationId")
     LiveData<WrenchConfiguration> getConfiguration(long configurationId);
 
+    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId")
+    LiveData<List<WrenchConfigurationWithValues>> getApplicationConfigurations(long applicationId);
+
     @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId AND " + ConfigurationTable.COL_KEY + " LIKE :query")
-    LiveData<List<WrenchConfiguration>> getApplicationConfigurations(long applicationId, String query);
+    LiveData<List<WrenchConfigurationWithValues>> getApplicationConfigurations(long applicationId, String query);
 
     @Insert
     long insert(WrenchConfiguration wrenchConfiguration);

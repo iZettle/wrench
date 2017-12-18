@@ -1,4 +1,4 @@
-package com.izettle.wrench;
+package com.izettle.wrench.configurationlist;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import com.izettle.wrench.R;
 import com.izettle.wrench.database.WrenchScope;
 import com.izettle.wrench.databinding.ActivityConfigurationsBinding;
 import com.izettle.wrench.dialogs.scope.ScopeFragment;
