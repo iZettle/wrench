@@ -1,6 +1,7 @@
 package com.izettle.wrench.configurationlist;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
@@ -22,12 +23,13 @@ public class ConfigurationViewModel extends ViewModel {
     private final MutableLiveData<String> queryLiveData;
     private final WrenchApplicationDao applicationDao;
     private final LiveData<List<WrenchScope>> scopesLiveData;
-    private final LiveData<List<WrenchConfigurationWithValues>> configurationListLiveData;
-    private WrenchScopeDao scopeDao;
-    private LiveData<WrenchApplication> wrenchApplicationLiveData;
-    private MutableLiveData<Long> applicationIdLiveData;
-    private LiveData<WrenchScope> selectedScopeLiveData;
-    private LiveData<WrenchScope> defaultScopeLiveData;
+    private final MediatorLiveData<List<WrenchConfigurationWithValues>> configurationListLiveData;
+    private final WrenchScopeDao scopeDao;
+    private final LiveData<WrenchApplication> wrenchApplicationLiveData;
+    private final MutableLiveData<Long> applicationIdLiveData;
+    private final LiveData<WrenchScope> selectedScopeLiveData;
+    private final LiveData<WrenchScope> defaultScopeLiveData;
+    private final MutableLiveData<Boolean> listEmpty;
 
     @Inject
     ConfigurationViewModel(WrenchApplicationDao applicationDao, WrenchConfigurationDao configurationDao, WrenchScopeDao scopeDao) {
@@ -45,7 +47,9 @@ public class ConfigurationViewModel extends ViewModel {
 
         setQuery("");
 
-        configurationListLiveData = Transformations.switchMap(queryLiveData, query -> {
+        listEmpty = new MutableLiveData<>();
+
+        LiveData<List<WrenchConfigurationWithValues>> configurationsLiveData = Transformations.switchMap(queryLiveData, query -> {
             if (TextUtils.isEmpty(query)) {
                 return configurationDao.getApplicationConfigurations(applicationIdLiveData.getValue());
             } else {
@@ -53,6 +57,11 @@ public class ConfigurationViewModel extends ViewModel {
             }
         });
 
+        configurationListLiveData = new MediatorLiveData<>();
+        configurationListLiveData.addSource(configurationsLiveData, wrenchConfigurationWithValues -> {
+            listEmpty.setValue(wrenchConfigurationWithValues == null || wrenchConfigurationWithValues.size() == 0);
+            configurationListLiveData.setValue(wrenchConfigurationWithValues);
+        });
     }
 
     void setApplicationId(long applicationIdLiveData) {
@@ -96,4 +105,9 @@ public class ConfigurationViewModel extends ViewModel {
     LiveData<WrenchScope> getDefaultScopeLiveData() {
         return defaultScopeLiveData;
     }
+
+    LiveData<Boolean> isListEmpty() {
+        return listEmpty;
+    }
+
 }

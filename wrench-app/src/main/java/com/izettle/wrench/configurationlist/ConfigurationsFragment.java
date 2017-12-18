@@ -54,13 +54,6 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
     }
 
     private void updateConfigurations(List<WrenchConfigurationWithValues> wrenchConfigurations) {
-        ViewAnimator animator = fragmentConfigurationsBinding.animator;
-        if (wrenchConfigurations.size() == 0 && animator.getDisplayedChild() != animator.indexOfChild(fragmentConfigurationsBinding.noConfigurationsEmptyView)) {
-            animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.noConfigurationsEmptyView));
-        } else if (animator.getDisplayedChild() != animator.indexOfChild(fragmentConfigurationsBinding.list)) {
-            animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.list));
-        }
-
         ConfigurationRecyclerViewAdapter adapter = (ConfigurationRecyclerViewAdapter) fragmentConfigurationsBinding.list.getAdapter();
         if (adapter == null) {
             adapter = new ConfigurationRecyclerViewAdapter(this, model);
@@ -124,6 +117,15 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
         model.getConfigurations().observe(this, wrenchConfigurationWithValues -> {
             if (wrenchConfigurationWithValues != null) {
                 updateConfigurations(wrenchConfigurationWithValues);
+            }
+        });
+
+        model.isListEmpty().observe(this, isEmpty -> {
+            ViewAnimator animator = fragmentConfigurationsBinding.animator;
+            if (isEmpty == null || isEmpty) {
+                animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.noConfigurationsEmptyView));
+            } else {
+                animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.list));
             }
         });
     }
