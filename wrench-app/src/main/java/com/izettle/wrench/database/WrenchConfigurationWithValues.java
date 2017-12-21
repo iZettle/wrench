@@ -19,7 +19,7 @@ public class WrenchConfigurationWithValues {
     @ColumnInfo(name = ConfigurationTable.COL_TYPE)
     private String type;
 
-    @Relation(parentColumn = "id", entityColumn = "configurationId", entity = WrenchConfigurationValue.class)
+    @Relation(parentColumn = "id", entityColumn = "configurationId")
     private List<WrenchConfigurationValue> configurationValues;
 
     public long getId() {

@@ -54,6 +54,7 @@ class AppModule {
     WrenchDatabase provideDb(Application app) {
         return Room.databaseBuilder(app, WrenchDatabase.class, "wrench_database.db")
                 .addMigrations(Migrations.MIGRATION_1_2)
+                .addMigrations(Migrations.MIGRATION_2_3)
                 .build();
     }
 

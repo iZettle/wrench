@@ -10,6 +10,7 @@ import android.database.Cursor;
 import com.izettle.wrench.database.tables.ConfigurationTable;
 import com.izettle.wrench.database.tables.ConfigurationValueTable;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -42,14 +43,16 @@ public interface WrenchConfigurationDao {
     LiveData<WrenchConfiguration> getConfiguration(long configurationId);
 
     @Transaction
-    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId")
+    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId ORDER BY lastUse DESC")
     LiveData<List<WrenchConfigurationWithValues>> getApplicationConfigurations(long applicationId);
 
     @Transaction
-    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId AND " + ConfigurationTable.COL_KEY + " LIKE :query")
+    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId AND " + ConfigurationTable.COL_KEY + " LIKE :query ORDER BY lastUse DESC")
     LiveData<List<WrenchConfigurationWithValues>> getApplicationConfigurations(long applicationId, String query);
 
     @Insert
     long insert(WrenchConfiguration wrenchConfiguration);
 
+    @Query("UPDATE " + ConfigurationTable.TABLE_NAME + " set lastUse=:date WHERE " + ConfigurationTable.COL_ID + "= :configurationId")
+    void touch(long configurationId, Date date);
 }

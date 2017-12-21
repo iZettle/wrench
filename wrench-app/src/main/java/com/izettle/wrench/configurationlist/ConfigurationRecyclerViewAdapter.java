@@ -117,7 +117,6 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
         void configurationClicked(WrenchConfigurationWithValues configuration);
     }
 
-
     private class ConfigurationListDiffCallbacks extends DiffUtil.Callback {
         private final ArrayList<WrenchConfigurationWithValues> oldItems;
         private final List<WrenchConfigurationWithValues> newItems;
@@ -149,6 +148,19 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
         public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
             WrenchConfigurationWithValues oldItem = oldItems.get(oldItemPosition);
             WrenchConfigurationWithValues newItem = newItems.get(newItemPosition);
+
+            if (oldItem.getConfigurationValues().size() != newItem.getConfigurationValues().size()) {
+                return false;
+            }
+
+            for (int i = 0; i < oldItem.getConfigurationValues().size(); i++) {
+                WrenchConfigurationValue oldWrenchConfigurationValue = oldItem.getConfigurationValues().get(i);
+                WrenchConfigurationValue newWrenchConfigurationValue = newItem.getConfigurationValues().get(i);
+
+                if (!TextUtils.equals(oldWrenchConfigurationValue.getValue(), newWrenchConfigurationValue.getValue())) {
+                    return false;
+                }
+            }
 
             return TextUtils.equals(oldItem.getKey(), newItem.getKey()) &&
                     TextUtils.equals(oldItem.getType(), newItem.getType());

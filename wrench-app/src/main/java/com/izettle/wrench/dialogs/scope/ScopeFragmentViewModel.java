@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteException;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
-import com.izettle.wrench.database.WrenchDatabase;
 import com.izettle.wrench.database.WrenchScope;
+import com.izettle.wrench.database.WrenchScopeDao;
 
 import java.util.Date;
 import java.util.List;
@@ -15,15 +15,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class ScopeFragmentViewModel extends ViewModel {
-    private final WrenchDatabase wrenchDatabase;
     private long applicationId;
     private LiveData<WrenchScope> selectedScopeLiveData;
     private WrenchScope selectedScope;
+    private WrenchScopeDao scopeDao;
 
     @SuppressWarnings("WeakerAccess")
     @Inject
-    public ScopeFragmentViewModel(WrenchDatabase wrenchDatabase) {
-        this.wrenchDatabase = wrenchDatabase;
+    public ScopeFragmentViewModel(WrenchScopeDao scopeDao) {
+        this.scopeDao = scopeDao;
     }
 
     public void init(long applicationId) {
@@ -31,12 +31,12 @@ public class ScopeFragmentViewModel extends ViewModel {
     }
 
     LiveData<List<WrenchScope>> getScopes() {
-        return wrenchDatabase.scopeDao().getScopes(applicationId);
+        return scopeDao.getScopes(applicationId);
     }
 
     void selectScope(WrenchScope wrenchScope) {
         wrenchScope.setTimeStamp(new Date());
-        wrenchDatabase.scopeDao().update(wrenchScope);
+        scopeDao.update(wrenchScope);
     }
 
     @WorkerThread
@@ -44,19 +44,19 @@ public class ScopeFragmentViewModel extends ViewModel {
         WrenchScope wrenchScope = new WrenchScope();
         wrenchScope.setName(scopeName);
         wrenchScope.setApplicationId(applicationId);
-        wrenchScope.setId(wrenchDatabase.scopeDao().insert(wrenchScope));
+        wrenchScope.setId(scopeDao.insert(wrenchScope));
 
         return wrenchScope;
     }
 
     @WorkerThread
     void removeScope(WrenchScope scope) {
-        wrenchDatabase.scopeDao().delete(scope);
+        scopeDao.delete(scope);
     }
 
     LiveData<WrenchScope> getSelectedScopeLiveData() {
         if (selectedScopeLiveData == null) {
-            selectedScopeLiveData = wrenchDatabase.scopeDao().getSelectedScopeLiveData(applicationId);
+            selectedScopeLiveData = scopeDao.getSelectedScopeLiveData(applicationId);
         }
         return selectedScopeLiveData;
     }
