@@ -246,7 +246,8 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
             EnumValueFragment.newInstance(configuration.getId(), selectedScopeId).show(getChildFragmentManager(), null);
 
         } else {
-            throw new IllegalArgumentException("crazy type: " + configuration.getType());
+
+            Snackbar.make(fragmentConfigurationsBinding.getRoot(), "Not sure what to do with type: " + configuration.getType(), Snackbar.LENGTH_LONG).show();
         }
     }
 }
