@@ -46,7 +46,7 @@
             android:authorities="${configurationAuthority}"
             android:enabled="true"
             android:exported="true"
-            android:permission="${wrenchPermission}" />
+            tools:ignore="ExportedContentProvider" />
 
     </application>
 
