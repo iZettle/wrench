@@ -32,22 +32,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <!--<Spinner-->
-                <!--android:id="@+id/scope_picker"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
-
-                <!--<Button-->
-                <!--android:id="@+id/add_scope"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="+" />-->
-
-                <!--<Button-->
-                <!--android:id="@+id/remove_scope"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="-" />-->
             </LinearLayout>
 
         </android.support.design.widget.AppBarLayout>

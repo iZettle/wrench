@@ -33,7 +33,7 @@
         </activity>
 
         <activity
-            android:name="com.izettle.wrench.ConfigurationsActivity"
+            android:name="com.izettle.wrench.configurationlist.ConfigurationsActivity"
             android:parentActivityName="com.izettle.wrench.applicationlist.ApplicationsActivity"
             tools:targetApi="jelly_bean">
             <meta-data

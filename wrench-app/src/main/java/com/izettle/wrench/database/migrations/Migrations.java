@@ -55,4 +55,37 @@ public class Migrations {
             }
         }
     };
+
+    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            {
+                String tableName = "application";
+                String tableNameTemp = tableName + "_temp";
+
+                database.execSQL("CREATE TABLE IF NOT EXISTS `" + tableNameTemp + "` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `packageName` TEXT NOT NULL, `applicationLabel` TEXT NOT NULL)");
+                database.execSQL("INSERT INTO " + tableNameTemp + " SELECT * FROM " + tableName);
+                database.execSQL("DROP TABLE " + tableName);
+                database.execSQL("ALTER TABLE " + tableNameTemp + " RENAME TO " + tableName);
+            }
+            {
+                String tableName = "configuration";
+                String tableNameTemp = tableName + "_temp";
+
+                database.execSQL("CREATE TABLE IF NOT EXISTS `" + tableNameTemp + "` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `applicationId` INTEGER NOT NULL, `configurationKey` TEXT, `configurationType` TEXT NOT NULL, `lastUse` INTEGER NOT NULL DEFAULT 0, FOREIGN KEY(`applicationId`) REFERENCES `application`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+                database.execSQL("INSERT INTO " + tableNameTemp + " SELECT * FROM " + tableName);
+                database.execSQL("DROP TABLE " + tableName);
+                database.execSQL("ALTER TABLE " + tableNameTemp + " RENAME TO " + tableName);
+            }
+            {
+                String tableName = "scope";
+                String tableNameTemp = tableName + "_temp";
+
+                database.execSQL("CREATE TABLE IF NOT EXISTS `" + tableNameTemp + "` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `applicationId` INTEGER NOT NULL, `name` TEXT, `selectedTimestamp` INTEGER, FOREIGN KEY(`applicationId`) REFERENCES `application`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+                database.execSQL("INSERT INTO " + tableNameTemp + " SELECT * FROM " + tableName);
+                database.execSQL("DROP TABLE " + tableName);
+                database.execSQL("ALTER TABLE " + tableNameTemp + " RENAME TO " + tableName);
+            }
+        }
+    };
 }

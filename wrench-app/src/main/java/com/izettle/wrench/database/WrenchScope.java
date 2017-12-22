@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.izettle.wrench.database.tables.ApplicationTable;
@@ -32,11 +33,23 @@ public class WrenchScope {
     @ColumnInfo(name = ScopeTable.COL_APP_ID)
     private long applicationId;
 
+    @NonNull
     @ColumnInfo(name = ScopeTable.COL_NAME)
     private String name = SCOPE_DEFAULT;
 
+    @NonNull
     @ColumnInfo(name = ScopeTable.COL_SELECTED_TIMESTAMP)
     private Date timeStamp = new Date();
+
+    public WrenchScope() {
+    }
+
+    public WrenchScope(long id, long applicationId, @NonNull String name, @NonNull Date timeStamp) {
+        this.id = id;
+        this.applicationId = applicationId;
+        this.name = name;
+        this.timeStamp = timeStamp;
+    }
 
     public static boolean isDefaultScope(WrenchScope scope) {
         return TextUtils.equals(WrenchScope.SCOPE_DEFAULT, scope.getName());

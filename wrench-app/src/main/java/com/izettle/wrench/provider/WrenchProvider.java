@@ -155,15 +155,16 @@ public class WrenchProvider extends ContentProvider {
         WrenchApplication wrenchApplication = applicationDao.loadByPackageName(packageManagerWrapper.getCallingApplicationPackageName());
 
         if (wrenchApplication == null) {
-            wrenchApplication = new WrenchApplication();
-            wrenchApplication.setPackageName(packageManagerWrapper.getCallingApplicationPackageName());
             try {
-                wrenchApplication.setApplicationLabel(packageManagerWrapper.getApplicationLabel());
+                wrenchApplication = new WrenchApplication(0, packageManagerWrapper.getCallingApplicationPackageName(), packageManagerWrapper.getApplicationLabel());
+
+                wrenchApplication.setId(applicationDao.insert(wrenchApplication));
+
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
+                throw new RuntimeException(e);
             }
 
-            wrenchApplication.setId(applicationDao.insert(wrenchApplication));
         }
 
         return wrenchApplication;
@@ -257,17 +258,14 @@ public class WrenchProvider extends ContentProvider {
                 WrenchConfiguration wrenchConfiguration = configurationDao.getWrenchConfiguration(callingApplication.id(), bolt.getKey());
 
                 if (wrenchConfiguration == null) {
-                    wrenchConfiguration = new WrenchConfiguration();
-                    wrenchConfiguration.setApplicationId(callingApplication.id());
-                    wrenchConfiguration.setKey(bolt.getKey());
-                    wrenchConfiguration.setType(bolt.getType());
+                    wrenchConfiguration = new WrenchConfiguration(0, callingApplication.id(), bolt.getKey(), bolt.getType());
 
                     wrenchConfiguration.setId(configurationDao.insert(wrenchConfiguration));
                 }
 
                 WrenchScope defaultScope = getDefaultScope(getContext(), scopeDao, callingApplication.id());
 
-                WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue();
+                WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue(0, wrenchConfiguration.id(), bolt.getValue(), defaultScope.id());
                 wrenchConfigurationValue.setConfigurationId(wrenchConfiguration.id());
                 wrenchConfigurationValue.setValue(bolt.getValue());
                 wrenchConfigurationValue.setScope(defaultScope.id());
@@ -325,10 +323,7 @@ public class WrenchProvider extends ContentProvider {
                 WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.id());
                 updatedRows = configurationValueDao.updateConfigurationValue(Long.parseLong(uri.getLastPathSegment()), scope.id(), bolt.getValue());
                 if (updatedRows == 0) {
-                    WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue();
-                    wrenchConfigurationValue.setConfigurationId(Long.parseLong(uri.getLastPathSegment()));
-                    wrenchConfigurationValue.setScope(scope.id());
-                    wrenchConfigurationValue.setValue(bolt.getValue());
+                    WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue(0, Long.parseLong(uri.getLastPathSegment()), bolt.getValue(), scope.id());
                     configurationValueDao.insert(wrenchConfigurationValue);
                 }
 

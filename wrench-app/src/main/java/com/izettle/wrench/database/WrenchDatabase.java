@@ -4,7 +4,7 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 
-@Database(entities = {WrenchApplication.class, WrenchConfiguration.class, WrenchConfigurationValue.class, WrenchPredefinedConfigurationValue.class, WrenchScope.class}, version = 2)
+@Database(entities = {WrenchApplication.class, WrenchConfiguration.class, WrenchConfigurationValue.class, WrenchPredefinedConfigurationValue.class, WrenchScope.class}, version = 3)
 @TypeConverters({RoomDateConverter.class})
 public abstract class WrenchDatabase extends RoomDatabase {
 

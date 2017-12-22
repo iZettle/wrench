@@ -4,11 +4,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 import android.database.Cursor;
 
 import com.izettle.wrench.database.tables.ConfigurationTable;
 import com.izettle.wrench.database.tables.ConfigurationValueTable;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -37,16 +39,20 @@ public interface WrenchConfigurationDao {
             " WHERE configuration.applicationId = (:applicationId) AND configuration.configurationKey = (:configurationKey)")
     WrenchConfiguration getWrenchConfiguration(long applicationId, String configurationKey);
 
-    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId")
-    LiveData<List<WrenchConfiguration>> getApplicationConfigurations(long applicationId);
-
     @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_ID + " = :configurationId")
     LiveData<WrenchConfiguration> getConfiguration(long configurationId);
 
-    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId AND " + ConfigurationTable.COL_KEY + " LIKE :query")
-    LiveData<List<WrenchConfiguration>> getApplicationConfigurations(long applicationId, String query);
+    @Transaction
+    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId ORDER BY lastUse DESC")
+    LiveData<List<WrenchConfigurationWithValues>> getApplicationConfigurations(long applicationId);
+
+    @Transaction
+    @Query("SELECT * FROM " + ConfigurationTable.TABLE_NAME + " WHERE " + ConfigurationTable.COL_APP_ID + " = :applicationId AND " + ConfigurationTable.COL_KEY + " LIKE :query ORDER BY lastUse DESC")
+    LiveData<List<WrenchConfigurationWithValues>> getApplicationConfigurations(long applicationId, String query);
 
     @Insert
     long insert(WrenchConfiguration wrenchConfiguration);
 
+    @Query("UPDATE " + ConfigurationTable.TABLE_NAME + " set lastUse=:date WHERE " + ConfigurationTable.COL_ID + "= :configurationId")
+    void touch(long configurationId, Date date);
 }

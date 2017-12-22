@@ -1,7 +1,7 @@
 package com.izettle.wrench.database;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.paging.LivePagedListProvider;
+import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -16,7 +16,7 @@ public interface WrenchApplicationDao {
     LiveData<WrenchApplication> get(long id);
 
     @Query("SELECT * FROM " + ApplicationTable.TABLE_NAME)
-    LivePagedListProvider<Integer, WrenchApplication> getApplications();
+    DataSource.Factory<Integer, WrenchApplication> getApplications();
 
 
     @Query("SELECT * FROM " + ApplicationTable.TABLE_NAME + " WHERE packageName IN (:packageName)")

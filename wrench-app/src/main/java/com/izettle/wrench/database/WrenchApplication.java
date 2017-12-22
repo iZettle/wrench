@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.izettle.wrench.database.tables.ApplicationTable;
 
@@ -15,11 +16,22 @@ public class WrenchApplication {
     @ColumnInfo(name = ApplicationTable.COL_ID)
     private long id;
 
+    @NonNull
     @ColumnInfo(name = ApplicationTable.COL_PACK_NAME)
     private String packageName;
 
+    @NonNull
     @ColumnInfo(name = ApplicationTable.COL_APP_LABEL)
     private String applicationLabel;
+
+    public WrenchApplication() {
+    }
+
+    public WrenchApplication(long id, @NonNull String packageName, @NonNull String applicationLabel) {
+        this.id = id;
+        this.packageName = packageName;
+        this.applicationLabel = applicationLabel;
+    }
 
     public void setId(long id) {
         this.id = id;

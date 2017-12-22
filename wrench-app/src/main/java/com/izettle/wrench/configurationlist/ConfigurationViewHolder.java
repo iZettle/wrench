@@ -1,15 +1,15 @@
-package com.izettle.wrench;
+package com.izettle.wrench.configurationlist;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.izettle.wrench.database.WrenchConfiguration;
+import com.izettle.wrench.database.WrenchConfigurationWithValues;
 import com.izettle.wrench.databinding.ConfigurationListItemBinding;
 
 public class ConfigurationViewHolder extends RecyclerView.ViewHolder {
     public final ConfigurationListItemBinding binding;
-    public WrenchConfiguration configuration;
+    public WrenchConfigurationWithValues configuration;
 
-    ConfigurationViewHolder(ConfigurationListItemBinding binding, WrenchConfiguration configuration) {
+    ConfigurationViewHolder(ConfigurationListItemBinding binding, WrenchConfigurationWithValues configuration) {
         super(binding.getRoot());
         this.binding = binding;
         this.configuration = configuration;

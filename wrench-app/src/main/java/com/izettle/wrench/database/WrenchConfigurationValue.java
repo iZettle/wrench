@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.Nullable;
 
 import com.izettle.wrench.database.tables.ConfigurationTable;
 import com.izettle.wrench.database.tables.ConfigurationValueTable;
@@ -25,11 +26,19 @@ public class WrenchConfigurationValue {
     @ColumnInfo(name = ConfigurationValueTable.COL_CONFIG_ID)
     private long configurationId;
 
+    @Nullable
     @ColumnInfo(name = ConfigurationValueTable.COL_VALUE)
     private String value;
 
     @ColumnInfo(name = ConfigurationValueTable.COL_SCOPE)
     private long scope;
+
+    public WrenchConfigurationValue(long id, long configurationId, @Nullable String value, long scope) {
+        this.id = id;
+        this.configurationId = configurationId;
+        this.value = value;
+        this.scope = scope;
+    }
 
     public long getId() {
         return id;

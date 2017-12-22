@@ -1,6 +1,5 @@
-package com.izettle.wrench;
+package com.izettle.wrench.configurationlist;
 
-import android.arch.lifecycle.LifecycleOwner;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
@@ -10,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.izettle.wrench.database.WrenchConfiguration;
 import com.izettle.wrench.database.WrenchConfigurationValue;
+import com.izettle.wrench.database.WrenchConfigurationWithValues;
 import com.izettle.wrench.database.WrenchScope;
 import com.izettle.wrench.databinding.ConfigurationListItemBinding;
 
@@ -22,18 +21,16 @@ import java.util.List;
 class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<ConfigurationViewHolder> {
 
     private static final int VIEW_TYPE_GENERAL = 1;
-    private final ArrayList<WrenchConfiguration> items = new ArrayList<>();
+    private final ArrayList<WrenchConfigurationWithValues> items = new ArrayList<>();
     private final ConfigurationViewModel model;
-    private final LifecycleOwner lifecycleOwner;
     private final Listener listener;
 
-    ConfigurationRecyclerViewAdapter(Listener listener, LifecycleOwner lifecycleOwner, ConfigurationViewModel model) {
+    ConfigurationRecyclerViewAdapter(Listener listener, ConfigurationViewModel model) {
         this.listener = listener;
-        this.lifecycleOwner = lifecycleOwner;
         this.model = model;
     }
 
-    void setItems(List<WrenchConfiguration> items) {
+    void setItems(List<WrenchConfigurationWithValues> items) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ConfigurationListDiffCallbacks(this.items, items));
         diffResult.dispatchUpdatesTo(this);
         this.items.clear();
@@ -65,39 +62,34 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
 
     @Override
     public void onBindViewHolder(final ConfigurationViewHolder viewHolder, int position, List<Object> payloads) {
-        if (viewHolder.configuration != null) {
-            model.getConfigurationValues(viewHolder.configuration.id()).removeObservers(lifecycleOwner);
-        }
-
         viewHolder.configuration = items.get(viewHolder.getAdapterPosition());
 
-        viewHolder.binding.title.setText(viewHolder.configuration.key());
-        model.getConfigurationValues(viewHolder.configuration.id()).observe(lifecycleOwner, wrenchConfigurationValues -> {
-            if (wrenchConfigurationValues == null) {
-                return;
-            }
+        viewHolder.binding.title.setText(viewHolder.configuration.getKey());
 
-            WrenchScope defaultScope = model.getDefaultScopeLiveData().getValue();
-            WrenchScope selectedScope = model.getSelectedScopeLiveData().getValue();
+        if (viewHolder.configuration.getConfigurationValues() == null) {
+            return;
+        }
 
-            WrenchConfigurationValue defaultScopedItem = getItemForScope(defaultScope, wrenchConfigurationValues);
-            if (defaultScopedItem == null) {
-                return;
-            }
+        WrenchScope defaultScope = model.getDefaultScopeLiveData().getValue();
+        WrenchScope selectedScope = model.getSelectedScopeLiveData().getValue();
 
-            viewHolder.binding.defaultValue.setText(defaultScopedItem.getValue());
+        WrenchConfigurationValue defaultScopedItem = getItemForScope(defaultScope, viewHolder.configuration.getConfigurationValues());
+        if (defaultScopedItem == null) {
+            return;
+        }
 
-            WrenchConfigurationValue selectedScopedItem = getItemForScope(selectedScope, wrenchConfigurationValues);
-            if (selectedScopedItem != null && selectedScopedItem.getScope() != defaultScope.id()) {
-                viewHolder.binding.defaultValue.setPaintFlags(viewHolder.binding.defaultValue.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                viewHolder.binding.customValue.setText(selectedScopedItem.getValue());
-                viewHolder.binding.customValue.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.binding.customValue.setText(null);
-                viewHolder.binding.defaultValue.setPaintFlags(viewHolder.binding.defaultValue.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                viewHolder.binding.customValue.setVisibility(View.GONE);
-            }
-        });
+        viewHolder.binding.defaultValue.setText(defaultScopedItem.getValue());
+
+        WrenchConfigurationValue selectedScopedItem = getItemForScope(selectedScope, viewHolder.configuration.getConfigurationValues());
+        if (selectedScopedItem != null && selectedScopedItem.getScope() != defaultScope.id()) {
+            viewHolder.binding.defaultValue.setPaintFlags(viewHolder.binding.defaultValue.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            viewHolder.binding.customValue.setText(selectedScopedItem.getValue());
+            viewHolder.binding.customValue.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.binding.customValue.setText(null);
+            viewHolder.binding.defaultValue.setPaintFlags(viewHolder.binding.defaultValue.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            viewHolder.binding.customValue.setVisibility(View.GONE);
+        }
         viewHolder.binding.getRoot().setOnClickListener(view -> listener.configurationClicked(items.get(viewHolder.getAdapterPosition())));
     }
 
@@ -122,15 +114,14 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
     }
 
     public interface Listener {
-        void configurationClicked(WrenchConfiguration configuration);
+        void configurationClicked(WrenchConfigurationWithValues configuration);
     }
 
-
     private class ConfigurationListDiffCallbacks extends DiffUtil.Callback {
-        private final ArrayList<WrenchConfiguration> oldItems;
-        private final List<WrenchConfiguration> newItems;
+        private final ArrayList<WrenchConfigurationWithValues> oldItems;
+        private final List<WrenchConfigurationWithValues> newItems;
 
-        ConfigurationListDiffCallbacks(ArrayList<WrenchConfiguration> oldItems, List<WrenchConfiguration> newItems) {
+        ConfigurationListDiffCallbacks(ArrayList<WrenchConfigurationWithValues> oldItems, List<WrenchConfigurationWithValues> newItems) {
             this.oldItems = oldItems;
             this.newItems = newItems;
         }
@@ -147,19 +138,32 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
 
         @Override
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-            WrenchConfiguration oldItem = oldItems.get(oldItemPosition);
-            WrenchConfiguration newItem = newItems.get(newItemPosition);
+            WrenchConfigurationWithValues oldItem = oldItems.get(oldItemPosition);
+            WrenchConfigurationWithValues newItem = newItems.get(newItemPosition);
 
-            return oldItem.id() == newItem.id();
+            return oldItem.getId() == newItem.getId();
         }
 
         @Override
         public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-            WrenchConfiguration oldItem = oldItems.get(oldItemPosition);
-            WrenchConfiguration newItem = newItems.get(newItemPosition);
+            WrenchConfigurationWithValues oldItem = oldItems.get(oldItemPosition);
+            WrenchConfigurationWithValues newItem = newItems.get(newItemPosition);
 
-            return TextUtils.equals(oldItem.key(), newItem.key()) &&
-                    TextUtils.equals(oldItem.type(), newItem.type());
+            if (oldItem.getConfigurationValues().size() != newItem.getConfigurationValues().size()) {
+                return false;
+            }
+
+            for (int i = 0; i < oldItem.getConfigurationValues().size(); i++) {
+                WrenchConfigurationValue oldWrenchConfigurationValue = oldItem.getConfigurationValues().get(i);
+                WrenchConfigurationValue newWrenchConfigurationValue = newItem.getConfigurationValues().get(i);
+
+                if (!TextUtils.equals(oldWrenchConfigurationValue.getValue(), newWrenchConfigurationValue.getValue())) {
+                    return false;
+                }
+            }
+
+            return TextUtils.equals(oldItem.getKey(), newItem.getKey()) &&
+                    TextUtils.equals(oldItem.getType(), newItem.getType());
         }
     }
 }
