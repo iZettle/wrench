@@ -117,6 +117,10 @@ public class Migrations {
                 database.execSQL("CREATE UNIQUE INDEX `index_configuration_temp_applicationId_configurationKey` ON `" + tableNameTemp + "` (`applicationId`, `configurationKey`)");
 
                 database.execSQL("INSERT INTO " + tableNameTemp + " SELECT id, applicationId, configurationKey, configurationType, 0 FROM " + tableName);
+                database.execSQL("UPDATE " + tableNameTemp + " SET configurationType='integer' WHERE configurationType='java.lang.Integer'");
+                database.execSQL("UPDATE " + tableNameTemp + " SET configurationType='string' WHERE configurationType='java.lang.String'");
+                database.execSQL("UPDATE " + tableNameTemp + " SET configurationType='boolean' WHERE configurationType='java.lang.Boolean'");
+                database.execSQL("UPDATE " + tableNameTemp + " SET configurationType='enum' WHERE configurationType='java.lang.Enum'");
                 database.execSQL("DROP TABLE " + tableName);
 
                 database.execSQL("DROP INDEX `index_configuration_temp_applicationId_configurationKey`");

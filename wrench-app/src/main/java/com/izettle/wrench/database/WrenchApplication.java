@@ -2,6 +2,7 @@ package com.izettle.wrench.database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ public class WrenchApplication {
     public WrenchApplication() {
     }
 
+    @Ignore
     public WrenchApplication(long id, @NonNull String packageName, @NonNull String applicationLabel) {
         this.id = id;
         this.packageName = packageName;

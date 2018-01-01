@@ -44,10 +44,11 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
         getProvider().predefinedConfigurationDao = wrenchDatabase.predefinedConfigurationValueDao();
 
         getProvider().packageManagerWrapper = new TestPackageManagerWrapper("TestApplication", "com.test.application");
+
     }
 
     @Test
-    public void testInsertBolt() throws Exception {
+    public void testInsertBolt() {
         String insertBoltKey = "insertBoltKey";
 
         Uri uri = WrenchProviderContract.boltUri();
@@ -79,7 +80,7 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
     }
 
     @Test
-    public void testUpdateBolt() throws Exception {
+    public void testUpdateBolt() {
         String updateBoltKey = "updateBoltKey";
 
         Uri uri = WrenchProviderContract.boltUri();
@@ -111,57 +112,57 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingInsertForBoltWithId() throws Exception {
+    public void testMissingInsertForBoltWithId() {
         contentResolver.insert(WrenchProviderContract.boltUri(0), getBolt("dummyBolt").toContentValues());
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingInsertForBoltWithKey() throws Exception {
+    public void testMissingInsertForBoltWithKey() {
         contentResolver.insert(WrenchProviderContract.boltUri("fake"), getBolt("dummyBolt").toContentValues());
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingUpdateForBoltWithKey() throws Exception {
+    public void testMissingUpdateForBoltWithKey() {
         contentResolver.update(WrenchProviderContract.boltUri("fake"), getBolt("dummyBolt").toContentValues(), null, null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingUpdateForBolts() throws Exception {
+    public void testMissingUpdateForBolts() {
         contentResolver.update(WrenchProviderContract.boltUri(), getBolt("dummyBolt").toContentValues(), null, null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingUpdateForNuts() throws Exception {
+    public void testMissingUpdateForNuts() {
         contentResolver.update(WrenchProviderContract.nutUri(), getNut("dummyNut").toContentValues(), null, null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingQueryForBolts() throws Exception {
+    public void testMissingQueryForBolts() {
         contentResolver.update(WrenchProviderContract.boltUri(), getBolt("dummyBolt").toContentValues(), null, null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingQueryForNuts() throws Exception {
+    public void testMissingQueryForNuts() {
         contentResolver.update(WrenchProviderContract.nutUri(), getNut("dummyNut").toContentValues(), null, null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingDeleteForBoltWithId() throws Exception {
+    public void testMissingDeleteForBoltWithId() {
         contentResolver.delete(WrenchProviderContract.boltUri(0), null, null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingDeleteForBoltWithKey() throws Exception {
+    public void testMissingDeleteForBoltWithKey() {
         contentResolver.delete(WrenchProviderContract.boltUri("fake"), null, null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingDeleteForBolts() throws Exception {
+    public void testMissingDeleteForBolts() {
         contentResolver.delete(WrenchProviderContract.boltUri(), null, null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMissingDeleteForNuts() throws Exception {
+    public void testMissingDeleteForNuts() {
         contentResolver.delete(WrenchProviderContract.nutUri(), null, null);
     }
 

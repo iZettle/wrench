@@ -3,6 +3,7 @@ package com.izettle.wrench.database;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -44,6 +45,7 @@ public class WrenchScope {
     public WrenchScope() {
     }
 
+    @Ignore
     public WrenchScope(long id, long applicationId, @NonNull String name, @NonNull Date timeStamp) {
         this.id = id;
         this.applicationId = applicationId;

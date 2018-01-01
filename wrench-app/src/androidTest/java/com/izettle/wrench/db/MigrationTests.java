@@ -3,10 +3,13 @@ package com.izettle.wrench.db;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.db.framework.FrameworkSQLiteOpenHelperFactory;
 import android.arch.persistence.room.testing.MigrationTestHelper;
+import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.database.WrenchDatabase;
+import com.izettle.wrench.database.tables.ConfigurationTable;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,6 +19,8 @@ import java.io.IOException;
 
 import static com.izettle.wrench.database.migrations.Migrations.MIGRATION_1_2;
 import static com.izettle.wrench.database.migrations.Migrations.MIGRATION_2_3;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class MigrationTests {
@@ -30,41 +35,53 @@ public class MigrationTests {
     @Test
     public void test1to2() throws IOException {
         // Create the database with version 2
-        SupportSQLiteDatabase db = testHelper.createDatabase(TEST_DB_NAME, 1);
+        SupportSQLiteDatabase originalDb = testHelper.createDatabase(TEST_DB_NAME, 1);
 
         // insert data
 
-        db.close();
+        originalDb.close();
 
         testHelper.runMigrationsAndValidate(TEST_DB_NAME, 2, true, MIGRATION_1_2);
 
     }
 
     @Test
-    public void test1to3() throws IOException {
-        // Create the database with version 2
-        SupportSQLiteDatabase db = testHelper.createDatabase(TEST_DB_NAME, 1);
-
-        // insert data
-
-        db.close();
-
-        testHelper.runMigrationsAndValidate(TEST_DB_NAME, 3, true, MIGRATION_1_2, MIGRATION_2_3);
-
-    }
-
-    @Test
     public void test2to3() throws IOException {
         // Create the database with version 2
-        SupportSQLiteDatabase db = testHelper.createDatabase(TEST_DB_NAME, 2);
+        SupportSQLiteDatabase originalDb = testHelper.createDatabase(TEST_DB_NAME, 2);
+
+        long testApplicationId = DatabaseHelper.insertWrenchApplication(originalDb, "TestApplication", "com.izettle.wrench.testapplication");
+
 
         // insert data
+        DatabaseHelper.insertWrenchConfiguration(originalDb, testApplicationId, "Integerkey", Integer.class.getName());
+        DatabaseHelper.insertWrenchConfiguration(originalDb, testApplicationId, "Stringkey", String.class.getName());
+        DatabaseHelper.insertWrenchConfiguration(originalDb, testApplicationId, "Booleankey", Boolean.class.getName());
+        DatabaseHelper.insertWrenchConfiguration(originalDb, testApplicationId, "Enumkey", Enum.class.getName());
 
-        db.close();
+        originalDb.close();
 
-        testHelper.runMigrationsAndValidate(TEST_DB_NAME, 3, true, MIGRATION_2_3);
+        SupportSQLiteDatabase migratedDb = testHelper.runMigrationsAndValidate(TEST_DB_NAME, 3, true, MIGRATION_2_3);
 
+        Cursor cursor = DatabaseHelper.getWrenchConfigurationByKey(migratedDb, "Integerkey");
+        assertTrue(cursor.moveToFirst());
+        assertEquals(Bolt.TYPE.INTEGER, cursor.getString(cursor.getColumnIndex(ConfigurationTable.COL_TYPE)));
+        cursor.close();
+
+        cursor = DatabaseHelper.getWrenchConfigurationByKey(migratedDb, "Stringkey");
+        assertTrue(cursor.moveToFirst());
+        assertEquals(Bolt.TYPE.STRING, cursor.getString(cursor.getColumnIndex(ConfigurationTable.COL_TYPE)));
+        cursor.close();
+
+        cursor = DatabaseHelper.getWrenchConfigurationByKey(migratedDb, "Booleankey");
+        assertTrue(cursor.moveToFirst());
+        assertEquals(Bolt.TYPE.BOOLEAN, cursor.getString(cursor.getColumnIndex(ConfigurationTable.COL_TYPE)));
+        cursor.close();
+
+        cursor = DatabaseHelper.getWrenchConfigurationByKey(migratedDb, "Enumkey");
+        assertTrue(cursor.moveToFirst());
+        assertEquals(Bolt.TYPE.ENUM, cursor.getString(cursor.getColumnIndex(ConfigurationTable.COL_TYPE)));
+        cursor.close();
     }
-
 
 }
