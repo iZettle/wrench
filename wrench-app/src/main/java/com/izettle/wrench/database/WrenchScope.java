@@ -77,7 +77,7 @@ public class WrenchScope {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
@@ -90,7 +90,7 @@ public class WrenchScope {
         return timeStamp;
     }
 
-    public void setTimeStamp(Date timeStamp) {
+    public void setTimeStamp(@NonNull Date timeStamp) {
         this.timeStamp = timeStamp;
     }
 }
