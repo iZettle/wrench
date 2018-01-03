@@ -255,6 +255,8 @@ public class WrenchProvider extends ContentProvider {
             case CURRENT_CONFIGURATIONS: {
                 Bolt bolt = Bolt.fromContentValues(values);
 
+                bolt = fixRCTypes(bolt);
+
                 WrenchConfiguration wrenchConfiguration = configurationDao.getWrenchConfiguration(callingApplication.id(), bolt.getKey());
 
                 if (wrenchConfiguration == null) {
@@ -288,6 +290,23 @@ public class WrenchProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(Uri.withAppendedPath(uri, String.valueOf(insertId)), null, false);
 
         return ContentUris.withAppendedId(uri, insertId);
+    }
+
+    private Bolt fixRCTypes(Bolt bolt) {
+        switch (bolt.getType()) {
+            case "java.lang.String":
+                return bolt.copy(bolt.getId(), Bolt.TYPE.STRING, bolt.getKey(), bolt.getValue());
+            case "java.lang.Integer":
+                return bolt.copy(bolt.getId(), Bolt.TYPE.INTEGER, bolt.getKey(), bolt.getValue());
+            case "java.lang.Enum":
+                return bolt.copy(bolt.getId(), Bolt.TYPE.ENUM, bolt.getKey(), bolt.getValue());
+            case "java.lang.Boolean":
+                return bolt.copy(bolt.getId(), Bolt.TYPE.BOOLEAN, bolt.getKey(), bolt.getValue());
+            default: {
+                return bolt;
+            }
+
+        }
     }
 
     @Override
