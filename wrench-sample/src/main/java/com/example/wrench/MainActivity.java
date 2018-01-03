@@ -53,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         wrenchPreferences.getEnum(getString(R.string.enum_configuration), MyEnum.class, MyEnum.FIRST);
-        wrenchSampleViewModel.getBolt(getString(R.string.enum_configuration)).observe(this, bolt -> {
+        wrenchSampleViewModel.getEnumBolt().observe(this, bolt -> {
             if (bolt != null) {
                 activityMainBinding.enumConfiguration.setText(bolt.getValue());
             }
         });
 
         wrenchPreferences.getString(getString(R.string.service_configuration), null);
-        wrenchSampleViewModel.getBolt(getString(R.string.service_configuration)).observe(this, bolt -> {
+        wrenchSampleViewModel.getServiceStringBolt().observe(this, bolt -> {
             if (bolt != null) {
                 activityMainBinding.serviceConfiguration.setText(bolt.getValue());
             }
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressWarnings("unused")
-    enum MyEnum {
+    public enum MyEnum {
         FIRST, SECOND, THIRD
     }
 }

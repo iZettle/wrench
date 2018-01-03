@@ -1,8 +1,9 @@
-package com.example.wrench;
+package com.example.wrench.BoltLiveData;
 
 import android.arch.lifecycle.LiveData;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.pm.ProviderInfo;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,31 +13,33 @@ import android.support.annotation.Nullable;
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.WrenchProviderContract;
 
-public class BoltLiveData extends LiveData<Bolt> {
+public abstract class BoltLiveData extends LiveData<Bolt> {
     private final String key;
     private final String type;
-    private final String defValue;
     private final Context context;
     private BoltContentObserver boltContentObserver;
 
-    BoltLiveData(Context context, String key, String defValue, @Bolt.BoltType String type) {
+    BoltLiveData(Context context, String key, @Bolt.BoltType String type) {
         this.context = context;
         this.key = key;
         this.type = type;
-        this.defValue = defValue;
         boltContentObserver = new BoltContentObserver(new Handler());
     }
 
-    public static BoltLiveData string(Context context, String key, String def) {
-        return new BoltLiveData(context, key, def, Bolt.TYPE.STRING);
+    public static BoltLiveData create(Context context, String key, String def) {
+        return new StringBoltLiveData(context, key, def, Bolt.TYPE.STRING);
     }
 
-    public static BoltLiveData bool(Context context, String key, boolean def) {
-        return new BoltLiveData(context, key, String.valueOf(def), Bolt.TYPE.BOOLEAN);
+    public static BoltLiveData create(Context context, String key, boolean def) {
+        return new StringBoltLiveData(context, key, String.valueOf(def), Bolt.TYPE.BOOLEAN);
     }
 
-    public static BoltLiveData integer(Context context, String key, int def) {
-        return new BoltLiveData(context, key, String.valueOf(def), Bolt.TYPE.INTEGER);
+    public static BoltLiveData create(Context context, String key, int def) {
+        return new StringBoltLiveData(context, key, String.valueOf(def), Bolt.TYPE.INTEGER);
+    }
+
+    public static <T extends Enum> BoltLiveData create(Context context, String key, Class<T> enumClass, T def) {
+        return new EnumBoltLiveData<>(context, key, enumClass, def);
     }
 
     @Nullable
@@ -65,16 +68,27 @@ public class BoltLiveData extends LiveData<Bolt> {
         return new Bolt();
     }
 
-    private static Uri insertBolt(ContentResolver contentResolver, Bolt bolt) {
-        return contentResolver.insert(WrenchProviderContract.boltUri(), bolt.toContentValues());
+    String getType() {
+        return type;
+    }
+
+    Context getContext() {
+        return context;
+    }
+
+    String getKey() {
+        return key;
     }
 
     @Override
     protected void onActive() {
-        context.getContentResolver()
-                .registerContentObserver(WrenchProviderContract.boltUri(), true, boltContentObserver);
+        ProviderInfo providerInfo = context.getPackageManager().resolveContentProvider(WrenchProviderContract.WRENCH_AUTHORITY, 0);
+        if (providerInfo != null) {
+            context.getContentResolver()
+                    .registerContentObserver(WrenchProviderContract.boltUri(), true, boltContentObserver);
 
-        boltChanged();
+        }
+        onChange();
     }
 
     @Override
@@ -82,21 +96,11 @@ public class BoltLiveData extends LiveData<Bolt> {
         context.getContentResolver().unregisterContentObserver(boltContentObserver);
     }
 
-    private void boltChanged() {
-        Bolt bolt = getBolt(context.getContentResolver(), key);
-
-        if (bolt == null) {
-            setValue(null);
-            return;
-        }
-
-        if (bolt.getId() == 0) {
-            bolt = bolt.copy(bolt.getId(), type, key, defValue);
-            Uri uri = insertBolt(context.getContentResolver(), bolt);
-            bolt.setId(Long.parseLong(uri.getLastPathSegment()));
-        }
-        setValue(bolt);
+    private void onChange() {
+        boltChanged(getBolt(context.getContentResolver(), key));
     }
+
+    abstract void boltChanged(@Nullable Bolt bolt);
 
     class BoltContentObserver extends ContentObserver {
         BoltContentObserver(Handler handler) {
@@ -110,7 +114,7 @@ public class BoltLiveData extends LiveData<Bolt> {
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-            BoltLiveData.this.boltChanged();
+            BoltLiveData.this.onChange();
         }
     }
 }
