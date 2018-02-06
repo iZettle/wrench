@@ -7,7 +7,7 @@ import com.izettle.wrench.core.Bolt
 import com.izettle.wrench.core.Nut
 import com.izettle.wrench.core.WrenchProviderContract
 
-class WrenchPreferences(context: Context) {
+open class WrenchPreferences(context: Context) {
     private val contentResolver: ContentResolver = context.contentResolver
 
     private fun insertNut(contentResolver: ContentResolver, nut: Nut) {
