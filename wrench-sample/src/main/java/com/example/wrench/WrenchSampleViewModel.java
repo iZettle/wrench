@@ -8,7 +8,10 @@ import android.support.annotation.NonNull;
 import com.example.wrench.BoltLiveData.BoltLiveData;
 import com.izettle.wrench.core.Bolt;
 
+import javax.inject.Inject;
+
 public class WrenchSampleViewModel extends AndroidViewModel {
+    @Inject
     public WrenchSampleViewModel(@NonNull Application application) {
         super(application);
     }

@@ -41,6 +41,9 @@ android {
 }
 
 dependencies {
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.14.1"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.14.1"
+
     testImplementation 'junit:junit:4.12'
 
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2-alpha1'
@@ -53,9 +56,13 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta4'
     implementation 'android.arch.lifecycle:extensions:1.1.0'
 
+    implementation "com.google.dagger:dagger:2.14.1"
+    implementation "com.google.dagger:dagger-android:2.14.1"
+    implementation "com.google.dagger:dagger-android-support:2.14.1"
+
     implementation project(":wrench-core")
     debugImplementation project(":wrench-prefs")
     releaseImplementation project(":wrench-prefs-no-op")
 
-    implementation 'com.izettle.wrench:wrench-service:0.2'
+    implementation project(":wrench-service")
 }
