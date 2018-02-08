@@ -94,6 +94,16 @@ public class Migrations {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             {
+                // Reinstate indexes - due to a bug in a previous migration (1 -> 2) these indexes may be missing.
+                // This will recreate them in case they were missing so that migration can progress
+                database.execSQL("DROP INDEX IF EXISTS `index_configurationValue_configurationId_value_scope`");
+                database.execSQL("CREATE UNIQUE INDEX `index_configurationValue_configurationId_value_scope` ON `configurationValue` (`configurationId`, `value`, `scope`)");
+
+                database.execSQL("DROP INDEX IF EXISTS `index_predefinedConfigurationValue_configurationId`");
+                database.execSQL("CREATE  INDEX `index_predefinedConfigurationValue_configurationId` ON `predefinedConfigurationValue` (`configurationId`)");
+            }
+
+            {
                 String tableName = "application";
                 String tableNameTemp = tableName + "_temp";
 
