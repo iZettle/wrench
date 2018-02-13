@@ -2,7 +2,6 @@ package com.example.wrench;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,10 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
 import com.example.wrench.databinding.ActivityMainBinding;
+import com.example.wrench.livedataprefs.LiveDataPreferencesFragment;
+import com.example.wrench.wrenchprefs.WrenchPreferencesFragment;
 import com.izettle.wrench.preferences.WrenchPreferences;
-import com.izettle.wrench.service.WrenchService;
-
-import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -47,47 +45,33 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
         WrenchSampleViewModel wrenchSampleViewModel = ViewModelProviders.of(this, viewModelFactory).get(WrenchSampleViewModel.class);
 
-        wrenchSampleViewModel.getStringBolt().observe(this, bolt -> {
-            if (bolt != null) {
-                activityMainBinding.stringConfiguration.setText(bolt.getValue());
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(activityMainBinding.container.getId(), LiveDataPreferencesFragment.newInstance())
+                .commit();
+
+        activityMainBinding.bottomNav.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.nav_live_data: {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(activityMainBinding.container.getId(), LiveDataPreferencesFragment.newInstance())
+                            .commit();
+                    return true;
+                }
+                case R.id.nav_wrench_prefs: {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(activityMainBinding.container.getId(), WrenchPreferencesFragment.newInstance())
+                            .commit();
+                    return true;
+                }
+                default: {
+                    throw new IllegalStateException("Unknown id");
+                }
             }
         });
 
-        wrenchSampleViewModel.getUrlBolt().observe(this, bolt -> {
-            if (bolt != null) {
-                activityMainBinding.urlConfiguration.setText(bolt.getValue());
-            }
-        });
-
-        wrenchSampleViewModel.getBooleanBolt().observe(this, bolt -> {
-            if (bolt != null) {
-                activityMainBinding.booleanConfiguration.setText(bolt.getValue());
-            }
-        });
-
-        wrenchSampleViewModel.getIntBolt().observe(this, bolt -> {
-            if (bolt != null) {
-                activityMainBinding.intConfiguration.setText(bolt.getValue());
-            }
-        });
-
-        wrenchSampleViewModel.getEnumBolt().observe(this, bolt -> {
-            if (bolt != null) {
-                activityMainBinding.enumConfiguration.setText(bolt.getValue());
-            }
-        });
-
-        wrenchSampleViewModel.getServiceStringBolt().observe(this, bolt -> {
-            if (bolt != null) {
-                activityMainBinding.serviceConfiguration.setText(bolt.getValue());
-            }
-        });
-
-        activityMainBinding.serviceButton.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), WrenchService.class);
-            intent.putExtra(getString(R.string.service_configuration), new Date().toString());
-            startService(intent);
-        });
     }
 
     @Override

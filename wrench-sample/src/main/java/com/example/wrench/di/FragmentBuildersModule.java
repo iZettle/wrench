@@ -16,13 +16,18 @@
 
 package com.example.wrench.di;
 
-import com.example.wrench.MainActivity;
+import com.example.wrench.livedataprefs.LiveDataPreferencesFragment;
+import com.example.wrench.wrenchprefs.WrenchPreferencesFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class ActivityModule {
-    @ContributesAndroidInjector(modules = {FragmentBuildersModule.class})
-    abstract MainActivity contributeMainAcitvity();
+public abstract class FragmentBuildersModule {
+    @ContributesAndroidInjector
+    abstract LiveDataPreferencesFragment contributeLiveDataPreferencesFragment();
+
+    @ContributesAndroidInjector
+    abstract WrenchPreferencesFragment contributeWrenchPreferencesFragment();
+
 }

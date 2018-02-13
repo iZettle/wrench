@@ -7,4 +7,9 @@
     <string name="enum_configuration">enum configuration:</string>
     <string name="service_configuration">service_configuration</string>
     <string name="click_to_update_value_using_service">Click to update value using service</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_menu_wrench_prefs_live_data">Live data</string>
+    <string name="nav_menu_wrench_preferences">Wrench Prefs</string>
 </resources>
