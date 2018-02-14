@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.wrench.wrenchprefs.WrenchPreferencesFragmentViewModel" />
+    </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,6 +45,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="0dp"
             android:padding="8dp"
+            android:text="@{viewModel.stringConfiguration}"
             app:layout_constraintBottom_toTopOf="@+id/url_configuration_title"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -76,6 +84,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="0dp"
             android:padding="8dp"
+            android:text="@{viewModel.urlConfiguration}"
             app:layout_constraintBottom_toTopOf="@+id/boolean_configuration_title"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -117,6 +126,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="0dp"
             android:padding="8dp"
+            android:text="@{String.valueOf(viewModel.booleanConfiguration)}"
             app:layout_constraintBottom_toTopOf="@+id/int_configuration_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -155,6 +165,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="0dp"
             android:padding="8dp"
+            android:text="@{String.valueOf(viewModel.intConfiguration)}"
             app:layout_constraintBottom_toTopOf="@+id/enum_configuration_title"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -195,6 +206,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="0dp"
             android:padding="8dp"
+            android:text="@{String.valueOf(viewModel.enumConfiguration)}"
             app:layout_constraintBottom_toTopOf="@+id/service_button"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -232,6 +244,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="0dp"
             android:padding="8dp"
+            android:text="@{viewModel.serviceStringConfiguration}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"

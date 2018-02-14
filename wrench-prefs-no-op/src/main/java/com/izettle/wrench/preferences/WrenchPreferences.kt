@@ -10,7 +10,7 @@ class WrenchPreferences(context: Context) {
         return defValue
     }
 
-    fun getString(key: String, defValue: String): String {
+    fun getString(key: String, defValue: String?): String? {
         return defValue
     }
 

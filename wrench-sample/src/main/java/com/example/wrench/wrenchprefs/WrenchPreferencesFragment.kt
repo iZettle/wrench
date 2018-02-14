@@ -38,23 +38,13 @@ class WrenchPreferencesFragment : Fragment(), Injectable {
 
         binding = FragmentWrenchPreferencesBinding.inflate(inflater, container, false)
 
+        binding.viewModel = viewModel
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.stringConfiguration.text = viewModel.getStringConfiguration()
-
-        binding.urlConfiguration.text = viewModel.getUrlConfiguration()
-
-        binding.booleanConfiguration.text = viewModel.getBooleanConfiguration().toString()
-
-        binding.intConfiguration.text = viewModel.getIntConfiguration().toString()
-
-        binding.enumConfiguration.text = viewModel.getEnumConfiguration().toString()
-
-        binding.serviceConfiguration.text = viewModel.getServiceStringConfiguration()
 
         binding.serviceButton.setOnClickListener({ v ->
             val intent = Intent(v.context, WrenchService::class.java)

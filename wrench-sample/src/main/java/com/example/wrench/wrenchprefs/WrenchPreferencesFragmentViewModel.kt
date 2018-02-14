@@ -13,16 +13,16 @@ class WrenchPreferencesFragmentViewModel @Inject constructor(val application: Ap
         return wrenchPreferences.getString(application.resources.getString(R.string.string_configuration), "string1")
     }
 
-    internal fun getIntConfiguration(): Int? {
-        return wrenchPreferences.getInt(application.resources.getString(R.string.int_configuration), 1)
+    fun getUrlConfiguration(): String? {
+        return wrenchPreferences.getString(application.resources.getString(R.string.url_configuration), "http://www.example.com/path?param=value")
     }
 
-    internal fun getBooleanConfiguration(): Boolean? {
+    fun getBooleanConfiguration(): Boolean? {
         return wrenchPreferences.getBoolean(application.resources.getString(R.string.boolean_configuration), true)
     }
 
-    fun getUrlConfiguration(): String? {
-        return wrenchPreferences.getString(application.resources.getString(R.string.url_configuration), "http://www.example.com/path?param=value")
+    fun getIntConfiguration(): Int? {
+        return wrenchPreferences.getInt(application.resources.getString(R.string.int_configuration), 1)
     }
 
     fun getEnumConfiguration(): MainActivity.MyEnum? {

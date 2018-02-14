@@ -11,7 +11,6 @@ import android.view.Menu;
 import com.example.wrench.databinding.ActivityMainBinding;
 import com.example.wrench.livedataprefs.LiveDataPreferencesFragment;
 import com.example.wrench.wrenchprefs.WrenchPreferencesFragment;
-import com.izettle.wrench.preferences.WrenchPreferences;
 
 import javax.inject.Inject;
 
@@ -25,9 +24,6 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
-
-    @Inject
-    WrenchPreferences wrenchPreferences;
 
     private ActivityMainBinding activityMainBinding;
 
