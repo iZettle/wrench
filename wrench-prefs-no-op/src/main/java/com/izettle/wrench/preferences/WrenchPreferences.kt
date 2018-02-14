@@ -4,7 +4,7 @@ package com.izettle.wrench.preferences
 import android.content.Context
 
 @Suppress("unused", "UNUSED_PARAMETER")
-class WrenchPreferences(context: Context) {
+open class WrenchPreferences(context: Context) {
 
     fun <T : Enum<T>> getEnum(key: String, type: Class<T>, defValue: T): T {
         return defValue

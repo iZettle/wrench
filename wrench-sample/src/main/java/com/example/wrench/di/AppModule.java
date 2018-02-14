@@ -17,10 +17,9 @@
 package com.example.wrench.di;
 
 import android.app.Application;
+import android.content.res.Resources;
 
 import com.izettle.wrench.preferences.WrenchPreferences;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -29,8 +28,12 @@ import dagger.Provides;
 class AppModule {
 
     @Provides
-    @Singleton
     WrenchPreferences provideWrenchPreferences(Application app) {
         return new WrenchPreferences(app);
+    }
+
+    @Provides
+    Resources provideResources(Application app) {
+        return app.getResources();
     }
 }
