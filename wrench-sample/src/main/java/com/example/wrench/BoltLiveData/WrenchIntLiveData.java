@@ -6,11 +6,11 @@ import android.net.Uri;
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.WrenchProviderContract;
 
-class StringBoltLiveData extends BoltLiveData {
-    private final String defValue;
+class WrenchIntLiveData extends WrenchLiveData<Integer> {
+    private final int defValue;
 
-    StringBoltLiveData(Context context, String key, String defValue, String type) {
-        super(context, key, type);
+    WrenchIntLiveData(Context context, String key, int defValue) {
+        super(context, key, Bolt.TYPE.INTEGER);
 
         this.defValue = defValue;
     }
@@ -18,15 +18,15 @@ class StringBoltLiveData extends BoltLiveData {
     @Override
     void boltChanged(Bolt bolt) {
         if (bolt == null) {
-            setValue(new Bolt(0, getType(), getKey(), defValue));
+            setValue(defValue);
             return;
         }
 
         if (bolt.getId() == 0) {
-            bolt = bolt.copy(bolt.getId(), getType(), getKey(), defValue);
+            bolt = bolt.copy(bolt.getId(), getType(), getKey(), String.valueOf(defValue));
             Uri uri = getContext().getContentResolver().insert(WrenchProviderContract.boltUri(), bolt.toContentValues());
             bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         }
-        setValue(bolt);
+        setValue(Integer.valueOf(bolt.getValue()));
     }
 }

@@ -1,7 +1,6 @@
 package com.example.wrench.livedataprefs
 
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -13,7 +12,6 @@ import android.view.ViewGroup
 import com.example.wrench.R
 import com.example.wrench.databinding.FragmentLiveDataPreferencesBinding
 import com.example.wrench.di.Injectable
-import com.izettle.wrench.core.Bolt
 import com.izettle.wrench.service.WrenchService
 import java.util.*
 import javax.inject.Inject
@@ -39,36 +37,15 @@ class LiveDataPreferencesFragment : Fragment(), Injectable {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LiveDataPreferencesFragmentViewModel::class.java)
 
         binding = FragmentLiveDataPreferencesBinding.inflate(inflater, container, false)
+        binding.setLifecycleOwner(this)
+
+        binding.viewModel = viewModel
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.getStringBolt().observe(this, Observer<Bolt?> { bolt ->
-            bolt?.let { binding.stringConfiguration.text = bolt.value }
-        })
-
-        viewModel.getUrlBolt().observe(this, Observer<Bolt?> { bolt ->
-            bolt?.let { binding.urlConfiguration.text = bolt.value }
-        })
-
-        viewModel.getBooleanBolt().observe(this, Observer<Bolt?> { bolt ->
-            bolt?.let { binding.booleanConfiguration.text = bolt.value }
-        })
-
-        viewModel.getIntBolt().observe(this, Observer<Bolt?> { bolt ->
-            bolt?.let { binding.intConfiguration.text = bolt.value }
-        })
-
-        viewModel.getEnumBolt().observe(this, Observer<Bolt?> { bolt ->
-            bolt?.let { binding.enumConfiguration.text = bolt.value }
-        })
-
-        viewModel.getServiceStringBolt().observe(this, Observer<Bolt?> { bolt ->
-            bolt?.let { binding.serviceConfiguration.text = bolt.value }
-        })
 
         binding.serviceButton.setOnClickListener({ v ->
             val intent = Intent(v.context, WrenchService::class.java)

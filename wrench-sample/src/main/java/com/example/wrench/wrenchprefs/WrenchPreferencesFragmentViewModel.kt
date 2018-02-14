@@ -7,7 +7,7 @@ import com.example.wrench.R
 import com.izettle.wrench.preferences.WrenchPreferences
 import javax.inject.Inject
 
-class WrenchPreferencesFragmentViewModel @Inject constructor(val application: Application, val wrenchPreferences: WrenchPreferences) : ViewModel() {
+class WrenchPreferencesFragmentViewModel @Inject constructor(val application: Application, private val wrenchPreferences: WrenchPreferences) : ViewModel() {
 
     fun getStringConfiguration(): String? {
         return wrenchPreferences.getString(application.resources.getString(R.string.string_configuration), "string1")

@@ -13,33 +13,33 @@ import android.support.annotation.Nullable;
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.WrenchProviderContract;
 
-public abstract class BoltLiveData extends LiveData<Bolt> {
+public abstract class WrenchLiveData<T> extends LiveData<T> {
     private final String key;
     private final String type;
     private final Context context;
     private BoltContentObserver boltContentObserver;
 
-    BoltLiveData(Context context, String key, @Bolt.BoltType String type) {
+    WrenchLiveData(Context context, String key, @Bolt.BoltType String type) {
         this.context = context;
         this.key = key;
         this.type = type;
         boltContentObserver = new BoltContentObserver(new Handler());
     }
 
-    public static BoltLiveData create(Context context, String key, String def) {
-        return new StringBoltLiveData(context, key, def, Bolt.TYPE.STRING);
+    public static WrenchLiveData<String> create(Context context, String key, String def) {
+        return new WrenchStringLiveData(context, key, def, Bolt.TYPE.STRING);
     }
 
-    public static BoltLiveData create(Context context, String key, boolean def) {
-        return new StringBoltLiveData(context, key, String.valueOf(def), Bolt.TYPE.BOOLEAN);
+    public static WrenchLiveData<Boolean> create(Context context, String key, boolean def) {
+        return new WrenchBooleanLiveData(context, key, def);
     }
 
-    public static BoltLiveData create(Context context, String key, int def) {
-        return new StringBoltLiveData(context, key, String.valueOf(def), Bolt.TYPE.INTEGER);
+    public static WrenchLiveData<Integer> create(Context context, String key, int def) {
+        return new WrenchIntLiveData(context, key, def);
     }
 
-    public static <T extends Enum> BoltLiveData create(Context context, String key, Class<T> enumClass, T def) {
-        return new EnumBoltLiveData<>(context, key, enumClass, def);
+    public static <T extends Enum<T>> WrenchLiveData<T> create(Context context, String key, Class<T> enumClass, T def) {
+        return new WrenchEnumLiveData<>(context, key, enumClass, def);
     }
 
     @Nullable
@@ -114,7 +114,7 @@ public abstract class BoltLiveData extends LiveData<Bolt> {
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-            BoltLiveData.this.onChange();
+            WrenchLiveData.this.onChange();
         }
     }
 }
