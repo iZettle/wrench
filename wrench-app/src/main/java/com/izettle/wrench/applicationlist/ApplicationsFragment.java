@@ -41,7 +41,7 @@ public class ApplicationsFragment extends Fragment implements Injectable {
         ApplicationViewModel model = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel.class);
 
         ApplicationAdapter adapter = new ApplicationAdapter();
-        model.getApplications().observe(this, adapter::setList);
+        model.getApplications().observe(this, adapter::submitList);
         fragmentApplicationsBinding.list.setAdapter(adapter);
 
         model.isListEmpty().observe(this, isEmpty -> {
