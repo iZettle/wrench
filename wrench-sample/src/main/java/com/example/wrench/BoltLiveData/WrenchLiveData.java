@@ -43,7 +43,7 @@ public abstract class WrenchLiveData<T> extends LiveData<T> {
     }
 
     @Nullable
-    private static Bolt getBolt(ContentResolver contentResolver, String key) {
+    private static Bolt getBolt(ContentResolver contentResolver, @Bolt.BoltType String type, String key) {
         Cursor cursor = null;
         try {
             cursor = contentResolver.query(WrenchProviderContract.boltUri(key),
@@ -65,7 +65,7 @@ public abstract class WrenchLiveData<T> extends LiveData<T> {
                 cursor.close();
             }
         }
-        return new Bolt();
+        return new Bolt(0, type, key, "");
     }
 
     String getType() {
@@ -97,7 +97,7 @@ public abstract class WrenchLiveData<T> extends LiveData<T> {
     }
 
     private void onChange() {
-        boltChanged(getBolt(context.getContentResolver(), key));
+        boltChanged(getBolt(context.getContentResolver(), type, key));
     }
 
     abstract void boltChanged(@Nullable Bolt bolt);

@@ -24,7 +24,7 @@ class WrenchService : IntentService("WrenchService") {
     }
 
     private fun updateInteger(contentResolver: ContentResolver, key: String, value: Int) {
-        var bolt = getBolt(contentResolver, key) ?: return
+        var bolt = getBolt(contentResolver, Bolt.TYPE.INTEGER, key) ?: return
 
         if (bolt.id == 0L) {
             bolt = bolt.copy(bolt.id, Bolt.TYPE.INTEGER, key, value.toString())
@@ -37,7 +37,7 @@ class WrenchService : IntentService("WrenchService") {
     }
 
     private fun updateBoolean(contentResolver: ContentResolver, key: String, value: Boolean) {
-        var bolt = getBolt(contentResolver, key) ?: return
+        var bolt = getBolt(contentResolver, Bolt.TYPE.BOOLEAN, key) ?: return
 
         if (bolt.id == 0L) {
             bolt = bolt.copy(bolt.id, Bolt.TYPE.BOOLEAN, key, value.toString())
@@ -50,7 +50,7 @@ class WrenchService : IntentService("WrenchService") {
     }
 
     private fun updateString(contentResolver: ContentResolver, key: String, value: String) {
-        var bolt = getBolt(contentResolver, key) ?: return
+        var bolt = getBolt(contentResolver, Bolt.TYPE.STRING, key) ?: return
 
         if (bolt.id == 0L) {
             bolt = bolt.copy(bolt.id, Bolt.TYPE.STRING, key, value)
@@ -70,7 +70,7 @@ class WrenchService : IntentService("WrenchService") {
         contentResolver.update(WrenchProviderContract.boltUri(bolt.id), bolt.toContentValues(), null, null)
     }
 
-    private fun getBolt(contentResolver: ContentResolver, key: String): Bolt? {
+    private fun getBolt(contentResolver: ContentResolver, @Bolt.BoltType boltType: String, key: String): Bolt? {
         val cursor = contentResolver.query(WrenchProviderContract.boltUri(key), null, null, null, null)
         cursor.use {
             if (cursor == null) {
@@ -82,6 +82,6 @@ class WrenchService : IntentService("WrenchService") {
             }
         }
 
-        return Bolt()
+        return Bolt(type = boltType, key = key)
     }
 }
