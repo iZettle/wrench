@@ -82,6 +82,6 @@ class WrenchService : IntentService("WrenchService") {
             }
         }
 
-        return Bolt(type = boltType, key = key)
+        return Bolt(0, boltType, key, null)
     }
 }
