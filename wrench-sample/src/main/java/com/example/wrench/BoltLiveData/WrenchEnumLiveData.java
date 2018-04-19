@@ -7,11 +7,13 @@ import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.Nut;
 import com.izettle.wrench.core.WrenchProviderContract;
 
-class EnumBoltLiveData<T extends Enum> extends BoltLiveData {
+import java.util.Objects;
+
+class WrenchEnumLiveData<T extends Enum<T>> extends WrenchLiveData<T> {
     private final Class<T> enumClass;
     private final T defValue;
 
-    EnumBoltLiveData(Context context, String key, Class<T> enumClass, T defValue) {
+    WrenchEnumLiveData(Context context, String key, Class<T> enumClass, T defValue) {
         super(context, key, Bolt.TYPE.ENUM);
         this.enumClass = enumClass;
         this.defValue = defValue;
@@ -28,7 +30,7 @@ class EnumBoltLiveData<T extends Enum> extends BoltLiveData {
     @Override
     void boltChanged(Bolt bolt) {
         if (bolt == null) {
-            setValue(new Bolt(0, getType(), getKey(), String.valueOf(defValue)));
+            setValue(defValue);
             return;
         }
 
@@ -41,6 +43,7 @@ class EnumBoltLiveData<T extends Enum> extends BoltLiveData {
                 insertNut(new Nut(bolt.getId(), t.toString()));
             }
         }
-        setValue(bolt);
+
+        setValue(Enum.valueOf(enumClass, Objects.requireNonNull(bolt.getValue())));
     }
 }

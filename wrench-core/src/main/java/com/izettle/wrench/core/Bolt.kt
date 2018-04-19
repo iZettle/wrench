@@ -5,7 +5,7 @@ import android.database.Cursor
 import android.support.annotation.StringDef
 
 data class Bolt(var id: Long = 0,
-                @BoltType val type: String = "",
+                @BoltType val type: String,
                 val key: String = "",
                 val value: String? = null) {
 

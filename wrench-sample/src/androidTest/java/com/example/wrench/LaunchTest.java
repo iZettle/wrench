@@ -35,7 +35,7 @@ public class LaunchTest {
     private Resources resources;
 
     private static void updateInteger(ContentResolver contentResolver, String key, int value) {
-        Bolt bolt = getBolt(contentResolver, key);
+        Bolt bolt = getBolt(contentResolver, Bolt.TYPE.INTEGER, key);
         if (bolt == null) {
             Log.w(TAG, "provider not found");
             return;
@@ -52,7 +52,7 @@ public class LaunchTest {
     }
 
     private static void updateBoolean(ContentResolver contentResolver, String key, boolean value) {
-        Bolt bolt = getBolt(contentResolver, key);
+        Bolt bolt = getBolt(contentResolver, Bolt.TYPE.BOOLEAN, key);
         if (bolt == null) {
             Log.w(TAG, "provider not found");
             return;
@@ -69,7 +69,7 @@ public class LaunchTest {
     }
 
     private static void updateString(ContentResolver contentResolver, String key, String value) {
-        Bolt bolt = getBolt(contentResolver, key);
+        Bolt bolt = getBolt(contentResolver, Bolt.TYPE.STRING, key);
         if (bolt == null) {
             Log.w(TAG, "provider not found");
             return;
@@ -86,7 +86,7 @@ public class LaunchTest {
     }
 
     @Nullable
-    private static Bolt getBolt(ContentResolver contentResolver, String key) {
+    private static Bolt getBolt(ContentResolver contentResolver, @Bolt.BoltType String type, String key) {
         Cursor cursor = null;
         try {
             cursor = contentResolver.query(WrenchProviderContract.boltUri(key),
@@ -108,7 +108,7 @@ public class LaunchTest {
                 cursor.close();
             }
         }
-        return new Bolt();
+        return new Bolt(0, type, key, "");
     }
 
     private static Uri insertBolt(ContentResolver contentResolver, Bolt bolt) {
