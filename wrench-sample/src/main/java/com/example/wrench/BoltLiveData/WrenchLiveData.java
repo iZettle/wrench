@@ -65,7 +65,7 @@ public abstract class WrenchLiveData<T> extends LiveData<T> {
                 cursor.close();
             }
         }
-        return new Bolt(0, type, key, "");
+        return new Bolt(0L, type, key, "");
     }
 
     String getType() {

@@ -108,7 +108,7 @@ public class LaunchTest {
                 cursor.close();
             }
         }
-        return new Bolt(0, type, key, "");
+        return new Bolt(0L, type, key, "");
     }
 
     private static Uri insertBolt(ContentResolver contentResolver, Bolt bolt) {

@@ -26,7 +26,7 @@ open class WrenchPreferences(context: Context) {
             }
         }
 
-        return Bolt(type = boltType, key = key)
+        return Bolt(0, boltType, key, null)
     }
 
     private fun insertBolt(contentResolver: ContentResolver, bolt: Bolt): Uri? {
@@ -37,7 +37,7 @@ open class WrenchPreferences(context: Context) {
         var bolt = getBolt(contentResolver, Bolt.TYPE.ENUM, key) ?: return defValue
 
         if (bolt.id == 0L) {
-            bolt = bolt.copy(key = key, type = Bolt.TYPE.ENUM, value = defValue.toString())
+            bolt = bolt.copy(bolt.id, key, Bolt.TYPE.ENUM, defValue.toString())
             val uri = insertBolt(contentResolver, bolt)
             bolt.id = uri!!.lastPathSegment.toLong()
 
@@ -54,7 +54,7 @@ open class WrenchPreferences(context: Context) {
         var bolt = getBolt(contentResolver, Bolt.TYPE.STRING, key) ?: return defValue
 
         if (bolt.id == 0L) {
-            bolt = bolt.copy(key = key, type = Bolt.TYPE.STRING, value = defValue)
+            bolt = bolt.copy(bolt.id, key, Bolt.TYPE.STRING, defValue)
             insertBolt(contentResolver, bolt)
         }
 
@@ -65,7 +65,7 @@ open class WrenchPreferences(context: Context) {
         var bolt = getBolt(contentResolver, Bolt.TYPE.BOOLEAN, key) ?: return defValue
 
         if (bolt.id == 0L) {
-            bolt = bolt.copy(key = key, type = Bolt.TYPE.BOOLEAN, value = defValue.toString())
+            bolt = bolt.copy(bolt.id, key, Bolt.TYPE.BOOLEAN, defValue.toString())
             insertBolt(contentResolver, bolt)
         }
 
@@ -76,7 +76,7 @@ open class WrenchPreferences(context: Context) {
         var bolt = getBolt(contentResolver, Bolt.TYPE.INTEGER, key) ?: return defValue
 
         if (bolt.id == 0L) {
-            bolt = bolt.copy(key = key, type = Bolt.TYPE.INTEGER, value = defValue.toString())
+            bolt = bolt.copy(bolt.id, key, Bolt.TYPE.INTEGER, defValue.toString())
             insertBolt(contentResolver, bolt)
         }
 
