@@ -171,6 +171,6 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
     }
 
     private Bolt getBolt(String key) {
-        return new Bolt(0, "bolttype", key, "boltvalue");
+        return new Bolt(0L, "bolttype", key, "boltvalue");
     }
 }
