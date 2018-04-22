@@ -1,7 +1,9 @@
-package com.example.wrench.BoltLiveData;
+package com.izettle.wrench.livedata;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.WrenchProviderContract;
@@ -9,14 +11,14 @@ import com.izettle.wrench.core.WrenchProviderContract;
 class WrenchStringLiveData extends WrenchLiveData<String> {
     private final String defValue;
 
-    WrenchStringLiveData(Context context, String key, String defValue, String type) {
-        super(context, key, type);
+    WrenchStringLiveData(@NonNull Context context, @NonNull String key, @Nullable String defValue) {
+        super(context, key, Bolt.TYPE.STRING);
 
         this.defValue = defValue;
     }
 
     @Override
-    void boltChanged(Bolt bolt) {
+    void boltChanged(@Nullable Bolt bolt) {
         if (bolt == null) {
             setValue(defValue);
             return;
@@ -25,6 +27,9 @@ class WrenchStringLiveData extends WrenchLiveData<String> {
         if (bolt.getId() == 0) {
             bolt = bolt.copy(bolt.getId(), getType(), getKey(), defValue);
             Uri uri = getContext().getContentResolver().insert(WrenchProviderContract.boltUri(), bolt.toContentValues());
+            if (uri == null) {
+                throw new IllegalStateException("uri was null after insert");
+            }
             bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         }
         setValue(bolt.getValue());

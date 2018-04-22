@@ -1,4 +1,4 @@
-package com.example.wrench.BoltLiveData;
+package com.izettle.wrench.livedata;
 
 import android.arch.lifecycle.LiveData;
 import android.content.ContentResolver;
@@ -8,42 +8,52 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.WrenchProviderContract;
 
 public abstract class WrenchLiveData<T> extends LiveData<T> {
+    @NonNull
     private final String key;
+    @NonNull
+    @Bolt.BoltType
     private final String type;
+    @NonNull
     private final Context context;
+    @NonNull
     private BoltContentObserver boltContentObserver;
 
-    WrenchLiveData(Context context, String key, @Bolt.BoltType String type) {
+    WrenchLiveData(@NonNull Context context, @NonNull String key, @NonNull @Bolt.BoltType String type) {
         this.context = context;
         this.key = key;
         this.type = type;
         boltContentObserver = new BoltContentObserver(new Handler());
     }
 
-    public static WrenchLiveData<String> create(Context context, String key, String def) {
-        return new WrenchStringLiveData(context, key, def, Bolt.TYPE.STRING);
+    @NonNull
+    public static WrenchLiveData<String> create(@NonNull Context context, @NonNull String key, @Nullable String def) {
+        return new WrenchStringLiveData(context, key, def);
     }
 
-    public static WrenchLiveData<Boolean> create(Context context, String key, boolean def) {
+    @NonNull
+    public static WrenchLiveData<Boolean> create(@NonNull Context context, @NonNull String key, boolean def) {
         return new WrenchBooleanLiveData(context, key, def);
     }
 
-    public static WrenchLiveData<Integer> create(Context context, String key, int def) {
+    @NonNull
+    public static WrenchLiveData<Integer> create(@NonNull Context context, @NonNull String key, int def) {
         return new WrenchIntLiveData(context, key, def);
     }
 
-    public static <T extends Enum<T>> WrenchLiveData<T> create(Context context, String key, Class<T> enumClass, T def) {
+    @NonNull
+    public static <T extends Enum<T>> WrenchLiveData<T> create(@NonNull Context context, @NonNull String key, @NonNull Class<T> enumClass, @NonNull T def) {
         return new WrenchEnumLiveData<>(context, key, enumClass, def);
     }
 
     @Nullable
-    private static Bolt getBolt(ContentResolver contentResolver, @Bolt.BoltType String type, String key) {
+    private static Bolt getBolt(@NonNull ContentResolver contentResolver, @NonNull @Bolt.BoltType String type, @NonNull String key) {
         Cursor cursor = null;
         try {
             cursor = contentResolver.query(WrenchProviderContract.boltUri(key),
@@ -68,14 +78,17 @@ public abstract class WrenchLiveData<T> extends LiveData<T> {
         return new Bolt(0L, type, key, "");
     }
 
+    @NonNull
     String getType() {
         return type;
     }
 
+    @NonNull
     Context getContext() {
         return context;
     }
 
+    @NonNull
     String getKey() {
         return key;
     }

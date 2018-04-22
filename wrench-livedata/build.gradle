@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 27
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        baseline file("lint-baseline.xml")
+        checkReleaseBuilds true
+        abortOnError true
+        warningsAsErrors true
+        lintConfig file("../lint.xml")
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    implementation project(":wrench-core")
+    implementation 'com.android.support:support-annotations:27.1.1'
+    api 'android.arch.lifecycle:livedata-core:1.1.1'
+}
+
+// The api of this module should be discussed before any potential release
+// apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
