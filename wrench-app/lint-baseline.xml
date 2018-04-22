@@ -1,48 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <issues format="4" by="lint 3.1.0-alpha04">
 
-    <issue
-        id="CheckResult"
-        message="The result of `inject` is not used"
-        errorLine1="            AndroidInjection.inject(activity);"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/izettle/wrench/di/AppInjector.java"
-            line="86"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="CheckResult"
-        message="The result of `inject` is not used"
-        errorLine1="                                        AndroidSupportInjection.inject(f);"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/izettle/wrench/di/AppInjector.java"
-            line="96"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="CheckResult"
-        message="The result of `onCreate` is not used"
-        errorLine1="        super.onCreate();"
-        errorLine2="        ~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/izettle/wrench/WrenchApplication.java"
-            line="14"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="CheckResult"
-        message="The result of `inject` is not used"
-        errorLine1="            AndroidInjection.inject(this);"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/izettle/wrench/provider/WrenchProvider.java"
-            line="139"
-            column="13"/>
-    </issue>
-
 </issues>
