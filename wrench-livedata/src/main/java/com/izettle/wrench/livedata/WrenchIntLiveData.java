@@ -1,22 +1,24 @@
-package com.example.wrench.BoltLiveData;
+package com.izettle.wrench.livedata;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.WrenchProviderContract;
 
-class WrenchBooleanLiveData extends WrenchLiveData<Boolean> {
-    private final boolean defValue;
+class WrenchIntLiveData extends WrenchLiveData<Integer> {
+    private final int defValue;
 
-    WrenchBooleanLiveData(Context context, String key, boolean defValue) {
-        super(context, key, Bolt.TYPE.BOOLEAN);
+    WrenchIntLiveData(@NonNull Context context, @NonNull String key, int defValue) {
+        super(context, key, Bolt.TYPE.INTEGER);
 
         this.defValue = defValue;
     }
 
     @Override
-    void boltChanged(Bolt bolt) {
+    void boltChanged(@Nullable Bolt bolt) {
         if (bolt == null) {
             setValue(defValue);
             return;
@@ -25,8 +27,11 @@ class WrenchBooleanLiveData extends WrenchLiveData<Boolean> {
         if (bolt.getId() == 0) {
             bolt = bolt.copy(bolt.getId(), getType(), getKey(), String.valueOf(defValue));
             Uri uri = getContext().getContentResolver().insert(WrenchProviderContract.boltUri(), bolt.toContentValues());
+            if (uri == null) {
+                throw new IllegalStateException("uri was null after insert");
+            }
             bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         }
-        setValue(Boolean.valueOf(bolt.getValue()));
+        setValue(Integer.valueOf(bolt.getValue()));
     }
 }

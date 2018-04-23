@@ -19,7 +19,7 @@ public class Bolt {
     private final String value;
     private long id;
 
-    public Bolt(Long id, @NonNull String type, @NonNull String key, @Nullable String value) {
+    public Bolt(long id, @NonNull String type, @NonNull String key, @Nullable String value) {
         this.id = id;
         this.type = type;
         this.key = key;

@@ -3,9 +3,9 @@ package com.example.wrench.livedataprefs
 import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import com.example.wrench.BoltLiveData.WrenchLiveData
 import com.example.wrench.MainActivity
 import com.example.wrench.R
+import com.izettle.wrench.livedata.WrenchLiveData
 import javax.inject.Inject
 
 class LiveDataPreferencesFragmentViewModel @Inject constructor(val application: Application) : ViewModel() {

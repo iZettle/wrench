@@ -67,6 +67,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:2.15"
 
     implementation project(":wrench-core")
+    implementation project(":wrench-livedata")
     debugImplementation project(":wrench-prefs")
     releaseImplementation project(":wrench-prefs-no-op")
 

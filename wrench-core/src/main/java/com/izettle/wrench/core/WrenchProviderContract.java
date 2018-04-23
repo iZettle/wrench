@@ -1,6 +1,7 @@
 package com.izettle.wrench.core;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 public final class WrenchProviderContract {
     public static final String WRENCH_AUTHORITY = BuildConfig.WRENCH_AUTHORITY;
@@ -10,6 +11,7 @@ public final class WrenchProviderContract {
     private static Uri boltUri = Uri.parse("content://" + WRENCH_AUTHORITY + "/currentConfiguration");
     private static Uri nutUri = Uri.parse("content://" + WRENCH_AUTHORITY + "/predefinedConfigurationValue");
 
+    @NonNull
     public static Uri boltUri(long id) {
         return boltUri
                 .buildUpon()
@@ -18,6 +20,7 @@ public final class WrenchProviderContract {
                 .build();
     }
 
+    @NonNull
     public static Uri boltUri(String key) {
         return boltUri
                 .buildUpon()
@@ -26,6 +29,7 @@ public final class WrenchProviderContract {
                 .build();
     }
 
+    @NonNull
     public static Uri boltUri() {
         return boltUri
                 .buildUpon()
@@ -33,6 +37,7 @@ public final class WrenchProviderContract {
                 .build();
     }
 
+    @NonNull
     public static Uri nutUri() {
         return nutUri
                 .buildUpon()
