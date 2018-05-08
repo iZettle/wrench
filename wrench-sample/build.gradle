@@ -54,7 +54,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     implementation "com.izettle.wrench:wrench-core:0.3"
-    androidTestImplementation project(":wrench-prefs")
+    androidTestImplementation "com.izettle.wrench:wrench-prefs:0.3"
 
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
@@ -68,8 +68,8 @@ dependencies {
 
     implementation "com.izettle.wrench:wrench-core:0.3"
     implementation project(":wrench-livedata")
-    debugImplementation project(":wrench-prefs")
-    releaseImplementation project(":wrench-prefs-no-op")
+    debugImplementation "com.izettle.wrench:wrench-prefs:0.3"
+    releaseImplementation "com.izettle.wrench:wrench-prefs-no-op:0.3"
 
     implementation project(":wrench-service")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

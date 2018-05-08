@@ -86,5 +86,5 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:2.15"
 
     implementation "com.izettle.wrench:wrench-core:0.3"
-    implementation project(":wrench-prefs")
+    implementation "com.izettle.wrench:wrench-prefs:0.3"
 }
