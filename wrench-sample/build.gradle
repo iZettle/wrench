@@ -45,14 +45,14 @@ android {
 
 dependencies {
     kapt "com.google.dagger:dagger-android-processor:2.15"
-    kapt "com.google.dagger:dagger-compiler:2.15"
+    kapt "com.google.dagger:dagger-compiler:2.16"
 
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.18.0'
+    testImplementation 'org.mockito:mockito-core:2.18.3'
 
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2-beta1'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2-beta1'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2-beta1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation project(":wrench-core")
     androidTestImplementation project(":wrench-prefs")
 
@@ -62,7 +62,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
 
-    implementation "com.google.dagger:dagger:2.15"
+    implementation "com.google.dagger:dagger:2.16"
     implementation "com.google.dagger:dagger-android:2.15"
     implementation "com.google.dagger:dagger-android-support:2.15"
 
