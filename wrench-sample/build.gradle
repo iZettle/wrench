@@ -53,7 +53,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
-    androidTestImplementation project(":wrench-core")
+    implementation "com.izettle.wrench:wrench-core:0.3"
     androidTestImplementation project(":wrench-prefs")
 
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -66,11 +66,11 @@ dependencies {
     implementation "com.google.dagger:dagger-android:2.15"
     implementation "com.google.dagger:dagger-android-support:2.15"
 
-    implementation project(":wrench-core")
+    implementation "com.izettle.wrench:wrench-core:0.3"
     implementation project(":wrench-livedata")
     debugImplementation project(":wrench-prefs")
     releaseImplementation project(":wrench-prefs-no-op")
 
     implementation project(":wrench-service")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

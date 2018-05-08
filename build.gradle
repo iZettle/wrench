@@ -20,6 +20,9 @@ allprojects {
     repositories {
         jcenter()
         google()
+        maven {
+            url "https://oss.sonatype.org/service/local/repositories/comizettle-1057/content/"
+        }
     }
 }
 
