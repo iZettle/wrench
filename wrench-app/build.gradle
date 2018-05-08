@@ -62,14 +62,14 @@ android {
 dependencies {
     testImplementation 'junit:junit:4.12'
 
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2-beta1'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2-beta1'
-    androidTestImplementation 'android.arch.persistence.room:testing:1.1.0-beta2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'android.arch.persistence.room:testing:1.1.0'
 
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
-    annotationProcessor "android.arch.persistence.room:compiler:1.1.0-beta2"
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
     annotationProcessor "com.google.dagger:dagger-android-processor:2.15"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.15"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.16"
 
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
@@ -78,10 +78,10 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
-    implementation 'android.arch.persistence.room:runtime:1.1.0-beta2'
-    implementation "android.arch.paging:runtime:1.0.0-beta1"
+    implementation 'android.arch.persistence.room:runtime:1.1.0'
+    implementation "android.arch.paging:runtime:1.0.0"
 
-    implementation "com.google.dagger:dagger:2.15"
+    implementation "com.google.dagger:dagger:2.16"
     implementation "com.google.dagger:dagger-android:2.15"
     implementation "com.google.dagger:dagger-android-support:2.15"
 

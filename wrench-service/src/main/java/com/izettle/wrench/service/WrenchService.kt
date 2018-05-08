@@ -1,5 +1,6 @@
 package com.izettle.wrench.service
 
+import android.annotation.SuppressLint
 import android.app.IntentService
 import android.content.ContentResolver
 import android.content.Intent
@@ -70,6 +71,7 @@ class WrenchService : IntentService("WrenchService") {
         contentResolver.update(WrenchProviderContract.boltUri(bolt.id), bolt.toContentValues(), null, null)
     }
 
+    @SuppressLint("Recycle")
     private fun getBolt(contentResolver: ContentResolver, @Bolt.BoltType boltType: String, key: String): Bolt? {
         val cursor = contentResolver.query(WrenchProviderContract.boltUri(key), null, null, null, null)
         cursor.use {

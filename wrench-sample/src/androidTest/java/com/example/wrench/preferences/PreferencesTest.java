@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 
 @RunWith(AndroidJUnit4.class)
 public class PreferencesTest {
@@ -39,8 +40,8 @@ public class PreferencesTest {
     public void checkBoolean() {
         String key = "boolean";
         WrenchPreferences wrenchPreferences = new WrenchPreferences(mockContext);
-        assertEquals(false, wrenchPreferences.getBoolean(key, false));
-        assertEquals(false, wrenchPreferences.getBoolean(key, true));
+        assertFalse(wrenchPreferences.getBoolean(key, false));
+        assertFalse(wrenchPreferences.getBoolean(key, true));
     }
 
     @Test
