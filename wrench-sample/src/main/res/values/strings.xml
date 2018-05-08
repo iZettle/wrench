@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sample Application</string>
+    <string name="app_name">Wrench Sample</string>
     <string name="string_configuration">String configuration:</string>
     <string name="url_configuration">Url configuration (http://www.example.com/path?param=value):</string>
     <string name="boolean_configuration">boolean configuration:</string>
