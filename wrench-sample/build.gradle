@@ -9,11 +9,11 @@ android {
         enabled = true
     }
 
-    compileSdkVersion 27
+    compileSdkVersion Versions.compileSdk
     defaultConfig {
         applicationId "com.example.wrench"
-        minSdkVersion 15
-        targetSdkVersion 27
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
         versionCode 2
         versionName "1.0.8"
 

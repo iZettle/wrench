@@ -6,11 +6,11 @@ android {
         enabled = true
     }
 
-    compileSdkVersion 27
+    compileSdkVersion Versions.compileSdk
     defaultConfig {
         applicationId "com.izettle.wrench"
-        minSdkVersion 15
-        targetSdkVersion 27
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
         versionCode 11
         versionName "1.0.10"
 
@@ -37,7 +37,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-stetho.pro'
         }
         debug {
@@ -68,7 +68,7 @@ dependencies {
 
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
-    annotationProcessor "com.google.dagger:dagger-android-processor:2.15"
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.16"
     annotationProcessor "com.google.dagger:dagger-compiler:2.16"
 
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -82,8 +82,8 @@ dependencies {
     implementation "android.arch.paging:runtime:1.0.0"
 
     implementation "com.google.dagger:dagger:2.16"
-    implementation "com.google.dagger:dagger-android:2.15"
-    implementation "com.google.dagger:dagger-android-support:2.15"
+    implementation "com.google.dagger:dagger-android:2.16"
+    implementation "com.google.dagger:dagger-android-support:2.16"
 
     implementation "com.izettle.wrench:wrench-core:0.3"
     implementation "com.izettle.wrench:wrench-prefs:0.3"
