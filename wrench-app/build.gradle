@@ -60,7 +60,7 @@ android {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
+    testImplementation Libs.junit
 
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -68,8 +68,8 @@ dependencies {
 
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
-    annotationProcessor "com.google.dagger:dagger-android-processor:2.16"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.16"
+    annotationProcessor Libs.daggerAndroidProcessor
+    annotationProcessor Libs.daggerCompiler
 
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
@@ -81,10 +81,10 @@ dependencies {
     implementation 'android.arch.persistence.room:runtime:1.1.0'
     implementation "android.arch.paging:runtime:1.0.0"
 
-    implementation "com.google.dagger:dagger:2.16"
-    implementation "com.google.dagger:dagger-android:2.16"
-    implementation "com.google.dagger:dagger-android-support:2.16"
+    implementation Libs.dagger
+    implementation Libs.daggerAndroid
+    implementation Libs.daggerAndroidSupport
 
-    implementation "com.izettle.wrench:wrench-core:0.3"
-    implementation "com.izettle.wrench:wrench-prefs:0.3"
+    implementation Libs.wrench_core
+    implementation Libs.wrench_prefs
 }

@@ -44,16 +44,15 @@ android {
 }
 
 dependencies {
-    kapt "com.google.dagger:dagger-android-processor:2.15"
-    kapt "com.google.dagger:dagger-compiler:2.16"
+    kapt Libs.daggerAndroidProcessor
+    kapt Libs.daggerCompiler
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation Libs.junit
     testImplementation 'org.mockito:mockito-core:2.18.3'
 
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
-    implementation "com.izettle.wrench:wrench-core:0.3"
     androidTestImplementation "com.izettle.wrench:wrench-prefs:0.3"
 
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -62,15 +61,15 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
 
-    implementation "com.google.dagger:dagger:2.16"
-    implementation "com.google.dagger:dagger-android:2.15"
-    implementation "com.google.dagger:dagger-android-support:2.15"
+    implementation Libs.dagger
+    implementation Libs.daggerAndroid
+    implementation Libs.daggerAndroidSupport
 
-    implementation "com.izettle.wrench:wrench-core:0.3"
+    implementation Libs.wrench_core
+    debugImplementation Libs.wrench_prefs
+    releaseImplementation Libs.wrench_prefs_no_op
     implementation project(":wrench-livedata")
-    debugImplementation "com.izettle.wrench:wrench-prefs:0.3"
-    releaseImplementation "com.izettle.wrench:wrench-prefs-no-op:0.3"
-
     implementation project(":wrench-service")
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

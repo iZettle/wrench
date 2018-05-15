@@ -28,9 +28,9 @@ android {
 }
 
 dependencies {
-    implementation "com.izettle.wrench:wrench-core:0.3"
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:support-annotations:27.1.1'
+    implementation Libs.wrench_core
+    testImplementation Libs.junit
+    implementation Libs.support_annotations
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
