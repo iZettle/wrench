@@ -27,9 +27,9 @@ android {
 
 dependencies {
     testImplementation Libs.junit
-    implementation Libs.wrench_core
-    implementation Libs.support_annotations
-    api 'android.arch.lifecycle:livedata-core:1.1.1'
+    implementation Libs.wrench.core
+    implementation Libs.support.annotations
+    api Libs.lifecycle.core
 }
 
 // The api of this module should be discussed before any potential release

@@ -27,8 +27,8 @@ android {
 
 dependencies {
     testImplementation Libs.junit
-    implementation Libs.wrench_core
-    implementation Libs.support_annotations
+    implementation Libs.wrench.core
+    implementation Libs.support.annotations
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

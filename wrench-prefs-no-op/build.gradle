@@ -27,7 +27,7 @@ android {
 
 dependencies {
     testImplementation Libs.junit
-    implementation Libs.support_annotations
+    implementation Libs.support.annotations
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

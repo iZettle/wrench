@@ -28,10 +28,10 @@ android {
 }
 
 dependencies {
-    implementation Libs.wrench_core
+    implementation Libs.wrench.core
     testImplementation Libs.junit
-    implementation Libs.support_annotations
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation Libs.support.annotations
+    implementation Libs.kotlin.stdlib
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

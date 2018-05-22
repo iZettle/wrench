@@ -62,29 +62,29 @@ android {
 dependencies {
     testImplementation Libs.junit
 
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'android.arch.persistence.room:testing:1.1.0'
+    androidTestImplementation Libs.espresso.core
+    androidTestImplementation Libs.androidTestingSupportLibrary.runner
+    androidTestImplementation Libs.room.testing
 
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
-    annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
-    annotationProcessor Libs.daggerAndroidProcessor
-    annotationProcessor Libs.daggerCompiler
+    annotationProcessor Libs.lifecycle.compiler
+    annotationProcessor Libs.room.compiler
+    annotationProcessor Libs.dagger.daggerAndroidProcessor
+    annotationProcessor Libs.dagger.daggerCompiler
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    implementation Libs.support.app_compat
+    implementation Libs.support.recyclerview
+    implementation Libs.support.design
     implementation 'com.facebook.stetho:stetho:1.5.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
-    implementation 'android.arch.persistence.room:runtime:1.1.0'
-    implementation "android.arch.paging:runtime:1.0.0"
+    implementation Libs.constraint_layout
+    implementation Libs.support.cardview
+    implementation Libs.lifecycle.extensions
+    implementation Libs.room.runtime
+    implementation Libs.paging
 
-    implementation Libs.dagger
-    implementation Libs.daggerAndroid
-    implementation Libs.daggerAndroidSupport
+    implementation Libs.dagger.runtime
+    implementation Libs.dagger.daggerAndroid
+    implementation Libs.dagger.daggerAndroidSupport
 
-    implementation Libs.wrench_core
-    implementation Libs.wrench_prefs
+    implementation Libs.wrench.core
+    implementation Libs.wrench.prefs
 }

@@ -44,32 +44,32 @@ android {
 }
 
 dependencies {
-    kapt Libs.daggerAndroidProcessor
-    kapt Libs.daggerCompiler
+    kapt Libs.dagger.daggerAndroidProcessor
+    kapt Libs.dagger.daggerCompiler
 
     testImplementation Libs.junit
-    testImplementation 'org.mockito:mockito-core:2.18.3'
+    testImplementation Libs.mockito.core
 
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
-    androidTestImplementation "com.izettle.wrench:wrench-prefs:0.3"
+    androidTestImplementation Libs.espresso.core
+    androidTestImplementation Libs.androidTestingSupportLibrary.runner
+    androidTestImplementation Libs.androidTestingSupportLibrary.rules
+    androidTestImplementation Libs.wrench.prefs
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation "com.android.support:design:27.1.1"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation Libs.support.app_compat
+    implementation Libs.support.design
+    implementation Libs.constraint_layout
+    implementation Libs.lifecycle.extensions
 
-    implementation Libs.dagger
-    implementation Libs.daggerAndroid
-    implementation Libs.daggerAndroidSupport
+    implementation Libs.dagger.runtime
+    implementation Libs.dagger.daggerAndroid
+    implementation Libs.dagger.daggerAndroidSupport
 
-    implementation Libs.wrench_core
-    debugImplementation Libs.wrench_prefs
-    releaseImplementation Libs.wrench_prefs_no_op
+    implementation Libs.wrench.core
+    debugImplementation Libs.wrench.prefs
+    releaseImplementation Libs.wrench.prefs_no_op
+
     implementation project(":wrench-livedata")
     implementation project(":wrench-service")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation Libs.kotlin.stdlib
 }
