@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-package com.example.wrench.di;
+package com.example.wrench.di
 
-/**
- * Marks an activity / fragment injectable.
- */
-public interface Injectable {
+import com.example.wrench.MainActivity
+
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
+
+@Module
+abstract class ActivityModule {
+    @ContributesAndroidInjector(modules = [(FragmentBuildersModule::class)])
+    internal abstract fun contributeMainAcitvity(): MainActivity
 }

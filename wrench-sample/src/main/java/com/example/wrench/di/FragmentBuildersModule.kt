@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package com.example.wrench.di;
+package com.example.wrench.di
 
-import com.example.wrench.livedataprefs.LiveDataPreferencesFragment;
-import com.example.wrench.wrenchprefs.WrenchPreferencesFragment;
+import com.example.wrench.livedataprefs.LiveDataPreferencesFragment
+import com.example.wrench.wrenchprefs.WrenchPreferencesFragment
 
-import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
 @Module
-public abstract class FragmentBuildersModule {
+abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
-    abstract LiveDataPreferencesFragment contributeLiveDataPreferencesFragment();
+    internal abstract fun contributeLiveDataPreferencesFragment(): LiveDataPreferencesFragment
 
     @ContributesAndroidInjector
-    abstract WrenchPreferencesFragment contributeWrenchPreferencesFragment();
+    internal abstract fun contributeWrenchPreferencesFragment(): WrenchPreferencesFragment
 
 }

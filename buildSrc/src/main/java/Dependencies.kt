@@ -41,7 +41,7 @@ object Versions {
 
 object AndroidTestingSupportLibrary {
     val runner = "com.android.support.test:runner:${Versions.atsl_runner}"
-    val rules = "com.android.support.test:rules:${Versions.atsl_runner}"
+    val rules = "com.android.support.test:rules:${Versions.atsl_rules}"
 }
 
 object Lifecycle {
@@ -83,6 +83,19 @@ object Wrench {
     val prefs_no_op = "com.izettle.wrench:wrench-prefs-no-op:${Versions.wrench}"
 }
 
+object Navigation {
+
+    val fragment = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
+    val ui = "android.arch.navigation:navigation-ui:${Versions.navigation}"
+
+    val fragmentKotlin = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
+    val uiKotlin = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
+
+    val testing = "android.arch.navigation:navigation-testing:${Versions.navigation}"
+
+    val safeArgsPlugin = "android.arch.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
+}
+
 object Libs {
     val wrench = Wrench
     val lifecycle = Lifecycle
@@ -93,6 +106,7 @@ object Libs {
     val espresso = Espresso
     val room = Room
     val kotlin = Kotlin
+    val navigation = Navigation
 
     val paging = "android.arch.paging:runtime:${Versions.paging}"
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"

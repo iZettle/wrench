@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
 
@@ -64,12 +65,14 @@ dependencies {
     implementation Libs.dagger.daggerAndroid
     implementation Libs.dagger.daggerAndroidSupport
 
+    implementation Libs.navigation.fragmentKotlin
+    implementation Libs.navigation.uiKotlin
+
     implementation Libs.wrench.core
     debugImplementation Libs.wrench.prefs
     releaseImplementation Libs.wrench.prefs_no_op
 
     implementation project(":wrench-livedata")
-    implementation project(":wrench-service")
 
     implementation Libs.kotlin.stdlib
 }

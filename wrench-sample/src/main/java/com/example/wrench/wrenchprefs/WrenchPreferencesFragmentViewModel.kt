@@ -2,7 +2,7 @@ package com.example.wrench.wrenchprefs
 
 import android.arch.lifecycle.ViewModel
 import android.content.res.Resources
-import com.example.wrench.MainActivity
+import com.example.wrench.MyEnum
 import com.example.wrench.R
 import com.izettle.wrench.preferences.WrenchPreferences
 import javax.inject.Inject
@@ -25,8 +25,8 @@ class WrenchPreferencesFragmentViewModel @Inject constructor(val resources: Reso
         return wrenchPreferences.getInt(resources.getString(R.string.int_configuration), 1)
     }
 
-    fun getEnumConfiguration(): MainActivity.MyEnum? {
-        return wrenchPreferences.getEnum(resources.getString(R.string.enum_configuration), MainActivity.MyEnum::class.java, MainActivity.MyEnum.SECOND)
+    fun getEnumConfiguration(): MyEnum? {
+        return wrenchPreferences.getEnum(resources.getString(R.string.enum_configuration), MyEnum::class.java, MyEnum.SECOND)
     }
 
     fun getServiceStringConfiguration(): String? {

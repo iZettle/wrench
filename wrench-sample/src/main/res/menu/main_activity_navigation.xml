@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_live_data"
+        android:id="@+id/action_live_data"
         android:icon="@android:drawable/ic_delete"
         android:title="@string/nav_menu_wrench_prefs_live_data" />
     <item
-        android:id="@+id/nav_wrench_prefs"
+        android:id="@+id/action_wrench_prefs"
         android:icon="@android:drawable/ic_input_add"
         android:title="@string/nav_menu_wrench_preferences" />
 </menu>

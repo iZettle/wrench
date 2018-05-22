@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package com.example.wrench.di;
+package com.example.wrench.di
 
-import android.app.Application;
-import android.content.res.Resources;
+import android.app.Application
+import android.content.res.Resources
 
-import com.izettle.wrench.preferences.WrenchPreferences;
+import com.izettle.wrench.preferences.WrenchPreferences
 
-import dagger.Module;
-import dagger.Provides;
+import dagger.Module
+import dagger.Provides
 
-@Module(includes = ViewModelModule.class)
-class AppModule {
+@Module(includes = [(ViewModelModule::class)])
+internal class AppModule {
 
     @Provides
-    WrenchPreferences provideWrenchPreferences(Application app) {
-        return new WrenchPreferences(app);
+    fun provideWrenchPreferences(app: Application): WrenchPreferences {
+        return WrenchPreferences(app)
     }
 
     @Provides
-    Resources provideResources(Application app) {
-        return app.getResources();
+    fun provideResources(app: Application): Resources {
+        return app.resources
     }
 }
