@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'com.google.gms.oss.licenses.plugin'
 
 android {
 
@@ -75,4 +76,6 @@ dependencies {
     implementation project(":wrench-livedata")
 
     implementation Libs.kotlin.stdlib
+
+    implementation Libs.oss.runtime
 }

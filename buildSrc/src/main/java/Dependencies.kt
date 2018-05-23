@@ -26,7 +26,7 @@ object Versions {
     val mockito_all = "1.10.19"
     val dexmaker = "2.2.0"
     val glide = "4.7.1"
-    val timber = "4.5.1"
+    val timber = "4.7.0"
     val android_gradle_plugin = "3.2.0-alpha15"
     val rxjava2 = "2.1.3"
     val rx_android = "2.0.1"
@@ -96,6 +96,11 @@ object Navigation {
     val safeArgsPlugin = "android.arch.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
 }
 
+object Oss {
+    val plugin = "com.google.gms:oss-licenses:0.9.2"
+    val runtime = "com.google.android.gms:play-services-oss-licenses:15.0.1"
+}
+
 object Libs {
     val wrench = Wrench
     val lifecycle = Lifecycle
@@ -107,6 +112,7 @@ object Libs {
     val room = Room
     val kotlin = Kotlin
     val navigation = Navigation
+    val oss = Oss
 
     val paging = "android.arch.paging:runtime:${Versions.paging}"
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
