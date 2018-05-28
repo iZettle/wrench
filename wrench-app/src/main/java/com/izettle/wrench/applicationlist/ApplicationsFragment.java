@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewAnimator;
 
+import com.izettle.wrench.R;
 import com.izettle.wrench.databinding.FragmentApplicationsBinding;
 import com.izettle.wrench.di.Injectable;
 
@@ -27,16 +28,18 @@ public class ApplicationsFragment extends Fragment implements Injectable {
     public ApplicationsFragment() {
     }
 
-    public static ApplicationsFragment newInstance() {
-        ApplicationsFragment fragment = new ApplicationsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        fragmentApplicationsBinding = FragmentApplicationsBinding.inflate(inflater, container, false);
+        fragmentApplicationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
+        return fragmentApplicationsBinding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        getActivity().setTitle(R.string.app_name);
 
         ApplicationViewModel model = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel.class);
 
@@ -55,10 +58,5 @@ public class ApplicationsFragment extends Fragment implements Injectable {
 
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragmentApplicationsBinding = FragmentApplicationsBinding.inflate(inflater, container, false);
-        fragmentApplicationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
-        return fragmentApplicationsBinding.getRoot();
-    }
+
 }

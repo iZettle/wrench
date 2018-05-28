@@ -5,6 +5,9 @@ object Versions {
     val compileSdk = 27
     val minSdk = 14
 
+    val appVersionCode = 11
+    val appVersionName = "1.0.10"
+
     val dagger = "2.16"
 
     val support_lib = "27.1.1"

@@ -22,32 +22,30 @@ import javax.inject.Inject;
 
 public class EnumValueFragment extends DialogFragment implements PredefinedValueRecyclerViewAdapter.Listener, Injectable {
 
-    private static final String ARGUMENT_CONFIGURATION_ID = "ARGUMENT_CONFIGURATION_ID";
-    private static final String ARGUMENT_SCOPE_ID = "ARGUMENT_SCOPE_ID";
     @Inject
     ViewModelProvider.Factory viewModelFactory;
     private FragmentEnumValueBinding binding;
     private FragmentEnumValueViewModel viewModel;
     private PredefinedValueRecyclerViewAdapter adapter;
 
-    public static EnumValueFragment newInstance(long configurationId, long scopeId) {
+    public static EnumValueFragment newInstance(EnumValueFragmentArgs args) {
         EnumValueFragment fragment = new EnumValueFragment();
-        Bundle args = new Bundle();
-        args.putLong(ARGUMENT_CONFIGURATION_ID, configurationId);
-        args.putLong(ARGUMENT_SCOPE_ID, scopeId);
-        fragment.setArguments(args);
+        fragment.setArguments(args.toBundle());
         return fragment;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        assert getArguments() != null;
 
         binding = FragmentEnumValueBinding.inflate(LayoutInflater.from(getContext()), null);
 
+        EnumValueFragmentArgs args = EnumValueFragmentArgs.fromBundle(getArguments());
+
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentEnumValueViewModel.class);
 
-        viewModel.init(getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID));
+        viewModel.init(args.getConfigurationId(), args.getScopeId());
 
         viewModel.getConfiguration().observe(this, wrenchConfiguration -> {
             if (wrenchConfiguration != null) {

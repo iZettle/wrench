@@ -90,7 +90,7 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
             viewHolder.binding.defaultValue.setPaintFlags(viewHolder.binding.defaultValue.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             viewHolder.binding.customValue.setVisibility(View.GONE);
         }
-        viewHolder.binding.getRoot().setOnClickListener(view -> listener.configurationClicked(items.get(viewHolder.getAdapterPosition())));
+        viewHolder.binding.getRoot().setOnClickListener(view -> listener.configurationClicked(view, items.get(viewHolder.getAdapterPosition())));
     }
 
     @Nullable
@@ -114,7 +114,7 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
     }
 
     public interface Listener {
-        void configurationClicked(WrenchConfigurationWithValues configuration);
+        void configurationClicked(View v, WrenchConfigurationWithValues configuration);
     }
 
     private class ConfigurationListDiffCallbacks extends DiffUtil.Callback {

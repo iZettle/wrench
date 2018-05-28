@@ -2,6 +2,7 @@ package com.izettle.wrench.configurationlist;
 
 import android.app.ActivityManager;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
@@ -29,19 +31,30 @@ import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.database.WrenchApplication;
 import com.izettle.wrench.database.WrenchConfigurationWithValues;
 import com.izettle.wrench.databinding.FragmentConfigurationsBinding;
+import com.izettle.wrench.di.Injectable;
 import com.izettle.wrench.dialogs.booleanvalue.BooleanValueFragment;
+import com.izettle.wrench.dialogs.booleanvalue.BooleanValueFragmentArgs;
 import com.izettle.wrench.dialogs.enumvalue.EnumValueFragment;
+import com.izettle.wrench.dialogs.enumvalue.EnumValueFragmentArgs;
 import com.izettle.wrench.dialogs.integervalue.IntegerValueFragment;
+import com.izettle.wrench.dialogs.integervalue.IntegerValueFragmentArgs;
+import com.izettle.wrench.dialogs.scope.ScopeFragment;
 import com.izettle.wrench.dialogs.stringvalue.StringValueFragment;
+import com.izettle.wrench.dialogs.stringvalue.StringValueFragmentArgs;
 
 import java.util.List;
 
-public class ConfigurationsFragment extends Fragment implements SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener {
+import javax.inject.Inject;
+
+public class ConfigurationsFragment extends Fragment implements SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener, Injectable {
     private static final String STATE_FILTER = "STATE_FILTER";
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
     private FragmentConfigurationsBinding fragmentConfigurationsBinding;
     private CharSequence currentFilter;
     private SearchView searchView;
     private ConfigurationViewModel model;
+
 
     public ConfigurationsFragment() {
     }
@@ -91,14 +104,17 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        assert getArguments() != null;
 
-        model = ViewModelProviders.of(getActivity()).get(ConfigurationViewModel.class);
+        model = ViewModelProviders.of(this, viewModelFactory).get(ConfigurationViewModel.class);
+        ConfigurationsFragmentArgs args = ConfigurationsFragmentArgs.fromBundle(getArguments());
+        model.setApplicationId(args.getApplicationId());
 
         fragmentConfigurationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
 
         model.getWrenchApplication().observe(this, wrenchApplication -> {
             if (wrenchApplication != null) {
-                getActivity().setTitle(wrenchApplication.applicationLabel());
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(wrenchApplication.applicationLabel());
             }
         });
 
@@ -112,7 +128,10 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
             if (scope != null && fragmentConfigurationsBinding.list.getAdapter() != null) {
                 fragmentConfigurationsBinding.list.getAdapter().notifyDataSetChanged();
             }
+            fragmentConfigurationsBinding.scopeButton.setText(scope.getName());
         });
+
+        fragmentConfigurationsBinding.scopeButton.setOnClickListener(v -> ScopeFragment.newInstance(args.getApplicationId()).show(getChildFragmentManager(), null));
 
         model.getConfigurations().observe(this, wrenchConfigurationWithValues -> {
             if (wrenchConfigurationWithValues != null) {
@@ -125,7 +144,7 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
             if (isEmpty == null || isEmpty) {
                 animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.noConfigurationsEmptyView));
             } else {
-                animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.list));
+                animator.setDisplayedChild(animator.indexOfChild(fragmentConfigurationsBinding.listWrapper));
             }
         });
     }
@@ -221,29 +240,33 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
     }
 
     @Override
-    public void configurationClicked(WrenchConfigurationWithValues configuration) {
+    public void configurationClicked(View v, WrenchConfigurationWithValues configuration) {
         if (model.getSelectedScopeLiveData().getValue() == null) {
             Snackbar.make(fragmentConfigurationsBinding.getRoot(), "No selected scope found", Snackbar.LENGTH_LONG).show();
             return;
         }
 
-        long selectedScopeId = model.getSelectedScopeLiveData().getValue().id();
+        int selectedScopeId = (int) model.getSelectedScopeLiveData().getValue().id();
 
         if (TextUtils.equals(String.class.getName(), configuration.getType()) ||
                 TextUtils.equals(Bolt.TYPE.STRING, configuration.getType())) {
-            StringValueFragment.newInstance(configuration.getId(), selectedScopeId).show(getChildFragmentManager(), null);
+
+            StringValueFragment.newInstance(new StringValueFragmentArgs.Builder((int) configuration.getId(), selectedScopeId).build()).show(getChildFragmentManager(), null);
 
         } else if (TextUtils.equals(Integer.class.getName(), configuration.getType()) ||
                 TextUtils.equals(Bolt.TYPE.INTEGER, configuration.getType())) {
-            IntegerValueFragment.newInstance(configuration.getId(), selectedScopeId).show(getChildFragmentManager(), null);
+
+            IntegerValueFragment.newInstance(new IntegerValueFragmentArgs.Builder((int) configuration.getId(), selectedScopeId).build()).show(getChildFragmentManager(), null);
 
         } else if (TextUtils.equals(Boolean.class.getName(), configuration.getType()) ||
                 TextUtils.equals(Bolt.TYPE.BOOLEAN, configuration.getType())) {
-            BooleanValueFragment.newInstance(configuration.getId(), selectedScopeId).show(getChildFragmentManager(), null);
+
+            BooleanValueFragment.newInstance(new BooleanValueFragmentArgs.Builder((int) configuration.getId(), selectedScopeId).build()).show(getChildFragmentManager(), null);
 
         } else if (TextUtils.equals(Enum.class.getName(), configuration.getType()) ||
                 TextUtils.equals(Bolt.TYPE.ENUM, configuration.getType())) {
-            EnumValueFragment.newInstance(configuration.getId(), selectedScopeId).show(getChildFragmentManager(), null);
+
+            EnumValueFragment.newInstance(new EnumValueFragmentArgs.Builder((int) configuration.getId(), selectedScopeId).build()).show(getChildFragmentManager(), null);
 
         } else {
 
