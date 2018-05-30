@@ -16,7 +16,7 @@ object Versions {
     val wrench = "0.3"
 
     val arch_core = "1.1.1"
-    val room = "1.1.0"
+    val room = "1.1.1-rc1"
     val lifecycle = "1.1.1"
     val support = "27.1.1"
     val junit = "4.12"
@@ -30,7 +30,7 @@ object Versions {
     val dexmaker = "2.2.0"
     val glide = "4.7.1"
     val timber = "4.7.0"
-    val android_gradle_plugin = "3.2.0-alpha15"
+    val android_gradle_plugin = "3.2.0-alpha16"
     val rxjava2 = "2.1.3"
     val rx_android = "2.0.1"
     val atsl_runner = "1.0.2"

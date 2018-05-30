@@ -1,7 +1,9 @@
 package com.izettle.wrench;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
@@ -17,6 +19,8 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+    private DrawerLayout drawerLayout;
+    private NavController navController;
 
     @Override
     public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
@@ -28,13 +32,17 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
-        NavigationUI.setupActionBarWithNavController(this, navController);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
+
+        NavigationUI.setupWithNavController((NavigationView) findViewById(R.id.nav_view), navController);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        return Navigation.findNavController(this, R.id.nav_host_fragment).navigateUp();
+        return NavigationUI.navigateUp(drawerLayout, navController);
     }
 }

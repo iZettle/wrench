@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
 
@@ -91,4 +93,5 @@ dependencies {
 
     implementation Libs.wrench.core
     implementation Libs.wrench.prefs
+    implementation Libs.kotlin.stdlib
 }

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Wrench</string>
 
+    <string name="applications">Applications</string>
+
     <string name="no_configurations_found">No configurations found.</string>
     <string name="no_applications_found">No applications found</string>
     <string name="restart_application">Restart application</string>
@@ -14,5 +16,13 @@
     <string name="application_icon">Application icon</string>
     <string name="wrench_permission_label">Access Wrench</string>
     <string name="wrench_permission_description">Access to request configuration from Wrench</string>
+    <string name="help">Help</string>
+    <string name="oss">Open source</string>
+    <string name="help_availability">Available from maven central</string>
+
+    <string name="help_dependency_title">App build.gradle</string>
+    <string name="help_dependency">dependencies {\n\timplementation \'com.izettle.wrench:wrench-prefs:0.3\'\n}</string>
+    <string name="help_implementation_title">Implementation</string>
+    <string name="help_implementation">WrenchPreferences wrenchPreferences = new WrenchPreferences(getApplicationContext());\nboolean myBetaFeature = wrenchPreferences.getBoolean("My unreleased feature", false)</string>
 
 </resources>

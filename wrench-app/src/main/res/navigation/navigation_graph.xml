@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/applicationsFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/action_applications">
 
     <fragment
-        android:id="@+id/applicationsFragment"
+        android:id="@+id/action_applications"
         android:name="com.izettle.wrench.applicationlist.ApplicationsFragment"
-        android:label="ApplicationsFragment">
+        android:label="@string/applications">
         <action
             android:id="@+id/action_applicationsFragment_to_configurationsFragment"
             app:destination="@id/configurationsFragment" />
@@ -89,4 +90,14 @@
             android:name="scopeId"
             app:type="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/action_oss"
+        android:name="com.izettle.wrench.oss.OssFragment"
+        android:label="@string/oss"
+        tools:layout="@layout/fragment_oss" />
+    <fragment
+        android:id="@+id/action_help"
+        android:name="help.HelpFragment"
+        android:label="@string/help"
+        tools:layout="@layout/fragment_help" />
 </navigation>

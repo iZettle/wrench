@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewAnimator;
 
-import com.izettle.wrench.R;
 import com.izettle.wrench.databinding.FragmentApplicationsBinding;
 import com.izettle.wrench.di.Injectable;
 
@@ -38,8 +37,6 @@ public class ApplicationsFragment extends Fragment implements Injectable {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        getActivity().setTitle(R.string.app_name);
 
         ApplicationViewModel model = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel.class);
 

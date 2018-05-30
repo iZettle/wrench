@@ -46,6 +46,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.navigation.Navigation;
+
 public class ConfigurationsFragment extends Fragment implements SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener, Injectable {
     private static final String STATE_FILTER = "STATE_FILTER";
     @Inject
@@ -57,13 +59,6 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
 
 
     public ConfigurationsFragment() {
-    }
-
-    public static ConfigurationsFragment newInstance() {
-        ConfigurationsFragment fragment = new ConfigurationsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     private void updateConfigurations(List<WrenchConfigurationWithValues> wrenchConfigurations) {
@@ -205,7 +200,7 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
 
                         Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(wrenchApplication.packageName());
                         if (intent != null) {
-                            ConfigurationsFragment.this.getContext().startActivity(Intent.makeRestartActivityTask(intent.getComponent()));
+                            getContext().startActivity(Intent.makeRestartActivityTask(intent.getComponent()));
                         } else if (ConfigurationsFragment.this.getView() != null) {
                             Snackbar.make(ConfigurationsFragment.this.getView(), R.string.application_not_installed, Snackbar.LENGTH_LONG).show();
                         }
@@ -230,7 +225,7 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
             }
             case R.id.action_delete_application: {
                 AsyncTask.execute(() -> model.deleteApplication(model.getWrenchApplication().getValue()));
-                getActivity().finish();
+                Navigation.findNavController(fragmentConfigurationsBinding.getRoot()).navigateUp();
                 return true;
             }
             default: {
