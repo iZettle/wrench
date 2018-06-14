@@ -10,6 +10,7 @@ import com.izettle.wrench.dialogs.enumvalue.FragmentEnumValueViewModel;
 import com.izettle.wrench.dialogs.integervalue.FragmentIntegerValueViewModel;
 import com.izettle.wrench.dialogs.scope.ScopeFragmentViewModel;
 import com.izettle.wrench.dialogs.stringvalue.FragmentStringValueViewModel;
+import com.izettle.wrench.oss.OssViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -51,6 +52,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FragmentBooleanValueViewModel.class)
     abstract ViewModel bindFragmentBooleanValueViewModel(FragmentBooleanValueViewModel fragmentBooleanValueViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(OssViewModel.class)
+    abstract ViewModel bindFragmentOssViewModel(OssViewModel ossViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);

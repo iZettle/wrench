@@ -2,8 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="licenceMetadata"
+            type="com.izettle.wrench.oss.LicenceMetadata" />
+
+    </data>
+
     <TextView
-        android:id="@id/value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
@@ -13,6 +20,7 @@
         android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+        android:text="@{licenceMetadata.dependency}"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="#FF000000"
         tools:text="Test text" />

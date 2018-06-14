@@ -23,6 +23,7 @@ import com.izettle.wrench.dialogs.enumvalue.EnumValueFragment;
 import com.izettle.wrench.dialogs.integervalue.IntegerValueFragment;
 import com.izettle.wrench.dialogs.scope.ScopeFragment;
 import com.izettle.wrench.dialogs.stringvalue.StringValueFragment;
+import com.izettle.wrench.oss.OssFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -49,5 +50,8 @@ public abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract ScopeFragment contributeScopeFragment();
+
+    @ContributesAndroidInjector
+    abstract OssFragment contributeOssFragment();
 
 }

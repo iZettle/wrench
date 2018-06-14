@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.oss.licenses.plugin'
+
+androidExtensions {
+    experimental = true
+}
 
 android {
 
@@ -69,10 +75,10 @@ dependencies {
     androidTestImplementation Libs.androidTestingSupportLibrary.runner
     androidTestImplementation Libs.room.testing
 
-    annotationProcessor Libs.lifecycle.compiler
-    annotationProcessor Libs.room.compiler
-    annotationProcessor Libs.dagger.daggerAndroidProcessor
-    annotationProcessor Libs.dagger.daggerCompiler
+    kapt Libs.lifecycle.compiler
+    kapt Libs.room.compiler
+    kapt Libs.dagger.daggerAndroidProcessor
+    kapt Libs.dagger.daggerCompiler
 
     implementation Libs.support.app_compat
     implementation Libs.support.recyclerview

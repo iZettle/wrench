@@ -1,45 +1,44 @@
 // https://handstandsam.com/2018/02/11/kotlin-buildsrc-for-better-gradle-dependency-management/
 
 object Versions {
-    val targetSdk = 27
-    val compileSdk = 27
-    val minSdk = 14
+    const val targetSdk = 28
+    const val compileSdk = 28
+    const val minSdk = 14
 
-    val appVersionCode = 11
-    val appVersionName = "1.0.10"
+    const val appVersionCode = 11
+    const val appVersionName = "1.0.10"
 
-    val dagger = "2.16"
+    const val dagger = "2.16"
 
-    val support_lib = "27.1.1"
-    val constraint_layout = "1.1.0"
+    const val constraint_layout = "1.1.2"
 
-    val wrench = "0.3"
+    const val wrench = "0.3"
 
-    val arch_core = "1.1.1"
-    val room = "1.1.1-rc1"
-    val lifecycle = "1.1.1"
-    val support = "27.1.1"
-    val junit = "4.12"
-    val espresso = "3.0.2"
-    val retrofit = "2.3.0"
-    val okhttp_logging_interceptor = "3.9.0"
-    val mockwebserver = "3.8.1"
-    val apache_commons = "2.5"
-    val mockito = "2.18.3"
-    val mockito_all = "1.10.19"
-    val dexmaker = "2.2.0"
-    val glide = "4.7.1"
-    val timber = "4.7.0"
-    val android_gradle_plugin = "3.2.0-alpha16"
-    val rxjava2 = "2.1.3"
-    val rx_android = "2.0.1"
-    val atsl_runner = "1.0.2"
-    val atsl_rules = "1.0.2"
-    val hamcrest = "1.3"
-    val kotlin = "1.2.41"
-    val paging = "1.0.0"
-    val work = "1.0.0-alpha01"
-    val navigation = "1.0.0-alpha01"
+    const val arch_core = "1.1.1"
+    const val room = "1.1.1-rc1"
+    const val lifecycle = "1.1.1"
+    const val support = "28.0.0-alpha3"
+    const val junit = "4.12"
+    const val espresso = "3.0.2"
+    const val retrofit = "2.3.0"
+    const val okhttp_logging_interceptor = "3.9.0"
+    const val mockwebserver = "3.8.1"
+    const val apache_commons = "2.5"
+    const val mockito = "2.18.3"
+    const val mockito_all = "1.10.19"
+    const val dexmaker = "2.2.0"
+    const val glide = "4.7.1"
+    const val timber = "4.7.0"
+    const val android_gradle_plugin = "3.2.0-alpha18"
+    const val rxjava2 = "2.1.3"
+    const val rx_android = "2.0.1"
+    const val atsl_runner = "1.0.2"
+    const val atsl_rules = "1.0.2"
+    const val hamcrest = "1.3"
+    const val kotlin = "1.2.41"
+    const val paging = "1.0.0"
+    const val work = "1.0.0-alpha01"
+    const val navigation = "1.0.0-alpha02"
 }
 
 object AndroidTestingSupportLibrary {
