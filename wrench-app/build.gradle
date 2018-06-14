@@ -80,6 +80,8 @@ dependencies {
     kapt Libs.dagger.daggerAndroidProcessor
     kapt Libs.dagger.daggerCompiler
 
+    implementation Libs.kotlin.coroutines
+
     implementation Libs.support.app_compat
     implementation Libs.support.recyclerview
     implementation Libs.support.design

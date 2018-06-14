@@ -39,68 +39,70 @@ object Versions {
     const val paging = "1.0.0"
     const val work = "1.0.0-alpha01"
     const val navigation = "1.0.0-alpha02"
+    const val kotlin_coroutines = "0.23.2"
 }
 
 object AndroidTestingSupportLibrary {
-    val runner = "com.android.support.test:runner:${Versions.atsl_runner}"
-    val rules = "com.android.support.test:rules:${Versions.atsl_rules}"
+    const val runner = "com.android.support.test:runner:${Versions.atsl_runner}"
+    const val rules = "com.android.support.test:rules:${Versions.atsl_rules}"
 }
 
 object Lifecycle {
-    val core = "android.arch.lifecycle:livedata-core:${Versions.lifecycle}"
-    val runtime = "android.arch.lifecycle:runtime:${Versions.lifecycle}"
-    val extensions = "android.arch.lifecycle:extensions:${Versions.lifecycle}"
-    val java8 = "android.arch.lifecycle:common-java8:${Versions.lifecycle}"
-    val compiler = "android.arch.lifecycle:compiler:${Versions.lifecycle}"
+    const val core = "android.arch.lifecycle:livedata-core:${Versions.lifecycle}"
+    const val runtime = "android.arch.lifecycle:runtime:${Versions.lifecycle}"
+    const val extensions = "android.arch.lifecycle:extensions:${Versions.lifecycle}"
+    const val java8 = "android.arch.lifecycle:common-java8:${Versions.lifecycle}"
+    const val compiler = "android.arch.lifecycle:compiler:${Versions.lifecycle}"
 }
 
 object Espresso {
-    val core = "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
-    val contrib = "com.android.support.test.espresso:espresso-contrib:${Versions.espresso}"
-    val intents = "com.android.support.test.espresso:espresso-intents:${Versions.espresso}"
+    const val core = "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
+    const val contrib = "com.android.support.test.espresso:espresso-contrib:${Versions.espresso}"
+    const val intents = "com.android.support.test.espresso:espresso-intents:${Versions.espresso}"
 }
 
 object Room {
-    val runtime = "android.arch.persistence.room:runtime:${Versions.room}"
-    val compiler = "android.arch.persistence.room:compiler:${Versions.room}"
-    val rxjava2 = "android.arch.persistence.room:rxjava2:${Versions.room}"
-    val testing = "android.arch.persistence.room:testing:${Versions.room}"
+    const val runtime = "android.arch.persistence.room:runtime:${Versions.room}"
+    const val compiler = "android.arch.persistence.room:compiler:${Versions.room}"
+    const val rxjava2 = "android.arch.persistence.room:rxjava2:${Versions.room}"
+    const val testing = "android.arch.persistence.room:testing:${Versions.room}"
 }
 
 object Mockito {
-    val core = "org.mockito:mockito-core:${Versions.mockito}"
-    val all = "org.mockito:mockito-all:${Versions.mockito_all}"
+    const val core = "org.mockito:mockito-core:${Versions.mockito}"
+    const val all = "org.mockito:mockito-all:${Versions.mockito_all}"
 }
 
 object Kotlin {
-    val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
-    val test = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
-    val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-    val allopen = "org.jetbrains.kotlin:kotlin-allopen:${Versions.kotlin}"
+    const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
+    const val test = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
+    const val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    const val allopen = "org.jetbrains.kotlin:kotlin-allopen:${Versions.kotlin}"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
 }
 
 object Wrench {
-    val core = "com.izettle.wrench:wrench-core:${Versions.wrench}"
-    val prefs = "com.izettle.wrench:wrench-prefs:${Versions.wrench}"
-    val prefs_no_op = "com.izettle.wrench:wrench-prefs-no-op:${Versions.wrench}"
+    const val core = "com.izettle.wrench:wrench-core:${Versions.wrench}"
+    const val prefs = "com.izettle.wrench:wrench-prefs:${Versions.wrench}"
+    const val prefs_no_op = "com.izettle.wrench:wrench-prefs-no-op:${Versions.wrench}"
 }
 
 object Navigation {
 
-    val fragment = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
-    val ui = "android.arch.navigation:navigation-ui:${Versions.navigation}"
+    const val fragment = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
+    const val ui = "android.arch.navigation:navigation-ui:${Versions.navigation}"
 
-    val fragmentKotlin = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
-    val uiKotlin = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
+    const val fragmentKotlin = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
+    const val uiKotlin = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
 
-    val testing = "android.arch.navigation:navigation-testing:${Versions.navigation}"
+    const val testing = "android.arch.navigation:navigation-testing:${Versions.navigation}"
 
-    val safeArgsPlugin = "android.arch.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
+    const val safeArgsPlugin = "android.arch.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
 }
 
 object Oss {
-    val plugin = "com.google.gms:oss-licenses:0.9.2"
-    val runtime = "com.google.android.gms:play-services-oss-licenses:15.0.1"
+    const val plugin = "com.google.gms:oss-licenses:0.9.2"
+    const val runtime = "com.google.android.gms:play-services-oss-licenses:15.0.1"
 }
 
 object Libs {
@@ -116,31 +118,31 @@ object Libs {
     val navigation = Navigation
     val oss = Oss
 
-    val paging = "android.arch.paging:runtime:${Versions.paging}"
-    val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+    const val paging = "android.arch.paging:runtime:${Versions.paging}"
+    const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
-    val android_gradle_plugin = "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
+    const val android_gradle_plugin = "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
 
-    val constraint_layout = "com.android.support.constraint:constraint-layout:${Versions.constraint_layout}"
+    const val constraint_layout = "com.android.support.constraint:constraint-layout:${Versions.constraint_layout}"
 
-    val junit = "junit:junit:${Versions.junit}"
+    const val junit = "junit:junit:${Versions.junit}"
 
 }
 
 object Dagger {
-    val runtime = "com.google.dagger:dagger:${Versions.dagger}"
-    val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-    val daggerAndroid = "com.google.dagger:dagger-android:${Versions.dagger}"
-    val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
-    val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
+    const val runtime = "com.google.dagger:dagger:${Versions.dagger}"
+    const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+    const val daggerAndroid = "com.google.dagger:dagger-android:${Versions.dagger}"
+    const val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
+    const val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
 }
 
 object Support {
-    val annotations = "com.android.support:support-annotations:${Versions.support}"
-    val app_compat = "com.android.support:appcompat-v7:${Versions.support}"
-    val recyclerview = "com.android.support:recyclerview-v7:${Versions.support}"
-    val cardview = "com.android.support:cardview-v7:${Versions.support}"
-    val design = "com.android.support:design:${Versions.support}"
-    val v4 = "com.android.support:support-v4:${Versions.support}"
-    val core_utils = "com.android.support:support-core-utils:${Versions.support}"
+    const val annotations = "com.android.support:support-annotations:${Versions.support}"
+    const val app_compat = "com.android.support:appcompat-v7:${Versions.support}"
+    const val recyclerview = "com.android.support:recyclerview-v7:${Versions.support}"
+    const val cardview = "com.android.support:cardview-v7:${Versions.support}"
+    const val design = "com.android.support:design:${Versions.support}"
+    const val v4 = "com.android.support:support-v4:${Versions.support}"
+    const val core_utils = "com.android.support:support-core-utils:${Versions.support}"
 }
