@@ -18,11 +18,14 @@
     <string name="wrench_permission_description">Access to request configuration from Wrench</string>
     <string name="help">Help</string>
     <string name="oss">Open source</string>
-    <string name="help_availability">Available from maven central</string>
+    <string name="wrench_preferences">Wrench Preferences:</string>
+    <string name="wrench_livedata">Wrench LiveData:</string>
 
     <string name="help_dependency_title">App build.gradle</string>
-    <string name="help_dependency">dependencies {\n\timplementation \'com.izettle.wrench:wrench-prefs:0.3\'\n}</string>
+    <string name="wrench_preferences_dependency">dependencies {\n\timplementation \'com.izettle.wrench:wrench-prefs:0.3\'\n}</string>
+    <string name="wrench_livedata_dependency">dependencies {\n\timplementation \'com.izettle.wrench:wrench-livedata:0.3\'\n}</string>
     <string name="help_implementation_title">Implementation</string>
-    <string name="help_implementation">WrenchPreferences wrenchPreferences = new WrenchPreferences(getApplicationContext());\nboolean myBetaFeature = wrenchPreferences.getBoolean("My unreleased feature", false)</string>
+    <string name="wrench_preferences_implementation">WrenchPreferences wrenchPreferences = new WrenchPreferences(getApplicationContext());\nboolean myBetaFeature = wrenchPreferences.getBoolean(&quot;Unreleased feature&quot;, false)</string>
+    <string name="wrench_livedata_implementation">fun getBooleanConfiguration(): LiveData&lt;Boolean&gt; {\n\treturn WrenchLiveData.create(application, &quot;Unreleased feature&quot;, false)\n}</string>
 
 </resources>
