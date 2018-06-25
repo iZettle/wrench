@@ -25,7 +25,7 @@
     <string name="wrench_preferences_dependency">dependencies {\n\timplementation \'com.izettle.wrench:wrench-prefs:0.3\'\n}</string>
     <string name="wrench_livedata_dependency">dependencies {\n\timplementation \'com.izettle.wrench:wrench-livedata:0.3\'\n}</string>
     <string name="help_implementation_title">Implementation</string>
-    <string name="wrench_preferences_implementation">WrenchPreferences wrenchPreferences = new WrenchPreferences(getApplicationContext());\nboolean myBetaFeature = wrenchPreferences.getBoolean(&quot;Unreleased feature&quot;, false)</string>
+    <string name="wrench_preferences_implementation">val wrenchPrefs = WrenchPreferences(applicationContext)\nval feature = wrenchPreferences.getBoolean(&quot;Unreleased feature&quot;, false)</string>
     <string name="wrench_livedata_implementation">fun getBooleanConfiguration(): LiveData&lt;Boolean&gt; {\n\treturn WrenchLiveData.create(application, &quot;Unreleased feature&quot;, false)\n}</string>
 
 </resources>
