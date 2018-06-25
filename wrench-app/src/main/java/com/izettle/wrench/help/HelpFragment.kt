@@ -1,4 +1,4 @@
-package help
+package com.izettle.wrench.help
 
 
 import android.os.Bundle

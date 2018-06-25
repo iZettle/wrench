@@ -1,7 +1,9 @@
-package com.izettle.wrench.oss;
+package com.izettle.wrench.oss.list;
 
 import android.content.Context;
 import android.content.res.Resources;
+
+import com.izettle.wrench.oss.LicenceMetadata;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

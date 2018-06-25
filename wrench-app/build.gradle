@@ -40,6 +40,9 @@ android {
         buildConfigField "String", "CONFIG_AUTHORITY", "\"${configurationAuthorityValue}\""
 
     }
+    packagingOptions {
+        exclude 'META-INF/main.kotlin_module'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

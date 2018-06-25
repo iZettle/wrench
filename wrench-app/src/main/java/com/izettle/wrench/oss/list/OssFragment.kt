@@ -1,4 +1,4 @@
-package com.izettle.wrench.oss
+package com.izettle.wrench.oss.list
 
 
 import android.arch.lifecycle.Observer
@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.izettle.wrench.databinding.FragmentOssBinding
 import com.izettle.wrench.di.Injectable
+import com.izettle.wrench.oss.detail.OssDetailFragment
+import com.izettle.wrench.oss.detail.OssDetailFragmentArgs
 import javax.inject.Inject
 
 class OssFragment : Fragment(), Injectable {
@@ -26,11 +28,12 @@ class OssFragment : Fragment(), Injectable {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val model = ViewModelProviders.of(this, viewModelFactory).get(OssViewModel::class.java)
+        val model = ViewModelProviders.of(this, viewModelFactory).get(OssListViewModel::class.java)
 
         val adapter = OssRecyclerViewAdapter(clickCallback = {
             Log.d("Tag", "dependency = " + it.dependency)
-            OssDialogFragment().show(childFragmentManager, "aleaht")
+            val ossDetailFragmentArgs = OssDetailFragmentArgs.Builder(it.dependency, it.skipBytes.toInt(), it.length).build()
+            OssDetailFragment.newInstance(ossDetailFragmentArgs).show(childFragmentManager, "OssDetails")
         })
         binding.recView.adapter = adapter
 

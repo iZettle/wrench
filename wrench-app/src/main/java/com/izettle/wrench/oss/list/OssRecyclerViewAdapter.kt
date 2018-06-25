@@ -1,10 +1,11 @@
-package com.izettle.wrench.oss
+package com.izettle.wrench.oss.list
 
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.izettle.wrench.databinding.OssListItemBinding
+import com.izettle.wrench.oss.LicenceMetadata
 
 class OssRecyclerViewAdapter(private val clickCallback: ((LicenceMetadata) -> Unit)?) : ListAdapter<LicenceMetadata, OssViewHolder>(object : DiffUtil.ItemCallback<LicenceMetadata?>() {
     override fun areItemsTheSame(p0: LicenceMetadata, p1: LicenceMetadata): Boolean = p0.dependency == p1.dependency

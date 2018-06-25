@@ -15,7 +15,7 @@ object Versions {
     const val wrench = "0.3"
 
     const val arch_core = "1.1.1"
-    const val room = "1.1.1-rc1"
+    const val room = "1.1.1"
     const val lifecycle = "1.1.1"
     const val support = "28.0.0-alpha3"
     const val junit = "4.12"
@@ -24,12 +24,12 @@ object Versions {
     const val okhttp_logging_interceptor = "3.9.0"
     const val mockwebserver = "3.8.1"
     const val apache_commons = "2.5"
-    const val mockito = "2.18.3"
+    const val mockito = "2.19.0"
     const val mockito_all = "1.10.19"
     const val dexmaker = "2.2.0"
     const val glide = "4.7.1"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.2.0-alpha18"
+    const val android_gradle_plugin = "3.2.0-beta01"
     const val rxjava2 = "2.1.3"
     const val rx_android = "2.0.1"
     const val atsl_runner = "1.0.2"
@@ -39,7 +39,7 @@ object Versions {
     const val paging = "1.0.0"
     const val work = "1.0.0-alpha01"
     const val navigation = "1.0.0-alpha02"
-    const val kotlin_coroutines = "0.23.2"
+    const val kotlin_coroutines = "0.23.3"
 }
 
 object AndroidTestingSupportLibrary {

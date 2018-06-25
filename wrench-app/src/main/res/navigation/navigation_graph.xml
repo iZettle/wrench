@@ -92,12 +92,30 @@
     </fragment>
     <fragment
         android:id="@+id/action_oss"
-        android:name="com.izettle.wrench.oss.OssFragment"
+        android:name="com.izettle.wrench.oss.list.OssFragment"
         android:label="@string/oss"
         tools:layout="@layout/fragment_oss" />
+
+    <fragment
+        android:id="@+id/action_oss_detail"
+        android:name="com.izettle.wrench.oss.detail.OssDetailFragment"
+        android:label="@string/oss"
+        tools:layout="@layout/fragment_oss_detail">
+
+        <argument
+            android:name="dependency"
+            app:type="string" />
+        <argument
+            android:name="skip"
+            app:type="integer" />
+        <argument
+            android:name="length"
+            app:type="integer" />
+    </fragment>
+
     <fragment
         android:id="@+id/action_help"
-        android:name="help.HelpFragment"
+        android:name="com.izettle.wrench.help.HelpFragment"
         android:label="@string/help"
         tools:layout="@layout/fragment_help" />
 </navigation>
