@@ -35,7 +35,7 @@ object Versions {
     const val atsl_runner = "1.0.2"
     const val atsl_rules = "1.0.2"
     const val hamcrest = "1.3"
-    const val kotlin = "1.2.50"
+    const val kotlin = "1.2.41"
     const val paging = "1.0.1"
     const val work = "1.0.0-alpha01"
     const val navigation = "1.0.0-alpha02"
