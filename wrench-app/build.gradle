@@ -69,13 +69,15 @@ android {
     sourceSets {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 }
 
 dependencies {
     testImplementation Libs.junit
 
     androidTestImplementation Libs.espresso.core
-    androidTestImplementation Libs.androidTestingSupportLibrary.runner
     androidTestImplementation Libs.room.testing
 
     kapt Libs.lifecycle.compiler

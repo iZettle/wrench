@@ -43,6 +43,9 @@ android {
         warningsAsErrors true
         lintConfig file("../lint.xml")
     }
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 }
 
 dependencies {
@@ -53,7 +56,6 @@ dependencies {
     testImplementation Libs.mockito.core
 
     androidTestImplementation Libs.espresso.core
-    androidTestImplementation Libs.androidTestingSupportLibrary.runner
     androidTestImplementation Libs.androidTestingSupportLibrary.rules
     androidTestImplementation Libs.wrench.prefs
 
