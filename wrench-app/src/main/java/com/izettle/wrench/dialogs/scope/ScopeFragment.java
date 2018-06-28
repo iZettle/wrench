@@ -40,6 +40,7 @@ public class ScopeFragment extends DialogFragment implements ScopeRecyclerViewAd
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        assert getArguments() != null;
 
         binding = FragmentScopeBinding.inflate(LayoutInflater.from(getContext()), null);
 

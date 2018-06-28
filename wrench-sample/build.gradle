@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'com.google.gms.oss.licenses.plugin'
 
 android {
 
@@ -9,13 +11,13 @@ android {
         enabled = true
     }
 
-    compileSdkVersion 27
+    compileSdkVersion Versions.compileSdk
     defaultConfig {
         applicationId "com.example.wrench"
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 2
-        versionName "1.0.8"
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Versions.appVersionCode
+        versionName Versions.appVersionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -41,36 +43,41 @@ android {
         warningsAsErrors true
         lintConfig file("../lint.xml")
     }
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 }
 
 dependencies {
-    kapt "com.google.dagger:dagger-android-processor:2.15"
-    kapt "com.google.dagger:dagger-compiler:2.16"
+    kapt Libs.dagger.daggerAndroidProcessor
+    kapt Libs.dagger.daggerCompiler
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.18.3'
+    testImplementation Libs.junit
+    testImplementation Libs.mockito.core
 
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
-    implementation "com.izettle.wrench:wrench-core:0.3"
-    androidTestImplementation "com.izettle.wrench:wrench-prefs:0.3"
+    androidTestImplementation Libs.espresso.core
+    androidTestImplementation Libs.androidTestingSupportLibrary.rules
+    androidTestImplementation Libs.wrench.prefs
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation "com.android.support:design:27.1.1"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation Libs.support.app_compat
+    implementation Libs.support.design
+    implementation Libs.constraint_layout
+    implementation Libs.lifecycle.extensions
 
-    implementation "com.google.dagger:dagger:2.16"
-    implementation "com.google.dagger:dagger-android:2.15"
-    implementation "com.google.dagger:dagger-android-support:2.15"
+    implementation Libs.dagger.runtime
+    implementation Libs.dagger.daggerAndroid
+    implementation Libs.dagger.daggerAndroidSupport
 
-    implementation "com.izettle.wrench:wrench-core:0.3"
+    implementation Libs.navigation.fragmentKotlin
+    implementation Libs.navigation.uiKotlin
+
+    implementation Libs.wrench.core
+    debugImplementation Libs.wrench.prefs
+    releaseImplementation Libs.wrench.prefs_no_op
+
     implementation project(":wrench-livedata")
-    debugImplementation "com.izettle.wrench:wrench-prefs:0.3"
-    releaseImplementation "com.izettle.wrench:wrench-prefs-no-op:0.3"
 
-    implementation project(":wrench-service")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation Libs.kotlin.stdlib
+
+    implementation Libs.oss.runtime
 }

@@ -1,29 +1,23 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
-    ext.kotlin_version = '1.2.41'
-    repositories {
-        jcenter()
-        google()
-    }
+buildscript { 
+    Repos.addRepos(repositories)
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha14'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath Libs.android_gradle_plugin
+        classpath Libs.kotlin.plugin
+        classpath Libs.navigation.safeArgsPlugin
+        classpath Libs.oss.plugin
+        classpath Libs.kotlin.plugin
     }
 }
 
 plugins {
-    id 'com.github.ben-manes.versions' version '0.17.0'
+    id 'com.github.ben-manes.versions' version '0.20.0'
 }
 
 allprojects {
-    repositories {
-        jcenter()
-        google()
-        maven {
-            url "https://oss.sonatype.org/service/local/repositories/comizettle-1057/content/"
-        }
-    }
+    Repos.addRepos(repositories)
 }
 
 task clean(type: Delete) {

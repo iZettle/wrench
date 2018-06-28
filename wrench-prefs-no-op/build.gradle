@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion Versions.compileSdk
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 27
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -26,8 +26,8 @@ android {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:support-annotations:27.1.1'
+    testImplementation Libs.junit
+    implementation Libs.support.annotations
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

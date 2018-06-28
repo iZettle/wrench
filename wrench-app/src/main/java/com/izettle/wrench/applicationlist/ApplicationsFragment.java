@@ -27,11 +27,11 @@ public class ApplicationsFragment extends Fragment implements Injectable {
     public ApplicationsFragment() {
     }
 
-    public static ApplicationsFragment newInstance() {
-        ApplicationsFragment fragment = new ApplicationsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        fragmentApplicationsBinding = FragmentApplicationsBinding.inflate(inflater, container, false);
+        fragmentApplicationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
+        return fragmentApplicationsBinding.getRoot();
     }
 
     @Override
@@ -55,10 +55,5 @@ public class ApplicationsFragment extends Fragment implements Injectable {
 
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragmentApplicationsBinding = FragmentApplicationsBinding.inflate(inflater, container, false);
-        fragmentApplicationsBinding.list.setLayoutManager(new LinearLayoutManager(getContext()));
-        return fragmentApplicationsBinding.getRoot();
-    }
+
 }

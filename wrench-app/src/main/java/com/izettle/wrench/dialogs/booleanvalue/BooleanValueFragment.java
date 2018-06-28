@@ -6,12 +6,9 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.izettle.wrench.R;
 import com.izettle.wrench.databinding.FragmentBooleanValueBinding;
@@ -21,36 +18,29 @@ import javax.inject.Inject;
 
 public class BooleanValueFragment extends DialogFragment implements Injectable {
 
-    private static final String ARGUMENT_CONFIGURATION_ID = "ARGUMENT_CONFIGURATION_ID";
-    private static final String ARGUMENT_SCOPE_ID = "ARGUMENT_SCOPE_ID";
     @Inject
     ViewModelProvider.Factory viewModelFactory;
     private FragmentBooleanValueBinding binding;
     private FragmentBooleanValueViewModel viewModel;
 
-    public static BooleanValueFragment newInstance(long configurationId, long scopeId) {
+    public static BooleanValueFragment newInstance(BooleanValueFragmentArgs args) {
         BooleanValueFragment fragment = new BooleanValueFragment();
-        Bundle args = new Bundle();
-        args.putLong(ARGUMENT_CONFIGURATION_ID, configurationId);
-        args.putLong(ARGUMENT_SCOPE_ID, scopeId);
-        fragment.setArguments(args);
+        fragment.setArguments(args.toBundle());
         return fragment;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return binding.getRoot();
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        assert getArguments() != null;
+
         binding = FragmentBooleanValueBinding.inflate(LayoutInflater.from(getContext()), null);
+
+        BooleanValueFragmentArgs args = BooleanValueFragmentArgs.fromBundle(getArguments());
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentBooleanValueViewModel.class);
 
-        viewModel.init(getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID));
+        viewModel.init(args.getConfigurationId(), args.getScopeId());
 
         viewModel.getConfiguration().observe(this, wrenchConfiguration -> {
             if (wrenchConfiguration != null) {

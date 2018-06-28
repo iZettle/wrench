@@ -1,4 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.oss.licenses.plugin'
+
+androidExtensions {
+    experimental = true
+}
 
 android {
 
@@ -6,13 +15,13 @@ android {
         enabled = true
     }
 
-    compileSdkVersion 27
+    compileSdkVersion Versions.compileSdk
     defaultConfig {
         applicationId "com.izettle.wrench"
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 11
-        versionName "1.0.10"
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Versions.appVersionCode
+        versionName Versions.appVersionName
 
         testInstrumentationRunner "com.izettle.wrench.WrenchTestRunner"
         vectorDrawables.useSupportLibrary = true
@@ -31,13 +40,16 @@ android {
         buildConfigField "String", "CONFIG_AUTHORITY", "\"${configurationAuthorityValue}\""
 
     }
+    packagingOptions {
+        exclude 'META-INF/main.kotlin_module'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-stetho.pro'
         }
         debug {
@@ -57,34 +69,42 @@ android {
     sourceSets {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
+    testImplementation Libs.junit
 
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'android.arch.persistence.room:testing:1.1.0'
+    androidTestImplementation Libs.espresso.core
+    androidTestImplementation Libs.room.testing
 
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
-    annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
-    annotationProcessor "com.google.dagger:dagger-android-processor:2.15"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.16"
+    kapt Libs.lifecycle.compiler
+    kapt Libs.room.compiler
+    kapt Libs.dagger.daggerAndroidProcessor
+    kapt Libs.dagger.daggerCompiler
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    implementation Libs.kotlin.coroutines
+
+    implementation Libs.support.app_compat
+    implementation Libs.support.recyclerview
+    implementation Libs.support.design
     implementation 'com.facebook.stetho:stetho:1.5.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
-    implementation 'android.arch.persistence.room:runtime:1.1.0'
-    implementation "android.arch.paging:runtime:1.0.0"
+    implementation Libs.constraint_layout
+    implementation Libs.support.cardview
+    implementation Libs.lifecycle.extensions
+    implementation Libs.room.runtime
+    implementation Libs.paging
 
-    implementation "com.google.dagger:dagger:2.16"
-    implementation "com.google.dagger:dagger-android:2.15"
-    implementation "com.google.dagger:dagger-android-support:2.15"
+    implementation Libs.navigation.fragment
+    implementation Libs.navigation.ui
 
-    implementation "com.izettle.wrench:wrench-core:0.3"
-    implementation "com.izettle.wrench:wrench-prefs:0.3"
+    implementation Libs.dagger.runtime
+    implementation Libs.dagger.daggerAndroid
+    implementation Libs.dagger.daggerAndroidSupport
+
+    implementation Libs.wrench.core
+    implementation Libs.wrench.prefs
+    implementation Libs.kotlin.stdlib
 }

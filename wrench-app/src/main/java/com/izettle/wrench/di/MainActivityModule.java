@@ -16,8 +16,7 @@
 
 package com.izettle.wrench.di;
 
-import com.izettle.wrench.applicationlist.ApplicationsActivity;
-import com.izettle.wrench.configurationlist.ConfigurationsActivity;
+import com.izettle.wrench.MainActivity;
 import com.izettle.wrench.provider.WrenchProvider;
 
 import dagger.Module;
@@ -26,10 +25,7 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class MainActivityModule {
     @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
-    abstract ApplicationsActivity contributeApplicationsActivity();
-
-    @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
-    abstract ConfigurationsActivity contributeConfigurationsActivity();
+    abstract MainActivity contributeApplicationsActivity();
 
     @ContributesAndroidInjector()
     abstract WrenchProvider contributeWrenchProvider();

@@ -19,31 +19,29 @@ import javax.inject.Inject;
 
 public class StringValueFragment extends DialogFragment implements Injectable {
 
-    private static final String ARGUMENT_CONFIGURATION_ID = "ARGUMENT_CONFIGURATION_ID";
-    private static final String ARGUMENT_SCOPE_ID = "ARGUMENT_SCOPE_ID";
     @Inject
     ViewModelProvider.Factory viewModelFactory;
     private FragmentStringValueBinding binding;
     private FragmentStringValueViewModel viewModel;
 
-    public static StringValueFragment newInstance(long configurationId, long scopeId) {
+    public static StringValueFragment newInstance(StringValueFragmentArgs args) {
         StringValueFragment fragment = new StringValueFragment();
-        Bundle args = new Bundle();
-        args.putLong(ARGUMENT_CONFIGURATION_ID, configurationId);
-        args.putLong(ARGUMENT_SCOPE_ID, scopeId);
-        fragment.setArguments(args);
+        fragment.setArguments(args.toBundle());
         return fragment;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        assert getArguments() != null;
 
         binding = FragmentStringValueBinding.inflate(LayoutInflater.from(getContext()), null);
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentStringValueViewModel.class);
 
-        viewModel.init(getArguments().getLong(ARGUMENT_CONFIGURATION_ID), getArguments().getLong(ARGUMENT_SCOPE_ID));
+        StringValueFragmentArgs args = StringValueFragmentArgs.fromBundle(getArguments());
+
+        viewModel.init(args.getConfigurationId(), args.getScopeId());
 
         viewModel.getConfiguration().observe(this, wrenchConfiguration -> {
             if (wrenchConfiguration != null) {
