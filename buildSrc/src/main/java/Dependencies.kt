@@ -17,29 +17,29 @@ object Versions {
     const val arch_core = "1.1.1"
     const val room = "1.1.1"
     const val lifecycle = "1.1.1"
-    const val support = "28.0.0-alpha3"
+    const val support = "28.0.0-beta01"
     const val junit = "4.12"
     const val espresso = "3.0.2"
     const val retrofit = "2.3.0"
     const val okhttp_logging_interceptor = "3.9.0"
     const val mockwebserver = "3.8.1"
     const val apache_commons = "2.5"
-    const val mockito = "2.19.0"
+    const val mockito = "2.20.1"
     const val mockito_all = "1.10.19"
     const val dexmaker = "2.2.0"
     const val glide = "4.7.1"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.2.0-beta01"
+    const val android_gradle_plugin = "3.3.0-alpha03"
     const val rxjava2 = "2.1.3"
     const val rx_android = "2.0.1"
     const val atsl_runner = "1.0.2"
     const val atsl_rules = "1.0.2"
     const val hamcrest = "1.3"
-    const val kotlin = "1.2.41"
+    const val kotlin = "1.2.51"
     const val paging = "1.0.1"
     const val work = "1.0.0-alpha01"
-    const val navigation = "1.0.0-alpha02"
-    const val kotlin_coroutines = "0.23.3"
+    const val navigation = "1.0.0-alpha04"
+    const val kotlin_coroutines = "0.24.0"
 }
 
 object AndroidTestingSupportLibrary {
@@ -102,7 +102,7 @@ object Navigation {
 
 object Oss {
     const val plugin = "com.google.gms:oss-licenses:0.9.2"
-    const val runtime = "com.google.android.gms:play-services-oss-licenses:15.0.1"
+    const val runtime = "com.google.android.gms:play-services-oss-licenses:16.0.0"
 }
 
 object Libs {

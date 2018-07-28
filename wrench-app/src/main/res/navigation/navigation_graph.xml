@@ -18,7 +18,7 @@
         android:label="ConfigurationsFragment">
         <argument
             android:name="applicationId"
-            app:type="integer" />
+            app:argType="integer" />
         <action
             android:id="@+id/action_configurationsFragment_to_scopeFragment"
             app:destination="@id/scopeFragment" />
@@ -41,10 +41,10 @@
         android:label="EnumValueFragment">
         <argument
             android:name="configurationId"
-            app:type="integer" />
+            app:argType="integer" />
         <argument
             android:name="scopeId"
-            app:type="integer" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/stringValueFragment"
@@ -52,10 +52,10 @@
         android:label="StringValueFragment">
         <argument
             android:name="configurationId"
-            app:type="integer" />
+            app:argType="integer" />
         <argument
             android:name="scopeId"
-            app:type="integer" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/integerValueFragment"
@@ -63,10 +63,10 @@
         android:label="IntegerValueFragment">
         <argument
             android:name="configurationId"
-            app:type="integer" />
+            app:argType="integer" />
         <argument
             android:name="scopeId"
-            app:type="integer" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/booleanValueFragment"
@@ -74,10 +74,10 @@
         android:label="BooleanValueFragment">
         <argument
             android:name="configurationId"
-            app:type="integer" />
+            app:argType="integer" />
         <argument
             android:name="scopeId"
-            app:type="integer" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/scopeFragment"
@@ -85,10 +85,10 @@
         android:label="ScopeFragment">
         <argument
             android:name="configurationId"
-            app:type="integer" />
+            app:argType="integer" />
         <argument
             android:name="scopeId"
-            app:type="integer" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/action_oss"
@@ -104,13 +104,13 @@
 
         <argument
             android:name="dependency"
-            app:type="string" />
+            app:argType="string" />
         <argument
             android:name="skip"
-            app:type="integer" />
+            app:argType="integer" />
         <argument
             android:name="length"
-            app:type="integer" />
+            app:argType="integer" />
     </fragment>
 
     <fragment
