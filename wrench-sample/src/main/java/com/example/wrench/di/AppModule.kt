@@ -20,6 +20,8 @@ import android.app.Application
 import android.content.res.Resources
 
 import com.izettle.wrench.preferences.WrenchPreferences
+import com.izettle.wrench.service.WrenchService
+import com.izettle.wrench.service.WrenchServiceFactory
 
 import dagger.Module
 import dagger.Provides
@@ -35,5 +37,10 @@ internal class AppModule {
     @Provides
     fun provideResources(app: Application): Resources {
         return app.resources
+    }
+
+    @Provides
+    fun providerWrenchServiceFactory(app: Application): WrenchServiceFactory {
+        return WrenchService.with(app)
     }
 }

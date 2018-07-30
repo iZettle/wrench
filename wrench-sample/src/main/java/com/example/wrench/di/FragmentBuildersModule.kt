@@ -17,6 +17,7 @@
 package com.example.wrench.di
 
 import com.example.wrench.livedataprefs.LiveDataPreferencesFragment
+import com.example.wrench.service.WrenchServiceFragment
 import com.example.wrench.wrenchprefs.WrenchPreferencesFragment
 
 import dagger.Module
@@ -30,4 +31,6 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     internal abstract fun contributeWrenchPreferencesFragment(): WrenchPreferencesFragment
 
+    @ContributesAndroidInjector
+    internal abstract fun contributeWrenchServiceFragment(): WrenchServiceFragment
 }
