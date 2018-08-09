@@ -10,7 +10,7 @@ public interface TestInterface {
     }
 
 
-    /* */
+    /* J8 default method */
 
     default Object objectReturnTypeDefaultMethod(final Object value){
         return value;

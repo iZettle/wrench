@@ -76,7 +76,10 @@ dependencies {
     releaseImplementation Libs.wrench.prefs_no_op
 
     implementation project(":wrench-livedata")
+
     implementation project(":wrench-service")
+    debugImplementation project(":wrench-service-prefs")
+    releaseImplementation project(":wrench-service-prefs-no-op")
 
     implementation Libs.kotlin.stdlib
 

@@ -1,55 +1,40 @@
 package com.izettle.wrench.service;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
-import com.izettle.wrench.service.processor.KeyProcessorFactory;
-import com.izettle.wrench.service.processor.ValueProcessorFactory;
-import com.izettle.wrench.service.storage.StorageFactory;
-
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
-public final class WrenchService implements InvocationHandler {
+public final class WrenchService {
 
-    public static WrenchServiceFactory with(final Context context) {
-        final Storage storage = new StorageFactory(context).create();
-        final AnnotationProcessor<String> keyProcessor = new KeyProcessorFactory().create();
-        final AnnotationProcessor<Object> valProcessor = new ValueProcessorFactory().create();
-        return new WrenchServiceFactory(storage, keyProcessor, valProcessor);
+    public static WrenchService with(final Provider provider) {
+        final AnnotationProcessor<String> keyProcessor = new KeyProcessor();
+        final AnnotationProcessor<Object> valProcessor = new ValueProcessor();
+        return new WrenchService(provider, keyProcessor, valProcessor);
     }
 
-    private final Storage mStorage;
+    private final Provider mProvider;
     private final AnnotationProcessor<String> mKeyProcessor;
     private final AnnotationProcessor<Object> mValueProcessor;
 
     @VisibleForTesting
-    WrenchService(final Storage storage,
+    WrenchService(final Provider storage,
                   final AnnotationProcessor<String> keyProcessor,
                   final AnnotationProcessor<Object> valueProcessor) {
-        mStorage = storage;
+        mProvider = storage;
         mKeyProcessor = keyProcessor;
         mValueProcessor = valueProcessor;
     }
 
-    @SuppressLint("NewApi")
-    @Override
-    public Object invoke(final Object proxy,
-                         final Method method,
-                         final Object[] args) throws Throwable {
-        if (method.getDeclaringClass() == Object.class) {
-            return method.invoke(this, args);
-        }
+    public <T> T create(Class<T> service) {
+        final ClassLoader loader = service.getClassLoader();
+        final Class[] interfaces = new Class[]{service};
 
-        if (method.isDefault()) {
-            throw new UnsupportedOperationException("Default method are not supported");
-        }
+        final InvocationHandler handler = new WrenchServiceHandler(
+                mProvider,
+                mKeyProcessor,
+                mValueProcessor);
 
-        final String key = mKeyProcessor.getValue(method, args);
-        final Object value = mValueProcessor.getValue(method, args);
-        final Class<?> returnType = method.getReturnType();
-
-        return mStorage.getValue(returnType, key, value);
+        return (T) Proxy.newProxyInstance(loader, interfaces, handler);
     }
 }

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -34,11 +33,8 @@ android {
 dependencies {
     testImplementation Libs.junit
     testImplementation Libs.mockito.core
-    testImplementation Libs.kotlin.stdlib
 
     implementation Libs.wrench.core
-    implementation Libs.wrench.prefs
-    implementation Libs.support.annotations
 
     api project(":wrench-service-provider")
 }

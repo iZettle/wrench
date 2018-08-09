@@ -2,13 +2,12 @@ package com.example.wrench.service
 
 import android.arch.lifecycle.ViewModel
 import com.example.wrench.MyEnum
-import com.example.wrench.R
-import com.izettle.wrench.service.WrenchServiceFactory
+import com.izettle.wrench.service.WrenchService
 import javax.inject.Inject
 
-class WrenchServiceFragmentViewModel @Inject constructor(factory: WrenchServiceFactory) : ViewModel(){
+class WrenchServiceFragmentViewModel @Inject constructor(service: WrenchService) : ViewModel(){
 
-    private val wrenchPreference = factory.create(WrenchPreference::class.java)
+    private val wrenchPreference = service.create(WrenchPreference::class.java)
 
     val stringConfiguration: String = wrenchPreference.getStringConfiguration()
 
