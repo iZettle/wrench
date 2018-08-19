@@ -8,7 +8,7 @@ object Versions {
     const val appVersionCode = 11
     const val appVersionName = "1.0.10"
 
-    const val dagger = "2.16"
+    const val dagger = "2.17"
 
     const val constraint_layout = "1.1.2"
 
@@ -17,14 +17,14 @@ object Versions {
     const val arch_core = "1.1.1"
     const val room = "1.1.1"
     const val lifecycle = "1.1.1"
-    const val support = "28.0.0-beta01"
+    const val support = "28.0.0-rc01"
     const val junit = "4.12"
     const val espresso = "3.0.2"
     const val retrofit = "2.3.0"
     const val okhttp_logging_interceptor = "3.9.0"
     const val mockwebserver = "3.8.1"
     const val apache_commons = "2.5"
-    const val mockito = "2.20.1"
+    const val mockito = "2.21.0"
     const val mockito_all = "1.10.19"
     const val dexmaker = "2.2.0"
     const val glide = "4.7.1"
@@ -35,10 +35,10 @@ object Versions {
     const val atsl_runner = "1.0.2"
     const val atsl_rules = "1.0.2"
     const val hamcrest = "1.3"
-    const val kotlin = "1.2.51"
+    const val kotlin = "1.2.61"
     const val paging = "1.0.1"
     const val work = "1.0.0-alpha01"
-    const val navigation = "1.0.0-alpha04"
+    const val navigation = "1.0.0-alpha05"
     const val kotlin_coroutines = "0.24.0"
 }
 
