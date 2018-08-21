@@ -10,6 +10,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
+import androidx.room.testing.MigrationTestHelper;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
+
 import static com.izettle.wrench.database.migrations.Migrations.MIGRATION_1_2;
 import static com.izettle.wrench.database.migrations.Migrations.MIGRATION_2_3;
 import static junit.framework.Assert.assertEquals;
@@ -26,7 +34,7 @@ public class MigrationTests {
                     new FrameworkSQLiteOpenHelperFactory());
 
     @Test
-    public void test1to2() {
+    public void test1to2() throws IOException {
         // Create the database with version 2
         SupportSQLiteDatabase originalDb = testHelper.createDatabase(TEST_DB_NAME, 1);
 
@@ -39,7 +47,7 @@ public class MigrationTests {
     }
 
     @Test
-    public void test2to3() {
+    public void test2to3() throws IOException {
         // Create the database with version 2
         SupportSQLiteDatabase originalDb = testHelper.createDatabase(TEST_DB_NAME, 2);
 

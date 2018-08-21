@@ -15,6 +15,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.room.Room;
+import androidx.test.runner.AndroidJUnit4;
+
 @RunWith(AndroidJUnit4.class)
 public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
 
