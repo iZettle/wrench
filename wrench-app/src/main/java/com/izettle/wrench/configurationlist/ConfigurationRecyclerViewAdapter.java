@@ -1,9 +1,6 @@
 package com.izettle.wrench.configurationlist;
 
 import android.graphics.Paint;
-import android.support.annotation.Nullable;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +13,10 @@ import com.izettle.wrench.databinding.ConfigurationListItemBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<ConfigurationViewHolder> {

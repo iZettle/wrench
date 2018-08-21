@@ -1,9 +1,7 @@
 package com.izettle.wrench.provider;
 
-import android.arch.persistence.room.Room;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.ProviderTestCase2;
 import android.test.mock.MockContentResolver;
 

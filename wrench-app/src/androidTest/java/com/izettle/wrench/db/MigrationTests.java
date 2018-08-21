@@ -1,11 +1,6 @@
 package com.izettle.wrench.db;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.db.framework.FrameworkSQLiteOpenHelperFactory;
-import android.arch.persistence.room.testing.MigrationTestHelper;
 import android.database.Cursor;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.database.WrenchDatabase;
@@ -14,8 +9,6 @@ import com.izettle.wrench.database.tables.ConfigurationTable;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.IOException;
 
 import static com.izettle.wrench.database.migrations.Migrations.MIGRATION_1_2;
 import static com.izettle.wrench.database.migrations.Migrations.MIGRATION_2_3;
@@ -33,7 +26,7 @@ public class MigrationTests {
                     new FrameworkSQLiteOpenHelperFactory());
 
     @Test
-    public void test1to2() throws IOException {
+    public void test1to2() {
         // Create the database with version 2
         SupportSQLiteDatabase originalDb = testHelper.createDatabase(TEST_DB_NAME, 1);
 
@@ -46,7 +39,7 @@ public class MigrationTests {
     }
 
     @Test
-    public void test2to3() throws IOException {
+    public void test2to3() {
         // Create the database with version 2
         SupportSQLiteDatabase originalDb = testHelper.createDatabase(TEST_DB_NAME, 2);
 

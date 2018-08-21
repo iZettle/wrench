@@ -2,11 +2,12 @@ package com.izettle.wrench.livedata;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.WrenchProviderContract;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 class WrenchStringLiveData extends WrenchLiveData<String> {
     private final String defValue;

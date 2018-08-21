@@ -1,16 +1,17 @@
 package com.izettle.wrench.database;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
 import android.content.ContentValues;
 
 import com.izettle.wrench.database.tables.ConfigurationTable;
 import com.izettle.wrench.database.tables.PredefinedConfigurationValueTable;
 
-import static android.arch.persistence.room.ForeignKey.CASCADE;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
+import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = PredefinedConfigurationValueTable.TABLE_NAME,
         indices = {@Index(value = {PredefinedConfigurationValueTable.COL_CONFIG_ID})},

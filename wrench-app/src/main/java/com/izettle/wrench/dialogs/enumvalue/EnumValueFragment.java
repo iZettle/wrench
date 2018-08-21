@@ -1,14 +1,8 @@
 package com.izettle.wrench.dialogs.enumvalue;
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +13,14 @@ import com.izettle.wrench.databinding.FragmentEnumValueBinding;
 import com.izettle.wrench.di.Injectable;
 
 import javax.inject.Inject;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class EnumValueFragment extends DialogFragment implements PredefinedValueRecyclerViewAdapter.Listener, Injectable {
 
@@ -61,7 +63,7 @@ public class EnumValueFragment extends DialogFragment implements PredefinedValue
 
         adapter = new PredefinedValueRecyclerViewAdapter(this);
         binding.list.setAdapter(adapter);
-        binding.list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        binding.list.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
 
         viewModel.getPredefinedValues().observe(this, items -> {
