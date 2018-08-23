@@ -32,14 +32,14 @@ object Versions {
     const val navigation = "1.0.0-alpha05"
     const val kotlin_coroutines = "0.24.0"
 
-    const val room = "2.0.0-alpha1"
-    const val lifecycle = "2.0.0-alpha1"
-    const val paging = "2.0.0-alpha1"
-    const val atsl_runner = "1.1.0-alpha1"
-    const val atsl_rules = "1.1.0-alpha1"
-    const val espresso = "3.1.0-alpha1"
+    const val room = "2.0.0-rc01"
+    const val lifecycle = "2.0.0-rc01"
+    const val paging = "2.0.0-rc01"
+    const val atsl_runner = "1.1.0-alpha4"
+    const val atsl_rules = "1.1.0-alpha4"
+    const val espresso = "3.1.0-alpha4"
     const val constraint_layout = "1.1.0"
-    const val support = "1.0.0-alpha1"
+    const val support = "1.0.0-rc01"
 }
 
 object AndroidTestingSupportLibrary {
