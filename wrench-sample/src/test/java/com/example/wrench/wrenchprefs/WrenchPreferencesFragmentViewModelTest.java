@@ -37,6 +37,7 @@ public class WrenchPreferencesFragmentViewModelTest {
 
     @Test
     public void getIntConfiguration() {
+        when(resources.getString(anyInt())).thenReturn("asd");
         when(wrenchPreferences.getInt(anyString(), anyInt())).thenReturn(1);
         Integer result = wrenchPreferencesViewModel.getIntConfiguration();
         assertNotNull(result);
@@ -52,6 +53,7 @@ public class WrenchPreferencesFragmentViewModelTest {
 
     @Test
     public void getBooleanConfiguration() {
+        when(resources.getString(anyInt())).thenReturn("asd");
         when(wrenchPreferences.getBoolean(anyString(), anyBoolean())).thenReturn(false);
         Boolean result = wrenchPreferencesViewModel.getBooleanConfiguration();
         assertNotNull(result);
@@ -60,8 +62,9 @@ public class WrenchPreferencesFragmentViewModelTest {
 
     @Test
     public void getEnumConfiguration() {
-        when(wrenchPreferences.getEnum(anyString(), eq(MyEnum.class), any(MyEnum.class))).thenReturn(MyEnum.SECOND);
+        when(resources.getString(anyInt())).thenReturn("asd");
+        when(wrenchPreferences.getEnum(anyString(), eq(MyEnum.class), any(MyEnum.class))).thenReturn(MyEnum.THIRD);
         MyEnum result = wrenchPreferencesViewModel.getEnumConfiguration();
-        assertEquals(null, result);
+        assertEquals(MyEnum.THIRD, result);
     }
 }
