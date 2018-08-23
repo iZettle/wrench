@@ -11,7 +11,7 @@ class WrenchPreferencesFragmentViewModelTest {
     lateinit var wrenchPreferencesViewModel: WrenchPreferencesFragmentViewModel
 
     @Before
-    fun init() {
+    fun initialise() {
         val wrenchPreferences = mock(WrenchPreferences::class.java)
         val resources = mock(Resources::class.java)
         val wrenchPreferencesViewModel = WrenchPreferencesFragmentViewModel(resources, wrenchPreferences)
