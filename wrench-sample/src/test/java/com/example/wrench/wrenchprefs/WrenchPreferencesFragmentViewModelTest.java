@@ -36,7 +36,7 @@ public class WrenchPreferencesFragmentViewModelTest {
     }
 
     @Test
-    public void getIntConfiguration() {
+    public void getIntConfiguration() throws Exception{
         when(resources.getString(anyInt())).thenReturn("asd");
         when(wrenchPreferences.getInt(anyString(), anyInt())).thenReturn(1);
         Integer result = wrenchPreferencesViewModel.getIntConfiguration();
@@ -44,7 +44,7 @@ public class WrenchPreferencesFragmentViewModelTest {
     }
 
     @Test
-    public void getStringConfiguration() {
+    public void getStringConfiguration() throws Exception{
         when(resources.getString(anyInt())).thenReturn("asd");
         when(wrenchPreferences.getString(anyString(), anyString())).thenReturn("123");
         String result = wrenchPreferencesViewModel.getStringConfiguration();
@@ -52,7 +52,7 @@ public class WrenchPreferencesFragmentViewModelTest {
     }
 
     @Test
-    public void getBooleanConfiguration() {
+    public void getBooleanConfiguration() throws Exception{
         when(resources.getString(anyInt())).thenReturn("asd");
         when(wrenchPreferences.getBoolean(anyString(), anyBoolean())).thenReturn(false);
         Boolean result = wrenchPreferencesViewModel.getBooleanConfiguration();
@@ -61,7 +61,7 @@ public class WrenchPreferencesFragmentViewModelTest {
     }
 
     @Test
-    public void getEnumConfiguration() {
+    public void getEnumConfiguration() throws Exception{
         when(resources.getString(anyInt())).thenReturn("asd");
         when(wrenchPreferences.getEnum(anyString(), eq(MyEnum.class), any(MyEnum.class))).thenReturn(MyEnum.THIRD);
         MyEnum result = wrenchPreferencesViewModel.getEnumConfiguration();
