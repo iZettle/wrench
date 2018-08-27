@@ -1,8 +1,8 @@
 package com.izettle.wrench.database.migrations;
 
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.room.migration.Migration;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 public class Migrations {
     public static final Migration MIGRATION_1_2 = new Migration(1, 2) {

@@ -9,8 +9,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.izettle.wrench.BuildConfig;
 import com.izettle.wrench.core.Bolt;
@@ -31,6 +29,8 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import dagger.android.AndroidInjection;
 import dagger.android.HasContentProviderInjector;
 

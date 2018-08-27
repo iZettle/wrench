@@ -1,12 +1,13 @@
 package com.izettle.wrench.db;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.support.annotation.NonNull;
 
 import com.izettle.wrench.database.tables.ApplicationTable;
 import com.izettle.wrench.database.tables.ConfigurationTable;
+
+import androidx.annotation.NonNull;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_FAIL;
 import static junit.framework.Assert.assertNotNull;

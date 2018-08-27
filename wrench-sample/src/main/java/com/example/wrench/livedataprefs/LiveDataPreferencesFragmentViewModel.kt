@@ -1,8 +1,9 @@
 package com.example.wrench.livedataprefs
 
 import android.app.Application
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+
 import com.example.wrench.MyEnum
 import com.example.wrench.R
 import com.izettle.wrench.livedata.WrenchLiveData

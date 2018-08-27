@@ -19,12 +19,14 @@ package com.izettle.wrench.di;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 
 import com.izettle.wrench.WrenchApplication;
 
+import org.jetbrains.annotations.NotNull;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -90,7 +92,8 @@ public class AppInjector {
                     .registerFragmentLifecycleCallbacks(
                             new FragmentManager.FragmentLifecycleCallbacks() {
                                 @Override
-                                public void onFragmentCreated(FragmentManager fm, Fragment f,
+                                public void onFragmentCreated(@NotNull FragmentManager fm,
+                                                              @NotNull Fragment f,
                                                               Bundle savedInstanceState) {
                                     if (f instanceof Injectable) {
                                         AndroidSupportInjection.inject(f);

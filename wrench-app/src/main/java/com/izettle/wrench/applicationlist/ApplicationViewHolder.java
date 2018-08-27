@@ -2,13 +2,13 @@ package com.izettle.wrench.applicationlist;
 
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
 
 import com.izettle.wrench.R;
 import com.izettle.wrench.database.WrenchApplication;
 import com.izettle.wrench.databinding.ApplicationListItemBinding;
 
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 class ApplicationViewHolder extends RecyclerView.ViewHolder {
     final ApplicationListItemBinding binding;

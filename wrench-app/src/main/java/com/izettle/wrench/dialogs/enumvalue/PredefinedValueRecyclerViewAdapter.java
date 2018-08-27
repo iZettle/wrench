@@ -1,6 +1,5 @@
 package com.izettle.wrench.dialogs.enumvalue;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +7,12 @@ import android.view.ViewGroup;
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValue;
 import com.izettle.wrench.databinding.SimpleListItemBinding;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class PredefinedValueRecyclerViewAdapter extends RecyclerView.Adapter<PredefinedValueRecyclerViewAdapter.ViewHolder> {
 
@@ -20,14 +23,15 @@ public class PredefinedValueRecyclerViewAdapter extends RecyclerView.Adapter<Pre
         this.listener = listener;
     }
 
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         SimpleListItemBinding binding = SimpleListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
         WrenchPredefinedConfigurationValue predefinedConfigurationValue = items.get(position);
 
         holder.binding.value.setText(predefinedConfigurationValue.getValue());

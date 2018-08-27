@@ -1,11 +1,5 @@
 package com.izettle.wrench.configurationlist;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
-import android.arch.lifecycle.ViewModel;
-import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
 import com.izettle.wrench.database.WrenchApplication;
@@ -18,6 +12,13 @@ import com.izettle.wrench.database.WrenchScopeDao;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import androidx.annotation.WorkerThread;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
+import androidx.lifecycle.ViewModel;
 
 public class ConfigurationViewModel extends ViewModel {
     private final MutableLiveData<String> queryLiveData;

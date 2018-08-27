@@ -8,18 +8,12 @@ object Versions {
     const val appVersionCode = 11
     const val appVersionName = "1.0.10"
 
-    const val dagger = "2.17"
-
-    const val constraint_layout = "1.1.2"
+    const val dagger = "2.16"
 
     const val wrench = "0.3"
 
     const val arch_core = "1.1.1"
-    const val room = "1.1.1"
-    const val lifecycle = "1.1.1"
-    const val support = "28.0.0-rc01"
     const val junit = "4.12"
-    const val espresso = "3.0.2"
     const val retrofit = "2.3.0"
     const val okhttp_logging_interceptor = "3.9.0"
     const val mockwebserver = "3.8.1"
@@ -29,43 +23,49 @@ object Versions {
     const val dexmaker = "2.2.0"
     const val glide = "4.7.1"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.3.0-alpha06"
+    const val android_gradle_plugin = "3.3.0-alpha07"
     const val rxjava2 = "2.1.3"
     const val rx_android = "2.0.1"
-    const val atsl_runner = "1.0.2"
-    const val atsl_rules = "1.0.2"
     const val hamcrest = "1.3"
     const val kotlin = "1.2.61"
-    const val paging = "1.0.1"
     const val work = "1.0.0-alpha01"
     const val navigation = "1.0.0-alpha05"
     const val kotlin_coroutines = "0.24.0"
+
+    const val room = "2.0.0-rc01"
+    const val lifecycle = "2.0.0-rc01"
+    const val paging = "2.0.0-rc01"
+    const val atsl_runner = "1.1.0-alpha4"
+    const val atsl_rules = "1.1.0-alpha4"
+    const val espresso = "3.1.0-alpha4"
+    const val constraint_layout = "1.1.0"
+    const val support = "1.0.0-rc01"
 }
 
 object AndroidTestingSupportLibrary {
-    const val runner = "com.android.support.test:runner:${Versions.atsl_runner}"
-    const val rules = "com.android.support.test:rules:${Versions.atsl_rules}"
+    const val runner = "androidx.test:runner:${Versions.atsl_runner}"
+    const val rules = "androidx.test:rules:${Versions.atsl_rules}"
 }
 
 object Lifecycle {
-    const val core = "android.arch.lifecycle:livedata-core:${Versions.lifecycle}"
-    const val runtime = "android.arch.lifecycle:runtime:${Versions.lifecycle}"
-    const val extensions = "android.arch.lifecycle:extensions:${Versions.lifecycle}"
-    const val java8 = "android.arch.lifecycle:common-java8:${Versions.lifecycle}"
-    const val compiler = "android.arch.lifecycle:compiler:${Versions.lifecycle}"
+    const val core = "androidx.lifecycle:lifecycle-livedata-core:${Versions.lifecycle}"
+    const val runtime = "androidx.lifecycle:lifecycle-runtime:${Versions.lifecycle}"
+    const val extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
+    const val java8 = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
+    const val compiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
 }
 
 object Espresso {
-    const val core = "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
-    const val contrib = "com.android.support.test.espresso:espresso-contrib:${Versions.espresso}"
-    const val intents = "com.android.support.test.espresso:espresso-intents:${Versions.espresso}"
+    const val core = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val contrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
+    const val intents = "androidx.test.espresso:espresso-intents:${Versions.espresso}"
 }
 
 object Room {
-    const val runtime = "android.arch.persistence.room:runtime:${Versions.room}"
-    const val compiler = "android.arch.persistence.room:compiler:${Versions.room}"
-    const val rxjava2 = "android.arch.persistence.room:rxjava2:${Versions.room}"
-    const val testing = "android.arch.persistence.room:testing:${Versions.room}"
+    const val runtime = "androidx.room:room-runtime:${Versions.room}"
+    const val compiler = "androidx.room:room-compiler:${Versions.room}"
+    const val rxjava2 = "androidx.room:room-rxjava2:${Versions.room}"
+    const val testing = "androidx.room:room-testing:${Versions.room}"
 }
 
 object Mockito {
@@ -118,12 +118,12 @@ object Libs {
     val navigation = Navigation
     val oss = Oss
 
-    const val paging = "android.arch.paging:runtime:${Versions.paging}"
+    const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
     const val android_gradle_plugin = "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
 
-    const val constraint_layout = "com.android.support.constraint:constraint-layout:${Versions.constraint_layout}"
+    const val constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
 
     const val junit = "junit:junit:${Versions.junit}"
 
@@ -138,11 +138,11 @@ object Dagger {
 }
 
 object Support {
-    const val annotations = "com.android.support:support-annotations:${Versions.support}"
-    const val app_compat = "com.android.support:appcompat-v7:${Versions.support}"
-    const val recyclerview = "com.android.support:recyclerview-v7:${Versions.support}"
-    const val cardview = "com.android.support:cardview-v7:${Versions.support}"
-    const val design = "com.android.support:design:${Versions.support}"
-    const val v4 = "com.android.support:support-v4:${Versions.support}"
-    const val core_utils = "com.android.support:support-core-utils:${Versions.support}"
+    const val annotations = "androidx.annotation:annotation:${Versions.support}"
+    const val app_compat = "androidx.appcompat:appcompat:${Versions.support}"
+    const val recyclerview = "androidx.recyclerview:recyclerview:${Versions.support}"
+    const val cardview = "androidx.cardview:cardview:${Versions.support}"
+    const val design = "com.google.android.material:material:${Versions.support}"
+    const val v4 = "androidx.legacy:legacy-support-v4:${Versions.support}"
+    const val core_utils = "androidx.legacy:legacy-support-core-utils:${Versions.support}"
 }

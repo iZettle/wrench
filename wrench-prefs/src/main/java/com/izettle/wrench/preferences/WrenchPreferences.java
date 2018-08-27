@@ -4,12 +4,13 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.Nut;
 import com.izettle.wrench.core.WrenchProviderContract;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class WrenchPreferences {
     private final ContentResolver contentResolver;

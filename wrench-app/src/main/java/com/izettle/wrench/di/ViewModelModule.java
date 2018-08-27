@@ -1,8 +1,5 @@
 package com.izettle.wrench.di;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-
 import com.izettle.wrench.applicationlist.ApplicationViewModel;
 import com.izettle.wrench.configurationlist.ConfigurationViewModel;
 import com.izettle.wrench.dialogs.booleanvalue.FragmentBooleanValueViewModel;
@@ -13,6 +10,8 @@ import com.izettle.wrench.dialogs.stringvalue.FragmentStringValueViewModel;
 import com.izettle.wrench.oss.detail.OssDetailViewModel;
 import com.izettle.wrench.oss.list.OssListViewModel;
 
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;

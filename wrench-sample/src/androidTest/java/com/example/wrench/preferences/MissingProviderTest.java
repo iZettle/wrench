@@ -2,7 +2,6 @@ package com.example.wrench.preferences;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.mock.MockContentResolver;
 import android.test.mock.MockContext;
 
@@ -13,7 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.test.runner.AndroidJUnit4;
+
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
@@ -34,8 +36,8 @@ public class MissingProviderTest {
         String key = "boolean";
 
         WrenchPreferences wrenchPreferences = new WrenchPreferences(mockContext);
-        assertEquals(false, wrenchPreferences.getBoolean(key, false));
-        assertEquals(false, wrenchPreferences.getBoolean(key, false));
+        assertFalse(wrenchPreferences.getBoolean(key, false));
+        assertFalse(wrenchPreferences.getBoolean(key, false));
     }
 
     @Test

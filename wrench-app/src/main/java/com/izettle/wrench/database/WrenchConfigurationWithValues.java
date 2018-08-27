@@ -1,11 +1,12 @@
 package com.izettle.wrench.database;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Relation;
 
 import com.izettle.wrench.database.tables.ConfigurationTable;
 
 import java.util.List;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Relation;
 
 public class WrenchConfigurationWithValues {
 

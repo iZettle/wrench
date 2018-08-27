@@ -1,22 +1,18 @@
 package com.example.wrench
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-
-import com.example.wrench.databinding.ActivityMainBinding
-
-import javax.inject.Inject
-
-import androidx.navigation.NavController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import com.example.wrench.databinding.ActivityMainBinding
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
@@ -33,11 +29,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(this, R.id.nav_host_fragment)
 
-        setupActionBarWithNavController(navController)
-        activityMainBinding.bottomNav.setupWithNavController(navController)
-
+        setupActionBarWithNavController(this, navController)
+        NavigationUI.setupWithNavController(activityMainBinding.bottomNav, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {

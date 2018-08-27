@@ -1,13 +1,8 @@
 package com.izettle.wrench.dialogs.integervalue;
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
 
@@ -16,6 +11,12 @@ import com.izettle.wrench.databinding.FragmentIntegerValueBinding;
 import com.izettle.wrench.di.Injectable;
 
 import javax.inject.Inject;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 public class IntegerValueFragment extends DialogFragment implements Injectable {
 

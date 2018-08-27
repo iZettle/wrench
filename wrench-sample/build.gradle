@@ -19,7 +19,7 @@ android {
         versionCode Versions.appVersionCode
         versionName Versions.appVersionName
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     compileOptions {
@@ -57,7 +57,8 @@ dependencies {
 
     androidTestImplementation Libs.espresso.core
     androidTestImplementation Libs.androidTestingSupportLibrary.rules
-    androidTestImplementation Libs.wrench.prefs
+//    androidTestImplementation Libs.wrench.prefs
+    androidTestImplementation project(":wrench-prefs")
 
     implementation Libs.support.app_compat
     implementation Libs.support.design
@@ -71,9 +72,13 @@ dependencies {
     implementation Libs.navigation.fragmentKotlin
     implementation Libs.navigation.uiKotlin
 
-    implementation Libs.wrench.core
-    debugImplementation Libs.wrench.prefs
-    releaseImplementation Libs.wrench.prefs_no_op
+//    implementation Libs.wrench.core
+//    debugImplementation Libs.wrench.prefs
+//    releaseImplementation Libs.wrench.prefs_no_op
+
+    implementation project(":wrench-core")
+    debugImplementation project(":wrench-prefs")
+    releaseImplementation project(":wrench-prefs-no-op")
 
     implementation project(":wrench-livedata")
 

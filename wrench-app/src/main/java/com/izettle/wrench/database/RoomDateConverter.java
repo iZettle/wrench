@@ -1,8 +1,9 @@
 package com.izettle.wrench.database;
 
-import android.arch.persistence.room.TypeConverter;
 
 import java.util.Date;
+
+import androidx.room.TypeConverter;
 
 public class RoomDateConverter {
     @TypeConverter
