@@ -5,6 +5,10 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'com.google.gms.oss.licenses.plugin'
 
+androidExtensions {
+    experimental = true
+}
+
 android {
 
     dataBinding {
