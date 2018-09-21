@@ -38,7 +38,8 @@ object Versions {
     const val atsl_runner = "1.1.0-alpha4"
     const val atsl_rules = "1.1.0-alpha4"
     const val espresso = "3.1.0-alpha4"
-    const val constraint_layout = "2.0.0-alpha2"
+    // const val constraint_layout = "2.0.0-alpha2"
+    const val constraint_layout = "1.+"
     const val support = "1.0.0-rc02"
 }
 

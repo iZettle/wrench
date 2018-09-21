@@ -14,33 +14,26 @@
  * limitations under the License.
  */
 
-package com.izettle.wrench.di;
+package com.izettle.wrench.di
 
-import android.app.Application;
-
-import com.izettle.wrench.WrenchApplication;
-
-import javax.inject.Singleton;
-
-import dagger.BindsInstance;
-import dagger.Component;
-import dagger.android.AndroidInjector;
-import dagger.android.support.AndroidSupportInjectionModule;
+import android.app.Application
+import com.izettle.wrench.WrenchApplication
+import dagger.BindsInstance
+import dagger.Component
+import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
+import javax.inject.Singleton
 
 @Singleton
-@Component(modules = {
-        AndroidSupportInjectionModule.class,
-        AppModule.class,
-        MainActivityModule.class
-})
-public interface AppComponent extends AndroidInjector<WrenchApplication> {
-    void inject(WrenchApplication wrenchApplication);
+@Component(modules = [AndroidSupportInjectionModule::class, AppModule::class, MainActivityModule::class])
+interface AppComponent : AndroidInjector<WrenchApplication> {
+    override fun inject(wrenchApplication: WrenchApplication)
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        Builder application(Application application);
+        fun application(application: Application): Builder
 
-        AppComponent build();
+        fun build(): AppComponent
     }
 }

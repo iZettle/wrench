@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package com.izettle.wrench.di;
+package com.izettle.wrench.di
 
-import com.izettle.wrench.MainActivity;
-import com.izettle.wrench.provider.WrenchProvider;
+import com.izettle.wrench.MainActivity
+import com.izettle.wrench.provider.WrenchProvider
 
-import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
 @Module
-public abstract class MainActivityModule {
-    @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
-    abstract MainActivity contributeApplicationsActivity();
+abstract class MainActivityModule {
+    @ContributesAndroidInjector(modules = arrayOf(FragmentBuildersModule::class))
+    internal abstract fun contributeApplicationsActivity(): MainActivity
 
-    @ContributesAndroidInjector()
-    abstract WrenchProvider contributeWrenchProvider();
+    @ContributesAndroidInjector
+    internal abstract fun contributeWrenchProvider(): WrenchProvider
 }

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.izettle.wrench.di;
+package com.izettle.wrench.di
 
 /**
  * Marks an activity / fragment injectable.
  */
-public interface Injectable {
-}
+interface Injectable
+
