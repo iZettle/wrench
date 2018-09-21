@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.util.Log;
 
 import com.izettle.wrench.BuildConfig;
 import com.izettle.wrench.core.Bolt;

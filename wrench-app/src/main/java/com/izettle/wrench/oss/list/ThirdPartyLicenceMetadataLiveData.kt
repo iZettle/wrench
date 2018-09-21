@@ -8,7 +8,7 @@ import kotlinx.coroutines.experimental.async
 class ThirdPartyLicenceMetadataLiveData(val application: Application) : LiveData<List<LicenceMetadata>>() {
 
     init {
-        async {
+        run {
             postValue(OssLoading.getThirdPartyLicenceMetadata(application))
         }
     }

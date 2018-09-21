@@ -1,23 +1,32 @@
-package com.example.wrench
+package com.izettle.wrench
 
 import android.content.Context
 import android.os.StrictMode
-import android.util.Log
 
-import com.example.wrench.di.AppInjector
-import com.example.wrench.di.DaggerAppComponent
+import com.facebook.stetho.Stetho
+import com.izettle.wrench.di.AppInjector
+import com.izettle.wrench.di.DaggerAppComponent
 import com.izettle.wrench.preferences.WrenchPreferences
 
 import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import dagger.android.DaggerApplication
 
-class SampleApplication : DaggerApplication() {
+class WrenchApplication : DaggerApplication() {
+
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
 
         AppInjector.init(this)
+    }
 
-        if (WrenchPreferences(this).getBoolean("Use strict mode", false)) {
+    override fun onCreate() {
+        super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this)
+        }
+
+        if (false && WrenchPreferences(this).getBoolean("Use strict mode", false)) {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                     .detectAll()
                     .penaltyLog()
@@ -30,9 +39,6 @@ class SampleApplication : DaggerApplication() {
                     .penaltyDeath()
                     .build())
         }
-
-
-        Log.e("WrenchProvider", "sample app: current thread: " + Thread.currentThread() + " main thread: " + getMainLooper().getThread())
 
     }
 
