@@ -1,9 +1,7 @@
 package com.example.wrench.di
 
-import android.app.Application
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.wrench.livedataprefs.LiveDataPreferencesFragmentViewModel
 import com.example.wrench.service.WrenchServiceFragmentViewModel
 import com.example.wrench.wrenchprefs.WrenchPreferencesFragmentViewModel

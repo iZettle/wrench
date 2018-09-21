@@ -1,8 +1,5 @@
 package com.izettle.wrench.dialogs.enumvalue;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
-
 import com.izettle.wrench.database.WrenchConfiguration;
 import com.izettle.wrench.database.WrenchConfigurationDao;
 import com.izettle.wrench.database.WrenchConfigurationValue;
@@ -14,6 +11,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 public class FragmentEnumValueViewModel extends ViewModel {
 

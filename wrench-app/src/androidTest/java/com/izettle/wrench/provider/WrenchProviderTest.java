@@ -1,9 +1,7 @@
 package com.izettle.wrench.provider;
 
-import android.arch.persistence.room.Room;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.ProviderTestCase2;
 import android.test.mock.MockContentResolver;
 
@@ -16,6 +14,9 @@ import com.izettle.wrench.database.WrenchDatabase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import androidx.room.Room;
+import androidx.test.runner.AndroidJUnit4;
 
 @RunWith(AndroidJUnit4.class)
 public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {

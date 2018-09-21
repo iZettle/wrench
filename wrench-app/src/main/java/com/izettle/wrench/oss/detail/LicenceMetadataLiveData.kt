@@ -1,7 +1,7 @@
 package com.izettle.wrench.oss.detail
 
 import android.app.Application
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.izettle.wrench.oss.LicenceMetadata
 import com.izettle.wrench.oss.list.OssLoading
 import kotlinx.coroutines.experimental.async

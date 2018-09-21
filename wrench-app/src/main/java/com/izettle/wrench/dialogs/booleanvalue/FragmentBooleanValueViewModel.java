@@ -1,8 +1,5 @@
 package com.izettle.wrench.dialogs.booleanvalue;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
-
 import com.izettle.wrench.database.WrenchConfiguration;
 import com.izettle.wrench.database.WrenchConfigurationDao;
 import com.izettle.wrench.database.WrenchConfigurationValue;
@@ -11,6 +8,9 @@ import com.izettle.wrench.database.WrenchConfigurationValueDao;
 import java.util.Date;
 
 import javax.inject.Inject;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 public class FragmentBooleanValueViewModel extends ViewModel {
 

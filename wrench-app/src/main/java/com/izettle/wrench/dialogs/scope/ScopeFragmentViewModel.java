@@ -1,10 +1,6 @@
 package com.izettle.wrench.dialogs.scope;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
 import android.database.sqlite.SQLiteException;
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
 
 import com.izettle.wrench.database.WrenchScope;
 import com.izettle.wrench.database.WrenchScopeDao;
@@ -13,6 +9,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 public class ScopeFragmentViewModel extends ViewModel {
     private long applicationId;

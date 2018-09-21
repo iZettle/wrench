@@ -1,6 +1,5 @@
 package com.izettle.wrench.livedata;
 
-import android.arch.lifecycle.LiveData;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ProviderInfo;
@@ -8,11 +7,13 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.izettle.wrench.core.Bolt;
 import com.izettle.wrench.core.WrenchProviderContract;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 
 public abstract class WrenchLiveData<T> extends LiveData<T> {
     @NonNull

@@ -7,7 +7,7 @@ android {
         minSdkVersion Versions.minSdk
         targetSdkVersion Versions.targetSdk
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -27,7 +27,8 @@ android {
 
 dependencies {
     testImplementation Libs.junit
-    implementation Libs.wrench.core
+//    implementation Libs.wrench.core
+    implementation project(":wrench-core")
     implementation Libs.support.annotations
     api Libs.lifecycle.core
 }

@@ -1,7 +1,7 @@
 package com.example.wrench.wrenchprefs
 
-import android.arch.lifecycle.ViewModel
 import android.content.res.Resources
+import androidx.lifecycle.ViewModel
 import com.example.wrench.MyEnum
 import com.example.wrench.R
 import com.izettle.wrench.preferences.WrenchPreferences

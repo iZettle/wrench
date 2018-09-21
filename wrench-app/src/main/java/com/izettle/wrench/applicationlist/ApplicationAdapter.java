@@ -1,13 +1,14 @@
 package com.izettle.wrench.applicationlist;
 
-import android.arch.paging.PagedListAdapter;
-import android.support.annotation.NonNull;
-import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.izettle.wrench.database.WrenchApplication;
 import com.izettle.wrench.databinding.ApplicationListItemBinding;
+
+import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 
 public class ApplicationAdapter extends PagedListAdapter<WrenchApplication, ApplicationViewHolder> {
     private static final DiffUtil.ItemCallback<WrenchApplication> DIFF_CALLBACK = new DiffUtil.ItemCallback<WrenchApplication>() {

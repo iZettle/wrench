@@ -1,15 +1,15 @@
 package com.izettle.wrench.oss.detail
 
 import android.app.Dialog
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.text.util.LinkifyCompat
-import android.support.v7.app.AlertDialog
 import android.text.util.Linkify
 import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
+import androidx.core.text.util.LinkifyCompat
+import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.izettle.wrench.databinding.FragmentOssDetailBinding
 import com.izettle.wrench.di.Injectable
 import com.izettle.wrench.oss.LicenceMetadata

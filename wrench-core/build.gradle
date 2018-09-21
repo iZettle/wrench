@@ -7,7 +7,7 @@ android {
         minSdkVersion Versions.minSdk
         targetSdkVersion Versions.targetSdk
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         def wrenchProviderAuthority = "com.izettle.wrench.configprovider"
         manifestPlaceholders = [wrenchProviderAuthority: wrenchProviderAuthority]
