@@ -103,7 +103,7 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
             fragmentConfigurationsBinding.scopeButton.text = scope!!.name
         })
 
-        fragmentConfigurationsBinding.scopeButton.setOnClickListener { v -> ScopeFragment.newInstance(args.applicationId.toLong()).show(childFragmentManager, null) }
+        fragmentConfigurationsBinding.scopeButton.setOnClickListener { ScopeFragment.newInstance(args.applicationId).show(childFragmentManager, null) }
 
         model.configurations.observe(this, Observer { wrenchConfigurationWithValues ->
             if (wrenchConfigurationWithValues != null) {
@@ -209,23 +209,23 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
             return
         }
 
-        val selectedScopeId = model.selectedScopeLiveData.value!!.id.toInt()
+        val selectedScopeId = model.selectedScopeLiveData.value!!.id
 
         if (TextUtils.equals(String::class.java.name, configuration.type) || TextUtils.equals(Bolt.TYPE.STRING, configuration.type)) {
 
-            StringValueFragment.newInstance(StringValueFragmentArgs.Builder(configuration.id.toInt(), selectedScopeId).build()).show(childFragmentManager, null)
+            StringValueFragment.newInstance(StringValueFragmentArgs.Builder(configuration.id, selectedScopeId).build()).show(childFragmentManager, null)
 
         } else if (TextUtils.equals(Int::class.java.name, configuration.type) || TextUtils.equals(Bolt.TYPE.INTEGER, configuration.type)) {
 
-            IntegerValueFragment.newInstance(IntegerValueFragmentArgs.Builder(configuration.id.toInt(), selectedScopeId).build()).show(childFragmentManager, null)
+            IntegerValueFragment.newInstance(IntegerValueFragmentArgs.Builder(configuration.id, selectedScopeId).build()).show(childFragmentManager, null)
 
         } else if (TextUtils.equals(Boolean::class.java.name, configuration.type) || TextUtils.equals(Bolt.TYPE.BOOLEAN, configuration.type)) {
 
-            BooleanValueFragment.newInstance(BooleanValueFragmentArgs.Builder(configuration.id.toInt(), selectedScopeId).build()).show(childFragmentManager, null)
+            BooleanValueFragment.newInstance(BooleanValueFragmentArgs.Builder(configuration.id, selectedScopeId).build()).show(childFragmentManager, null)
 
         } else if (TextUtils.equals(Enum::class.java.name, configuration.type) || TextUtils.equals(Bolt.TYPE.ENUM, configuration.type)) {
 
-            EnumValueFragment.newInstance(EnumValueFragmentArgs.Builder(configuration.id.toInt(), selectedScopeId).build()).show(childFragmentManager, null)
+            EnumValueFragment.newInstance(EnumValueFragmentArgs.Builder(configuration.id, selectedScopeId).build()).show(childFragmentManager, null)
 
         } else {
 
@@ -234,6 +234,6 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
     }
 
     companion object {
-        private val STATE_FILTER = "STATE_FILTER"
+        private const val STATE_FILTER = "STATE_FILTER"
     }
 }

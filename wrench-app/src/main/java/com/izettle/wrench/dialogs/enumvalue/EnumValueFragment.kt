@@ -38,7 +38,7 @@ class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.L
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentEnumValueViewModel::class.java)
 
-        viewModel.init(args.configurationId.toLong(), args.scopeId.toLong())
+        viewModel.init(args.configurationId, args.scopeId)
 
         viewModel.configuration.observe(this, Observer { wrenchConfiguration ->
             if (wrenchConfiguration != null) {

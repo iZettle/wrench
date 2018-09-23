@@ -26,7 +26,7 @@ class ApplicationViewHolder(val binding: ApplicationListItemBinding) : RecyclerV
 
         binding.root.setOnClickListener { v ->
             val applicationId = application.id
-            Navigation.findNavController(v).navigate(ApplicationsFragmentDirections.actionApplicationsFragmentToConfigurationsFragment(applicationId.toInt()))
+            Navigation.findNavController(v).navigate(ApplicationsFragmentDirections.actionApplicationsFragmentToConfigurationsFragment(applicationId))
         }
     }
 
