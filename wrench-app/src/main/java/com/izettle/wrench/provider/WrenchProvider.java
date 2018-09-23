@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
-import android.util.Log;
 
 import com.izettle.wrench.BuildConfig;
 import com.izettle.wrench.core.Bolt;
@@ -198,27 +197,27 @@ public class WrenchProvider extends ContentProvider {
 
         switch (sUriMatcher.match(uri)) {
             case CURRENT_CONFIGURATION_ID: {
-                WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.id());
-                cursor = configurationDao.getBolt(Long.valueOf(uri.getLastPathSegment()), scope.id());
+                WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.getId());
+                cursor = configurationDao.getBolt(Long.valueOf(uri.getLastPathSegment()), scope.getId());
 
                 if (cursor.getCount() == 0) {
                     cursor.close();
 
-                    WrenchScope defaultScope = getDefaultScope(getContext(), scopeDao, callingApplication.id());
-                    cursor = configurationDao.getBolt(Long.valueOf(uri.getLastPathSegment()), defaultScope.id());
+                    WrenchScope defaultScope = getDefaultScope(getContext(), scopeDao, callingApplication.getId());
+                    cursor = configurationDao.getBolt(Long.valueOf(uri.getLastPathSegment()), defaultScope.getId());
                 }
 
                 break;
             }
             case CURRENT_CONFIGURATION_KEY: {
-                WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.id());
-                cursor = configurationDao.getBolt(uri.getLastPathSegment(), scope.id());
+                WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.getId());
+                cursor = configurationDao.getBolt(uri.getLastPathSegment(), scope.getId());
 
                 if (cursor.getCount() == 0) {
                     cursor.close();
 
-                    WrenchScope defaultScope = getDefaultScope(getContext(), scopeDao, callingApplication.id());
-                    cursor = configurationDao.getBolt(uri.getLastPathSegment(), defaultScope.id());
+                    WrenchScope defaultScope = getDefaultScope(getContext(), scopeDao, callingApplication.getId());
+                    cursor = configurationDao.getBolt(uri.getLastPathSegment(), defaultScope.getId());
                 }
 
                 break;
@@ -236,7 +235,7 @@ public class WrenchProvider extends ContentProvider {
     }
 
     private boolean isWrenchApplication(WrenchApplication callingApplication) {
-        return callingApplication.packageName().equals(BuildConfig.APPLICATION_ID);
+        return callingApplication.getPackageName().equals(BuildConfig.APPLICATION_ID);
     }
 
     @Override
@@ -258,24 +257,24 @@ public class WrenchProvider extends ContentProvider {
 
                 bolt = fixRCTypes(bolt);
 
-                WrenchConfiguration wrenchConfiguration = configurationDao.getWrenchConfiguration(callingApplication.id(), bolt.getKey());
+                WrenchConfiguration wrenchConfiguration = configurationDao.getWrenchConfiguration(callingApplication.getId(), bolt.getKey());
 
                 if (wrenchConfiguration == null) {
-                    wrenchConfiguration = new WrenchConfiguration(0, callingApplication.id(), bolt.getKey(), bolt.getType());
+                    wrenchConfiguration = new WrenchConfiguration(0, callingApplication.getId(), bolt.getKey(), bolt.getType());
 
                     wrenchConfiguration.setId(configurationDao.insert(wrenchConfiguration));
                 }
 
-                WrenchScope defaultScope = getDefaultScope(getContext(), scopeDao, callingApplication.id());
+                WrenchScope defaultScope = getDefaultScope(getContext(), scopeDao, callingApplication.getId());
 
-                WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue(0, wrenchConfiguration.id(), bolt.getValue(), defaultScope.id());
-                wrenchConfigurationValue.setConfigurationId(wrenchConfiguration.id());
+                WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue(0, wrenchConfiguration.getId(), bolt.getValue(), defaultScope.getId());
+                wrenchConfigurationValue.setConfigurationId(wrenchConfiguration.getId());
                 wrenchConfigurationValue.setValue(bolt.getValue());
-                wrenchConfigurationValue.setScope(defaultScope.id());
+                wrenchConfigurationValue.setScope(defaultScope.getId());
 
                 wrenchConfigurationValue.setId(configurationValueDao.insert(wrenchConfigurationValue));
 
-                insertId = wrenchConfiguration.id();
+                insertId = wrenchConfiguration.getId();
                 break;
             }
             case PREDEFINED_CONFIGURATION_VALUES: {
@@ -340,10 +339,10 @@ public class WrenchProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case CURRENT_CONFIGURATION_ID: {
                 Bolt bolt = Bolt.fromContentValues(values);
-                WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.id());
-                updatedRows = configurationValueDao.updateConfigurationValue(Long.parseLong(uri.getLastPathSegment()), scope.id(), bolt.getValue());
+                WrenchScope scope = getSelectedScope(getContext(), scopeDao, callingApplication.getId());
+                updatedRows = configurationValueDao.updateConfigurationValue(Long.parseLong(uri.getLastPathSegment()), scope.getId(), bolt.getValue());
                 if (updatedRows == 0) {
-                    WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue(0, Long.parseLong(uri.getLastPathSegment()), bolt.getValue(), scope.id());
+                    WrenchConfigurationValue wrenchConfigurationValue = new WrenchConfigurationValue(0, Long.parseLong(uri.getLastPathSegment()), bolt.getValue(), scope.getId());
                     configurationValueDao.insert(wrenchConfigurationValue);
                 }
 

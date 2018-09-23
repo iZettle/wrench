@@ -21,7 +21,7 @@ class ApplicationViewHolder extends RecyclerView.ViewHolder {
     void bindTo(WrenchApplication application) {
         try {
             PackageManager packageManager = binding.getRoot().getContext().getPackageManager();
-            Drawable icon = packageManager.getApplicationIcon(application.packageName());
+            Drawable icon = packageManager.getApplicationIcon(application.getPackageName());
             binding.applicationIcon.setImageDrawable(icon);
             binding.status.setText("");
 
@@ -30,10 +30,10 @@ class ApplicationViewHolder extends RecyclerView.ViewHolder {
             binding.status.setText(R.string.not_installed);
             e.printStackTrace();
         }
-        binding.applicationName.setText(application.applicationLabel());
+        binding.applicationName.setText(application.getApplicationLabel());
 
         binding.getRoot().setOnClickListener(v -> {
-            long applicationId = application.id();
+            long applicationId = application.getId();
             Navigation.findNavController(v).navigate(ApplicationsFragmentDirections.actionApplicationsFragmentToConfigurationsFragment((int) applicationId));
         });
     }

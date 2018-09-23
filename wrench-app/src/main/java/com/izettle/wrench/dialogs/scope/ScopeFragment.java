@@ -83,7 +83,7 @@ public class ScopeFragment extends DialogFragment implements ScopeRecyclerViewAd
                             if (selectedScope == null) {
                                 return;
                             }
-                            if (!WrenchScope.isDefaultScope(selectedScope)) {
+                            if (!WrenchScope.Companion.isDefaultScope(selectedScope)) {
                                 AsyncTask.execute(() -> viewModel.removeScope(selectedScope));
                             }
                         }

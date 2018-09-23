@@ -1,22 +1,18 @@
-package com.izettle.wrench.database;
+package com.izettle.wrench.database
 
 
-import android.database.Cursor;
-
-import com.izettle.wrench.database.tables.ConfigurationTable;
-import com.izettle.wrench.database.tables.ConfigurationValueTable;
-
-import java.util.Date;
-import java.util.List;
-
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Transaction;
+import android.database.Cursor
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Transaction
+import com.izettle.wrench.database.tables.ConfigurationTable
+import com.izettle.wrench.database.tables.ConfigurationValueTable
+import java.util.*
 
 @Dao
-public interface WrenchConfigurationDao {
+interface WrenchConfigurationDao {
 
     @Query("SELECT configuration.id, " +
             " configuration.configurationKey, " +
@@ -25,7 +21,7 @@ public interface WrenchConfigurationDao {
             " FROM " + ConfigurationTable.TABLE_NAME +
             " INNER JOIN " + ConfigurationValueTable.TABLE_NAME + " ON configuration.id = configurationValue.configurationId " +
             " WHERE configuration.id = (:configurationId) AND configurationValue.scope = (:scopeId)")
-    Cursor getBolt(long configurationId, long scopeId);
+    fun getBolt(configurationId: Long, scopeId: Long): Cursor
 
     @Query("SELECT configuration.id, " +
             " configuration.configurationKey, " +
@@ -34,27 +30,27 @@ public interface WrenchConfigurationDao {
             " FROM " + ConfigurationTable.TABLE_NAME +
             " INNER JOIN " + ConfigurationValueTable.TABLE_NAME + " ON configuration.id = configurationValue.configurationId " +
             " WHERE configuration.configurationKey = (:configurationKey) AND configurationValue.scope = (:scopeId)")
-    Cursor getBolt(String configurationKey, long scopeId);
+    fun getBolt(configurationKey: String, scopeId: Long): Cursor
 
     @Query("SELECT * " +
             " FROM " + ConfigurationTable.TABLE_NAME +
             " WHERE configuration.applicationId = (:applicationId) AND configuration.configurationKey = (:configurationKey)")
-    WrenchConfiguration getWrenchConfiguration(long applicationId, String configurationKey);
+    fun getWrenchConfiguration(applicationId: Long, configurationKey: String): WrenchConfiguration
 
     @Query("SELECT * FROM configuration WHERE id = :configurationId")
-    LiveData<WrenchConfiguration> getConfiguration(long configurationId);
+    fun getConfiguration(configurationId: Long): LiveData<WrenchConfiguration>
 
     @Transaction
     @Query("SELECT id, applicationId, configurationKey, configurationType FROM configuration WHERE applicationId = :applicationId ORDER BY lastUse DESC")
-    LiveData<List<WrenchConfigurationWithValues>> getApplicationConfigurations(long applicationId);
+    fun getApplicationConfigurations(applicationId: Long): LiveData<List<WrenchConfigurationWithValues>>
 
     @Transaction
     @Query("SELECT id, applicationId, configurationKey, configurationType FROM configuration WHERE applicationId = :applicationId AND configurationKey LIKE :query ORDER BY lastUse DESC")
-    LiveData<List<WrenchConfigurationWithValues>> getApplicationConfigurations(long applicationId, String query);
+    fun getApplicationConfigurations(applicationId: Long, query: String): LiveData<List<WrenchConfigurationWithValues>>
 
     @Insert
-    long insert(WrenchConfiguration wrenchConfiguration);
+    fun insert(wrenchConfiguration: WrenchConfiguration): Long
 
     @Query("UPDATE configuration set lastUse=:date WHERE id= :configurationId")
-    void touch(long configurationId, Date date);
+    fun touch(configurationId: Long, date: Date)
 }

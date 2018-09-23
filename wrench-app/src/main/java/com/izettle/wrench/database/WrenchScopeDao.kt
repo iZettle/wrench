@@ -1,40 +1,33 @@
-package com.izettle.wrench.database;
+package com.izettle.wrench.database
 
-import com.izettle.wrench.database.tables.ScopeTable;
-
-import java.util.List;
-
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.izettle.wrench.database.tables.ScopeTable
 
 @Dao
-public interface WrenchScopeDao {
+interface WrenchScopeDao {
 
     @Query("SELECT * FROM " + ScopeTable.TABLE_NAME + " WHERE " + ScopeTable.COL_APP_ID + " = (:applicationId) AND " + ScopeTable.COL_NAME + " != '" + WrenchScope.SCOPE_DEFAULT + "'")
-    LiveData<List<WrenchScope>> getScopes(long applicationId);
+    fun getScopes(applicationId: Long): LiveData<List<WrenchScope>>
 
     @Insert
-    long insert(WrenchScope scope);
+    fun insert(scope: WrenchScope): Long
 
     @Delete
-    void delete(WrenchScope scope);
+    fun delete(scope: WrenchScope)
 
     @Query("SELECT * FROM " + ScopeTable.TABLE_NAME + " WHERE " + ScopeTable.COL_APP_ID + " = (:applicationId) ORDER BY " + ScopeTable.COL_SELECTED_TIMESTAMP + " DESC LIMIT 1")
-    WrenchScope getSelectedScope(long applicationId);
+    fun getSelectedScope(applicationId: Long): WrenchScope
 
     @Query("SELECT * FROM " + ScopeTable.TABLE_NAME + " WHERE " + ScopeTable.COL_APP_ID + " = (:applicationId) ORDER BY " + ScopeTable.COL_SELECTED_TIMESTAMP + " DESC LIMIT 1")
-    LiveData<WrenchScope> getSelectedScopeLiveData(long applicationId);
+    fun getSelectedScopeLiveData(applicationId: Long): LiveData<WrenchScope>
 
     @Query("SELECT * FROM " + ScopeTable.TABLE_NAME + " WHERE " + ScopeTable.COL_APP_ID + " = (:applicationId) AND " + ScopeTable.COL_NAME + " = '" + WrenchScope.SCOPE_DEFAULT + "'")
-    LiveData<WrenchScope> getDefaultScopeLiveData(long applicationId);
+    fun getDefaultScopeLiveData(applicationId: Long): LiveData<WrenchScope>
 
     @Query("SELECT * FROM " + ScopeTable.TABLE_NAME + " WHERE " + ScopeTable.COL_APP_ID + " = (:applicationId) AND " + ScopeTable.COL_NAME + " = '" + WrenchScope.SCOPE_DEFAULT + "'")
-    WrenchScope getDefaultScope(long applicationId);
+    fun getDefaultScope(applicationId: Long): WrenchScope
 
     @Update
-    void update(WrenchScope scope);
+    fun update(scope: WrenchScope)
 }

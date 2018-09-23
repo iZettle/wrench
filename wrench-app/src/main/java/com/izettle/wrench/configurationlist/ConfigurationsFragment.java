@@ -109,7 +109,7 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
 
         model.getWrenchApplication().observe(this, wrenchApplication -> {
             if (wrenchApplication != null) {
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(wrenchApplication.applicationLabel());
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(wrenchApplication.getApplicationLabel());
             }
         });
 
@@ -196,9 +196,9 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
                         }
 
                         ActivityManager activityManager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
-                        activityManager.killBackgroundProcesses(wrenchApplication.packageName());
+                        activityManager.killBackgroundProcesses(wrenchApplication.getPackageName());
 
-                        Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(wrenchApplication.packageName());
+                        Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(wrenchApplication.getPackageName());
                         if (intent != null) {
                             getContext().startActivity(Intent.makeRestartActivityTask(intent.getComponent()));
                         } else if (ConfigurationsFragment.this.getView() != null) {
@@ -218,7 +218,7 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
                             return;
                         }
 
-                        startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", wrenchApplication.packageName(), null)));
+                        startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", wrenchApplication.getPackageName(), null)));
                     }
                 });
                 return true;
@@ -241,7 +241,7 @@ public class ConfigurationsFragment extends Fragment implements SearchView.OnQue
             return;
         }
 
-        int selectedScopeId = (int) model.getSelectedScopeLiveData().getValue().id();
+        int selectedScopeId = (int) model.getSelectedScopeLiveData().getValue().getId();
 
         if (TextUtils.equals(String.class.getName(), configuration.getType()) ||
                 TextUtils.equals(Bolt.TYPE.STRING, configuration.getType())) {

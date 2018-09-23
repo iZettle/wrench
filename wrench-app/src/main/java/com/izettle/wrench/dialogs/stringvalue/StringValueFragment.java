@@ -46,7 +46,7 @@ public class StringValueFragment extends DialogFragment implements Injectable {
 
         viewModel.getConfiguration().observe(this, wrenchConfiguration -> {
             if (wrenchConfiguration != null) {
-                getDialog().setTitle(wrenchConfiguration.key());
+                getDialog().setTitle(wrenchConfiguration.getKey());
             }
         });
 

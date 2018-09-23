@@ -14,7 +14,7 @@ public class ApplicationAdapter extends PagedListAdapter<WrenchApplication, Appl
     private static final DiffUtil.ItemCallback<WrenchApplication> DIFF_CALLBACK = new DiffUtil.ItemCallback<WrenchApplication>() {
         @Override
         public boolean areItemsTheSame(@NonNull WrenchApplication oldApplication, @NonNull WrenchApplication newApplication) {
-            return oldApplication.id() == newApplication.id();
+            return oldApplication.getId() == newApplication.getId();
         }
 
         @Override

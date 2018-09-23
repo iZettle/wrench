@@ -82,7 +82,7 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
         viewHolder.binding.defaultValue.setText(defaultScopedItem.getValue());
 
         WrenchConfigurationValue selectedScopedItem = getItemForScope(selectedScope, viewHolder.configuration.getConfigurationValues());
-        if (selectedScopedItem != null && selectedScopedItem.getScope() != defaultScope.id()) {
+        if (selectedScopedItem != null && selectedScopedItem.getScope() != defaultScope.getId()) {
             viewHolder.binding.defaultValue.setPaintFlags(viewHolder.binding.defaultValue.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             viewHolder.binding.customValue.setText(selectedScopedItem.getValue());
             viewHolder.binding.customValue.setVisibility(View.VISIBLE);
@@ -101,7 +101,7 @@ class ConfigurationRecyclerViewAdapter extends RecyclerView.Adapter<Configuratio
         }
 
         for (WrenchConfigurationValue wrenchConfigurationValue : wrenchConfigurationValues) {
-            if (wrenchConfigurationValue.getScope() == scope.id()) {
+            if (wrenchConfigurationValue.getScope() == scope.getId()) {
                 return wrenchConfigurationValue;
             }
         }
