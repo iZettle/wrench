@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.izettle.wrench.database.WrenchApplication
 import com.izettle.wrench.databinding.FragmentApplicationsBinding
 import com.izettle.wrench.di.Injectable
 import javax.inject.Inject
@@ -35,10 +33,10 @@ class ApplicationsFragment : Fragment(), Injectable {
         val model = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel::class.java)
 
         val adapter = ApplicationAdapter()
-        model.applications.observe(this, Observer<PagedList<WrenchApplication>> { adapter.submitList(it) })
+        model.applications.observe(this, Observer { adapter.submitList(it) })
         fragmentApplicationsBinding.list.adapter = adapter
 
-        model.isListEmpty.observe(this, Observer<Boolean> { isEmpty ->
+        model.isListEmpty.observe(this, Observer { isEmpty ->
             val animator = fragmentApplicationsBinding.animator
             if (isEmpty == null || isEmpty) {
                 animator.displayedChild = animator.indexOfChild(fragmentApplicationsBinding.noApplicationsEmptyView)
