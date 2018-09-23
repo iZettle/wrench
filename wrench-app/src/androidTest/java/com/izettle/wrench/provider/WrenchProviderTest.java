@@ -34,17 +34,17 @@ public class WrenchProviderTest extends ProviderTestCase2<WrenchProvider> {
 
         WrenchDatabase wrenchDatabase = Room.inMemoryDatabaseBuilder(getMockContext(), WrenchDatabase.class).build();
 
-        if (getProvider().applicationDao != null) {
+        if (getProvider().getApplicationDao() != null) {
             throw new IllegalStateException("applicationDao should be null here");
         }
 
-        getProvider().applicationDao = wrenchDatabase.applicationDao();
-        getProvider().configurationDao = wrenchDatabase.configurationDao();
-        getProvider().configurationValueDao = wrenchDatabase.configurationValueDao();
-        getProvider().scopeDao = wrenchDatabase.scopeDao();
-        getProvider().predefinedConfigurationDao = wrenchDatabase.predefinedConfigurationValueDao();
+        getProvider().setApplicationDao(wrenchDatabase.applicationDao());
+        getProvider().setConfigurationDao(wrenchDatabase.configurationDao());
+        getProvider().setConfigurationValueDao(wrenchDatabase.configurationValueDao());
+        getProvider().setScopeDao(wrenchDatabase.scopeDao());
+        getProvider().setPredefinedConfigurationDao(wrenchDatabase.predefinedConfigurationValueDao());
 
-        getProvider().packageManagerWrapper = new TestPackageManagerWrapper("TestApplication", "com.test.application");
+        getProvider().setPackageManagerWrapper(new TestPackageManagerWrapper("TestApplication", "com.test.application"));
 
     }
 
