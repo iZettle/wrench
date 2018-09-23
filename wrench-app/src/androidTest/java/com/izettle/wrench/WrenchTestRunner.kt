@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package com.izettle.wrench;
+package com.izettle.wrench
 
-import android.app.Application;
+import android.app.Application
+import android.content.Context
+
+import androidx.test.runner.AndroidJUnitRunner
 
 /**
- * We use a separate App for tests to prevent initializing dependency injection.
- * <p>
- * See {@link com.izettle.wrench.WrenchTestRunner}.
+ * Custom runner to disable dependency injection.
  */
-public class TestApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
+class WrenchTestRunner : AndroidJUnitRunner() {
+    @Throws(InstantiationException::class, IllegalAccessException::class, ClassNotFoundException::class)
+    override fun newApplication(cl: ClassLoader, className: String, context: Context): Application {
+        return super.newApplication(cl, TestApp::class.java.name, context)
     }
 }

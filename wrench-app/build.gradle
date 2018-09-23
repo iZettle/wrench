@@ -84,6 +84,9 @@ android {
 
 dependencies {
     testImplementation Libs.junit
+    testImplementation Libs.mockito.core
+    androidTestImplementation Libs.mockito.core
+
 
     androidTestImplementation Libs.espresso.core
     androidTestImplementation Libs.room.testing

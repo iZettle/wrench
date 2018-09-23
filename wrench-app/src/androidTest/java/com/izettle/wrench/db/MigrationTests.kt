@@ -9,8 +9,8 @@ import com.izettle.wrench.database.WrenchDatabase
 import com.izettle.wrench.database.migrations.Migrations.MIGRATION_1_2
 import com.izettle.wrench.database.migrations.Migrations.MIGRATION_2_3
 import com.izettle.wrench.database.tables.ConfigurationTable
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
