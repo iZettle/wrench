@@ -15,7 +15,7 @@ interface WrenchApplicationDao {
     fun getApplications(): DataSource.Factory<Int, WrenchApplication>
 
     @Query("SELECT * FROM " + ApplicationTable.TABLE_NAME + " WHERE id = (:id)")
-    operator fun get(id: Long): LiveData<WrenchApplication>
+    fun getApplication(id: Long): LiveData<WrenchApplication>
 
 
     @Query("SELECT * FROM " + ApplicationTable.TABLE_NAME + " WHERE packageName IN (:packageName)")
