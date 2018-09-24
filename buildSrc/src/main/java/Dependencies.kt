@@ -27,20 +27,20 @@ object Versions {
     const val rxjava2 = "2.1.3"
     const val rx_android = "2.0.1"
     const val hamcrest = "1.3"
-    const val kotlin = "1.2.70"
+    const val kotlin = "1.2.71"
     const val work = "1.0.0-alpha01"
     const val navigation = "1.0.0-alpha06"
     const val kotlin_coroutines = "0.26.1"
 
     const val room = "2.0.0-rc01"
-    const val lifecycle = "2.0.0-rc01"
+    const val lifecycle = "2.0.0"
     const val paging = "2.0.0-rc01"
     const val atsl_runner = "1.1.0-alpha4"
     const val atsl_rules = "1.1.0-alpha4"
     const val espresso = "3.1.0-alpha4"
-    // const val constraint_layout = "2.0.0-alpha2"
-    const val constraint_layout = "1.+"
-    const val support = "1.0.0-rc02"
+    const val constraint_layout = "2.0.0-alpha2"
+    // const val constraint_layout = "1.+"
+    const val support = "1.0.0"
 }
 
 object AndroidTestingSupportLibrary {
@@ -71,6 +71,7 @@ object Room {
 
 object Mockito {
     const val core = "org.mockito:mockito-core:${Versions.mockito}"
+    const val android = "org.mockito:mockito-android:${Versions.mockito}"
     const val all = "org.mockito:mockito-all:${Versions.mockito_all}"
 }
 

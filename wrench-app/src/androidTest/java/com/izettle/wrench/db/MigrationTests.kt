@@ -18,7 +18,7 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class MigrationTests {
-    @Rule
+    @get:Rule
     var testHelper = MigrationTestHelper(
             InstrumentationRegistry.getInstrumentation(),
             WrenchDatabase::class.java.canonicalName!!,
