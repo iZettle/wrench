@@ -97,7 +97,6 @@ dependencies {
     kapt Libs.dagger.daggerAndroidProcessor
     kapt Libs.dagger.daggerCompiler
 
-    implementation Libs.kotlin.coroutines
 
     implementation Libs.support.app_compat
     implementation Libs.support.recyclerview
@@ -109,8 +108,8 @@ dependencies {
     implementation Libs.room.runtime
     implementation Libs.paging
 
-    implementation Libs.navigation.fragment
-    implementation Libs.navigation.ui
+    implementation Libs.navigation.fragmentKotlin
+    implementation Libs.navigation.uiKotlin
 
     implementation Libs.dagger.runtime
     implementation Libs.dagger.daggerAndroid
@@ -119,4 +118,6 @@ dependencies {
     implementation Libs.wrench.core
     implementation Libs.wrench.prefs
     implementation Libs.kotlin.stdlib
+    implementation Libs.kotlin.coroutines
+
 }

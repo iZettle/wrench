@@ -2,12 +2,9 @@ package com.izettle.wrench
 
 import android.content.Context
 import android.os.StrictMode
-
 import com.facebook.stetho.Stetho
 import com.izettle.wrench.di.AppInjector
 import com.izettle.wrench.di.DaggerAppComponent
-import com.izettle.wrench.preferences.WrenchPreferences
-
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 
@@ -26,19 +23,18 @@ class WrenchApplication : DaggerApplication() {
             Stetho.initializeWithDefaults(this)
         }
 
-        if (false && WrenchPreferences(this).getBoolean("Use strict mode", false)) {
-            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .penaltyDeath()
-                    .build())
+        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .penaltyDeath()
+                .build())
 
-            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .penaltyDeath()
-                    .build())
-        }
+        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .penaltyDeath()
+                .build())
+
 
     }
 

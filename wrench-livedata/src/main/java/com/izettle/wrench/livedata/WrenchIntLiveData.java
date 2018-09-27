@@ -21,7 +21,7 @@ class WrenchIntLiveData extends WrenchLiveData<Integer> {
     @Override
     void boltChanged(@Nullable Bolt bolt) {
         if (bolt == null) {
-            setValue(defValue);
+            postValue(defValue);
             return;
         }
 
@@ -33,6 +33,6 @@ class WrenchIntLiveData extends WrenchLiveData<Integer> {
             }
             bolt.setId(Long.parseLong(uri.getLastPathSegment()));
         }
-        setValue(Integer.valueOf(bolt.getValue()));
+        postValue(Integer.valueOf(bolt.getValue()));
     }
 }

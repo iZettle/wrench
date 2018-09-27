@@ -23,7 +23,7 @@ object Versions {
     const val dexmaker = "2.2.0"
     const val glide = "4.7.1"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.3.0-alpha11"
+    const val android_gradle_plugin = "3.3.0-alpha12"
     const val rxjava2 = "2.1.3"
     const val rx_android = "2.0.1"
     const val hamcrest = "1.3"
@@ -38,8 +38,8 @@ object Versions {
     const val atsl_runner = "1.1.0-alpha4"
     const val atsl_rules = "1.1.0-alpha4"
     const val espresso = "3.1.0-alpha4"
-    const val constraint_layout = "2.0.0-alpha2"
-    // const val constraint_layout = "1.+"
+    // const val constraint_layout = "2.0.0-alpha2"
+    const val constraint_layout = "1.+"
     const val support = "1.0.0"
 }
 

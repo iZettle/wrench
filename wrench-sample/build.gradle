@@ -95,6 +95,7 @@ dependencies {
     implementation project(":wrench-livedata")
 
     implementation Libs.kotlin.stdlib
+    implementation Libs.kotlin.coroutines
 
     implementation Libs.oss.runtime
 }

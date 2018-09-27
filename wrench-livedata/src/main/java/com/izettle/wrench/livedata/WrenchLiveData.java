@@ -6,6 +6,7 @@ import android.content.pm.ProviderInfo;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Handler;
 
 import com.izettle.wrench.core.Bolt;
@@ -111,7 +112,12 @@ public abstract class WrenchLiveData<T> extends LiveData<T> {
     }
 
     private void onChange() {
-        boltChanged(getBolt(context.getContentResolver(), type, key));
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                boltChanged(getBolt(context.getContentResolver(), type, key));
+            }
+        });
     }
 
     abstract void boltChanged(@Nullable Bolt bolt);
