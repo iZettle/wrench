@@ -1,20 +1,29 @@
 package com.izettle.wrench.configurationlist
 
 import android.text.TextUtils
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.*
 import com.izettle.wrench.database.*
 import javax.inject.Inject
 
 class ConfigurationViewModel @Inject
 internal constructor(private val applicationDao: WrenchApplicationDao, configurationDao: WrenchConfigurationDao, private val scopeDao: WrenchScopeDao) : ViewModel() {
-    private val queryLiveData: MutableLiveData<String>
-    private val scopes: LiveData<List<WrenchScope>>
+    private val queryLiveData: MutableLiveData<String> = MutableLiveData()
+
     private val configurationListLiveData: MediatorLiveData<List<WrenchConfigurationWithValues>>
-    internal val wrenchApplication: LiveData<WrenchApplication>
+
+    internal val wrenchApplication: LiveData<WrenchApplication> by lazy {
+        Transformations.switchMap(applicationIdLiveData) { applicationId: Long -> applicationDao.getApplication(applicationId) }
+    }
+
     private val applicationIdLiveData: MutableLiveData<Long> = MutableLiveData()
-    internal val selectedScopeLiveData: LiveData<WrenchScope>
-    internal val defaultScopeLiveData: LiveData<WrenchScope>
+    internal val selectedScopeLiveData: LiveData<WrenchScope> by lazy {
+        Transformations.switchMap(applicationIdLiveData) { applicationId: Long -> scopeDao.getSelectedScopeLiveData(applicationId) }
+    }
+
+    internal val defaultScopeLiveData: LiveData<WrenchScope> by lazy {
+        Transformations.switchMap(applicationIdLiveData) { applicationId: Long -> scopeDao.getDefaultScopeLiveData(applicationId) }
+    }
+
     private val listEmpty: MutableLiveData<Boolean>
 
     internal val configurations: LiveData<List<WrenchConfigurationWithValues>>
@@ -24,16 +33,6 @@ internal constructor(private val applicationDao: WrenchApplicationDao, configura
         get() = listEmpty
 
     init {
-
-        wrenchApplication = Transformations.switchMap(applicationIdLiveData) { applicationId: Long -> applicationDao.getApplication(applicationId) }
-
-        selectedScopeLiveData = Transformations.switchMap(applicationIdLiveData) { applicationId: Long -> scopeDao.getSelectedScopeLiveData(applicationId) }
-
-        defaultScopeLiveData = Transformations.switchMap(applicationIdLiveData) { applicationId: Long -> scopeDao.getDefaultScopeLiveData(applicationId) }
-
-        scopes = Transformations.switchMap(applicationIdLiveData) { applicationId: Long -> scopeDao.getScopes(applicationId) }
-
-        queryLiveData = MutableLiveData()
 
         setQuery("")
 
@@ -65,15 +64,4 @@ internal constructor(private val applicationDao: WrenchApplicationDao, configura
     internal fun deleteApplication(wrenchApplication: WrenchApplication) {
         applicationDao.delete(wrenchApplication)
     }
-
-    @WorkerThread
-    internal fun createScope(scopeName: String): WrenchScope {
-        val wrenchScope = WrenchScope()
-        wrenchScope.name = scopeName
-        wrenchScope.applicationId = applicationIdLiveData.value!!
-        wrenchScope.id = scopeDao.insert(wrenchScope)
-
-        return wrenchScope
-    }
-
 }
