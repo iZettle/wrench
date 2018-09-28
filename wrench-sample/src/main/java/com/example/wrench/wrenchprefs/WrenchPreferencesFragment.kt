@@ -35,30 +35,6 @@ class WrenchPreferencesFragment : Fragment(), Injectable {
         binding = FragmentWrenchPreferencesBinding.inflate(inflater, container, false)
         binding.setLifecycleOwner(this)
 
-        AsyncTask.execute {
-            wrenchPreferences.getString(resources.getString(R.string.string_configuration), "string1")
-        }
-
-        AsyncTask.execute {
-            wrenchPreferences.getString(resources.getString(R.string.url_configuration), "http://www.example.com/path?param=value")
-        }
-
-        AsyncTask.execute {
-            wrenchPreferences.getBoolean(resources.getString(R.string.boolean_configuration), true)
-        }
-
-        AsyncTask.execute {
-            wrenchPreferences.getInt(resources.getString(R.string.int_configuration), 1)
-        }
-
-        AsyncTask.execute {
-            wrenchPreferences.getEnum(resources.getString(R.string.enum_configuration), MyEnum::class.java, MyEnum.SECOND)
-        }
-
-        AsyncTask.execute {
-            wrenchPreferences.getString(resources.getString(R.string.service_configuration), null)
-        }
-
         binding.viewModel = viewModel
 
         return binding.root
