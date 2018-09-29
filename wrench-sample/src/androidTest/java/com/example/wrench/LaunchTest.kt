@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class LaunchTest {
 
-    @Rule
+    @get:Rule
     var mActivityRule = ActivityTestRule<MainActivity>(MainActivity::class.java)
 
     private var contentResolver: ContentResolver? = null

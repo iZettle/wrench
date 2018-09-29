@@ -31,7 +31,7 @@ android {
         versionCode Versions.appVersionCode
         versionName Versions.appVersionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.example.wrench.WrenchTestRunner"
         vectorDrawables.useSupportLibrary = true
     }
     compileOptions {
