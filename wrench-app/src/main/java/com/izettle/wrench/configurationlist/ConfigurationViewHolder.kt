@@ -15,19 +15,16 @@ class ConfigurationViewHolder internal constructor(
     fun bindTo(configuration: WrenchConfigurationWithValues, model: ConfigurationViewModel) {
         binding.title.text = configuration.key
 
-        if (configuration.configurationValues == null) {
-            return
-        }
+        val lol = configuration.configurationValues!!
 
         val defaultScope = model.defaultScopeLiveData.value
         val selectedScope = model.selectedScopeLiveData.value
 
-        val (_, _, value) = getItemForScope(defaultScope, configuration.configurationValues)
-                ?: return
+        val (_, _, value) = getItemForScope(defaultScope, lol)!!
 
         binding.defaultValue.text = value
 
-        val selectedScopedItem = getItemForScope(selectedScope, configuration.configurationValues)
+        val selectedScopedItem = getItemForScope(selectedScope, lol)
         if (selectedScopedItem != null && selectedScopedItem.scope != defaultScope!!.id) {
             binding.defaultValue.paintFlags = binding.defaultValue.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             binding.customValue.text = selectedScopedItem.value
@@ -40,12 +37,12 @@ class ConfigurationViewHolder internal constructor(
         binding.root.setOnClickListener { view -> listener.configurationClicked(view, configuration) }
     }
 
-    private fun getItemForScope(scope: WrenchScope?, wrenchConfigurationValues: List<WrenchConfigurationValue>?): WrenchConfigurationValue? {
+    private fun getItemForScope(scope: WrenchScope?, wrenchConfigurationValues: Set<WrenchConfigurationValue>): WrenchConfigurationValue? {
         if (scope == null) {
             return null
         }
 
-        for (wrenchConfigurationValue in wrenchConfigurationValues!!) {
+        for (wrenchConfigurationValue in wrenchConfigurationValues) {
             if (wrenchConfigurationValue.scope == scope.id) {
                 return wrenchConfigurationValue
             }

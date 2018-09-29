@@ -30,7 +30,7 @@ class ApplicationsFragment : Fragment(), Injectable {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val model = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel::class.java)
+        val model: ApplicationViewModel = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel::class.java)
 
         val adapter = ApplicationAdapter()
         model.applications.observe(this, Observer { adapter.submitList(it) })

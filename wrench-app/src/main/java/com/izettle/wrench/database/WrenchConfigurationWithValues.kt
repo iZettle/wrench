@@ -17,5 +17,5 @@ data class WrenchConfigurationWithValues constructor(
         var type: String?
 ) {
     @Relation(parentColumn = "id", entityColumn = "configurationId")
-    var configurationValues: List<WrenchConfigurationValue>? = null
+    var configurationValues: Set<WrenchConfigurationValue>? = null
 }
