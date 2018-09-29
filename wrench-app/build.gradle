@@ -61,8 +61,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-stetho.pro'
         }
         debug {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-stetho.pro'
-
             versionNameSuffix " debug"
             applicationIdSuffix = ".debug"
         }
@@ -85,10 +83,9 @@ android {
 dependencies {
     testImplementation Libs.junit
     testImplementation Libs.mockito.core
+
     androidTestImplementation Libs.mockito.android
     androidTestImplementation Libs.wrench.prefs
-
-
     androidTestImplementation Libs.espresso.core
     androidTestImplementation Libs.room.testing
 

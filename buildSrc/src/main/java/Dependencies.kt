@@ -30,7 +30,7 @@ object Versions {
     const val kotlin = "1.2.71"
     const val work = "1.0.0-alpha01"
     const val navigation = "1.0.0-alpha06"
-    const val kotlin_coroutines = "0.26.1"
+    const val kotlin_coroutines = "0.30.0"
 
     const val room = "2.0.0-rc01"
     const val lifecycle = "2.0.0"

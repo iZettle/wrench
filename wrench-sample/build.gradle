@@ -69,8 +69,7 @@ dependencies {
 
     androidTestImplementation Libs.espresso.core
     androidTestImplementation Libs.androidTestingSupportLibrary.rules
-//    androidTestImplementation Libs.wrench.prefs
-    androidTestImplementation project(":wrench-prefs")
+    androidTestImplementation Libs.wrench.prefs
 
     implementation Libs.support.app_compat
     implementation Libs.support.design
