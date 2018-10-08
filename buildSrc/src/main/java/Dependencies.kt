@@ -18,7 +18,7 @@ object Versions {
     const val okhttp_logging_interceptor = "3.9.0"
     const val mockwebserver = "3.8.1"
     const val apache_commons = "2.5"
-    const val mockito = "2.22.0"
+    const val mockito = "2.23.0"
     const val mockito_all = "1.10.19"
     const val dexmaker = "2.2.0"
     const val glide = "4.7.1"
@@ -30,22 +30,27 @@ object Versions {
     const val kotlin = "1.2.71"
     const val work = "1.0.0-alpha01"
     const val navigation = "1.0.0-alpha06"
-    const val kotlin_coroutines = "0.30.0"
+    const val kotlin_coroutines = "0.30.2"
 
     const val room = "2.0.0-rc01"
     const val lifecycle = "2.0.0"
-    const val paging = "2.0.0-rc01"
-    const val atsl_runner = "1.1.0-alpha4"
-    const val atsl_rules = "1.1.0-alpha4"
-    const val espresso = "3.1.0-alpha4"
-    // const val constraint_layout = "2.0.0-alpha2"
-    const val constraint_layout = "1.+"
+    const val paging = "2.0.0"
+    const val atsl = "1.1.0-beta01"
+    const val test = "1.0.0-beta01"
+    const val espresso = "3.1.0-beta01"
+
+    const val robolectric = "4.0-beta-1"
+    const val constraint_layout = "2.0.0-alpha2"
     const val support = "1.0.0"
 }
 
 object AndroidTestingSupportLibrary {
-    const val runner = "androidx.test:runner:${Versions.atsl_runner}"
-    const val rules = "androidx.test:rules:${Versions.atsl_rules}"
+    const val runner = "androidx.test:runner:${Versions.atsl}"
+    const val rules = "androidx.test:rules:${Versions.atsl}"
+    const val monitor = "androidx.test:monitor:${Versions.atsl}"
+    const val core = "androidx.test:core:${Versions.test}"
+    const val truth = "androidx.test.ext:truth:${Versions.test}"
+    const val junit = "androidx.test.ext:junit:${Versions.test}"
 }
 
 object Lifecycle {
@@ -104,7 +109,7 @@ object Navigation {
 
 object Oss {
     const val plugin = "com.google.gms:oss-licenses:0.9.2"
-    const val runtime = "com.google.android.gms:play-services-oss-licenses:16.0.0"
+    const val runtime = "com.google.android.gms:play-services-oss-licenses:16.0.1"
 }
 
 object Libs {
@@ -120,6 +125,8 @@ object Libs {
     val navigation = Navigation
     val oss = Oss
 
+    const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
+
     const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
@@ -128,6 +135,8 @@ object Libs {
     const val constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
 
     const val junit = "junit:junit:${Versions.junit}"
+
+    const val stetho = "com.facebook.stetho:stetho:1.5.0"
 
 }
 

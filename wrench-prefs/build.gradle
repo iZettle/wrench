@@ -35,14 +35,16 @@ android {
 dependencies {
     testImplementation Libs.junit
 
-    testImplementation 'com.android.support.test:rules:1.0.2'
-    testImplementation 'com.android.support.test:runner:1.0.2'
-    testImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    testImplementation "org.robolectric:robolectric:4.0-alpha-1"
+    testImplementation Libs.androidTestingSupportLibrary.core
+    // testImplementation Libs.androidTestingSupportLibrary.truth
+    testImplementation Libs.androidTestingSupportLibrary.rules
+    testImplementation Libs.androidTestingSupportLibrary.runner
+    testImplementation Libs.androidTestingSupportLibrary.junit
+    testImplementation Libs.robolectric
 
     implementation project(":wrench-core")
     implementation Libs.support.annotations
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

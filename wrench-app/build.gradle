@@ -98,7 +98,7 @@ dependencies {
     implementation Libs.support.app_compat
     implementation Libs.support.recyclerview
     implementation Libs.support.design
-    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation Libs.stetho
     implementation Libs.constraint_layout
     implementation Libs.support.cardview
     implementation Libs.lifecycle.extensions
