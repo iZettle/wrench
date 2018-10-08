@@ -8,9 +8,8 @@ import androidx.lifecycle.ViewModel
 import com.example.wrench.MyEnum
 import com.example.wrench.R
 import com.izettle.wrench.preferences.WrenchPreferences
-import javax.inject.Inject
 
-class WrenchPreferencesFragmentViewModel @Inject constructor(val resources: Resources, private val wrenchPreferences: WrenchPreferences) : ViewModel() {
+class WrenchPreferencesFragmentViewModel constructor(val resources: Resources, private val wrenchPreferences: WrenchPreferences) : ViewModel() {
 
     private val stringConfig: MutableLiveData<String> by lazy {
         MutableLiveData<String>()

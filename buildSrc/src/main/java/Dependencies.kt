@@ -41,6 +41,7 @@ object Versions {
     // const val constraint_layout = "2.0.0-alpha2"
     const val constraint_layout = "1.+"
     const val support = "1.0.0"
+    const val koin = "1.0.1"
 }
 
 object AndroidTestingSupportLibrary {
@@ -119,6 +120,7 @@ object Libs {
     val kotlin = Kotlin
     val navigation = Navigation
     val oss = Oss
+    val koin = Koin
 
     const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
@@ -147,4 +149,8 @@ object Support {
     const val design = "com.google.android.material:material:${Versions.support}"
     const val v4 = "androidx.legacy:legacy-support-v4:${Versions.support}"
     const val core_utils = "androidx.legacy:legacy-support-core-utils:${Versions.support}"
+}
+
+object Koin {
+    const val androidx = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
 }
