@@ -34,26 +34,26 @@ class WrenchPreferencesReturnsDefaultWhenMissingProviderTest {
     }
 
     @Test
-    fun `always return default enum when missing backing content providerr`() {
+    fun `always return default enum when missing backing content provider`() {
         assertEquals(TestEnum.FIRST, wrenchPreferences.getEnum(key, TestEnum::class.java, TestEnum.FIRST))
         assertEquals(TestEnum.SECOND, wrenchPreferences.getEnum(key, TestEnum::class.java, TestEnum.SECOND))
     }
 
     @Test
-    fun `always return default string when missing backing content providerr`() {
+    fun `always return default string when missing backing content provider`() {
         assertEquals("first", wrenchPreferences.getString(key, "first"))
         assertEquals("second", wrenchPreferences.getString(key, "second"))
     }
 
     @Test
-    fun `always return default boolean when missing backing content providerr`() {
+    fun `always return default boolean when missing backing content provider`() {
         assertEquals(true, wrenchPreferences.getBoolean(key, true))
         assertEquals(false, wrenchPreferences.getBoolean(key, false))
 
     }
 
     @Test
-    fun `always return default int when missing backing content providerr`() {
+    fun `always return default int when missing backing content provider`() {
         assertEquals(1, wrenchPreferences.getInt(key, 1))
         assertEquals(2, wrenchPreferences.getInt(key, 2))
     }
