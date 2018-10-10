@@ -61,9 +61,6 @@ android {
 }
 
 dependencies {
-    kapt Libs.dagger.daggerAndroidProcessor
-    kapt Libs.dagger.daggerCompiler
-
     testImplementation Libs.junit
     testImplementation Libs.mockito.core
 
@@ -75,10 +72,6 @@ dependencies {
     implementation Libs.support.design
     implementation Libs.constraint_layout
     implementation Libs.lifecycle.extensions
-
-    implementation Libs.dagger.runtime
-    implementation Libs.dagger.daggerAndroid
-    implementation Libs.dagger.daggerAndroidSupport
 
     implementation Libs.navigation.fragmentKotlin
     implementation Libs.navigation.uiKotlin
@@ -97,4 +90,6 @@ dependencies {
     implementation Libs.kotlin.coroutines
 
     implementation Libs.oss.runtime
+
+    implementation Libs.koin.androidx
 }

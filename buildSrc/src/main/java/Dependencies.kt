@@ -42,6 +42,7 @@ object Versions {
     const val robolectric = "4.0-beta-1"
     const val constraint_layout = "2.0.0-alpha2"
     const val support = "1.0.0"
+    const val koin = "1.0.1"
 }
 
 object AndroidTestingSupportLibrary {
@@ -124,6 +125,7 @@ object Libs {
     val kotlin = Kotlin
     val navigation = Navigation
     val oss = Oss
+    val koin = Koin
 
     const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
 
@@ -156,4 +158,8 @@ object Support {
     const val design = "com.google.android.material:material:${Versions.support}"
     const val v4 = "androidx.legacy:legacy-support-v4:${Versions.support}"
     const val core_utils = "androidx.legacy:legacy-support-core-utils:${Versions.support}"
+}
+
+object Koin {
+    const val androidx = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
 }
