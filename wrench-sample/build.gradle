@@ -23,7 +23,7 @@ android {
         versionCode Versions.appVersionCode
         versionName Versions.appVersionName
 
-        testInstrumentationRunner "com.example.wrench.WrenchTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     compileOptions {
@@ -46,6 +46,11 @@ android {
         abortOnError true
         warningsAsErrors true
         lintConfig file("../lint.xml")
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 
