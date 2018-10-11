@@ -12,6 +12,6 @@ class PackageManagerWrapper(private val packageManager: PackageManager) : IPacka
             return applicationInfo.loadLabel(packageManager).toString()
         }
 
-    override val callingApplicationPackageName: String
+    override val callingApplicationPackageName: String?
         get() = packageManager.getNameForUid(Binder.getCallingUid())
 }

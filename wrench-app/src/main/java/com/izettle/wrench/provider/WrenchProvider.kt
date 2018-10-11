@@ -41,11 +41,11 @@ class WrenchProvider : ContentProvider() {
 
     @Synchronized
     private fun getCallingApplication(applicationDao: WrenchApplicationDao): WrenchApplication? {
-        var wrenchApplication: WrenchApplication? = applicationDao.loadByPackageName(packageManagerWrapper.callingApplicationPackageName)
+        var wrenchApplication: WrenchApplication? = applicationDao.loadByPackageName(packageManagerWrapper.callingApplicationPackageName!!)
 
         if (wrenchApplication == null) {
             try {
-                wrenchApplication = WrenchApplication(0, packageManagerWrapper.callingApplicationPackageName, packageManagerWrapper.applicationLabel)
+                wrenchApplication = WrenchApplication(0, packageManagerWrapper.callingApplicationPackageName!!, packageManagerWrapper.applicationLabel)
 
                 wrenchApplication.id = applicationDao.insert(wrenchApplication)
 
@@ -78,7 +78,7 @@ class WrenchProvider : ContentProvider() {
 
         var cursor: Cursor?
 
-        when (sUriMatcher.match(uri)) {
+        when (uriMatcher.match(uri)) {
             CURRENT_CONFIGURATION_ID -> {
                 val scope = getSelectedScope(context, scopeDao, callingApplication.id)
                 cursor = configurationDao.getBolt(java.lang.Long.valueOf(uri.lastPathSegment!!), scope!!.id)
@@ -126,7 +126,7 @@ class WrenchProvider : ContentProvider() {
         }
 
         val insertId: Long
-        when (sUriMatcher.match(uri)) {
+        when (uriMatcher.match(uri)) {
             CURRENT_CONFIGURATIONS -> {
                 var bolt = Bolt.fromContentValues(values!!)
 
@@ -196,7 +196,7 @@ class WrenchProvider : ContentProvider() {
         }
 
         val updatedRows: Int
-        when (sUriMatcher.match(uri)) {
+        when (uriMatcher.match(uri)) {
             CURRENT_CONFIGURATION_ID -> {
                 val bolt = Bolt.fromContentValues(values!!)
                 val scope = getSelectedScope(context, scopeDao, callingApplication.id)
@@ -235,7 +235,7 @@ class WrenchProvider : ContentProvider() {
             assertValidApiVersion(wrenchPreferences, uri)
         }
 
-        when (sUriMatcher.match(uri)) {
+        when (uriMatcher.match(uri)) {
             CURRENT_CONFIGURATIONS -> {
                 return "vnd.android.cursor.dir/vnd." + BuildConfig.APPLICATION_ID + ".currentConfiguration"
             }
@@ -260,13 +260,13 @@ class WrenchProvider : ContentProvider() {
         private const val CURRENT_CONFIGURATION_KEY = 2
         private const val CURRENT_CONFIGURATIONS = 3
         private const val PREDEFINED_CONFIGURATION_VALUES = 5
-        private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
+        private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
         init {
-            sUriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration/#", CURRENT_CONFIGURATION_ID)
-            sUriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration/*", CURRENT_CONFIGURATION_KEY)
-            sUriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration", CURRENT_CONFIGURATIONS)
-            sUriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "predefinedConfigurationValue", PREDEFINED_CONFIGURATION_VALUES)
+            uriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration/#", CURRENT_CONFIGURATION_ID)
+            uriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration/*", CURRENT_CONFIGURATION_KEY)
+            uriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "currentConfiguration", CURRENT_CONFIGURATIONS)
+            uriMatcher.addURI(WrenchProviderContract.WRENCH_AUTHORITY, "predefinedConfigurationValue", PREDEFINED_CONFIGURATION_VALUES)
         }
 
         @Synchronized

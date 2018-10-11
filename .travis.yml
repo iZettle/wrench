@@ -26,8 +26,6 @@ script:
   # - ./gradlew check :wrench-app:installDebug :wrench-sample:connectedCheck :wrench-app:connectedCheck --stacktrace
   - ./gradlew check
   - ./gradlew :wrench-app:connectedCheck
-  - ./gradlew :wrench-app:installDebug
-  - ./gradlew :wrench-sample:connectedCheck
 
 sudo: false
 

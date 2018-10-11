@@ -35,9 +35,9 @@ object Versions {
     const val room = "2.0.0-rc01"
     const val lifecycle = "2.0.0"
     const val paging = "2.0.0"
-    const val atsl = "1.1.0-beta01"
-    const val test = "1.0.0-beta01"
-    const val espresso = "3.1.0-beta01"
+    const val atsl = "1.1.0-beta02"
+    const val test = "1.0.0-beta02"
+    const val espresso = "3.1.0-beta02"
 
     const val robolectric = "4.0-beta-1"
     const val constraint_layout = "2.0.0-alpha2"
