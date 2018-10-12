@@ -37,7 +37,8 @@ dependencies {
     testImplementation Libs.kotlin.stdlib
 
     implementation Libs.wrench.core
-    implementation Libs.wrench.prefs
+    debugImplementation project(":wrench-service-prefs")
+    releaseImplementation project(":wrench-service-prefs-no-op")
     implementation Libs.support.annotations
 
     api project(":wrench-service-provider")

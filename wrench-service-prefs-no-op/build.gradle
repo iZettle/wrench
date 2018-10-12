@@ -35,7 +35,7 @@ dependencies {
     testImplementation Libs.mockito.core
 
     implementation Libs.wrench.core
-    implementation Libs.wrench.prefs
+    implementation Libs.wrench.prefs_no_op
     api project(":wrench-service-provider")
 }
 
