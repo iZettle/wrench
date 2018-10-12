@@ -10,5 +10,6 @@
 
     <string name="nav_menu_wrench_prefs_live_data">Live data</string>
     <string name="nav_menu_wrench_preferences">Wrench Prefs</string>
+    <string name="nav_menu_wrench_service">Wrench Service</string>
     <string name="oss">oss</string>
 </resources>
