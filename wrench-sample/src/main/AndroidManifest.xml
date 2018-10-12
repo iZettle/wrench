@@ -19,9 +19,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="com.izettle.wrench.service.WrenchService"
-            android:exported="true" />
     </application>
 
 </manifest>

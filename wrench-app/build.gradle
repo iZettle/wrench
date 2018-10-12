@@ -84,9 +84,14 @@ dependencies {
     testImplementation Libs.junit
     testImplementation Libs.mockito.core
 
+    androidTestImplementation Libs.androidTestingSupportLibrary.core
+    androidTestImplementation Libs.androidTestingSupportLibrary.truth
+    androidTestImplementation Libs.androidTestingSupportLibrary.rules
+    androidTestImplementation Libs.androidTestingSupportLibrary.runner
+    androidTestImplementation Libs.androidTestingSupportLibrary.junit
+
     androidTestImplementation Libs.mockito.android
     androidTestImplementation Libs.wrench.prefs
-    androidTestImplementation Libs.espresso.core
     androidTestImplementation Libs.room.testing
 
     kapt Libs.lifecycle.compiler
@@ -98,7 +103,9 @@ dependencies {
     implementation Libs.support.app_compat
     implementation Libs.support.recyclerview
     implementation Libs.support.design
-    implementation Libs.stetho
+    implementation (Libs.stetho) {
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    }
     implementation Libs.constraint_layout
     implementation Libs.support.cardview
     implementation Libs.lifecycle.extensions

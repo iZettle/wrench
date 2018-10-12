@@ -10,8 +10,12 @@ public class WrenchPreferenceProvider implements Provider {
         mWrenchPreferences = wrenchPreferences;
     }
 
+    private static <T extends Enum<T>> Class<T> castToEnum(Class<?> type) {
+        return (Class<T>) type;
+    }
+
     @Override
-    public Object getValue(final Class<?> type, final String key, final Object defaultValue) throws TypeNotSupportedException{
+    public Object getValue(final Class<?> type, final String key, final Object defaultValue) throws TypeNotSupportedException {
         if (type == String.class) {
             return mWrenchPreferences.getString(key, (String) defaultValue);
         } else if (type == Integer.TYPE || type == Integer.class) {
@@ -24,9 +28,5 @@ public class WrenchPreferenceProvider implements Provider {
         }
 
         throw new TypeNotSupportedException();
-    }
-
-    private static <T extends Enum<T>> Class<T> castToEnum(Class<?> type) {
-        return (Class<T>) type;
     }
 }

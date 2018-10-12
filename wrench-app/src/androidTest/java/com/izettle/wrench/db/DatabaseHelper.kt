@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase.CONFLICT_FAIL
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.izettle.wrench.database.tables.ApplicationTable
 import com.izettle.wrench.database.tables.ConfigurationTable
-import junit.framework.Assert.assertNotNull
+import org.junit.Assert.assertNotNull
 
 object DatabaseHelper {
     fun insertWrenchConfiguration(db: SupportSQLiteDatabase, applicationId: Long, key: String, type: String): Long {

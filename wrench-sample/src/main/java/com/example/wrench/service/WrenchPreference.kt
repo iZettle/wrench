@@ -24,6 +24,4 @@ interface WrenchPreference {
     @Key("enum configuration:")
     fun getEnumConfiguration(@DefaultValue value: MyEnum = MyEnum.SECOND): MyEnum
 
-    @Key("service_configuration")
-    fun getServiceStringConfiguration(@DefaultValue value: String? = null): String
 }

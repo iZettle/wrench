@@ -1,5 +1,7 @@
 package com.izettle.wrench.service;
 
+import com.izettle.wrench.preferences.WrenchPreferences;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,13 +10,15 @@ import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Mockito.mock;
+
 public class WrenchPreferenceProviderTest {
 
     public WrenchPreferenceProvider provider;
 
     @Before
-    public void setUp() throws Exception {
-        provider = new WrenchPreferenceProvider();
+    public void setUp() {
+        provider = new WrenchPreferenceProvider(mock(WrenchPreferences.class));
     }
 
     @Test
@@ -50,9 +54,14 @@ public class WrenchPreferenceProviderTest {
                 .flatMap(r -> defaultValues.stream().map(d -> new AbstractMap.SimpleEntry<>(r, d)))
                 .flatMap(p -> keys.stream().map(k -> new Holder(k, p.getValue(), p.getKey())))
                 .forEach(holder -> {
+
                     final Object value = provider.getValue(holder.returnType, holder.key, holder.defaultValue);
                     Assert.assertEquals(holder.expectedValue, value);
                 });
+    }
+
+    private enum TestEnum {
+        VALUE
     }
 
     private static class Holder<T> {
@@ -67,9 +76,5 @@ public class WrenchPreferenceProviderTest {
             this.returnType = returnType;
             this.expectedValue = defaultValue;
         }
-    }
-
-    private enum TestEnum {
-        VALUE
     }
 }

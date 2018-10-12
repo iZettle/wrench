@@ -1,6 +1,5 @@
 package com.izettle.wrench.service;
 
-import com.izettle.wrench.service.KeyProcessor;
 import com.izettle.wrench.service.helper.Invokator;
 import com.izettle.wrench.service.helper.Invokator.Invokation;
 import com.izettle.wrench.service.helper.TestInterface;
@@ -19,7 +18,7 @@ public class KeyProcessorTest {
     public KeyProcessor processor;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         processor = new KeyProcessor();
     }
 

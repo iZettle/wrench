@@ -28,7 +28,7 @@ android {
 dependencies {
     testImplementation Libs.junit
 //    implementation Libs.wrench.core
-    implementation project(":wrench-core")
+    implementation Libs.wrench.core
     implementation Libs.support.annotations
     api Libs.lifecycle.core
 }

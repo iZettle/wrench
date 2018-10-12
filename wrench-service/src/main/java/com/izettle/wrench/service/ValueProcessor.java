@@ -1,8 +1,5 @@
 package com.izettle.wrench.service;
 
-import com.izettle.wrench.service.AnnotationProcessor;
-import com.izettle.wrench.service.DefaultValue;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 

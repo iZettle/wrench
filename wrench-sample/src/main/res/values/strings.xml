@@ -9,7 +9,7 @@
     <string name="click_to_update_value_using_service">Click to update value using service</string>
 
     <string name="nav_menu_wrench_prefs_live_data">Live data</string>
-    <string name="nav_menu_wrench_preferences">Wrench Prefs</string>
-    <string name="nav_menu_wrench_service">Wrench Service</string>
+    <string name="nav_menu_wrench_preferences">Prefs</string>
+    <string name="nav_menu_wrench_service">Annotation</string>
     <string name="oss">oss</string>
 </resources>

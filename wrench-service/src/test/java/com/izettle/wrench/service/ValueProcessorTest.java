@@ -1,6 +1,5 @@
 package com.izettle.wrench.service;
 
-import com.izettle.wrench.service.ValueProcessor;
 import com.izettle.wrench.service.helper.Invokator;
 import com.izettle.wrench.service.helper.Invokator.Invokation;
 import com.izettle.wrench.service.helper.TestInterface;
@@ -22,7 +21,7 @@ public class ValueProcessorTest {
     public ValueProcessor processor;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         processor = new ValueProcessor();
     }
 
@@ -113,7 +112,7 @@ public class ValueProcessorTest {
         for (final Map.Entry<Invokation, Object> entry : invokations.entrySet()) {
             Invokation invokation = entry.getKey();
             Object expected = entry.getValue();
-            final Object object = processor.getValue(invokation.method,null);
+            final Object object = processor.getValue(invokation.method, null);
             assertEquals(expected, object);
         }
     }

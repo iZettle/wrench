@@ -3,7 +3,7 @@ package com.izettle.wrench.provider
 import android.test.ProviderTestCase2
 import android.test.mock.MockContentResolver
 import androidx.room.Room
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.izettle.wrench.BuildConfig
 import com.izettle.wrench.core.Bolt
 import com.izettle.wrench.core.Nut

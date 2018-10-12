@@ -35,7 +35,7 @@ dependencies {
     testImplementation Libs.androidTestingSupportLibrary.junit
     testImplementation Libs.robolectric
 
-    implementation project(":wrench-core")
+    implementation Libs.wrench.core
     implementation Libs.support.annotations
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

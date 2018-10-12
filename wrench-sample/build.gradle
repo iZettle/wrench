@@ -76,9 +76,9 @@ dependencies {
 //    debugImplementation Libs.wrench.prefs
 //    releaseImplementation Libs.wrench.prefs_no_op
 
-    implementation project(":wrench-core")
-    debugImplementation project(":wrench-prefs")
-    releaseImplementation project(":wrench-prefs-no-op")
+    implementation Libs.wrench.core
+    debugImplementation Libs.wrench.prefs
+    releaseImplementation Libs.wrench.prefs_no_op
 
     implementation project(":wrench-livedata")
 
