@@ -3,15 +3,11 @@ package com.izettle.wrench.service
 import com.izettle.wrench.service.helper.Invokator
 import com.izettle.wrench.service.helper.Invokator.Invokation
 import com.izettle.wrench.service.helper.KTestInterface
-
-import org.junit.Before
-import org.junit.Test
-
-import java.util.Arrays
-import java.util.HashMap
-
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
+import org.junit.Before
+import org.junit.Test
+import java.util.*
 
 class KValueProcessorTest {
 

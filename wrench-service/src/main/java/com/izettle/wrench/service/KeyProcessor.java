@@ -1,8 +1,5 @@
 package com.izettle.wrench.service;
 
-import com.izettle.wrench.service.AnnotationProcessor;
-import com.izettle.wrench.service.Key;
-
 import java.lang.reflect.Method;
 
 class KeyProcessor implements AnnotationProcessor<String> {

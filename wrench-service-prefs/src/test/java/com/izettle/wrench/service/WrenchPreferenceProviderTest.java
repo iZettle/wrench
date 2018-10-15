@@ -17,12 +17,11 @@ import static org.mockito.Mockito.when;
 public class WrenchPreferenceProviderTest {
 
 
-
     public WrenchPreferences wrenchPreferences;
     public WrenchPreferenceProvider provider;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         wrenchPreferences = mock(WrenchPreferences.class);
         provider = new WrenchPreferenceProvider(wrenchPreferences);
     }
@@ -82,6 +81,10 @@ public class WrenchPreferenceProviderTest {
         }
     }
 
+    private enum TestEnum {
+        VALUE
+    }
+
     private static class Holder<T> {
         public final String key;
         public final T defaultValue;
@@ -94,9 +97,5 @@ public class WrenchPreferenceProviderTest {
             this.returnType = returnType;
             this.expectedValue = defaultValue;
         }
-    }
-
-    private enum TestEnum {
-        VALUE
     }
 }

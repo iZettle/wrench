@@ -18,33 +18,40 @@ object Versions {
     const val okhttp_logging_interceptor = "3.9.0"
     const val mockwebserver = "3.8.1"
     const val apache_commons = "2.5"
-    const val mockito = "2.21.0"
+    const val mockito = "2.23.0"
     const val mockito_all = "1.10.19"
     const val dexmaker = "2.2.0"
     const val glide = "4.7.1"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.3.0-alpha07"
+    const val android_gradle_plugin = "3.3.0-alpha13"
     const val rxjava2 = "2.1.3"
     const val rx_android = "2.0.1"
     const val hamcrest = "1.3"
-    const val kotlin = "1.2.61"
+    const val kotlin = "1.2.71"
     const val work = "1.0.0-alpha01"
-    const val navigation = "1.0.0-alpha05"
-    const val kotlin_coroutines = "0.24.0"
+    const val navigation = "1.0.0-alpha06"
+    const val kotlin_coroutines = "0.30.2"
 
     const val room = "2.0.0-rc01"
-    const val lifecycle = "2.0.0-rc01"
-    const val paging = "2.0.0-rc01"
-    const val atsl_runner = "1.1.0-alpha4"
-    const val atsl_rules = "1.1.0-alpha4"
-    const val espresso = "3.1.0-alpha4"
-    const val constraint_layout = "1.1.0"
-    const val support = "1.0.0-rc01"
+    const val lifecycle = "2.0.0"
+    const val paging = "2.0.0"
+    const val atsl = "1.1.0-beta02"
+    const val test = "1.0.0-beta02"
+    const val espresso = "3.1.0-beta02"
+
+    const val robolectric = "4.0-beta-1"
+    const val constraint_layout = "2.0.0-alpha2"
+    const val support = "1.0.0"
+    const val koin = "1.0.1"
 }
 
 object AndroidTestingSupportLibrary {
-    const val runner = "androidx.test:runner:${Versions.atsl_runner}"
-    const val rules = "androidx.test:rules:${Versions.atsl_rules}"
+    const val runner = "androidx.test:runner:${Versions.atsl}"
+    const val rules = "androidx.test:rules:${Versions.atsl}"
+    const val monitor = "androidx.test:monitor:${Versions.atsl}"
+    const val core = "androidx.test:core:${Versions.test}"
+    const val truth = "androidx.test.ext:truth:${Versions.test}"
+    const val junit = "androidx.test.ext:junit:${Versions.test}"
 }
 
 object Lifecycle {
@@ -70,6 +77,7 @@ object Room {
 
 object Mockito {
     const val core = "org.mockito:mockito-core:${Versions.mockito}"
+    const val android = "org.mockito:mockito-android:${Versions.mockito}"
     const val all = "org.mockito:mockito-all:${Versions.mockito_all}"
 }
 
@@ -102,7 +110,7 @@ object Navigation {
 
 object Oss {
     const val plugin = "com.google.gms:oss-licenses:0.9.2"
-    const val runtime = "com.google.android.gms:play-services-oss-licenses:16.0.0"
+    const val runtime = "com.google.android.gms:play-services-oss-licenses:16.0.1"
 }
 
 object Libs {
@@ -117,6 +125,9 @@ object Libs {
     val kotlin = Kotlin
     val navigation = Navigation
     val oss = Oss
+    val koin = Koin
+
+    const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
 
     const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
@@ -126,6 +137,8 @@ object Libs {
     const val constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
 
     const val junit = "junit:junit:${Versions.junit}"
+
+    const val stetho = "com.facebook.stetho:stetho:1.5.0"
 
 }
 
@@ -145,4 +158,8 @@ object Support {
     const val design = "com.google.android.material:material:${Versions.support}"
     const val v4 = "androidx.legacy:legacy-support-v4:${Versions.support}"
     const val core_utils = "androidx.legacy:legacy-support-core-utils:${Versions.support}"
+}
+
+object Koin {
+    const val androidx = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
 }

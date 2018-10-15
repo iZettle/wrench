@@ -10,7 +10,7 @@
         android:title="@string/nav_menu_wrench_preferences" />
     <item
         android:id="@+id/action_wrench_service"
-        android:icon="@drawable/ic_wrench_prefs_24dp"
+        android:icon="@drawable/ic_wrench_service_black_24dp"
         android:title="@string/nav_menu_wrench_service" />
     <item
         android:id="@+id/action_oss"

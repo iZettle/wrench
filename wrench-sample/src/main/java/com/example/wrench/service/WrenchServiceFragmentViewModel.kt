@@ -1,23 +1,69 @@
 package com.example.wrench.service
 
-import android.arch.lifecycle.ViewModel
+import android.os.AsyncTask
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.wrench.MyEnum
 import com.izettle.wrench.service.WrenchService
-import javax.inject.Inject
 
-class WrenchServiceFragmentViewModel @Inject constructor(service: WrenchService) : ViewModel(){
+class WrenchServiceFragmentViewModel constructor(service: WrenchService) : ViewModel() {
 
     private val wrenchPreference = service.create(WrenchPreference::class.java)
 
-    val stringConfiguration: String = wrenchPreference.getStringConfiguration()
+    private val stringConfig: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
 
-    val urlConfiguration: String = wrenchPreference.getUrlConfiguration()
+    fun getStringConfiguration(): LiveData<String> {
+        AsyncTask.execute {
+            stringConfig.postValue(wrenchPreference.getStringConfiguration())
+        }
+        return stringConfig
+    }
 
-    val booleanConfiguration: Boolean = wrenchPreference.getBooleanConfiguration()
+    private val urlConfig: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
 
-    val intConfiguration: Int = wrenchPreference.getIntConfiguration()
+    fun getUrlConfiguration(): LiveData<String> {
+        AsyncTask.execute {
+            urlConfig.postValue(wrenchPreference.getUrlConfiguration())
+        }
+        return urlConfig
+    }
 
-    val enumConfiguration: MyEnum = wrenchPreference.getEnumConfiguration()
+    private val booleanConfig: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
 
-    val serviceStringConfiguration: String = wrenchPreference.getServiceStringConfiguration()
+    fun getBooleanConfiguration(): LiveData<Boolean> {
+        AsyncTask.execute {
+            booleanConfig.postValue(wrenchPreference.getBooleanConfiguration())
+        }
+        return booleanConfig
+    }
+
+    private val intConfig: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
+
+    fun getIntConfiguration(): LiveData<Int> {
+        AsyncTask.execute {
+            intConfig.postValue(wrenchPreference.getIntConfiguration())
+        }
+        return intConfig
+    }
+
+    private val enumConfig: MutableLiveData<MyEnum> by lazy {
+        MutableLiveData<MyEnum>()
+    }
+
+    fun getEnumConfiguration(): LiveData<MyEnum> {
+        AsyncTask.execute {
+            enumConfig.postValue(wrenchPreference.getEnumConfiguration())
+        }
+        return enumConfig
+    }
+
 }

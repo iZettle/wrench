@@ -5,30 +5,26 @@ import com.izettle.wrench.service.Key;
 
 public interface TestInterface {
 
-    enum Test {
-        VALUE
+    default Object objectReturnTypeDefaultMethod(final Object value) {
+        return value;
     }
 
 
     /* J8 default method */
 
-    default Object objectReturnTypeDefaultMethod(final Object value){
-        return value;
-    }
-
-    /* Invalid return type */
-
     @Key("voidReturnType")
     void voidReturnType();
+
+    /* Invalid return type */
 
     @Key("runnableReturnType")
     Runnable runnableReturnType();
 
-    /* Constants default value */
-
     @Key("booleanReturnType")
     @DefaultValue.Boolean(true)
     boolean booleanReturnType();
+
+    /* Constants default value */
 
     @Key("stringReturnType")
     @DefaultValue.String("stringReturnType")
@@ -38,10 +34,10 @@ public interface TestInterface {
     @DefaultValue.Int(1)
     int intReturnType();
 
-    /* Dynamic default value  */
-
     @Key("booleanReturnTypeWithDynamicValue")
     boolean booleanReturnTypeWithDynamicValue(@DefaultValue boolean value);
+
+    /* Dynamic default value  */
 
     @Key("stringReturnTypeWithDynamicValue")
     String stringReturnTypeWithDynamicValue(@DefaultValue String value);
@@ -52,10 +48,10 @@ public interface TestInterface {
     @Key("enumReturnTypeWithDynamicValue")
     Test enumReturnTypeWithDynamicValue(@DefaultValue Test value);
 
-    /* Constants default value with missing key */
-
     @DefaultValue.Boolean(true)
     boolean booleanReturnTypeMissingKey();
+
+    /* Constants default value with missing key */
 
     @DefaultValue.String("stringReturnTypeMissingKey")
     String stringReturnTypeMissingKey();
@@ -63,9 +59,9 @@ public interface TestInterface {
     @DefaultValue.Int(1)
     int intReturnTypeMissingKey();
 
-    /* Dynamic default value with missing key */
-
     boolean booleanReturnTypeWithDynamicValueMissingKey(@DefaultValue boolean value);
+
+    /* Dynamic default value with missing key */
 
     String stringReturnTypeWithDynamicValueMissingKey(@DefaultValue String value);
 
@@ -73,10 +69,10 @@ public interface TestInterface {
 
     Test enumReturnTypeWithDynamicValueMissingKey(@DefaultValue Test value);
 
-    /* Missing default value */
-
     @Key("booleanReturnTypeMissingDefaultValue")
     boolean booleanReturnTypeMissingDefaultValue();
+
+    /* Missing default value */
 
     @Key("stringReturnTypeMissingDefaultValue")
     String stringReturnTypeMissingDefaultValue();
@@ -84,10 +80,10 @@ public interface TestInterface {
     @Key("intReturnTypeMissingDefaultValue")
     int intReturnTypeMissingDefaultValue();
 
-    /*  Missing default value with signature */
-
     @Key("booleanReturnTypeWithDynamicValueMissingDefaultValue")
     boolean booleanReturnTypeWithDynamicValueMissingDefaultValue(boolean value);
+
+    /*  Missing default value with signature */
 
     @Key("stringReturnTypeWithDynamicValueMissingDefaultValue")
     String stringReturnTypeWithDynamicValueMissingDefaultValue(String value);
@@ -97,4 +93,8 @@ public interface TestInterface {
 
     @Key("enumReturnTypeWithDynamicValueMissingDefaultValue")
     Test enumReturnTypeWithDynamicValueMissingDefaultValue(Test value);
+
+    enum Test {
+        VALUE
+    }
 }

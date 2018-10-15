@@ -1,7 +1,6 @@
 package com.izettle.wrench.service;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.VisibleForTesting;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -12,10 +11,9 @@ public class WrenchServiceHandler implements InvocationHandler {
     private final AnnotationProcessor<String> mKeyProcessor;
     private final AnnotationProcessor<Object> mValueProcessor;
 
-    @VisibleForTesting
     WrenchServiceHandler(final Provider provider,
-                  final AnnotationProcessor<String> keyProcessor,
-                  final AnnotationProcessor<Object> valueProcessor) {
+                         final AnnotationProcessor<String> keyProcessor,
+                         final AnnotationProcessor<Object> valueProcessor) {
         mProvider = provider;
         mKeyProcessor = keyProcessor;
         mValueProcessor = valueProcessor;

@@ -26,8 +26,8 @@ android {
     }
 
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -37,13 +37,11 @@ dependencies {
     testImplementation Libs.kotlin.stdlib
 
     implementation Libs.wrench.core
-    implementation Libs.wrench.prefs
+    debugImplementation project(":wrench-service-prefs")
+    releaseImplementation project(":wrench-service-prefs-no-op")
     implementation Libs.support.annotations
 
     api project(":wrench-service-provider")
-}
-repositories {
-    mavenCentral()
 }
 
 // The api of this module should be discussed before any potential release

@@ -2,12 +2,10 @@ package com.izettle.wrench.service
 
 import com.izettle.wrench.service.helper.Invokator
 import com.izettle.wrench.service.helper.KTestInterface
-
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-
-import java.util.Arrays
+import java.util.*
 
 
 class KKeyProcessorTest {

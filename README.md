@@ -12,7 +12,7 @@ Stores the settings / toggles behind a content provider.
 Wrapper library with a SharedPreference like api to get and set configurations using wrench provider.
 ```
 dependencies {
-    implementation 'com.izettle.wrench:wrench-prefs:0.2'
+    implementation 'com.izettle.wrench:wrench-prefs:0.3'
     // ....
 }
 ```
@@ -34,8 +34,8 @@ if (myBetaFeature) {
 No-op version of WrenchPreferences that can be used in a release build:
 ```
 dependencies {
-    debugImplementation 'com.izettle.wrench:wrench-prefs:0.2'
-    releaseImplementation 'com.izettle.wrench:wrench-prefs-no-op:0.2'
+    debugImplementation 'com.izettle.wrench:wrench-prefs:0.3'
+    releaseImplementation 'com.izettle.wrench:wrench-prefs-no-op:0.3'
     // ....
 }
 ```

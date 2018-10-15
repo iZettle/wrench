@@ -43,6 +43,10 @@ public class Invokator {
         return invokation.get();
     }
 
+    public interface Invoker<T> {
+        void onInvoke(T object);
+    }
+
     public static class Invokation {
         public final Method method;
         public final Object[] args;
@@ -51,9 +55,5 @@ public class Invokator {
             this.method = method;
             this.args = args;
         }
-    }
-
-    public interface Invoker<T> {
-        void onInvoke(T object);
     }
 }

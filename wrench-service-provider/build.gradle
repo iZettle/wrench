@@ -25,13 +25,9 @@ android {
     }
 
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 // The api of this module should be discussed before any potential release

@@ -17,7 +17,7 @@ public class WrenchServiceTest {
     public WrenchService service;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         provider = mock(Provider.class);
         keyProcessor = mock(AnnotationProcessor.class);
         valueProcessor = mock(AnnotationProcessor.class);

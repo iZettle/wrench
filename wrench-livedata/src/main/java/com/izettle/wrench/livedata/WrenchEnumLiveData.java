@@ -34,7 +34,7 @@ class WrenchEnumLiveData<T extends Enum<T>> extends WrenchLiveData<T> {
     @Override
     void boltChanged(@Nullable Bolt bolt) {
         if (bolt == null) {
-            setValue(defValue);
+            postValue(defValue);
             return;
         }
 
@@ -54,6 +54,6 @@ class WrenchEnumLiveData<T extends Enum<T>> extends WrenchLiveData<T> {
         if (bolt.getValue() == null) {
             throw new IllegalStateException("bolt value cannot be null for enum");
         }
-        setValue(Enum.valueOf(enumClass, bolt.getValue()));
+        postValue(Enum.valueOf(enumClass, bolt.getValue()));
     }
 }

@@ -18,7 +18,7 @@
         android:label="ConfigurationsFragment">
         <argument
             android:name="applicationId"
-            app:argType="integer" />
+            app:argType="long" />
         <action
             android:id="@+id/action_configurationsFragment_to_scopeFragment"
             app:destination="@id/scopeFragment" />
@@ -41,10 +41,10 @@
         android:label="EnumValueFragment">
         <argument
             android:name="configurationId"
-            app:argType="integer" />
+            app:argType="long" />
         <argument
             android:name="scopeId"
-            app:argType="integer" />
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/stringValueFragment"
@@ -52,10 +52,10 @@
         android:label="StringValueFragment">
         <argument
             android:name="configurationId"
-            app:argType="integer" />
+            app:argType="long" />
         <argument
             android:name="scopeId"
-            app:argType="integer" />
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/integerValueFragment"
@@ -63,10 +63,10 @@
         android:label="IntegerValueFragment">
         <argument
             android:name="configurationId"
-            app:argType="integer" />
+            app:argType="long" />
         <argument
             android:name="scopeId"
-            app:argType="integer" />
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/booleanValueFragment"
@@ -74,10 +74,10 @@
         android:label="BooleanValueFragment">
         <argument
             android:name="configurationId"
-            app:argType="integer" />
+            app:argType="long" />
         <argument
             android:name="scopeId"
-            app:argType="integer" />
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/scopeFragment"
@@ -85,10 +85,10 @@
         android:label="ScopeFragment">
         <argument
             android:name="configurationId"
-            app:argType="integer" />
+            app:argType="long" />
         <argument
             android:name="scopeId"
-            app:argType="integer" />
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/action_oss"
