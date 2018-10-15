@@ -5,8 +5,8 @@ object Versions {
     const val compileSdk = 28
     const val minSdk = 14
 
-    const val appVersionCode = 12
-    const val appVersionName = "1.0.11"
+    const val appVersionCode = 13
+    const val appVersionName = "1.0.12"
 
     const val dagger = "2.16"
 
