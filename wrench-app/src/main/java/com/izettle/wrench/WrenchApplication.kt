@@ -21,7 +21,6 @@ class WrenchApplication : DaggerApplication() {
 
         if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this)
-        }
 
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                 .detectAll()
@@ -34,8 +33,7 @@ class WrenchApplication : DaggerApplication() {
                 .penaltyLog()
                 .penaltyDeath()
                 .build())
-
-
+        }
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
