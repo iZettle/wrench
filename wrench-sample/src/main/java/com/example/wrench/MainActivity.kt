@@ -2,28 +2,31 @@ package com.example.wrench
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import com.example.wrench.databinding.ActivityMainBinding
+import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var activityMainBinding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
-        val navController = findNavController(this, R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
 
-        setupActionBarWithNavController(this, navController)
-        NavigationUI.setupWithNavController(activityMainBinding.bottomNav, navController)
+        setSupportActionBar(bottomAppBar)
+
+        fab.setOnClickListener { navController.navigate(R.id.action_wrench_prefs) }
+
+        setupActionBarWithNavController(navController, drawerLayout)
+
+        setupWithNavController(nav_view, navController)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return Navigation.findNavController(this, R.id.nav_host_fragment).navigateUp()
-    }
+    override fun onSupportNavigateUp(): Boolean = NavigationUI.navigateUp(navController, drawerLayout)
 }

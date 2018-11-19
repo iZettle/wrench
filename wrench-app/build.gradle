@@ -122,6 +122,6 @@ dependencies {
     implementation Libs.wrench.core
     implementation Libs.wrench.prefs
     implementation Libs.kotlin.stdlib
-    implementation Libs.kotlin.coroutines
+    implementation Libs.kotlin.coroutinesAndroid
 
 }

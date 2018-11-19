@@ -1,7 +1,7 @@
 // https://handstandsam.com/2018/02/11/kotlin-buildsrc-for-better-gradle-dependency-management/
 
 object Versions {
-    const val targetSdk = 28
+    const val targetSdk = 27
     const val compileSdk = 28
     const val minSdk = 14
 
@@ -23,25 +23,30 @@ object Versions {
     const val dexmaker = "2.2.0"
     const val glide = "4.7.1"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.3.0-alpha13"
+    const val android_gradle_plugin = "3.4.0-alpha04"
     const val rxjava2 = "2.1.3"
     const val rx_android = "2.0.1"
     const val hamcrest = "1.3"
-    const val kotlin = "1.2.71"
+    const val kotlin = "1.3.0"
     const val work = "1.0.0-alpha01"
-    const val navigation = "1.0.0-alpha06"
+    const val navigation = "1.0.0-alpha07"
     const val kotlin_coroutines = "0.30.2"
 
-    const val room = "2.0.0-rc01"
+    const val room = "2.1.0-alpha02"
     const val lifecycle = "2.0.0"
-    const val paging = "2.0.0"
+    const val paging = "2.1.0-beta01"
     const val atsl = "1.1.0-beta02"
-    const val test = "1.0.0-beta02"
+    const val test = "1.0.0"
     const val espresso = "3.1.0-beta02"
 
     const val robolectric = "4.0-beta-1"
     const val constraint_layout = "2.0.0-alpha2"
-    const val support = "1.0.0"
+    const val support = "1.0.2"
+    const val cardview = "1.0.0"
+    const val coordinatorlayout = "1.0.0"
+    const val recyclerview = "1.0.0"
+    const val material = "1.1.0-alpha01"
+    const val annotation = "1.0.0"
     const val koin = "1.0.1"
 }
 
@@ -86,7 +91,7 @@ object Kotlin {
     const val test = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
     const val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val allopen = "org.jetbrains.kotlin:kotlin-allopen:${Versions.kotlin}"
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
 }
 
 object Wrench {
@@ -151,11 +156,12 @@ object Dagger {
 }
 
 object Support {
-    const val annotations = "androidx.annotation:annotation:${Versions.support}"
+    const val annotations = "androidx.annotation:annotation:${Versions.annotation}"
     const val app_compat = "androidx.appcompat:appcompat:${Versions.support}"
-    const val recyclerview = "androidx.recyclerview:recyclerview:${Versions.support}"
-    const val cardview = "androidx.cardview:cardview:${Versions.support}"
-    const val design = "com.google.android.material:material:${Versions.support}"
+    const val recyclerview = "androidx.recyclerview:recyclerview:${Versions.recyclerview}"
+    const val cardview = "androidx.cardview:cardview:${Versions.cardview}"
+    const val coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:${Versions.coordinatorlayout}"
+    const val design = "com.google.android.material:material:${Versions.material}"
     const val v4 = "androidx.legacy:legacy-support-v4:${Versions.support}"
     const val core_utils = "androidx.legacy:legacy-support-core-utils:${Versions.support}"
 }

@@ -37,7 +37,7 @@ dependencies {
 
     implementation Libs.wrench.core
     implementation Libs.support.annotations
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation Libs.kotlin.stdlib
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

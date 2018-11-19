@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.izettle.wrench.databinding.FragmentApplicationsBinding
 import com.izettle.wrench.di.Injectable
 import javax.inject.Inject
@@ -32,6 +33,8 @@ class ApplicationsFragment : Fragment(), Injectable {
 
         val model: ApplicationViewModel = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel::class.java)
 
+        fragmentApplicationsBinding.list.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, true)
+
         val adapter = ApplicationAdapter()
         model.applications.observe(this, Observer { adapter.submitList(it) })
         fragmentApplicationsBinding.list.adapter = adapter
@@ -44,8 +47,5 @@ class ApplicationsFragment : Fragment(), Injectable {
                 animator.displayedChild = animator.indexOfChild(fragmentApplicationsBinding.list)
             }
         })
-
     }
-
-
 }

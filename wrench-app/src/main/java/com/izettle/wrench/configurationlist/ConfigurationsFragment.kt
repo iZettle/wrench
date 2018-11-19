@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.izettle.wrench.R
 import com.izettle.wrench.core.Bolt
@@ -80,9 +81,9 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
 
         model = ViewModelProviders.of(this, viewModelFactory).get(ConfigurationViewModel::class.java)
         val args = ConfigurationsFragmentArgs.fromBundle(arguments!!)
-        model.setApplicationId(args.applicationId.toLong())
+        model.setApplicationId(args.applicationId)
 
-        fragmentConfigurationsBinding.list.layoutManager = LinearLayoutManager(context)
+        fragmentConfigurationsBinding.list.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
 
         model.wrenchApplication.observe(this, Observer { wrenchApplication ->
             if (wrenchApplication != null) {
@@ -100,10 +101,8 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
             if (scope != null && fragmentConfigurationsBinding.list.adapter != null) {
                 fragmentConfigurationsBinding.list.adapter!!.notifyDataSetChanged()
             }
-            fragmentConfigurationsBinding.scopeButton.text = scope!!.name
+            // fragmentConfigurationsBinding.scopeButton.text = scope!!.name
         })
-
-        fragmentConfigurationsBinding.scopeButton.setOnClickListener { ScopeFragment.newInstance(args.applicationId).show(childFragmentManager, null) }
 
         model.configurations.observe(this, Observer { wrenchConfigurationWithValues ->
             if (wrenchConfigurationWithValues != null) {
@@ -116,7 +115,7 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
             if (isEmpty == null || isEmpty) {
                 animator.displayedChild = animator.indexOfChild(fragmentConfigurationsBinding.noConfigurationsEmptyView)
             } else {
-                animator.displayedChild = animator.indexOfChild(fragmentConfigurationsBinding.listWrapper)
+                animator.displayedChild = animator.indexOfChild(fragmentConfigurationsBinding.list)
             }
         })
     }
@@ -195,6 +194,11 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
             R.id.action_delete_application -> {
                 AsyncTask.execute { model.deleteApplication(model.wrenchApplication.value!!) }
                 Navigation.findNavController(fragmentConfigurationsBinding.root).navigateUp()
+                return true
+            }
+            R.id.action_change_scope -> {
+                val args = ConfigurationsFragmentArgs.fromBundle(arguments!!)
+                ScopeFragment.newInstance(args.applicationId).show(childFragmentManager, null)
                 return true
             }
             else -> {
