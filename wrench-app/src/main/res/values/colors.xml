@@ -6,7 +6,7 @@
 
     <color name="colorOnPrimary">#E4E8F1</color>
     <color name="colorOnSecondary">#FFFF0000</color>
-    <color name="colorSurface">#293663</color>
+    <color name="colorSurface">#FFFFFF</color>
     <color name="colorOnSurface">#FFFFFF00</color>
 
     <color name="launcherForegroundStartColor">#F000</color>

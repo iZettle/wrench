@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.izettle.wrench.oss.LicenceMetadata
 import com.izettle.wrench.oss.list.OssLoading
-import kotlinx.coroutines.experimental.async
 
 class LicenceMetadataLiveData(val application: Application, val licenceMetadata: LicenceMetadata) : LiveData<String>() {
 

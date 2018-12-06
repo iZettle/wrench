@@ -16,9 +16,9 @@ import com.izettle.wrench.R
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValue
 import com.izettle.wrench.databinding.FragmentEnumValueBinding
 import com.izettle.wrench.di.Injectable
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.Listener, Injectable {
@@ -42,7 +42,7 @@ class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.L
 
         viewModel.configuration.observe(this, Observer { wrenchConfiguration ->
             if (wrenchConfiguration != null) {
-                dialog.setTitle(wrenchConfiguration.key)
+                dialog?.setTitle(wrenchConfiguration.key)
             }
         })
 

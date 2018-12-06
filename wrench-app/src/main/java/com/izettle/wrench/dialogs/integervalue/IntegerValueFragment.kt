@@ -34,7 +34,7 @@ class IntegerValueFragment : DialogFragment(), Injectable {
 
         viewModel.configuration.observe(this, Observer { wrenchConfiguration ->
             if (wrenchConfiguration != null) {
-                dialog.setTitle(wrenchConfiguration.key)
+                dialog?.setTitle(wrenchConfiguration.key)
             }
         })
 
