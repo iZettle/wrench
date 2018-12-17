@@ -7,7 +7,7 @@
 
     <color name="colorOnPrimary">#E2D9D9</color>
     <color name="colorOnSecondary">#FFFF0000</color>
-    <color name="colorSurface">#E6D7D7</color>
+    <color name="colorSurface">#FFFFFF</color>
     <color name="colorOnSurface">#FFFFFF00</color>
 
     <color name="editTextBackground">#F3EFEF</color>
