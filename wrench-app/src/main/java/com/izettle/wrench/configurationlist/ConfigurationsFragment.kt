@@ -153,8 +153,8 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
         return false
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.action_restart_application -> {
                 model.wrenchApplication.observe(this, object : Observer<WrenchApplication> {
                     override fun onChanged(wrenchApplication: WrenchApplication?) {

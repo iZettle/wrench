@@ -17,7 +17,7 @@
     </style>
 
     <style name="TextInput" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="boxBackgroundColor">@android:color/white</item>
+        <item name="boxBackgroundColor">@android:color/holo_red_dark</item>
     </style>
 
 </resources>

@@ -7,7 +7,7 @@ import com.example.wrench.MyEnum
 import com.example.wrench.R
 import com.izettle.wrench.livedata.WrenchLiveData
 
-class LiveDataPreferencesFragmentViewModel constructor(val context: Context) : ViewModel() {
+class LiveDataPreferencesFragmentViewModel constructor(private val context: Context) : ViewModel() {
 
     private val stringConfig by lazy {
         WrenchLiveData.create(context, context.resources.getString(R.string.string_configuration), "string1")

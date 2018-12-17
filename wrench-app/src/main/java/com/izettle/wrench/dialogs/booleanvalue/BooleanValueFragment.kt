@@ -34,7 +34,7 @@ class BooleanValueFragment : DialogFragment(), Injectable {
 
         viewModel.configuration.observe(this, Observer { wrenchConfiguration ->
             if (wrenchConfiguration != null) {
-                dialog.setTitle(wrenchConfiguration.key)
+                requireDialog().setTitle(wrenchConfiguration.key)
             }
         })
 
