@@ -32,7 +32,7 @@ class ScopeFragment : DialogFragment(), ScopeRecyclerViewAdapter.Listener, Injec
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         assert(arguments != null)
 
-        binding = FragmentScopeBinding.inflate(LayoutInflater.from(context), null)
+        binding = FragmentScopeBinding.inflate(LayoutInflater.from(context))
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ScopeFragmentViewModel::class.java)
 

@@ -25,7 +25,7 @@ class IntegerValueFragment : DialogFragment(), Injectable {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         assert(arguments != null)
 
-        binding = FragmentIntegerValueBinding.inflate(LayoutInflater.from(context), null)
+        binding = FragmentIntegerValueBinding.inflate(LayoutInflater.from(context))
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentIntegerValueViewModel::class.java)
 

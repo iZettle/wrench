@@ -33,7 +33,7 @@ class ApplicationsFragment : Fragment(), Injectable {
 
         val model: ApplicationViewModel = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel::class.java)
 
-        fragmentApplicationsBinding.list.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, true)
+        fragmentApplicationsBinding.list.layoutManager = LinearLayoutManager(requireContext())
 
         val adapter = ApplicationAdapter()
         model.applications.observe(this, Observer { adapter.submitList(it) })

@@ -32,7 +32,7 @@ class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.L
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         assert(arguments != null)
 
-        binding = FragmentEnumValueBinding.inflate(LayoutInflater.from(context), null)
+        binding = FragmentEnumValueBinding.inflate(LayoutInflater.from(context))
 
         val args = EnumValueFragmentArgs.fromBundle(arguments!!)
 

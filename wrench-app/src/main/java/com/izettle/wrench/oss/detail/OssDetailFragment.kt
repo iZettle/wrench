@@ -37,7 +37,7 @@ class OssDetailFragment : DialogFragment(), Injectable {
 
         val ossDetailFragmentArgs = OssDetailFragmentArgs.fromBundle(arguments)
 
-        binding = FragmentOssDetailBinding.inflate(LayoutInflater.from(context), null)
+        binding = FragmentOssDetailBinding.inflate(LayoutInflater.from(context))
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(OssDetailViewModel::class.java)
 

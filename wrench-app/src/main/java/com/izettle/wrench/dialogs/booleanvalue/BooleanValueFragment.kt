@@ -24,7 +24,7 @@ class BooleanValueFragment : DialogFragment(), Injectable {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         assert(arguments != null)
 
-        binding = FragmentBooleanValueBinding.inflate(LayoutInflater.from(context), null)
+        binding = FragmentBooleanValueBinding.inflate(LayoutInflater.from(context))
 
         val args = BooleanValueFragmentArgs.fromBundle(arguments)
 

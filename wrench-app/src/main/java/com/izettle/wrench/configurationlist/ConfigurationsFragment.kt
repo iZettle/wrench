@@ -83,7 +83,7 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
         val args = ConfigurationsFragmentArgs.fromBundle(arguments!!)
         model.setApplicationId(args.applicationId)
 
-        fragmentConfigurationsBinding.list.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
+        fragmentConfigurationsBinding.list.layoutManager = LinearLayoutManager(context)
 
         model.wrenchApplication.observe(this, Observer { wrenchApplication ->
             if (wrenchApplication != null) {
