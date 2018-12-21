@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.izettle.wrench.database.WrenchScope
 import com.izettle.wrench.database.WrenchScopeDao
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -27,23 +29,27 @@ constructor(private val scopeDao: WrenchScopeDao) : ViewModel() {
     }
 
     internal fun selectScope(wrenchScope: WrenchScope) {
-        wrenchScope.timeStamp = Date()
-        scopeDao.update(wrenchScope)
+        GlobalScope.launch {
+            wrenchScope.timeStamp = Date()
+            scopeDao.update(wrenchScope)
+        }
     }
 
     @WorkerThread
     @Throws(SQLiteException::class)
-    internal fun createScope(scopeName: String): WrenchScope {
-        val wrenchScope = WrenchScope()
-        wrenchScope.name = scopeName
-        wrenchScope.applicationId = applicationId
-        wrenchScope.id = scopeDao.insert(wrenchScope)
-
-        return wrenchScope
+    internal fun createScope(scopeName: String) {
+        GlobalScope.launch {
+            val wrenchScope = WrenchScope()
+            wrenchScope.name = scopeName
+            wrenchScope.applicationId = applicationId
+            wrenchScope.id = scopeDao.insert(wrenchScope)
+        }
     }
 
     @WorkerThread
     internal fun removeScope(scope: WrenchScope) {
-        scopeDao.delete(scope)
+        GlobalScope.launch {
+            scopeDao.delete(scope)
+        }
     }
 }
