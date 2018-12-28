@@ -8,7 +8,7 @@ object Versions {
     const val appVersionCode = 14
     const val appVersionName = "1.0.13"
 
-    const val dagger = "2.19"
+    const val dagger = "2.20"
 
     const val wrench = "0.3"
 
@@ -29,18 +29,18 @@ object Versions {
     const val hamcrest = "1.3"
     const val kotlin = "1.3.11"
     const val work = "1.0.0-alpha01"
-    const val navigation = "1.0.0-alpha08"
-    const val kotlin_coroutines = "1.0.1"
+    const val navigation = "1.0.0-alpha09"
+    const val kotlin_coroutines = "1.1.0"
 
     const val room = "2.1.0-alpha03"
-    const val lifecycle = "2.0.0"
+    const val lifecycle = "2.1.0-alpha01"
     const val paging = "2.1.0-rc01"
-    const val atsl = "1.1.1-alpha01"
-    const val test = "1.1.0-alpha01"
+    const val atsl = "1.1.1"
+    const val test = "1.1.0"
     const val espresso = "3.1.0-beta02"
 
-    const val robolectric = "4.0.2"
-    const val constraint_layout = "2.0.0-alpha2"
+    const val robolectric = "4.1"
+    const val constraint_layout = "2.0.0-alpha3"
     const val support = "1.1.0-alpha01"
     const val cardview = "1.0.0"
     const val coordinatorlayout = "1.1.0-alpha01"

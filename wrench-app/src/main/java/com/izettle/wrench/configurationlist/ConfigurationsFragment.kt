@@ -4,7 +4,6 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
@@ -17,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.izettle.wrench.R
 import com.izettle.wrench.core.Bolt
@@ -192,7 +190,7 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
                 return true
             }
             R.id.action_delete_application -> {
-                AsyncTask.execute { model.deleteApplication(model.wrenchApplication.value!!) }
+                model.deleteApplication(model.wrenchApplication.value!!)
                 Navigation.findNavController(fragmentConfigurationsBinding.root).navigateUp()
                 return true
             }

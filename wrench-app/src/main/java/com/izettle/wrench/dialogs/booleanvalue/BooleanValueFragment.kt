@@ -1,7 +1,6 @@
 package com.izettle.wrench.dialogs.booleanvalue
 
 import android.app.Dialog
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
@@ -26,7 +25,7 @@ class BooleanValueFragment : DialogFragment(), Injectable {
 
         binding = FragmentBooleanValueBinding.inflate(LayoutInflater.from(context))
 
-        val args = BooleanValueFragmentArgs.fromBundle(arguments)
+        val args = BooleanValueFragmentArgs.fromBundle(arguments!!)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentBooleanValueViewModel::class.java)
 
@@ -50,13 +49,13 @@ class BooleanValueFragment : DialogFragment(), Injectable {
                 .setView(binding.root)
                 .setPositiveButton(android.R.string.ok
                 ) { _, _ ->
-                    AsyncTask.execute { viewModel.updateConfigurationValue(binding.value.isChecked.toString()) }
+                    viewModel.updateConfigurationValue(binding.value.isChecked.toString())
                     dismiss()
                 }
                 .setNegativeButton(R.string.revert
                 ) { _, _ ->
                     if (viewModel.selectedConfigurationValue != null) {
-                        AsyncTask.execute { viewModel.deleteConfigurationValue() }
+                        viewModel.deleteConfigurationValue()
                     }
                     dismiss()
                 }

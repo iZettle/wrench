@@ -1,7 +1,6 @@
 package com.izettle.wrench.dialogs.enumvalue
 
 import android.app.Dialog
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +15,6 @@ import com.izettle.wrench.R
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValue
 import com.izettle.wrench.databinding.FragmentEnumValueBinding
 import com.izettle.wrench.di.Injectable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.Listener, Injectable {
@@ -68,7 +64,7 @@ class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.L
                 .setNegativeButton(R.string.revert
                 ) { _, _ ->
                     if (viewModel.selectedConfigurationValue != null) {
-                        AsyncTask.execute { viewModel.deleteConfigurationValue() }
+                        viewModel.deleteConfigurationValue()
                     }
                     dismiss()
                 }
@@ -76,7 +72,7 @@ class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.L
     }
 
     override fun onClick(view: View, item: WrenchPredefinedConfigurationValue) {
-        CoroutineScope(Dispatchers.Default).launch { viewModel.updateConfigurationValue(item.value!!) }
+        viewModel.updateConfigurationValue(item.value!!)
         dismiss()
     }
 

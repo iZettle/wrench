@@ -3,6 +3,8 @@ package com.izettle.wrench.dialogs.enumvalue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.izettle.wrench.database.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -36,16 +38,20 @@ constructor(
     }
 
     fun updateConfigurationValue(value: String) {
-        if (selectedConfigurationValue != null) {
-            configurationValueDao.updateConfigurationValue(configurationId, scopeId, value)
-        } else {
-            val wrenchConfigurationValue = WrenchConfigurationValue(0, configurationId, value, scopeId)
-            wrenchConfigurationValue.id = configurationValueDao.insert(wrenchConfigurationValue)
+        GlobalScope.launch {
+            if (selectedConfigurationValue != null) {
+                configurationValueDao.updateConfigurationValue(configurationId, scopeId, value)
+            } else {
+                val wrenchConfigurationValue = WrenchConfigurationValue(0, configurationId, value, scopeId)
+                wrenchConfigurationValue.id = configurationValueDao.insert(wrenchConfigurationValue)
+            }
+            configurationDao.touch(configurationId, Date())
         }
-        configurationDao.touch(configurationId, Date())
     }
 
     internal fun deleteConfigurationValue() {
-        configurationValueDao.delete(selectedConfigurationValue!!)
+        GlobalScope.launch {
+            configurationValueDao.delete(selectedConfigurationValue!!)
+        }
     }
 }

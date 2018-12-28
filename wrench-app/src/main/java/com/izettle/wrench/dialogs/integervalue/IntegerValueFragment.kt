@@ -1,7 +1,6 @@
 package com.izettle.wrench.dialogs.integervalue
 
 import android.app.Dialog
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
@@ -48,7 +47,7 @@ class IntegerValueFragment : DialogFragment(), Injectable {
 
         binding.value.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                AsyncTask.execute { viewModel.updateConfigurationValue(binding.value.text!!.toString()) }
+                viewModel.updateConfigurationValue(binding.value.text!!.toString())
                 dismiss()
             }
             false
@@ -59,13 +58,13 @@ class IntegerValueFragment : DialogFragment(), Injectable {
                 .setView(binding.root)
                 .setPositiveButton(android.R.string.ok
                 ) { _, _ ->
-                    AsyncTask.execute { viewModel.updateConfigurationValue(binding.value.text!!.toString()) }
+                    viewModel.updateConfigurationValue(binding.value.text!!.toString())
                     dismiss()
                 }
                 .setNegativeButton(R.string.revert
                 ) { _, _ ->
                     if (viewModel.selectedConfigurationValue != null) {
-                        AsyncTask.execute { viewModel.deleteConfigurationValue() }
+                        viewModel.deleteConfigurationValue()
                     }
                     dismiss()
                 }

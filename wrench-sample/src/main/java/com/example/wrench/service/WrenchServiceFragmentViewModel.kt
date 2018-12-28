@@ -1,22 +1,28 @@
 package com.example.wrench.service
 
-import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.wrench.MyEnum
 import com.izettle.wrench.service.WrenchService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class WrenchServiceFragmentViewModel constructor(service: WrenchService) : ViewModel() {
 
     private val wrenchPreference = service.create(WrenchPreference::class.java)
+
+    private val job = Job()
+    private val scope = CoroutineScope(job + Dispatchers.Main)
 
     private val stringConfig: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
 
     fun getStringConfiguration(): LiveData<String> {
-        AsyncTask.execute {
+        scope.launch {
             stringConfig.postValue(wrenchPreference.getStringConfiguration())
         }
         return stringConfig
@@ -27,7 +33,7 @@ class WrenchServiceFragmentViewModel constructor(service: WrenchService) : ViewM
     }
 
     fun getUrlConfiguration(): LiveData<String> {
-        AsyncTask.execute {
+        scope.launch {
             urlConfig.postValue(wrenchPreference.getUrlConfiguration())
         }
         return urlConfig
@@ -38,7 +44,7 @@ class WrenchServiceFragmentViewModel constructor(service: WrenchService) : ViewM
     }
 
     fun getBooleanConfiguration(): LiveData<Boolean> {
-        AsyncTask.execute {
+        scope.launch {
             booleanConfig.postValue(wrenchPreference.getBooleanConfiguration())
         }
         return booleanConfig
@@ -49,7 +55,7 @@ class WrenchServiceFragmentViewModel constructor(service: WrenchService) : ViewM
     }
 
     fun getIntConfiguration(): LiveData<Int> {
-        AsyncTask.execute {
+        scope.launch {
             intConfig.postValue(wrenchPreference.getIntConfiguration())
         }
         return intConfig
@@ -60,7 +66,7 @@ class WrenchServiceFragmentViewModel constructor(service: WrenchService) : ViewM
     }
 
     fun getEnumConfiguration(): LiveData<MyEnum> {
-        AsyncTask.execute {
+        scope.launch {
             enumConfig.postValue(wrenchPreference.getEnumConfiguration())
         }
         return enumConfig

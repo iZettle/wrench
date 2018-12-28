@@ -35,7 +35,7 @@ class OssDetailFragment : DialogFragment(), Injectable {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        val ossDetailFragmentArgs = OssDetailFragmentArgs.fromBundle(arguments)
+        val ossDetailFragmentArgs = OssDetailFragmentArgs.fromBundle(arguments!!)
 
         binding = FragmentOssDetailBinding.inflate(LayoutInflater.from(context))
 
