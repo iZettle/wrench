@@ -23,7 +23,7 @@ object Versions {
     const val dexmaker = "2.2.0"
     const val glide = "4.7.1"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.4.0-alpha09"
+    const val android_gradle_plugin = "3.4.0-alpha10"
     const val rxjava2 = "2.1.3"
     const val rx_android = "2.0.1"
     const val hamcrest = "1.3"
@@ -47,7 +47,7 @@ object Versions {
     const val recyclerview = "1.1.0-alpha01"
     const val material = "1.1.0-alpha02"
     const val annotation = "1.0.1"
-    const val koin = "2.0.0-alpha-4"
+    const val koin = "2.0.0-alpha-6"
 }
 
 object AndroidTestingSupportLibrary {

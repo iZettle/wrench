@@ -45,7 +45,7 @@ class BooleanValueFragment : DialogFragment(), Injectable {
         })
 
         return AlertDialog.Builder(requireActivity())
-                .setTitle(R.string.select_scope)
+                .setTitle(".")
                 .setView(binding.root)
                 .setPositiveButton(android.R.string.ok
                 ) { _, _ ->

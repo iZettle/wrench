@@ -59,7 +59,7 @@ class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.L
         })
 
         return AlertDialog.Builder(activity!!)
-                .setTitle(R.string.select_scope)
+                .setTitle(".")
                 .setView(binding.root)
                 .setNegativeButton(R.string.revert
                 ) { _, _ ->

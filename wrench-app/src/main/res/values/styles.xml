@@ -5,20 +5,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <item name="colorOnSecondary">@color/colorOnSecondary</item>
-        <item name="colorSurface">@color/colorSurface</item>
-        <item name="colorOnSurface">@color/colorOnSurface</item>
-
-        <item name="textInputStyle">@style/TextInput</item>
-
-        <item name="editTextBackground">@color/editTextBackground</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox
+        </item>
 
         <item name="materialCardViewStyle">@style/MaterialCardViewStyle</item>
-    </style>
-
-    <style name="TextInput" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="boxBackgroundColor">@android:color/holo_red_dark</item>
     </style>
 
     <style name="MaterialCardViewStyle" parent="Widget.MaterialComponents.CardView">

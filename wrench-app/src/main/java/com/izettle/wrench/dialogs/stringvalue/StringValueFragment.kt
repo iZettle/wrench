@@ -54,15 +54,13 @@ class StringValueFragment : DialogFragment(), Injectable {
         }
 
         return AlertDialog.Builder(requireActivity())
-                .setTitle(R.string.select_scope)
+                .setTitle(".")
                 .setView(binding.root)
-                .setPositiveButton(android.R.string.ok
-                ) { _, _ ->
+                .setPositiveButton(android.R.string.ok) { _, _ ->
                     viewModel.updateConfigurationValue(binding.value.text!!.toString())
                     dismiss()
                 }
-                .setNegativeButton(R.string.revert
-                ) { _, _ ->
+                .setNegativeButton(R.string.revert) { _, _ ->
                     if (viewModel.selectedConfigurationValue != null) {
                         viewModel.deleteConfigurationValue()
                     }
