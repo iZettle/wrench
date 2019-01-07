@@ -8,8 +8,6 @@ object Versions {
     const val appVersionCode = 14
     const val appVersionName = "1.0.13"
 
-    const val dagger = "2.20"
-
     const val wrench = "0.3"
 
     const val arch_core = "1.1.1"
@@ -122,7 +120,6 @@ object Libs {
     val wrench = Wrench
     val lifecycle = Lifecycle
     val support = Support
-    val dagger = Dagger
     val mockito = Mockito
     val androidTestingSupportLibrary = AndroidTestingSupportLibrary
     val espresso = Espresso
@@ -145,14 +142,6 @@ object Libs {
 
     const val stetho = "com.facebook.stetho:stetho:1.5.0"
 
-}
-
-object Dagger {
-    const val runtime = "com.google.dagger:dagger:${Versions.dagger}"
-    const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-    const val daggerAndroid = "com.google.dagger:dagger-android:${Versions.dagger}"
-    const val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
-    const val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
 }
 
 object Support {

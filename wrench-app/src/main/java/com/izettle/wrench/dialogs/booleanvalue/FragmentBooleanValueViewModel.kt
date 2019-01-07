@@ -9,9 +9,8 @@ import com.izettle.wrench.database.WrenchConfigurationValueDao
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
-import javax.inject.Inject
 
-class FragmentBooleanValueViewModel @Inject
+class FragmentBooleanValueViewModel
 constructor(private val configurationDao: WrenchConfigurationDao, private val configurationValueDao: WrenchConfigurationValueDao) : ViewModel() {
 
     internal val configuration: LiveData<WrenchConfiguration> by lazy {

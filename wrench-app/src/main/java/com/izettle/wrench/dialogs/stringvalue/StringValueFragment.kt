@@ -7,26 +7,19 @@ import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.izettle.wrench.R
 import com.izettle.wrench.databinding.FragmentStringValueBinding
-import com.izettle.wrench.di.Injectable
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.viewModel
 
-class StringValueFragment : DialogFragment(), Injectable {
+class StringValueFragment : DialogFragment() {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentStringValueBinding
-    private lateinit var viewModel: FragmentStringValueViewModel
+    private val viewModel: FragmentStringValueViewModel by viewModel()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         assert(arguments != null)
 
         binding = FragmentStringValueBinding.inflate(LayoutInflater.from(context))
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentStringValueViewModel::class.java)
 
         val args = StringValueFragmentArgs.fromBundle(arguments!!)
 

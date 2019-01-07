@@ -8,29 +8,22 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.izettle.wrench.R
 import com.izettle.wrench.database.WrenchScope
 import com.izettle.wrench.databinding.FragmentScopeBinding
-import com.izettle.wrench.di.Injectable
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.viewModel
 
-class ScopeFragment : DialogFragment(), ScopeRecyclerViewAdapter.Listener, Injectable {
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+class ScopeFragment : DialogFragment(), ScopeRecyclerViewAdapter.Listener {
     private lateinit var binding: FragmentScopeBinding
-    private lateinit var viewModel: ScopeFragmentViewModel
+    private val viewModel: ScopeFragmentViewModel by viewModel()
     private var adapter: ScopeRecyclerViewAdapter? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         assert(arguments != null)
 
         binding = FragmentScopeBinding.inflate(LayoutInflater.from(context))
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ScopeFragmentViewModel::class.java)
 
         viewModel.init(arguments!!.getLong(ARGUMENT_APPLICATION_ID))
 

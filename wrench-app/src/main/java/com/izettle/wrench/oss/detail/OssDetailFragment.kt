@@ -8,21 +8,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.text.util.LinkifyCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.izettle.wrench.databinding.FragmentOssDetailBinding
-import com.izettle.wrench.di.Injectable
 import com.izettle.wrench.oss.LicenceMetadata
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.viewModel
 
-class OssDetailFragment : DialogFragment(), Injectable {
-
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+class OssDetailFragment : DialogFragment() {
 
     private lateinit var binding: FragmentOssDetailBinding
 
-    private lateinit var viewModel: OssDetailViewModel
+    private val viewModel: OssDetailViewModel by viewModel()
 
     companion object {
         @JvmStatic
@@ -38,8 +32,6 @@ class OssDetailFragment : DialogFragment(), Injectable {
         val ossDetailFragmentArgs = OssDetailFragmentArgs.fromBundle(arguments!!)
 
         binding = FragmentOssDetailBinding.inflate(LayoutInflater.from(context))
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(OssDetailViewModel::class.java)
 
         val licenceMetadata = LicenceMetadata(ossDetailFragmentArgs.dependency, ossDetailFragmentArgs.skip.toLong(), ossDetailFragmentArgs.length)
 

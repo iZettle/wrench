@@ -1,15 +1,15 @@
 package com.izettle.wrench.oss.detail
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.izettle.wrench.oss.LicenceMetadata
 import com.izettle.wrench.oss.list.OssLoading
 
-class LicenceMetadataLiveData(val application: Application, val licenceMetadata: LicenceMetadata) : LiveData<String>() {
+class LicenceMetadataLiveData(val context: Context, val licenceMetadata: LicenceMetadata) : LiveData<String>() {
 
     init {
         run {
-            postValue(OssLoading.getThirdPartyLicence(application, licenceMetadata))
+            postValue(OssLoading.getThirdPartyLicence(context, licenceMetadata))
         }
     }
 }

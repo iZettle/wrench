@@ -9,9 +9,8 @@ import com.izettle.wrench.database.WrenchScopeDao
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
-import javax.inject.Inject
 
-class ScopeFragmentViewModel @Inject
+class ScopeFragmentViewModel
 constructor(private val scopeDao: WrenchScopeDao) : ViewModel() {
     private var applicationId: Long = 0
 

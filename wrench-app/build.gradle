@@ -91,13 +91,12 @@ dependencies {
     androidTestImplementation Libs.androidTestingSupportLibrary.junit
 
     androidTestImplementation Libs.mockito.android
+    androidTestImplementation Libs.mockito.android
     androidTestImplementation Libs.wrench.prefs
     androidTestImplementation Libs.room.testing
 
     kapt Libs.lifecycle.compiler
     kapt Libs.room.compiler
-    kapt Libs.dagger.daggerAndroidProcessor
-    kapt Libs.dagger.daggerCompiler
 
 
     implementation Libs.support.app_compat
@@ -115,13 +114,11 @@ dependencies {
     implementation Libs.navigation.fragmentKotlin
     implementation Libs.navigation.uiKotlin
 
-    implementation Libs.dagger.runtime
-    implementation Libs.dagger.daggerAndroid
-    implementation Libs.dagger.daggerAndroidSupport
-
     implementation Libs.wrench.core
     implementation Libs.wrench.prefs
     implementation Libs.kotlin.stdlib
     implementation Libs.kotlin.coroutinesAndroid
+
+    implementation Libs.koin.androidx
 
 }

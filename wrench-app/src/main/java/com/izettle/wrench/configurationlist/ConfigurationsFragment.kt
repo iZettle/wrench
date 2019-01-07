@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -22,7 +20,6 @@ import com.izettle.wrench.core.Bolt
 import com.izettle.wrench.database.WrenchApplication
 import com.izettle.wrench.database.WrenchConfigurationWithValues
 import com.izettle.wrench.databinding.FragmentConfigurationsBinding
-import com.izettle.wrench.di.Injectable
 import com.izettle.wrench.dialogs.booleanvalue.BooleanValueFragment
 import com.izettle.wrench.dialogs.booleanvalue.BooleanValueFragmentArgs
 import com.izettle.wrench.dialogs.enumvalue.EnumValueFragment
@@ -32,16 +29,14 @@ import com.izettle.wrench.dialogs.integervalue.IntegerValueFragmentArgs
 import com.izettle.wrench.dialogs.scope.ScopeFragment
 import com.izettle.wrench.dialogs.stringvalue.StringValueFragment
 import com.izettle.wrench.dialogs.stringvalue.StringValueFragmentArgs
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.viewModel
 
 
-class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener, Injectable {
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener {
     private lateinit var fragmentConfigurationsBinding: FragmentConfigurationsBinding
     private var currentFilter: CharSequence? = null
     private var searchView: SearchView? = null
-    private lateinit var model: ConfigurationViewModel
+    private val model: ConfigurationViewModel by viewModel()
 
     private fun updateConfigurations(wrenchConfigurations: List<WrenchConfigurationWithValues>) {
         var adapter = fragmentConfigurationsBinding.list.adapter as ConfigurationRecyclerViewAdapter?
@@ -77,7 +72,6 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
         super.onViewCreated(view, savedInstanceState)
         assert(arguments != null)
 
-        model = ViewModelProviders.of(this, viewModelFactory).get(ConfigurationViewModel::class.java)
         val args = ConfigurationsFragmentArgs.fromBundle(arguments!!)
         model.setApplicationId(args.applicationId)
 

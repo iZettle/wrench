@@ -6,19 +6,14 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.izettle.wrench.R
 import com.izettle.wrench.databinding.FragmentBooleanValueBinding
-import com.izettle.wrench.di.Injectable
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.viewModel
 
-class BooleanValueFragment : DialogFragment(), Injectable {
+class BooleanValueFragment : DialogFragment() {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentBooleanValueBinding
-    private lateinit var viewModel: FragmentBooleanValueViewModel
+    private val viewModel: FragmentBooleanValueViewModel by viewModel()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         assert(arguments != null)
@@ -26,8 +21,6 @@ class BooleanValueFragment : DialogFragment(), Injectable {
         binding = FragmentBooleanValueBinding.inflate(LayoutInflater.from(context))
 
         val args = BooleanValueFragmentArgs.fromBundle(arguments!!)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentBooleanValueViewModel::class.java)
 
         viewModel.init(args.configurationId, args.scopeId)
 

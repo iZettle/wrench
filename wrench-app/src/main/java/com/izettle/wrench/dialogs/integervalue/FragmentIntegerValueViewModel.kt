@@ -10,9 +10,8 @@ import com.izettle.wrench.database.WrenchConfigurationValueDao
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
-import javax.inject.Inject
 
-class FragmentIntegerValueViewModel @Inject
+class FragmentIntegerValueViewModel
 constructor(private val configurationDao: WrenchConfigurationDao, private val configurationValueDao: WrenchConfigurationValueDao) : ViewModel() {
     private var configurationId: Long = 0
     private var scopeId: Long = 0

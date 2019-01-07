@@ -5,9 +5,8 @@ import androidx.lifecycle.*
 import com.izettle.wrench.database.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class ConfigurationViewModel @Inject
+class ConfigurationViewModel
 internal constructor(private val applicationDao: WrenchApplicationDao, configurationDao: WrenchConfigurationDao, private val scopeDao: WrenchScopeDao) : ViewModel() {
     private val queryLiveData: MutableLiveData<String> = MutableLiveData()
 

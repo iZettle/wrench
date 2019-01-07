@@ -7,22 +7,17 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.izettle.wrench.R
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValue
 import com.izettle.wrench.databinding.FragmentEnumValueBinding
-import com.izettle.wrench.di.Injectable
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.viewModel
 
-class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.Listener, Injectable {
+class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.Listener {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentEnumValueBinding
-    private lateinit var viewModel: FragmentEnumValueViewModel
+    private val viewModel: FragmentEnumValueViewModel by viewModel()
     private lateinit var adapter: PredefinedValueRecyclerViewAdapter
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -31,8 +26,6 @@ class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.L
         binding = FragmentEnumValueBinding.inflate(LayoutInflater.from(context))
 
         val args = EnumValueFragmentArgs.fromBundle(arguments!!)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentEnumValueViewModel::class.java)
 
         viewModel.init(args.configurationId, args.scopeId)
 
