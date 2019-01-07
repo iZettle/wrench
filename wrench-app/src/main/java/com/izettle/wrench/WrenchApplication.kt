@@ -4,6 +4,7 @@ import android.app.Application
 import com.facebook.stetho.Stetho
 import com.izettle.wrench.di.sampleAppModule
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.koinApplication
 
@@ -30,9 +31,11 @@ class WrenchApplication : Application() {
              */
         }
 
-        startKoin(koinApplication {
-            modules(listOf(sampleAppModule))
-            androidContext(this@WrenchApplication)
-        })
+        if (GlobalContext.getOrNull() == null) {
+            startKoin(koinApplication {
+                modules(listOf(sampleAppModule))
+                androidContext(this@WrenchApplication)
+            })
+        }
     }
 }

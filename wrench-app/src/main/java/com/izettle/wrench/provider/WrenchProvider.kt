@@ -9,8 +9,13 @@ import com.izettle.wrench.BuildConfig
 import com.izettle.wrench.core.Bolt
 import com.izettle.wrench.core.WrenchProviderContract
 import com.izettle.wrench.database.*
+import com.izettle.wrench.di.sampleAppModule
 import com.izettle.wrench.preferences.WrenchPreferences
 import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext
+import org.koin.core.context.startKoin
+import org.koin.dsl.koinApplication
 import java.util.*
 
 
@@ -51,6 +56,14 @@ class WrenchProvider : ContentProvider() {
     }
 
     override fun onCreate(): Boolean {
+
+        if (GlobalContext.getOrNull() == null) {
+            startKoin(koinApplication {
+                modules(listOf(sampleAppModule))
+                androidContext(context!!)
+            })
+        }
+
         return true
     }
 

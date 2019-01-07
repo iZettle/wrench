@@ -157,4 +157,5 @@ object Support {
 
 object Koin {
     const val androidx = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
+    const val koinTest = "org.koin:koin-test:${Versions.koin}"
 }
