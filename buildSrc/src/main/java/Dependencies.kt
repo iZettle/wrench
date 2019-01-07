@@ -1,7 +1,7 @@
 // https://handstandsam.com/2018/02/11/kotlin-buildsrc-for-better-gradle-dependency-management/
 
 object Versions {
-    const val targetSdk = 27
+    const val targetSdk = 28
     const val compileSdk = 28
     const val minSdk = 14
 

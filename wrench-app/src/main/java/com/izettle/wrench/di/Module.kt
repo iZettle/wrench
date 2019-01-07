@@ -13,13 +13,14 @@ import com.izettle.wrench.dialogs.stringvalue.FragmentStringValueViewModel
 import com.izettle.wrench.oss.detail.OssDetailViewModel
 import com.izettle.wrench.oss.list.OssListViewModel
 import com.izettle.wrench.preferences.WrenchPreferences
+import com.izettle.wrench.provider.IPackageManagerWrapper
 import com.izettle.wrench.provider.PackageManagerWrapper
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val sampleAppModule = module {
-    single { PackageManagerWrapper(androidContext().packageManager) }
+    single { PackageManagerWrapper(androidContext().packageManager) as IPackageManagerWrapper }
     single { WrenchPreferences(androidContext()) }
     single {
         Room.databaseBuilder(androidContext(), WrenchDatabase::class.java, "wrench_database.db")
