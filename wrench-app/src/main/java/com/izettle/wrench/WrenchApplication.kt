@@ -2,11 +2,6 @@ package com.izettle.wrench
 
 import android.app.Application
 import com.facebook.stetho.Stetho
-import com.izettle.wrench.di.sampleAppModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.GlobalContext
-import org.koin.core.context.startKoin
-import org.koin.dsl.koinApplication
 
 class WrenchApplication : Application() {
 
@@ -29,13 +24,6 @@ class WrenchApplication : Application() {
                     .penaltyDeath()
                     .build())
              */
-        }
-
-        if (GlobalContext.getOrNull() == null) {
-            startKoin(koinApplication {
-                modules(listOf(sampleAppModule))
-                androidContext(this@WrenchApplication)
-            })
         }
     }
 }

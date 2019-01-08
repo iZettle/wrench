@@ -13,8 +13,10 @@ import com.izettle.wrench.di.sampleAppModule
 import com.izettle.wrench.preferences.WrenchPreferences
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import org.koin.dsl.koinApplication
 import java.util.*
 
@@ -59,6 +61,7 @@ class WrenchProvider : ContentProvider() {
 
         if (GlobalContext.getOrNull() == null) {
             startKoin(koinApplication {
+                androidLogger(Level.DEBUG)
                 modules(listOf(sampleAppModule))
                 androidContext(context!!)
             })
