@@ -1,7 +1,6 @@
 package com.izettle.wrench.dialogs.scope
 
 import android.database.sqlite.SQLiteException
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.izettle.wrench.database.WrenchScope
@@ -34,7 +33,6 @@ constructor(private val scopeDao: WrenchScopeDao) : ViewModel() {
         }
     }
 
-    @WorkerThread
     @Throws(SQLiteException::class)
     internal fun createScope(scopeName: String) {
         GlobalScope.launch {
@@ -45,7 +43,6 @@ constructor(private val scopeDao: WrenchScopeDao) : ViewModel() {
         }
     }
 
-    @WorkerThread
     internal fun removeScope(scope: WrenchScope) {
         GlobalScope.launch {
             scopeDao.delete(scope)
