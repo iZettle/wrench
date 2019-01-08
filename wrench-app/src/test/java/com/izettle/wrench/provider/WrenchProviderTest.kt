@@ -15,13 +15,14 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
+import org.koin.core.logger.Level
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
-import org.koin.test.KoinTest
+import org.koin.test.AutoCloseKoinTest
 import org.koin.test.get
 import org.robolectric.Robolectric
 
@@ -38,7 +39,7 @@ val roomTestModule = module {
 }
 
 @RunWith(AndroidJUnit4::class)
-class WrenchProviderTest : KoinTest {
+class WrenchProviderTest : AutoCloseKoinTest() {
 
     private lateinit var wrenchProvider: WrenchProvider
 
@@ -49,6 +50,7 @@ class WrenchProviderTest : KoinTest {
     fun setUp() {
         if (GlobalContext.getOrNull() == null) {
             startKoin(koinApplication {
+                androidLogger(Level.DEBUG)
                 modules(listOf(sampleAppModule))
                 androidContext(ApplicationProvider.getApplicationContext())
             })
@@ -65,7 +67,6 @@ class WrenchProviderTest : KoinTest {
     @After
     fun tearDown() {
         databass!!.close()
-        stopKoin()
     }
 
     @Test
@@ -77,27 +78,31 @@ class WrenchProviderTest : KoinTest {
         val insertBoltUri = wrenchProvider.insert(uri, insertBolt.toContentValues())
         Assert.assertNotNull(insertBoltUri)
 
-        var cursor = wrenchProvider.query(WrenchProviderContract.boltUri(insertBoltKey), null, null, null, null)
-        Assert.assertNotNull(cursor)
-        Assert.assertEquals(1, cursor!!.count)
+        wrenchProvider.query(WrenchProviderContract.boltUri(insertBoltKey), null, null, null, null).use { cursor ->
 
-        cursor.moveToFirst()
-        var queryBolt = Bolt.fromCursor(cursor)
+            Assert.assertNotNull(cursor)
+            Assert.assertEquals(1, cursor!!.count)
 
-        Assert.assertEquals(insertBolt.key, queryBolt.key)
-        Assert.assertEquals(insertBolt.value, queryBolt.value)
-        Assert.assertEquals(insertBolt.type, queryBolt.type)
+            cursor.moveToFirst()
+            val queryBolt = Bolt.fromCursor(cursor)
 
-        cursor = wrenchProvider.query(WrenchProviderContract.boltUri(Integer.parseInt(insertBoltUri!!.lastPathSegment!!).toLong()), null, null, null, null)
-        Assert.assertNotNull(cursor)
-        Assert.assertEquals(1, cursor!!.count)
+            Assert.assertEquals(insertBolt.key, queryBolt.key)
+            Assert.assertEquals(insertBolt.value, queryBolt.value)
+            Assert.assertEquals(insertBolt.type, queryBolt.type)
+        }
 
-        cursor.moveToFirst()
-        queryBolt = Bolt.fromCursor(cursor)
+        wrenchProvider.query(WrenchProviderContract.boltUri(Integer.parseInt(insertBoltUri!!.lastPathSegment!!).toLong()), null, null, null, null).use { cursor ->
 
-        Assert.assertEquals(insertBolt.key, queryBolt.key)
-        Assert.assertEquals(insertBolt.value, queryBolt.value)
-        Assert.assertEquals(insertBolt.type, queryBolt.type)
+            Assert.assertNotNull(cursor)
+            Assert.assertEquals(1, cursor!!.count)
+
+            cursor.moveToFirst()
+            val queryBolt = Bolt.fromCursor(cursor)
+
+            Assert.assertEquals(insertBolt.key, queryBolt.key)
+            Assert.assertEquals(insertBolt.value, queryBolt.value)
+            Assert.assertEquals(insertBolt.type, queryBolt.type)
+        }
     }
 
     @Test
@@ -109,27 +114,31 @@ class WrenchProviderTest : KoinTest {
         val insertBoltUri = wrenchProvider.insert(uri, insertBolt.toContentValues())
         Assert.assertNotNull(insertBoltUri)
 
-        var cursor = wrenchProvider.query(WrenchProviderContract.boltUri(updateBoltKey), null, null, null, null)
-        Assert.assertNotNull(cursor)
-        Assert.assertTrue(cursor!!.moveToFirst())
+        wrenchProvider.query(WrenchProviderContract.boltUri(updateBoltKey), null, null, null, null).use { cursor ->
 
-        val providerBolt = Bolt.fromCursor(cursor)
-        Assert.assertEquals(insertBolt.key, providerBolt.key)
-        Assert.assertEquals(insertBolt.value, providerBolt.value)
-        Assert.assertEquals(insertBolt.type, providerBolt.type)
+            Assert.assertNotNull(cursor)
+            Assert.assertTrue(cursor!!.moveToFirst())
 
-        val updateBolt = Bolt(providerBolt.id!!, providerBolt.type, providerBolt.key, providerBolt.value!! + providerBolt.value!!)
+            val providerBolt = Bolt.fromCursor(cursor)
+            Assert.assertEquals(insertBolt.key, providerBolt.key)
+            Assert.assertEquals(insertBolt.value, providerBolt.value)
+            Assert.assertEquals(insertBolt.type, providerBolt.type)
 
-        val update = wrenchProvider.update(WrenchProviderContract.boltUri(updateBolt.id!!), updateBolt.toContentValues(), null, null)
-        Assert.assertEquals(1, update)
+            val updateBolt = Bolt(providerBolt.id!!, providerBolt.type, providerBolt.key, providerBolt.value!! + providerBolt.value!!)
 
-        cursor = wrenchProvider.query(WrenchProviderContract.boltUri(updateBoltKey), null, null, null, null)
-        Assert.assertNotNull(cursor)
+            val update = wrenchProvider.update(WrenchProviderContract.boltUri(updateBolt.id!!), updateBolt.toContentValues(), null, null)
+            Assert.assertEquals(1, update)
+        }
 
-        Assert.assertTrue(cursor!!.moveToFirst())
-        val updatedBolt = Bolt.fromCursor(cursor)
+        wrenchProvider.query(WrenchProviderContract.boltUri(updateBoltKey), null, null, null, null).use { cursor ->
 
-        Assert.assertEquals(insertBolt.value!! + insertBolt.value!!, updatedBolt.value)
+            Assert.assertNotNull(cursor)
+
+            Assert.assertTrue(cursor!!.moveToFirst())
+            val updatedBolt = Bolt.fromCursor(cursor)
+
+            Assert.assertEquals(insertBolt.value!! + insertBolt.value!!, updatedBolt.value)
+        }
     }
 
     @Test(expected = UnsupportedOperationException::class)
