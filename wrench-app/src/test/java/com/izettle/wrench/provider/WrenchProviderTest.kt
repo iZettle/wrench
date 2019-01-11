@@ -8,22 +8,15 @@ import com.izettle.wrench.core.Bolt
 import com.izettle.wrench.core.Nut
 import com.izettle.wrench.core.WrenchProviderContract
 import com.izettle.wrench.database.WrenchDatabase
-import com.izettle.wrench.di.sampleAppModule
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.GlobalContext
-import org.koin.core.context.loadKoinModules
-import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
-import org.koin.dsl.koinApplication
-import org.koin.dsl.module
+import org.koin.dsl.module.module
+import org.koin.standalone.StandAloneContext.loadKoinModules
+import org.koin.standalone.get
 import org.koin.test.AutoCloseKoinTest
-import org.koin.test.get
 import org.robolectric.Robolectric
 
 val roomTestModule = module {
@@ -43,30 +36,19 @@ class WrenchProviderTest : AutoCloseKoinTest() {
 
     private lateinit var wrenchProvider: WrenchProvider
 
-    private var databass: WrenchDatabase? = null
-
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        if (GlobalContext.getOrNull() == null) {
-            startKoin(koinApplication {
-                androidLogger(Level.DEBUG)
-                modules(listOf(sampleAppModule))
-                androidContext(ApplicationProvider.getApplicationContext())
-            })
-        }
-
-        loadKoinModules(roomTestModule)
-
-        databass = get<WrenchDatabase>()
 
         val contentProviderController = Robolectric.buildContentProvider(WrenchProvider::class.java).create(BuildConfig.CONFIG_AUTHORITY)
         wrenchProvider = contentProviderController.get()
+
+        loadKoinModules(roomTestModule)
     }
 
     @After
     fun tearDown() {
-        databass!!.close()
+        get<WrenchDatabase>().close()
     }
 
     @Test

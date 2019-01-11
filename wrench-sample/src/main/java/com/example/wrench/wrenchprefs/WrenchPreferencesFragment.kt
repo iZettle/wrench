@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.wrench.databinding.FragmentWrenchPreferencesBinding
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WrenchPreferencesFragment : Fragment() {
 

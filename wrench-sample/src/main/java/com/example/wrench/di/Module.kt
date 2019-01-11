@@ -8,8 +8,8 @@ import com.izettle.wrench.service.Provider
 import com.izettle.wrench.service.WrenchPreferenceProvider
 import com.izettle.wrench.service.WrenchService
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import org.koin.androidx.viewmodel.ext.koin.viewModel
+import org.koin.dsl.module.module
 
 val sampleAppModule = module {
     factory { WrenchPreferences(androidContext()) }

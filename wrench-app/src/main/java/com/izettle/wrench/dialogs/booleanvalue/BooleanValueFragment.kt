@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.izettle.wrench.R
 import com.izettle.wrench.databinding.FragmentBooleanValueBinding
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BooleanValueFragment : DialogFragment() {
 

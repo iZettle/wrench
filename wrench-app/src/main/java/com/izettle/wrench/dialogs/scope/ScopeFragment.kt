@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.izettle.wrench.R
 import com.izettle.wrench.database.WrenchScope
 import com.izettle.wrench.databinding.FragmentScopeBinding
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ScopeFragment : DialogFragment(), ScopeRecyclerViewAdapter.Listener {
     private lateinit var binding: FragmentScopeBinding

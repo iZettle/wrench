@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.izettle.wrench.R
 import com.izettle.wrench.database.WrenchPredefinedConfigurationValue
 import com.izettle.wrench.databinding.FragmentEnumValueBinding
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EnumValueFragment : DialogFragment(), PredefinedValueRecyclerViewAdapter.Listener {
 

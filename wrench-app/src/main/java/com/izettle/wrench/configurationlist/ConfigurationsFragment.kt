@@ -29,7 +29,7 @@ import com.izettle.wrench.dialogs.integervalue.IntegerValueFragmentArgs
 import com.izettle.wrench.dialogs.scope.ScopeFragment
 import com.izettle.wrench.dialogs.stringvalue.StringValueFragment
 import com.izettle.wrench.dialogs.stringvalue.StringValueFragmentArgs
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener {

@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.izettle.wrench.R
 import com.izettle.wrench.databinding.FragmentIntegerValueBinding
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class IntegerValueFragment : DialogFragment() {

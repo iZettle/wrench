@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import com.izettle.wrench.databinding.FragmentOssBinding
 import com.izettle.wrench.oss.detail.OssDetailFragment
 import com.izettle.wrench.oss.detail.OssDetailFragmentArgs
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OssFragment : Fragment() {
     private lateinit var binding: FragmentOssBinding

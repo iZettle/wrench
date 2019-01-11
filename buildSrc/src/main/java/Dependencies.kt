@@ -45,7 +45,7 @@ object Versions {
     const val recyclerview = "1.1.0-alpha01"
     const val material = "1.1.0-alpha02"
     const val annotation = "1.0.1"
-    const val koin = "2.0.0-alpha-6"
+    const val koin = "1.0.2"
 }
 
 object AndroidTestingSupportLibrary {
