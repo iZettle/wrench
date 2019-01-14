@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.wrench.databinding.FragmentWrenchServiceBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class WrenchServiceFragment : Fragment() {
 
     private val viewModel: WrenchServiceFragmentViewModel by viewModel()

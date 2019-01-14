@@ -7,10 +7,11 @@ import com.izettle.wrench.database.WrenchConfiguration
 import com.izettle.wrench.database.WrenchConfigurationDao
 import com.izettle.wrench.database.WrenchConfigurationValue
 import com.izettle.wrench.database.WrenchConfigurationValueDao
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
-import javax.inject.Inject
 
-class FragmentStringValueViewModel @Inject
+class FragmentStringValueViewModel
 constructor(private val configurationDao: WrenchConfigurationDao, private val configurationValueDao: WrenchConfigurationValueDao) : ViewModel() {
 
     private var configurationId: Long = 0
@@ -33,16 +34,20 @@ constructor(private val configurationDao: WrenchConfigurationDao, private val co
     }
 
     fun updateConfigurationValue(value: String) {
-        if (selectedConfigurationValue != null) {
-            configurationValueDao.updateConfigurationValue(configurationId, scopeId, value)
-        } else {
-            val wrenchConfigurationValue = WrenchConfigurationValue(0, configurationId, value, scopeId)
-            wrenchConfigurationValue.id = configurationValueDao.insert(wrenchConfigurationValue)
+        GlobalScope.launch {
+            if (selectedConfigurationValue != null) {
+                configurationValueDao.updateConfigurationValue(configurationId, scopeId, value)
+            } else {
+                val wrenchConfigurationValue = WrenchConfigurationValue(0, configurationId, value, scopeId)
+                wrenchConfigurationValue.id = configurationValueDao.insert(wrenchConfigurationValue)
+            }
+            configurationDao.touch(configurationId, Date())
         }
-        configurationDao.touch(configurationId, Date())
     }
 
     internal fun deleteConfigurationValue() {
-        configurationValueDao.delete(selectedConfigurationValue!!)
+        GlobalScope.launch {
+            configurationValueDao.delete(selectedConfigurationValue!!)
+        }
     }
 }

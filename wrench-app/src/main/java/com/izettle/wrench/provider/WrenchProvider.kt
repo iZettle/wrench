@@ -9,35 +9,28 @@ import com.izettle.wrench.BuildConfig
 import com.izettle.wrench.core.Bolt
 import com.izettle.wrench.core.WrenchProviderContract
 import com.izettle.wrench.database.*
+import com.izettle.wrench.di.sampleAppModule
 import com.izettle.wrench.preferences.WrenchPreferences
-import dagger.android.AndroidInjection
-import dagger.android.HasContentProviderInjector
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.startKoin
 import java.util.*
-import javax.inject.Inject
 
 
 class WrenchProvider : ContentProvider() {
 
-    @Inject
-    lateinit var applicationDao: WrenchApplicationDao
+    val applicationDao: WrenchApplicationDao by inject()
 
-    @Inject
-    lateinit var scopeDao: WrenchScopeDao
+    val scopeDao: WrenchScopeDao by inject()
 
-    @Inject
-    lateinit var configurationDao: WrenchConfigurationDao
+    val configurationDao: WrenchConfigurationDao by inject()
 
-    @Inject
-    lateinit var configurationValueDao: WrenchConfigurationValueDao
+    val configurationValueDao: WrenchConfigurationValueDao by inject()
 
-    @Inject
-    lateinit var predefinedConfigurationDao: WrenchPredefinedConfigurationValueDao
+    val predefinedConfigurationDao: WrenchPredefinedConfigurationValueDao by inject()
 
-    @Inject
-    lateinit var packageManagerWrapper: IPackageManagerWrapper
+    val packageManagerWrapper: IPackageManagerWrapper by inject()
 
-    @Inject
-    lateinit var wrenchPreferences: WrenchPreferences
+    val wrenchPreferences: WrenchPreferences by inject()
 
     @Synchronized
     private fun getCallingApplication(applicationDao: WrenchApplicationDao): WrenchApplication? {
@@ -60,10 +53,7 @@ class WrenchProvider : ContentProvider() {
     }
 
     override fun onCreate(): Boolean {
-
-        if (context!!.applicationContext is HasContentProviderInjector) {
-            AndroidInjection.inject(this)
-        }
+        startKoin(context!!, listOf(sampleAppModule))
 
         return true
     }

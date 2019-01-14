@@ -3,9 +3,10 @@ package com.izettle.wrench.configurationlist
 import android.text.TextUtils
 import androidx.lifecycle.*
 import com.izettle.wrench.database.*
-import javax.inject.Inject
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class ConfigurationViewModel @Inject
+class ConfigurationViewModel
 internal constructor(private val applicationDao: WrenchApplicationDao, configurationDao: WrenchConfigurationDao, private val scopeDao: WrenchScopeDao) : ViewModel() {
     private val queryLiveData: MutableLiveData<String> = MutableLiveData()
 
@@ -62,6 +63,8 @@ internal constructor(private val applicationDao: WrenchApplicationDao, configura
     }
 
     internal fun deleteApplication(wrenchApplication: WrenchApplication) {
-        applicationDao.delete(wrenchApplication)
+        GlobalScope.launch {
+            applicationDao.delete(wrenchApplication)
+        }
     }
 }

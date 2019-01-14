@@ -1,40 +1,33 @@
 package com.izettle.wrench.dialogs.integervalue
 
 import android.app.Dialog
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.izettle.wrench.R
 import com.izettle.wrench.databinding.FragmentIntegerValueBinding
-import com.izettle.wrench.di.Injectable
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class IntegerValueFragment : DialogFragment(), Injectable {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+class IntegerValueFragment : DialogFragment() {
+
     private lateinit var binding: FragmentIntegerValueBinding
-    private lateinit var viewModel: FragmentIntegerValueViewModel
+    private val viewModel: FragmentIntegerValueViewModel by viewModel()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         assert(arguments != null)
 
-        binding = FragmentIntegerValueBinding.inflate(LayoutInflater.from(context), null)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentIntegerValueViewModel::class.java)
+        binding = FragmentIntegerValueBinding.inflate(LayoutInflater.from(context))
 
         val args = IntegerValueFragmentArgs.fromBundle(arguments!!)
         viewModel.init(args.configurationId, args.scopeId)
 
         viewModel.configuration.observe(this, Observer { wrenchConfiguration ->
             if (wrenchConfiguration != null) {
-                dialog.setTitle(wrenchConfiguration.key)
+                requireDialog().setTitle(wrenchConfiguration.key)
             }
         })
 
@@ -48,24 +41,24 @@ class IntegerValueFragment : DialogFragment(), Injectable {
 
         binding.value.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                AsyncTask.execute { viewModel.updateConfigurationValue(binding.value.text!!.toString()) }
+                viewModel.updateConfigurationValue(binding.value.text!!.toString())
                 dismiss()
             }
             false
         }
 
         return AlertDialog.Builder(requireActivity())
-                .setTitle(R.string.select_scope)
+                .setTitle(".")
                 .setView(binding.root)
                 .setPositiveButton(android.R.string.ok
                 ) { _, _ ->
-                    AsyncTask.execute { viewModel.updateConfigurationValue(binding.value.text!!.toString()) }
+                    viewModel.updateConfigurationValue(binding.value.text!!.toString())
                     dismiss()
                 }
                 .setNegativeButton(R.string.revert
                 ) { _, _ ->
                     if (viewModel.selectedConfigurationValue != null) {
-                        AsyncTask.execute { viewModel.deleteConfigurationValue() }
+                        viewModel.deleteConfigurationValue()
                     }
                     dismiss()
                 }

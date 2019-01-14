@@ -1,40 +1,32 @@
 package com.izettle.wrench.dialogs.booleanvalue
 
 import android.app.Dialog
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.izettle.wrench.R
 import com.izettle.wrench.databinding.FragmentBooleanValueBinding
-import com.izettle.wrench.di.Injectable
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class BooleanValueFragment : DialogFragment(), Injectable {
+class BooleanValueFragment : DialogFragment() {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentBooleanValueBinding
-    private lateinit var viewModel: FragmentBooleanValueViewModel
+    private val viewModel: FragmentBooleanValueViewModel by viewModel()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         assert(arguments != null)
 
-        binding = FragmentBooleanValueBinding.inflate(LayoutInflater.from(context), null)
+        binding = FragmentBooleanValueBinding.inflate(LayoutInflater.from(context))
 
-        val args = BooleanValueFragmentArgs.fromBundle(arguments)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FragmentBooleanValueViewModel::class.java)
+        val args = BooleanValueFragmentArgs.fromBundle(arguments!!)
 
         viewModel.init(args.configurationId, args.scopeId)
 
         viewModel.configuration.observe(this, Observer { wrenchConfiguration ->
             if (wrenchConfiguration != null) {
-                dialog.setTitle(wrenchConfiguration.key)
+                requireDialog().setTitle(wrenchConfiguration.key)
             }
         })
 
@@ -46,17 +38,17 @@ class BooleanValueFragment : DialogFragment(), Injectable {
         })
 
         return AlertDialog.Builder(requireActivity())
-                .setTitle(R.string.select_scope)
+                .setTitle(".")
                 .setView(binding.root)
                 .setPositiveButton(android.R.string.ok
                 ) { _, _ ->
-                    AsyncTask.execute { viewModel.updateConfigurationValue(binding.value.isChecked.toString()) }
+                    viewModel.updateConfigurationValue(binding.value.isChecked.toString())
                     dismiss()
                 }
                 .setNegativeButton(R.string.revert
                 ) { _, _ ->
                     if (viewModel.selectedConfigurationValue != null) {
-                        AsyncTask.execute { viewModel.deleteConfigurationValue() }
+                        viewModel.deleteConfigurationValue()
                     }
                     dismiss()
                 }

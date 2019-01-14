@@ -4,7 +4,6 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
@@ -13,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -23,7 +20,6 @@ import com.izettle.wrench.core.Bolt
 import com.izettle.wrench.database.WrenchApplication
 import com.izettle.wrench.database.WrenchConfigurationWithValues
 import com.izettle.wrench.databinding.FragmentConfigurationsBinding
-import com.izettle.wrench.di.Injectable
 import com.izettle.wrench.dialogs.booleanvalue.BooleanValueFragment
 import com.izettle.wrench.dialogs.booleanvalue.BooleanValueFragmentArgs
 import com.izettle.wrench.dialogs.enumvalue.EnumValueFragment
@@ -33,16 +29,14 @@ import com.izettle.wrench.dialogs.integervalue.IntegerValueFragmentArgs
 import com.izettle.wrench.dialogs.scope.ScopeFragment
 import com.izettle.wrench.dialogs.stringvalue.StringValueFragment
 import com.izettle.wrench.dialogs.stringvalue.StringValueFragmentArgs
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener, Injectable {
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, ConfigurationRecyclerViewAdapter.Listener {
     private lateinit var fragmentConfigurationsBinding: FragmentConfigurationsBinding
     private var currentFilter: CharSequence? = null
     private var searchView: SearchView? = null
-    private lateinit var model: ConfigurationViewModel
+    private val model: ConfigurationViewModel by viewModel()
 
     private fun updateConfigurations(wrenchConfigurations: List<WrenchConfigurationWithValues>) {
         var adapter = fragmentConfigurationsBinding.list.adapter as ConfigurationRecyclerViewAdapter?
@@ -78,9 +72,8 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
         super.onViewCreated(view, savedInstanceState)
         assert(arguments != null)
 
-        model = ViewModelProviders.of(this, viewModelFactory).get(ConfigurationViewModel::class.java)
         val args = ConfigurationsFragmentArgs.fromBundle(arguments!!)
-        model.setApplicationId(args.applicationId.toLong())
+        model.setApplicationId(args.applicationId)
 
         fragmentConfigurationsBinding.list.layoutManager = LinearLayoutManager(context)
 
@@ -100,10 +93,8 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
             if (scope != null && fragmentConfigurationsBinding.list.adapter != null) {
                 fragmentConfigurationsBinding.list.adapter!!.notifyDataSetChanged()
             }
-            fragmentConfigurationsBinding.scopeButton.text = scope!!.name
+            // fragmentConfigurationsBinding.scopeButton.text = scope!!.name
         })
-
-        fragmentConfigurationsBinding.scopeButton.setOnClickListener { ScopeFragment.newInstance(args.applicationId).show(childFragmentManager, null) }
 
         model.configurations.observe(this, Observer { wrenchConfigurationWithValues ->
             if (wrenchConfigurationWithValues != null) {
@@ -116,7 +107,7 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
             if (isEmpty == null || isEmpty) {
                 animator.displayedChild = animator.indexOfChild(fragmentConfigurationsBinding.noConfigurationsEmptyView)
             } else {
-                animator.displayedChild = animator.indexOfChild(fragmentConfigurationsBinding.listWrapper)
+                animator.displayedChild = animator.indexOfChild(fragmentConfigurationsBinding.list)
             }
         })
     }
@@ -154,8 +145,8 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
         return false
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.action_restart_application -> {
                 model.wrenchApplication.observe(this, object : Observer<WrenchApplication> {
                     override fun onChanged(wrenchApplication: WrenchApplication?) {
@@ -193,8 +184,13 @@ class ConfigurationsFragment : Fragment(), SearchView.OnQueryTextListener, Confi
                 return true
             }
             R.id.action_delete_application -> {
-                AsyncTask.execute { model.deleteApplication(model.wrenchApplication.value!!) }
+                model.deleteApplication(model.wrenchApplication.value!!)
                 Navigation.findNavController(fragmentConfigurationsBinding.root).navigateUp()
+                return true
+            }
+            R.id.action_change_scope -> {
+                val args = ConfigurationsFragmentArgs.fromBundle(arguments!!)
+                ScopeFragment.newInstance(args.applicationId).show(childFragmentManager, null)
                 return true
             }
             else -> {

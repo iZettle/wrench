@@ -1,20 +1,9 @@
 package com.izettle.wrench
 
-import android.content.Context
-import android.os.StrictMode
+import android.app.Application
 import com.facebook.stetho.Stetho
-import com.izettle.wrench.di.AppInjector
-import com.izettle.wrench.di.DaggerAppComponent
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
 
-class WrenchApplication : DaggerApplication() {
-
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
-
-        AppInjector.init(this)
-    }
+class WrenchApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -22,21 +11,19 @@ class WrenchApplication : DaggerApplication() {
         if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this)
 
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .penaltyDeath()
-                .build())
+            /*
+            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build())
 
-        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .penaltyDeath()
-                .build())
+            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build())
+             */
         }
-    }
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.builder().application(this).build()
     }
 }

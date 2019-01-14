@@ -6,18 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izettle.wrench.databinding.FragmentApplicationsBinding
-import com.izettle.wrench.di.Injectable
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ApplicationsFragment : Fragment(), Injectable {
+class ApplicationsFragment : Fragment() {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val model: ApplicationViewModel by viewModel()
 
     private lateinit var fragmentApplicationsBinding: FragmentApplicationsBinding
 
@@ -30,7 +26,7 @@ class ApplicationsFragment : Fragment(), Injectable {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val model: ApplicationViewModel = ViewModelProviders.of(this, viewModelFactory).get(ApplicationViewModel::class.java)
+        fragmentApplicationsBinding.list.layoutManager = LinearLayoutManager(requireContext())
 
         val adapter = ApplicationAdapter()
         model.applications.observe(this, Observer { adapter.submitList(it) })
@@ -44,8 +40,5 @@ class ApplicationsFragment : Fragment(), Injectable {
                 animator.displayedChild = animator.indexOfChild(fragmentApplicationsBinding.list)
             }
         })
-
     }
-
-
 }

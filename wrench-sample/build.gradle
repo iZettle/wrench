@@ -66,6 +66,7 @@ dependencies {
 
     implementation Libs.support.app_compat
     implementation Libs.support.design
+    implementation Libs.support.coordinatorlayout
     implementation Libs.constraint_layout
     implementation Libs.lifecycle.extensions
 
@@ -87,7 +88,7 @@ dependencies {
     releaseImplementation project(":wrench-service-prefs-no-op")
 
     implementation Libs.kotlin.stdlib
-    implementation Libs.kotlin.coroutines
+    implementation Libs.kotlin.coroutinesAndroid
 
     implementation Libs.oss.runtime
 

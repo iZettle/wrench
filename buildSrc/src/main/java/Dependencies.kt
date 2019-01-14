@@ -8,41 +8,44 @@ object Versions {
     const val appVersionCode = 14
     const val appVersionName = "1.0.13"
 
-    const val dagger = "2.16"
-
     const val wrench = "0.3"
 
     const val arch_core = "1.1.1"
-    const val junit = "4.12"
+    const val junit = "4.13-beta-1"
     const val retrofit = "2.3.0"
     const val okhttp_logging_interceptor = "3.9.0"
     const val mockwebserver = "3.8.1"
     const val apache_commons = "2.5"
-    const val mockito = "2.23.0"
+    const val mockito = "2.23.4"
     const val mockito_all = "1.10.19"
     const val dexmaker = "2.2.0"
     const val glide = "4.7.1"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.3.0-alpha13"
+    const val android_gradle_plugin = "3.4.0-alpha10"
     const val rxjava2 = "2.1.3"
     const val rx_android = "2.0.1"
     const val hamcrest = "1.3"
-    const val kotlin = "1.2.71"
+    const val kotlin = "1.3.11"
     const val work = "1.0.0-alpha01"
-    const val navigation = "1.0.0-alpha06"
-    const val kotlin_coroutines = "0.30.2"
+    const val navigation = "1.0.0-alpha09"
+    const val kotlin_coroutines = "1.1.0"
 
-    const val room = "2.0.0-rc01"
-    const val lifecycle = "2.0.0"
-    const val paging = "2.0.0"
-    const val atsl = "1.1.0-beta02"
-    const val test = "1.0.0-beta02"
+    const val room = "2.1.0-alpha03"
+    const val lifecycle = "2.1.0-alpha01"
+    const val paging = "2.1.0-rc01"
+    const val atsl = "1.1.1"
+    const val test = "1.1.0"
     const val espresso = "3.1.0-beta02"
 
-    const val robolectric = "4.0-beta-1"
-    const val constraint_layout = "2.0.0-alpha2"
-    const val support = "1.0.0"
-    const val koin = "1.0.1"
+    const val robolectric = "4.1"
+    const val constraint_layout = "2.0.0-alpha3"
+    const val support = "1.1.0-alpha01"
+    const val cardview = "1.0.0"
+    const val coordinatorlayout = "1.1.0-alpha01"
+    const val recyclerview = "1.1.0-alpha01"
+    const val material = "1.1.0-alpha02"
+    const val annotation = "1.0.1"
+    const val koin = "1.0.2"
 }
 
 object AndroidTestingSupportLibrary {
@@ -86,7 +89,7 @@ object Kotlin {
     const val test = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
     const val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val allopen = "org.jetbrains.kotlin:kotlin-allopen:${Versions.kotlin}"
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
 }
 
 object Wrench {
@@ -117,7 +120,6 @@ object Libs {
     val wrench = Wrench
     val lifecycle = Lifecycle
     val support = Support
-    val dagger = Dagger
     val mockito = Mockito
     val androidTestingSupportLibrary = AndroidTestingSupportLibrary
     val espresso = Espresso
@@ -142,24 +144,18 @@ object Libs {
 
 }
 
-object Dagger {
-    const val runtime = "com.google.dagger:dagger:${Versions.dagger}"
-    const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-    const val daggerAndroid = "com.google.dagger:dagger-android:${Versions.dagger}"
-    const val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
-    const val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
-}
-
 object Support {
-    const val annotations = "androidx.annotation:annotation:${Versions.support}"
+    const val annotations = "androidx.annotation:annotation:${Versions.annotation}"
     const val app_compat = "androidx.appcompat:appcompat:${Versions.support}"
-    const val recyclerview = "androidx.recyclerview:recyclerview:${Versions.support}"
-    const val cardview = "androidx.cardview:cardview:${Versions.support}"
-    const val design = "com.google.android.material:material:${Versions.support}"
+    const val recyclerview = "androidx.recyclerview:recyclerview:${Versions.recyclerview}"
+    const val cardview = "androidx.cardview:cardview:${Versions.cardview}"
+    const val coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:${Versions.coordinatorlayout}"
+    const val design = "com.google.android.material:material:${Versions.material}"
     const val v4 = "androidx.legacy:legacy-support-v4:${Versions.support}"
     const val core_utils = "androidx.legacy:legacy-support-core-utils:${Versions.support}"
 }
 
 object Koin {
     const val androidx = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
+    const val koinTest = "org.koin:koin-test:${Versions.koin}"
 }

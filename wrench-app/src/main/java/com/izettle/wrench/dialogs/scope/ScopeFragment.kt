@@ -1,7 +1,6 @@
 package com.izettle.wrench.dialogs.scope
 
 import android.app.Dialog
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,32 +8,22 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.izettle.wrench.R
 import com.izettle.wrench.database.WrenchScope
 import com.izettle.wrench.databinding.FragmentScopeBinding
-import com.izettle.wrench.di.Injectable
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.launch
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ScopeFragment : DialogFragment(), ScopeRecyclerViewAdapter.Listener, Injectable {
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+class ScopeFragment : DialogFragment(), ScopeRecyclerViewAdapter.Listener {
     private lateinit var binding: FragmentScopeBinding
-    private lateinit var viewModel: ScopeFragmentViewModel
+    private val viewModel: ScopeFragmentViewModel by viewModel()
     private var adapter: ScopeRecyclerViewAdapter? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         assert(arguments != null)
 
-        binding = FragmentScopeBinding.inflate(LayoutInflater.from(context), null)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ScopeFragmentViewModel::class.java)
+        binding = FragmentScopeBinding.inflate(LayoutInflater.from(context))
 
         viewModel.init(arguments!!.getLong(ARGUMENT_APPLICATION_ID))
 
@@ -60,7 +49,7 @@ class ScopeFragment : DialogFragment(), ScopeRecyclerViewAdapter.Listener, Injec
                             .setPositiveButton("OK"
                             ) { _, _ ->
                                 val scopeName = input.text.toString()
-                                AsyncTask.execute { viewModel.createScope(scopeName) }
+                                viewModel.createScope(scopeName)
                             }.setNegativeButton("Cancel", null)
                             .show()
                 }
@@ -69,7 +58,7 @@ class ScopeFragment : DialogFragment(), ScopeRecyclerViewAdapter.Listener, Injec
                     val selectedScope = viewModel.selectedScope
                     if (selectedScope != null) {
                         if (!WrenchScope.isDefaultScope(selectedScope)) {
-                            AsyncTask.execute { viewModel.removeScope(selectedScope) }
+                            viewModel.removeScope(selectedScope)
                         }
                     }
                 }
@@ -77,7 +66,7 @@ class ScopeFragment : DialogFragment(), ScopeRecyclerViewAdapter.Listener, Injec
     }
 
     override fun onClick(view: View, wrenchScope: WrenchScope) {
-        CoroutineScope(Dispatchers.Default).launch { viewModel.selectScope(wrenchScope) }
+        viewModel.selectScope(wrenchScope)
         dismiss()
     }
 
