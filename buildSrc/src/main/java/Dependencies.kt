@@ -11,40 +11,33 @@ object Versions {
     const val wrench = "0.3"
 
     const val arch_core = "1.1.1"
-    const val junit = "4.13-beta-1"
-    const val retrofit = "2.3.0"
-    const val okhttp_logging_interceptor = "3.9.0"
-    const val mockwebserver = "3.8.1"
-    const val apache_commons = "2.5"
-    const val mockito = "2.23.4"
+    const val junit = "4.13-beta-2"
+    const val mockito = "2.24.0"
     const val mockito_all = "1.10.19"
     const val dexmaker = "2.2.0"
-    const val glide = "4.7.1"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.4.0-alpha10"
-    const val rxjava2 = "2.1.3"
-    const val rx_android = "2.0.1"
+    const val android_gradle_plugin = "3.5.0-alpha03"
     const val hamcrest = "1.3"
-    const val kotlin = "1.3.11"
+    const val kotlin = "1.3.21"
     const val work = "1.0.0-alpha01"
-    const val navigation = "1.0.0-alpha09"
-    const val kotlin_coroutines = "1.1.0"
+    const val navigation = "1.0.0-beta01"
+    const val kotlin_coroutines = "1.1.1"
 
-    const val room = "2.1.0-alpha03"
-    const val lifecycle = "2.1.0-alpha01"
-    const val paging = "2.1.0-rc01"
-    const val atsl = "1.1.1"
-    const val test = "1.1.0"
+    const val room = "2.1.0-alpha04"
+    const val lifecycle = "2.1.0-alpha02"
+    const val paging = "2.1.0"
+    const val atsl = "1.1.2-alpha01"
+    const val test = "1.1.1-alpha01"
     const val espresso = "3.1.0-beta02"
 
-    const val robolectric = "4.1"
+    const val robolectric = "4.2-beta-1"
     const val constraint_layout = "2.0.0-alpha3"
-    const val support = "1.1.0-alpha01"
+    const val appcompat = "1.1.0-alpha02"
     const val cardview = "1.0.0"
     const val coordinatorlayout = "1.1.0-alpha01"
-    const val recyclerview = "1.1.0-alpha01"
-    const val material = "1.1.0-alpha02"
-    const val annotation = "1.0.1"
+    const val recyclerview = "1.1.0-alpha02"
+    const val material = "1.1.0-alpha03"
+    const val annotation = "1.1.0-alpha01"
     const val koin = "1.0.2"
 }
 
@@ -113,7 +106,7 @@ object Navigation {
 
 object Oss {
     const val plugin = "com.google.gms:oss-licenses:0.9.2"
-    const val runtime = "com.google.android.gms:play-services-oss-licenses:16.0.1"
+    const val runtime = "com.google.android.gms:play-services-oss-licenses:16.0.2"
 }
 
 object Libs {
@@ -146,13 +139,13 @@ object Libs {
 
 object Support {
     const val annotations = "androidx.annotation:annotation:${Versions.annotation}"
-    const val app_compat = "androidx.appcompat:appcompat:${Versions.support}"
+    const val app_compat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val recyclerview = "androidx.recyclerview:recyclerview:${Versions.recyclerview}"
     const val cardview = "androidx.cardview:cardview:${Versions.cardview}"
     const val coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:${Versions.coordinatorlayout}"
     const val design = "com.google.android.material:material:${Versions.material}"
-    const val v4 = "androidx.legacy:legacy-support-v4:${Versions.support}"
-    const val core_utils = "androidx.legacy:legacy-support-core-utils:${Versions.support}"
+    const val v4 = "androidx.legacy:legacy-appcompat-v4:${Versions.appcompat}"
+    const val core_utils = "androidx.legacy:legacy-appcompat-core-utils:${Versions.appcompat}"
 }
 
 object Koin {
