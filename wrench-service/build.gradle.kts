@@ -1,9 +1,7 @@
 plugins {
     id("com.android.library")
-    id("kotlin-android-extensions")
     id("kotlin-android")
 }
-
 android {
     compileSdkVersion(Versions.compileSdk)
 
@@ -28,24 +26,25 @@ android {
         isWarningsAsErrors = true
         setLintConfig(File("../lint.xml"))
     }
-    testOptions {
-        unitTests.setIncludeAndroidResources(true)
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     testImplementation(Libs.junit)
-
-    testImplementation(Libs.androidTestingSupportLibrary.core)
-    testImplementation(Libs.androidTestingSupportLibrary.truth)
-    testImplementation(Libs.androidTestingSupportLibrary.rules)
-    testImplementation(Libs.androidTestingSupportLibrary.runner)
-    testImplementation(Libs.androidTestingSupportLibrary.junit)
-    testImplementation(Libs.robolectric)
+    testImplementation(Libs.mockito.core)
+    testImplementation(Libs.kotlin.stdlib)
 
     implementation(Libs.wrench.core)
+    debugImplementation(project(":wrench-service-prefs"))
+    releaseImplementation(project(":wrench-service-prefs-no-op"))
     implementation(Libs.support.annotations)
-    implementation(Libs.kotlin.stdlib)
+
+    api(project(":wrench-service-provider"))
 }
 
-apply(rootProject.file("gradle/gradle-mvn-push.gradle"))
+// The api of this module should be discussed before any potential release
+// apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
