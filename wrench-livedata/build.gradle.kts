@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
 }
-
 android {
     compileSdkVersion(Versions.compileSdk)
 
@@ -11,21 +10,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val wrenchProviderAuthority = "com.izettle.wrench.configprovider"
-
-        manifestPlaceholders = mapOf(Pair("wrenchProviderAuthority", wrenchProviderAuthority))
-        buildConfigField("String", "WRENCH_AUTHORITY", "\"${wrenchProviderAuthority}\"")
-
-        buildConfigField("int", "WRENCH_API_VERSION", "1")
     }
-
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-
-        getByName("debug") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
@@ -41,8 +28,11 @@ android {
 
 dependencies {
     testImplementation(Libs.junit)
+//    implementation Libs.wrench.core
+    implementation(Libs.wrench.core)
     implementation(Libs.support.annotations)
+    api(Libs.lifecycle.core)
 }
 
-
-apply(rootProject.file("gradle/gradle-mvn-push.gradle"))
+// The api of this module should be discussed before any potential release
+// apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
