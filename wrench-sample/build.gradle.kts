@@ -43,7 +43,7 @@ android {
         }
     }
     lintOptions {
-        baseline("lint-baseline.xml")
+        baselineFile = file("lint-baseline.xml")
         isCheckReleaseBuilds = true
         isAbortOnError = true
         isWarningsAsErrors = true
