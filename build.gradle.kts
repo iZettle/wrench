@@ -9,7 +9,6 @@ buildscript {
         classpath(Libs.kotlin.plugin)
         classpath(Libs.navigation.safeArgsPlugin)
         classpath(Libs.oss.plugin)
-        classpath(Libs.kotlin.plugin)
     }
     repositories {
         mavenCentral()
