@@ -19,7 +19,7 @@ class WrenchServiceFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentWrenchServiceBinding.inflate(inflater, container, false)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         return binding.root
