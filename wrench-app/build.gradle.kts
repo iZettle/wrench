@@ -47,14 +47,14 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = mapOf(Pair("room.schemaLocation", "$projectDir/schemas"))
+                arguments = mapOf("room.schemaLocation" to "$projectDir/schemas")
             }
         }
 
         val configurationAuthorityValue = "$applicationId.configprovider"
         val wrenchPermission = "$applicationId.permission"
 
-        manifestPlaceholders = mapOf(Pair("configurationAuthority", configurationAuthorityValue), Pair("wrenchPermission", wrenchPermission))
+        manifestPlaceholders = mapOf("configurationAuthority" to configurationAuthorityValue, "wrenchPermission" to wrenchPermission)
 
         buildConfigField("String", "CONFIG_AUTHORITY", "\"$configurationAuthorityValue\"")
 

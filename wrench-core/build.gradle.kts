@@ -13,7 +13,7 @@ android {
 
         val wrenchProviderAuthority = "com.izettle.wrench.configprovider"
 
-        manifestPlaceholders = mapOf(Pair("wrenchProviderAuthority", wrenchProviderAuthority))
+        manifestPlaceholders = mapOf("wrenchProviderAuthority" to wrenchProviderAuthority)
         buildConfigField("String", "WRENCH_AUTHORITY", "\"${wrenchProviderAuthority}\"")
 
         buildConfigField("int", "WRENCH_API_VERSION", "1")

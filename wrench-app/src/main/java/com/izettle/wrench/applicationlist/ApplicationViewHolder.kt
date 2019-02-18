@@ -1,39 +1,42 @@
 package com.izettle.wrench.applicationlist
 
 import android.content.pm.PackageManager
+import android.view.View
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.izettle.wrench.R
 import com.izettle.wrench.database.WrenchApplication
-import com.izettle.wrench.databinding.ApplicationListItemBinding
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.application_list_item.*
 
-class ApplicationViewHolder(val binding: ApplicationListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class ApplicationViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
     fun bindTo(application: WrenchApplication) {
         try {
-            val packageManager = binding.root.context.packageManager
+            val packageManager = containerView.context.packageManager
             val icon = packageManager.getApplicationIcon(application.packageName)
-            binding.applicationIcon.setImageDrawable(icon)
-            binding.status.text = ""
+
+            applicationIcon.setImageDrawable(icon)
+            status.text = ""
 
         } catch (e: PackageManager.NameNotFoundException) {
-            binding.applicationIcon.setImageResource(R.drawable.ic_report_black_24dp)
-            binding.status.setText(R.string.not_installed)
+            applicationIcon.setImageResource(R.drawable.ic_report_black_24dp)
+            status.setText(R.string.not_installed)
             e.printStackTrace()
         }
 
-        binding.applicationName.text = application.applicationLabel
+        applicationName.text = application.applicationLabel
 
-        binding.root.setOnClickListener { v ->
+        containerView.setOnClickListener { v ->
             val applicationId = application.id
             Navigation.findNavController(v).navigate(ApplicationsFragmentDirections.actionApplicationsFragmentToConfigurationsFragment(applicationId))
         }
     }
 
     fun clear() {
-        binding.applicationIcon.setImageDrawable(null)
-        binding.applicationName.text = null
-        binding.status.text = null
-        binding.root.setOnClickListener(null)
+        applicationIcon.setImageDrawable(null)
+        applicationName.text = null
+        status.text = null
+        containerView.setOnClickListener(null)
     }
 }
