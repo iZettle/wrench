@@ -52,5 +52,5 @@ interface WrenchConfigurationDao {
     fun insert(wrenchConfiguration: WrenchConfiguration): Long
 
     @Query("UPDATE configuration set lastUse=:date WHERE id= :configurationId")
-    fun touch(configurationId: Long, date: Date)
+    suspend fun touch(configurationId: Long, date: Date)
 }

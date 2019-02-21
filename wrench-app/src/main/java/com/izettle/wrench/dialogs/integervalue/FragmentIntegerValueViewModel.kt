@@ -3,11 +3,12 @@ package com.izettle.wrench.dialogs.integervalue
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.izettle.wrench.database.WrenchConfiguration
 import com.izettle.wrench.database.WrenchConfigurationDao
 import com.izettle.wrench.database.WrenchConfigurationValue
 import com.izettle.wrench.database.WrenchConfigurationValueDao
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -32,7 +33,7 @@ constructor(private val configurationDao: WrenchConfigurationDao, private val co
     }
 
     fun updateConfigurationValue(value: String) {
-        GlobalScope.launch {
+        viewModelScope.launch {
             if (selectedConfigurationValue != null) {
                 configurationValueDao.updateConfigurationValue(configurationId, scopeId, value)
             } else {
@@ -44,7 +45,7 @@ constructor(private val configurationDao: WrenchConfigurationDao, private val co
     }
 
     internal fun deleteConfigurationValue() {
-        GlobalScope.launch {
+        viewModelScope.async {
             configurationValueDao.delete(selectedConfigurationValue!!)
         }
     }

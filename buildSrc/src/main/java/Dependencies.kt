@@ -12,15 +12,15 @@ object Versions {
 
     const val arch_core = "1.1.1"
     const val junit = "4.13-beta-2"
-    const val mockito = "2.24.0"
+    const val mockito = "2.24.5"
     const val mockito_all = "1.10.19"
     const val dexmaker = "2.2.0"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.5.0-alpha04"
+    const val android_gradle_plugin = "3.5.0-alpha05"
     const val hamcrest = "1.3"
     const val kotlin = "1.3.21"
     const val work = "1.0.0-alpha01"
-    const val navigation = "1.0.0-beta02"
+    const val navigation = "1.0.0-rc01"
     const val kotlin_coroutines = "1.1.1"
 
     const val room = "2.1.0-alpha04"
@@ -30,7 +30,7 @@ object Versions {
     const val test = "1.1.1-alpha01"
     const val espresso = "3.1.0-beta02"
 
-    const val robolectric = "4.2-beta-1"
+    const val robolectric = "4.2"
     const val constraint_layout = "2.0.0-alpha3"
     const val appcompat = "1.1.0-alpha02"
     const val cardview = "1.0.0"
@@ -53,6 +53,7 @@ object AndroidTestingSupportLibrary {
 object Lifecycle {
     const val core = "androidx.lifecycle:lifecycle-livedata-core:${Versions.lifecycle}"
     const val runtime = "androidx.lifecycle:lifecycle-runtime:${Versions.lifecycle}"
+    const val viewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
     const val java8 = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
     const val compiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
@@ -66,6 +67,7 @@ object Espresso {
 
 object Room {
     const val runtime = "androidx.room:room-runtime:${Versions.room}"
+    const val coroutine = "androidx.room:room-coroutines:${Versions.room}"
     const val compiler = "androidx.room:room-compiler:${Versions.room}"
     const val rxjava2 = "androidx.room:room-rxjava2:${Versions.room}"
     const val testing = "androidx.room:room-testing:${Versions.room}"

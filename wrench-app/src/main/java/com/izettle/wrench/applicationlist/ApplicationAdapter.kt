@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.izettle.wrench.R
 import com.izettle.wrench.database.WrenchApplication
-import com.izettle.wrench.databinding.ApplicationListItemBinding
 
 class ApplicationAdapter : PagedListAdapter<WrenchApplication, ApplicationViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApplicationViewHolder {
-        return ApplicationViewHolder(ApplicationListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ApplicationViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.application_list_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: ApplicationViewHolder, position: Int) {

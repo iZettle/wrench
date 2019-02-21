@@ -18,14 +18,22 @@ interface WrenchConfigurationValueDao {
     @Query("UPDATE " + ConfigurationValueTable.TABLE_NAME +
             " SET " + ConfigurationValueTable.COL_VALUE + " = (:value)" +
             " WHERE " + ConfigurationValueTable.COL_CONFIG_ID + " = (:configurationId) AND " + ConfigurationValueTable.COL_SCOPE + " = (:scopeId) ")
-    fun updateConfigurationValue(configurationId: Long, scopeId: Long, value: String): Int
+    fun updateConfigurationValueSync(configurationId: Long, scopeId: Long, value: String): Int
+
+    @Query("UPDATE " + ConfigurationValueTable.TABLE_NAME +
+            " SET " + ConfigurationValueTable.COL_VALUE + " = (:value)" +
+            " WHERE " + ConfigurationValueTable.COL_CONFIG_ID + " = (:configurationId) AND " + ConfigurationValueTable.COL_SCOPE + " = (:scopeId) ")
+    suspend fun updateConfigurationValue(configurationId: Long, scopeId: Long, value: String): Int
 
     @Insert
-    fun insert(wrenchConfigurationValue: WrenchConfigurationValue): Long
+    fun insertSync(wrenchConfigurationValue: WrenchConfigurationValue): Long
+
+    @Insert
+    suspend fun insert(wrenchConfigurationValue: WrenchConfigurationValue): Long
 
     @Update
     fun update(wrenchConfigurationValue: WrenchConfigurationValue): Int
 
     @Delete
-    fun delete(selectedConfigurationValue: WrenchConfigurationValue)
+    suspend fun delete(selectedConfigurationValue: WrenchConfigurationValue)
 }

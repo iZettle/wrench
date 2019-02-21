@@ -2,8 +2,9 @@ package com.izettle.wrench.dialogs.enumvalue
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.izettle.wrench.database.*
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -37,7 +38,7 @@ constructor(
     }
 
     fun updateConfigurationValue(value: String) {
-        GlobalScope.launch {
+        viewModelScope.launch {
             if (selectedConfigurationValue != null) {
                 configurationValueDao.updateConfigurationValue(configurationId, scopeId, value)
             } else {
@@ -49,7 +50,7 @@ constructor(
     }
 
     internal fun deleteConfigurationValue() {
-        GlobalScope.launch {
+        viewModelScope.async {
             configurationValueDao.delete(selectedConfigurationValue!!)
         }
     }

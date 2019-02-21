@@ -132,7 +132,9 @@ dependencies {
     implementation(Libs.constraint_layout)
     implementation(Libs.support.cardview)
     implementation(Libs.lifecycle.extensions)
+    implementation(Libs.lifecycle.viewmodelKtx)
     implementation(Libs.room.runtime)
+    implementation(Libs.room.coroutine)
     implementation(Libs.paging)
 
     implementation(Libs.navigation.fragmentKotlin)

@@ -137,7 +137,7 @@ class WrenchProvider : ContentProvider() {
                 wrenchConfigurationValue.value = bolt.value
                 wrenchConfigurationValue.scope = defaultScope.id
 
-                wrenchConfigurationValue.id = configurationValueDao.insert(wrenchConfigurationValue)
+                wrenchConfigurationValue.id = configurationValueDao.insertSync(wrenchConfigurationValue)
 
                 insertId = wrenchConfiguration.id
             }
@@ -190,10 +190,10 @@ class WrenchProvider : ContentProvider() {
             CURRENT_CONFIGURATION_ID -> {
                 val bolt = Bolt.fromContentValues(values!!)
                 val scope = getSelectedScope(context, scopeDao, callingApplication.id)
-                updatedRows = configurationValueDao.updateConfigurationValue(java.lang.Long.parseLong(uri.lastPathSegment!!), scope!!.id, bolt.value!!)
+                updatedRows = configurationValueDao.updateConfigurationValueSync(java.lang.Long.parseLong(uri.lastPathSegment!!), scope!!.id, bolt.value!!)
                 if (updatedRows == 0) {
                     val wrenchConfigurationValue = WrenchConfigurationValue(0, java.lang.Long.parseLong(uri.lastPathSegment!!), bolt.value, scope.id)
-                    configurationValueDao.insert(wrenchConfigurationValue)
+                    configurationValueDao.insertSync(wrenchConfigurationValue)
                 }
             }
             else -> {

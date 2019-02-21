@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import com.izettle.wrench.R
 import com.izettle.wrench.databinding.FragmentBooleanValueBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -24,34 +23,38 @@ class BooleanValueFragment : DialogFragment() {
 
         viewModel.init(args.configurationId, args.scopeId)
 
-        viewModel.configuration.observe(this, Observer { wrenchConfiguration ->
-            if (wrenchConfiguration != null) {
-                requireDialog().setTitle(wrenchConfiguration.key)
+        viewModel.viewState.observe(this, Observer { viewState ->
+            if (viewState != null) {
+                when (viewState) {
+                    is ViewState.NewConfiguration -> {
+                        requireDialog().setTitle(viewState.title)
+                        binding.title.text = viewState.title
+                    }
+                    is ViewState.NewConfigurationValue -> binding.value.isChecked = viewState.enabled
+                }
             }
         })
 
-        viewModel.selectedConfigurationValueLiveData.observe(this, Observer { wrenchConfigurationValue ->
-            viewModel.selectedConfigurationValue = wrenchConfigurationValue
-            if (wrenchConfigurationValue != null) {
-                binding.value.isChecked = java.lang.Boolean.valueOf(wrenchConfigurationValue.value)
+        viewModel.viewEffects.observe(this, Observer { viewEffect ->
+            if (viewEffect != null) {
+                viewEffect.getContentIfNotHandled()?.let { contentIfNotHandled ->
+                    when (contentIfNotHandled) {
+                        ViewEffect.Dismiss -> dismiss()
+                    }
+                }
             }
         })
+
+        binding.revert.setOnClickListener {
+            viewModel.revertClick()
+        }
+
+        binding.save.setOnClickListener {
+            viewModel.saveClick(binding.value.isChecked.toString())
+        }
 
         return AlertDialog.Builder(requireActivity())
-                .setTitle(".")
                 .setView(binding.root)
-                .setPositiveButton(android.R.string.ok
-                ) { _, _ ->
-                    viewModel.updateConfigurationValue(binding.value.isChecked.toString())
-                    dismiss()
-                }
-                .setNegativeButton(R.string.revert
-                ) { _, _ ->
-                    if (viewModel.selectedConfigurationValue != null) {
-                        viewModel.deleteConfigurationValue()
-                    }
-                    dismiss()
-                }
                 .create()
     }
 
