@@ -32,23 +32,26 @@
 
         <Button
             android:id="@+id/revert"
-            android:layout_width="0dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:text="revert"
+            app:layout_constraintBottom_toBottomOf="@+id/save"
             app:layout_constraintEnd_toStartOf="@+id/save"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/value" />
+            app:layout_constraintTop_toTopOf="@+id/save" />
 
         <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:id="@+id/save"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:text="save"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/revert"
             app:layout_constraintTop_toBottomOf="@+id/value" />
 
