@@ -10,6 +10,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import java.util.*
 
+@ExperimentalCoroutinesApi
 class FragmentBooleanValueViewModel
 constructor(private val configurationDao: WrenchConfigurationDao, private val configurationValueDao: WrenchConfigurationValueDao) : ViewModel() {
 
@@ -26,7 +27,7 @@ constructor(private val configurationDao: WrenchConfigurationDao, private val co
     private var selectedConfigurationValue: WrenchConfigurationValue? = null
 
     val viewState = MediatorLiveData<ViewState>().apply {
-        value = ViewState.Empty
+        value = reduce(ViewState(), PartialViewState.Empty)
     }
 
     val viewEffects = MutableLiveData<Event<ViewEffect>>()
@@ -37,14 +38,17 @@ constructor(private val configurationDao: WrenchConfigurationDao, private val co
             for (viewAction in openSubscription()) {
                 when (viewAction) {
                     is ViewAction.SaveAction -> {
-                        viewState.value = ViewState.Loading
+                        viewState.value = reduce(viewState.value!!, PartialViewState.Saving)
                         updateConfigurationValue(viewAction.value).join()
                         viewEffects.value = Event(ViewEffect.Dismiss)
                     }
                     ViewAction.RevertAction -> {
-                        viewState.value = ViewState.Loading
+                        viewState.value = reduce(viewState.value!!, PartialViewState.Reverting)
                         deleteConfigurationValue()
                         viewEffects.value = Event(ViewEffect.Dismiss)
+                    }
+                    is ViewAction.CheckedChanged -> {
+                        viewState.value = reduce(viewState.value!!, PartialViewState.CheckChanged(viewAction.checked))
                     }
                 }
             }
@@ -55,27 +59,53 @@ constructor(private val configurationDao: WrenchConfigurationDao, private val co
         this.configurationId = configurationId
         this.scopeId = scopeId
 
-        viewState.addSource(configuration) { wrenchConfig -> viewState.value = ViewState.NewConfiguration(wrenchConfig.key) }
+        viewState.addSource(configuration) { wrenchConfig -> viewState.value = reduce(viewState.value!!, PartialViewState.NewConfiguration(wrenchConfig.key)) }
         viewState.addSource(selectedConfigurationValueLiveData) { wrenchConfigurationValue ->
             if (wrenchConfigurationValue != null) {
                 selectedConfigurationValue = wrenchConfigurationValue
-                viewState.value = ViewState.NewConfigurationValue(wrenchConfigurationValue.value!!.toBoolean())
+                viewState.value = reduce(viewState.value!!, PartialViewState.NewConfigurationValue(wrenchConfigurationValue.value!!.toBoolean()))
             }
         }
     }
 
+    private fun reduce(previousState: ViewState, partialViewState: PartialViewState): ViewState {
+        return when (partialViewState) {
+            is PartialViewState.NewConfiguration -> {
+                previousState.copy(title = partialViewState.title)
+            }
+            is PartialViewState.NewConfigurationValue -> {
+                previousState.copy(enabled = partialViewState.enabled)
+            }
+            is PartialViewState.Empty -> {
+                previousState
+            }
+            is PartialViewState.Saving -> {
+                previousState.copy(saving = true)
+            }
+            is PartialViewState.Reverting -> {
+                previousState.copy(reverting = true)
+            }
+            is PartialViewState.CheckChanged -> {
+                previousState.copy(enabled = partialViewState.checked)
+            }
+        }
+    }
 
-    @ExperimentalCoroutinesApi
     internal fun saveClick(value: String) {
         viewModelScope.launch {
             channel.send(ViewAction.SaveAction(value))
         }
     }
 
-    @ExperimentalCoroutinesApi
     internal fun revertClick() {
         viewModelScope.launch {
             channel.send(ViewAction.RevertAction)
+        }
+    }
+
+    fun checkedChanged(checked: Boolean) {
+        viewModelScope.launch {
+            channel.send(ViewAction.CheckedChanged(checked))
         }
     }
 
@@ -97,22 +127,33 @@ constructor(private val configurationDao: WrenchConfigurationDao, private val co
     private suspend fun deleteConfigurationValue() = coroutineScope {
         configurationValueDao.delete(selectedConfigurationValue!!)
     }
+
+
 }
 
 sealed class ViewAction {
     data class SaveAction(val value: String) : ViewAction()
     object RevertAction : ViewAction()
+    data class CheckedChanged(val checked: Boolean) : ViewAction()
 }
 
 sealed class ViewEffect {
     object Dismiss : ViewEffect()
 }
 
-sealed class ViewState {
-    object Empty : ViewState()
-    data class NewConfiguration(val title: String?) : ViewState()
-    data class NewConfigurationValue(val enabled: Boolean) : ViewState()
-    object Loading : ViewState()
+data class ViewState(val title: String? = null,
+                     val enabled: Boolean? = null,
+                     val saving: Boolean = false,
+                     val reverting: Boolean = false)
+
+private sealed class PartialViewState {
+    object Empty : PartialViewState()
+    data class NewConfiguration(val title: String?) : PartialViewState()
+    data class NewConfigurationValue(val enabled: Boolean) : PartialViewState()
+    data class CheckChanged(val checked: Boolean) : PartialViewState()
+
+    object Saving : PartialViewState()
+    object Reverting : PartialViewState()
 }
 
 
