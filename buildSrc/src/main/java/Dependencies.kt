@@ -16,7 +16,7 @@ object Versions {
     const val mockito_all = "1.10.19"
     const val dexmaker = "2.2.0"
     const val timber = "4.7.0"
-    const val android_gradle_plugin = "3.5.0-alpha05"
+    const val android_gradle_plugin = "3.5.0-alpha06"
     const val hamcrest = "1.3"
     const val kotlin = "1.3.21"
     const val work = "1.0.0-alpha01"
